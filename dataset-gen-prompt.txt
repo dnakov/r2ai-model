@@ -1,0 +1,1595 @@
+You're a helpful assistant and your goal is to come up with high-level user queries in English that a radare2 user would use radare2 for, and the commands that would satisfy those queries. I'll provide you with some documentation and you need to respond in a certain way explained later.
+------
+<documentation>
+
+  
+Command Syntax
+In a single line we can describe the syntax of the radare2 commands like this:
+
+ .- ignore special characters, same as full command quotes "?e hi > ho"
+ |    .- interpret the output of the command or run a script `.?`
+ |   /   .-- the repeat prefix operator, run a command N times   .------------.
+ |  |   /     . the command to run                               | , = csv    |
+ |  |  |    /    . command suffix output modifier --------------<  j = json   |
+ |  |  |   |    /                                                | * = r2cmds |
+ |  |  |   |   |                                                 `------------'
+['][.][N][cmd[,?*j]][~filter][@[@[@]]addr!size][|>pipe] ; another command
+                           |  | | |  \________/ | |     |
+                           |  | | |      |      |  \    `--- cmd separator
+ output filter modifier _.'  /  | |      |       \  `-- redirect to file
+   @ temporal seek  --------'  /  |       \       `--- pipe to system shell
+       @@ foreach operator ---'   |        `--- foreach modifiers @? @@? @@@?
+                                   `--- advanced foreach (addr+size on items)
+People who use Vim daily and are familiar with its commands will find themselves at home. You will see this format used throughout the book. Commands are identified by a single case-sensitive character [a-zA-Z].
+
+As an exercise for the reader you may want to read the following lines and understand the purpose of the syntax with examples.
+
+ds                    ; call the debugger's 'step' command
+px 200 @ esp          ; show 200 hex bytes at esp
+pc > file.c           ; dump buffer as a C byte array to file.c
+wx 90 @@ sym.*        ; write a nop on every symbol
+pd 2000 | grep eax    ; grep opcodes that use the 'eax' register
+px 20 ; pd 3 ; px 40  ; multiple commands in a single line
+Repetitions
+To repeatedly execute a command, prefix the command with a number:
+
+px    # run px
+3px   # run px 3 times
+An useful way to use this command is to draw the classic donut animation with 100?3d or perform an specific amount of steps when debugging like: 10ds (that will do the same as ds 10
+
+Shell Execution
+The ! prefix is used to execute a command in shell context. If you want to use the cmd callback from the I/O plugin you must prefix with :.
+
+Note that a single exclamation mark will run the command and print the output through the RCons API. This means that the execution will be blocking and not interactive. Use double exclamation marks -- !! -- to run a standard system call.
+
+All the socket, filesystem and execution APIs can be restricted with the cfg.sandbox configuration variable.
+
+Environment
+When executing system commands from radare2, we will get some special environment variables that can be used to script radare2 from shellscripts without the need to depend on r2pipe.
+
+The environment variables can be listed and modified with the % command.
+
+Note that the environment variables will be different depending on how we execute code with radare2:
+
+runtime environment (R2CORE tells where the instance is in memory)
+debugger environment (as clean as described in a rarun2 profile)
+spawning processes with ! (get some context details, like offset, file, ..)
+r2pipe environment (R2PIPE_IN and R2PIPE_OUT with the pipe descriptors)
+[0x00000000]> !export | grep R2_
+export R2_ARCH="arm"
+export R2_BITS="64"
+export R2_BSIZE="256"
+export R2_COLOR="0"
+export R2_DEBUG="0"
+export R2_ENDIAN="little"
+export R2_FILE="malloc://512"
+export R2_IOVA="1"
+export R2_OFFSET="0"
+export R2_SIZE="512"
+export R2_UTF8="1"
+export R2_XOFFSET="0x00000000"
+[0x00000000]>
+We can also find the location in memory of the RCore instance in the current process. This can be useful when injecting code inside radare2 (like when injecting r2 via r2frida or using native api calls on live runtimes without having to pass pointers or depend on RLang setups) We may learn more about this in the scripting chapter.
+
+[0x00000000]> %~R2
+R2CORE=0x140018000
+[0x00000000]>
+Pipes
+The standard UNIX pipe | is also available in the radare2 shell. You can use it to filter the output of an r2 command with any shell program that reads from stdin, such as grep, less, wc. If you do not want to spawn anything, or you can't, or the target system does not have the basic UNIX tools you need (Windows or embedded users), you can also use the built-in grep (~).
+
+Filtering
+The ~ is a special character that is used by the console filtering features. It can be chained multiple times to perform multiple filters like grepping, xml or json indentation, head/tail operations, select column of output, etc
+
+You may find that ~ is very similar to using the unix | pipe, but this
+
+As you may expect appending a question mark will display the help message.
+
+[0x00000000]> ~?
+Usage: [command]~[modifier][word,word][endmodifier][[column]][:line]
+modifier:
+|  &            all words must match to grep the line
+|  $[n]         sort numerically / alphabetically the Nth column
+|  $            sort in alphabetic order
+|  $$           sort + uniq
+|  $!           inverse alphabetical sort
+|  $!!          reverse the lines (like the `tac` tool)
+|  ,            token to define another keyword
+|  +            case insensitive grep (grep -i)
+|  *            zoom level
+|  ^            words must be placed at the beginning of line
+|  !            negate grep
+|  ?            count number of matching lines
+|  ?.           count number chars
+|  ??           show this help message
+|  ?ea          convert text into seven segment style ascii art
+|  :s..e        show lines s-e
+|  ..           internal 'less'
+|  ...          internal 'hud' (like V_)
+|  ....         internal 'hud' in one line
+|  :)           parse C-like output from decompiler
+|  :))          code syntax highlight
+|  <50          perform zoom to the given text width on the buffer
+|  <>           xml indentation
+|  {:           human friendly indentation (yes, it's a smiley)
+|  {:..         less the output of {:
+|  {:...        hud the output of {:
+|  {}           json indentation
+|  {}..         less json indentation
+|  {}...        hud json indentation
+|  {=}          gron-like output (key=value)
+|  {path}       json path grep
+endmodifier:
+|  $            words must be placed at the end of line
+column:
+|  [n]          show only column n
+|  [n-m]        show column n to m
+|  [n-]         show all columns starting from column n
+|  [i,j,k]      show the columns i, j and k
+Examples:
+|  i~:0         show first line of 'i' output
+|  i~:-2        show the second to last line of 'i' output
+|  i~:0..3      show first three lines of 'i' output
+|  pd~mov       disasm and grep for mov
+|  pi~[0]       show only opcode
+|  i~0x400$     show lines ending with 0x400
+The ~ character enables internal grep-like function used to filter output of any command:
+
+pd 20~call            ; disassemble 20 instructions and grep output for 'call'
+Additionally, you can grep either for columns or for rows:
+
+pd 20~call:0          ; get first row
+pd 20~call:1          ; get second row
+pd 20~call[0]         ; get first column
+pd 20~call[1]         ; get second column
+Or even combine them:
+
+pd 20~call:0[0]       ; grep the first column of the first row matching 'call'
+This internal grep function is a key feature for scripting radare2, because it can be used to iterate over a list of offsets or data generated by disassembler, ranges, or any other command. Refer to the loops section (iterators) for more information.
+
+Output Evaluation
+The . character at the begining of the command is used to interpret or evaluate the output of the command you execute.
+
+The purpose of this syntax rings some bells when you use the * suffix or the -r flag in all the r2 shell commands.
+
+For example, we can load the symbols from a binary in disk by running the following line:
+
+> .!rabin2 -rs $R2_FILE
+Temporal Seek
+The @ character is used to specify a temporary offset at which the command to its left will be executed. The original seek position in a file is then restored.
+
+For example, pd 5 @ 0x100000fce to disassemble 5 instructions at address 0x100000fce.
+
+Most of the commands offer autocompletion support using <TAB> key, for example seek or flags commands.
+
+It offers autocompletion using all possible values, taking flag names in this case.
+
+The command history can be interactively inspected with !~....
+
+To extend the autocompletion support to handle more commands or enable autocompletion to your own commands defined in core, I/O plugins you must use the !!! command.
+
+
+Expressions
+Expressions are mathematical representations of 64-bit numerical values. These are handled anywhere RNum API is used, the api takes a string that can contain multiple math operations with different numeric bases and operations and computes the resulting value.
+
+They can be displayed in different formats, be compared or used with all commands accepting numeric arguments. Expressions can use traditional arithmetic operations, as well as binary and boolean ones.
+
+To evaluate mathematical expressions prepend them with command ?:
+
+[0xb7f9d810]> ?vi 0x8048000
+134512640
+[0xv7f9d810]> ?vi 0x8048000+34
+134512674
+[0xb7f9d810]> ?vi 0x8048000+0x34
+134512692
+[0xb7f9d810]> ? 1+2+3-4*3
+hex     0xfffffffffffffffa
+octal   01777777777777777777772
+unit    17179869184.0G
+segment fffff000:0ffa
+int64   -6
+string  "\xfa\xff\xff\xff\xff\xff\xff\xff"
+binary  0b1111111111111111111111111111111111111111111111111111111111111010
+fvalue: -6.0
+float:  nanf
+double: nan
+trits   0t11112220022122120101211020120210210211201
+Supported arithmetic operations are:
+
+ +   addition
+ -   subtraction
+ *   multiplication
+ /   division
+ %   modulus
+ &   binary and
+ |   binary or
+ ^   binary xor
+ >>  shift right
+ <<  shift left
+For example, using the ?vi command we the the integer (base10) value resulting it from evaluating the given math expression
+
+[0x00000000]> ?vi 1+2+3
+6
+To use of binary OR should quote the whole command to avoid executing the | pipe:
+
+[0x00000000]> "? 1 | 2"
+hex     0x3
+octal   03
+unit    3
+segment 0000:0003
+int32   3
+string  "\x03"
+binary  0b00000011
+fvalue: 2.0
+float:  0.000000f
+double: 0.000000
+trits   0t10
+Note that on modern r2 versions you can use the single quote at the begining of the command to avoid evaluating the rest of the expression:
+
+'? 1 | 2 is the equivalent to "? 1 | 2"
+
+Numbers can be displayed in several formats:
+
+0x033   : hexadecimal can be displayed
+3334    : decimal
+sym.fo  : resolve flag offset
+10K     : KBytes  10*1024
+10M     : MBytes  10*1024*1024
+You can also use variables and seek positions to build complex expressions.
+
+Use the ?$? command to list all the available commands or read the refcard chapter of this book.
+
+$$    here (the current virtual seek)
+$l    opcode length
+$s    file size
+$j    jump address (e.g. jmp 0x10, jz 0x10 => 0x10)
+$f    jump fail address (e.g. jz 0x10 => next instruction)
+$m    opcode memory reference (e.g. mov eax,[0x10] => 0x10)
+$b    block size
+Some more examples:
+
+[0x4A13B8C0]> ? $m + $l
+140293837812900 0x7f98b45df4a4 03771426427372244 130658.0G 8b45d000:04a4 140293837812900 10100100 140293837812900.0 -0.000000
+Disassembling the very next instruction after the current one
+
+
+[0x4A13B8C0]> pd 1 @ +$l
+0x4A13B8C2   call 0x4a13c000
+
+
+
+
+
+Code Analysis
+Code analysis is the process of finding patterns, combining information from different sources and process the disassembly of the program in multiple ways in order to understand and extract more details of the logic behind the code.
+
+Radare2 has many different code analysis techniques implemented under different commands and configuration options, and it's important to understand what they do and how that affects in the final results before going for the default-standard aaaaa way because on some cases this can be too slow or just produce false positive results.
+
+As long as the whole functionalities of r2 are available with the API as well as using commands. This gives you the ability to implement your own analysis loops using any programming language, even with r2 oneliners, shellscripts, or analysis or core native plugins.
+
+The analysis will show up the internal data structures to identify basic blocks, function trees and to extract opcode-level information.
+
+The most common radare2 analysis command sequence is aa, which stands for "analyze all". That all is referring to all symbols and entry-points. If your binary is stripped you will need to use other commands like aaa, aab, aar, aac or so.
+
+Take some time to understand what each command does and the results after running them to find the best one for your needs.
+
+[0x08048440]> aa
+[0x08048440]> pdf @ main
+           ; DATA XREF from 0x08048457 (entry0)
+/ (fcn) fcn.08048648 141
+|     ;-- main:
+|     0x08048648    8d4c2404     lea ecx, [esp+0x4]
+|     0x0804864c    83e4f0       and esp, 0xfffffff0
+|     0x0804864f    ff71fc       push dword [ecx-0x4]
+|     0x08048652    55           push ebp
+|     ; CODE (CALL) XREF from 0x08048734 (fcn.080486e5)
+|     0x08048653    89e5         mov ebp, esp
+|     0x08048655    83ec28       sub esp, 0x28
+|     0x08048658    894df4       mov [ebp-0xc], ecx
+|     0x0804865b    895df8       mov [ebp-0x8], ebx
+|     0x0804865e    8975fc       mov [ebp-0x4], esi
+|     0x08048661    8b19         mov ebx, [ecx]
+|     0x08048663    8b7104       mov esi, [ecx+0x4]
+|     0x08048666    c744240c000. mov dword [esp+0xc], 0x0
+|     0x0804866e    c7442408010. mov dword [esp+0x8], 0x1 ;  0x00000001
+|     0x08048676    c7442404000. mov dword [esp+0x4], 0x0
+|     0x0804867e    c7042400000. mov dword [esp], 0x0
+|     0x08048685    e852fdffff   call sym..imp.ptrace
+|        sym..imp.ptrace(unk, unk)
+|     0x0804868a    85c0         test eax, eax
+| ,=< 0x0804868c    7911         jns 0x804869f
+| |   0x0804868e    c70424cf870. mov dword [esp], str.Don_tuseadebuguer_ ;  0x080487cf
+| |   0x08048695    e882fdffff   call sym..imp.puts
+| |      sym..imp.puts()
+| |   0x0804869a    e80dfdffff   call sym..imp.abort
+| |      sym..imp.abort()
+| `-> 0x0804869f    83fb02       cmp ebx, 0x2
+|,==< 0x080486a2    7411         je 0x80486b5
+||    0x080486a4    c704240c880. mov dword [esp], str.Youmustgiveapasswordforusethisprogram_ ;  0x0804880c
+||    0x080486ab    e86cfdffff   call sym..imp.puts
+||       sym..imp.puts()
+||    0x080486b0    e8f7fcffff   call sym..imp.abort
+||       sym..imp.abort()
+|`--> 0x080486b5    8b4604       mov eax, [esi+0x4]
+|     0x080486b8    890424       mov [esp], eax
+|     0x080486bb    e8e5feffff   call fcn.080485a5
+|        fcn.080485a5() ; fcn.080484c6+223
+|     0x080486c0    b800000000   mov eax, 0x0
+|     0x080486c5    8b4df4       mov ecx, [ebp-0xc]
+|     0x080486c8    8b5df8       mov ebx, [ebp-0x8]
+|     0x080486cb    8b75fc       mov esi, [ebp-0x4]
+|     0x080486ce    89ec         mov esp, ebp
+|     0x080486d0    5d           pop ebp
+|     0x080486d1    8d61fc       lea esp, [ecx-0x4]
+\     0x080486d4    c3           ret
+In this example, we analyze the whole file (aa) and then print disassembly of the main() function (pdf). The aa command belongs to the family of auto analysis commands and performs only the most basic auto analysis steps. In radare2 there are many different types of the auto analysis commands with a different analysis depth, including partial emulation: aa, aaa, aab, aaaa, ... There is also a mapping of those commands to the r2 CLI options: r2 -A, r2 -AA, and so on.
+
+It is a common sense that completely automated analysis can produce non sequitur results, thus radare2 provides separate commands for the particular stages of the analysis allowing fine-grained control of the analysis process. Moreover, there is a treasure trove of configuration variables for controlling the analysis outcomes. You can find them in anal.* and emu.* cfg variables' namespaces.
+
+Analyze functions
+One of the most important "basic" analysis commands is the set of af subcommands. af means "analyze function". Using this command you can either allow automatic analysis of the particular function or perform completely manual one.
+
+[0x00000000]> af?
+Usage: af
+| af ([name]) ([addr])                  analyze functions (start at addr or $$)
+| afr ([name]) ([addr])                 analyze functions recursively
+| af+ addr name [type] [diff]           hand craft a function (requires afb+)
+| af- [addr]                            clean all function analysis data (or function at addr)
+| afa                                   analyze function arguments in a call (afal honors dbg.funcarg)
+| afb+ fcnA bbA sz [j] [f] ([t]( [d]))  add bb to function @ fcnaddr
+| afb[?] [addr]                         List basic blocks of given function
+| afbF([0|1])                           Toggle the basic-block 'folded' attribute
+| afB 16                                set current function as thumb (change asm.bits)
+| afC[lc] ([addr])@[addr]               calculate the Cycles (afC) or Cyclomatic Complexity (afCc)
+| afc[?] type @[addr]                   set calling convention for function
+| afd[addr]                             show function + delta for given offset
+| afF[1|0|]                             fold/unfold/toggle
+| afi [addr|fcn.name]                   show function(s) information (verbose afl)
+| afj [tableaddr] [count]               analyze function jumptable
+| afl[?] [ls*] [fcn name]               list functions (addr, size, bbs, name) (see afll)
+| afm name                              merge two functions
+| afM name                              print functions map
+| afn[?] name [addr]                    rename name for function at address (change flag too)
+| afna                                  suggest automatic name for current offset
+| afo[?j] [fcn.name]                    show address for the function name or current offset
+| afs[!] ([fcnsign])                    get/set function signature at current address (afs! uses cfg.editor)
+| afS[stack_size]                       set stack frame size for function at current address
+| afsr [function_name] [new_type]       change type for given function
+| aft[?]                                type matching, type propagation
+| afu addr                              resize and analyze function from current address until addr
+| afv[absrx]?                           manipulate args, registers and variables in function
+| afx                                   list function references
+You can use afl to list the functions found by the analysis.
+
+There are a lot of useful commands under afl such as aflj, which lists the function in JSON format and aflm, which lists the functions in the syntax found in makefiles.
+
+There's also afl=, which displays ASCII-art bars with function ranges.
+
+You can find the rest of them under afl?.
+
+Some of the most challenging tasks while performing a function analysis are merge, crop and resize. As with other analysis commands you have two modes: semi-automatic and manual. For the semi-automatic, you can use afm <function name> to merge the current function with the one specified by name as an argument, aff to readjust the function after analysis changes or function edits, afu <address> to do the resize and analysis of the current function until the specified address.
+
+Apart from those semi-automatic ways to edit/analyze the function, you can hand craft it in the manual mode with af+ command and edit basic blocks of it using afb commands. Before changing the basic blocks of the function it is recommended to check the already presented ones:
+
+[0x00003ac0]> afb
+0x00003ac0 0x00003b7f 01:001A 191 f 0x00003b7f
+0x00003b7f 0x00003b84 00:0000 5 j 0x00003b92 f 0x00003b84
+0x00003b84 0x00003b8d 00:0000 9 f 0x00003b8d
+0x00003b8d 0x00003b92 00:0000 5
+0x00003b92 0x00003ba8 01:0030 22 j 0x00003ba8
+0x00003ba8 0x00003bf9 00:0000 81
+Hand craft function
+Before we start, let's prepare a binary file first. Write in example.c:
+
+int code_block()
+{
+  int result = 0;
+
+  for(int i = 0; i < 10; ++i)
+    result += 1;
+
+  return result;
+}
+then compile with gcc -c example.c -m32 -O0 -fno-pie, and open the object file example.o with radare2.
+
+Since we haven't analyzed it yet, the pdf command will not print out the disassembly here:
+
+$ r2 example.o 
+[0x08000034]> pdf
+p: Cannot find function at 0x08000034
+[0x08000034]> pd
+            ;-- section..text:
+            ;-- .text:
+            ;-- code_block:
+            ;-- eip:
+            0x08000034      55             push ebp                    ; [01] -r-x section size 41 named .text
+            0x08000035      89e5           mov ebp, esp
+            0x08000037      83ec10         sub esp, 0x10
+            0x0800003a      c745f8000000.  mov dword [ebp - 8], 0
+            0x08000041      c745fc000000.  mov dword [ebp - 4], 0
+        ,=< 0x08000048      eb08           jmp 0x8000052
+       .--> 0x0800004a      8345f801       add dword [ebp - 8], 1
+       :|   0x0800004e      8345fc01       add dword [ebp - 4], 1
+       :`-> 0x08000052      837dfc09       cmp dword [ebp - 4], 9
+       `==< 0x08000056      7ef2           jle 0x800004a
+            0x08000058      8b45f8         mov eax, dword [ebp - 8]
+            0x0800005b      c9             leave
+            0x0800005c      c3             ret
+
+our goal is to handcraft a function with the following structure
+
+analyze_one
+
+create a function at 0x8000034 named code_block:
+
+[0x8000034]> af+ 0x8000034 code_block
+In most cases, we use jump or call instructions as code block boundaries. so the range of first block is from 0x08000034 push ebp to 0x08000048 jmp 0x8000052. use afb+ command to add it.
+
+[0x08000034]> afb+ code_block 0x8000034 0x800004a-0x8000034 0x8000052
+note that the basic syntax of afb+ is afb+ function_address block_address block_size [jump] [fail]. the final instruction of this block points to a new address(jmp 0x8000052), thus we add the address of jump target (0x8000052) to reflect the jump info.
+
+the next block (0x08000052 ~ 0x08000056) is more likeyly an if conditional statement which has two branches. It will jump to 0x800004a if jle-less or equal, otherwise (the fail condition) jump to next instruction -- 0x08000058.:
+
+[0x08000034]> afb+ code_block 0x8000052 0x8000058-0x8000052 0x800004a 0x8000058
+follow the control flow and create the remaining two blocks (two branches) :
+
+[0x08000034]> afb+ code_block 0x800004a 0x8000052-0x800004a 0x8000052
+[0x08000034]> afb+ code_block 0x8000058 0x800005d-0x8000058
+check our work:
+
+[0x08000034]> afb
+0x08000034 0x0800004a 00:0000 22 j 0x08000052
+0x0800004a 0x08000052 00:0000 8 j 0x08000052
+0x08000052 0x08000058 00:0000 6 j 0x0800004a f 0x08000058
+0x08000058 0x0800005d 00:0000 5
+[0x08000034]> VV
+handcraft_one
+
+There are two very important commands for this: afc and afB. The latter is a must-know command for some platforms like ARM. It provides a way to change the "bitness" of the particular function. Basically, allowing to select between ARM and Thumb modes.
+
+afc on the other side, allows to manually specify function calling convention. You can find more information on its usage in calling_conventions.
+
+Recursive analysis
+There are 5 important program wide half-automated analysis commands:
+
+aab - perform basic-block analysis ("Nucleus" algorithm)
+aac - analyze function calls from one (selected or current function)
+aaf - analyze all function calls
+aar - analyze data references
+aad - analyze pointers to pointers references
+Those are only generic semi-automated reference searching algorithms. Radare2 provides a wide choice of manual references' creation of any kind. For this fine-grained control you can use ax commands.
+
+Usage: ax[?d-l*]   # see also 'afx?'
+| ax              list refs
+| ax*             output radare commands
+| ax addr [at]    add code ref pointing to addr (from curseek)
+| ax- [at]        clean all refs/refs from addr
+| ax-*            clean all refs/refs
+| axc addr [at]   add generic code ref
+| axC addr [at]   add code call ref
+| axg [addr]      show xrefs graph to reach current function
+| axg* [addr]     show xrefs graph to given address, use .axg*;aggv
+| axgj [addr]     show xrefs graph to reach current function in json format
+| axd addr [at]   add data ref
+| axq             list refs in quiet/human-readable format
+| axj             list refs in json format
+| axF [flg-glob]  find data/code references of flags
+| axm addr [at]   copy data/code references pointing to addr to also point to curseek (or at)
+| axt [addr]      find data/code references to this address
+| axf [addr]      find data/code references from this address
+| axv [addr]      list local variables read-write-exec references
+| ax. [addr]      find data/code references from and to this address
+| axff[j] [addr]  find data/code references from this function
+| axs addr [at]   add string ref
+The most commonly used ax commands are axt and axf, especially as a part of various r2pipe scripts. Lets say we see the string in the data or a code section and want to find all places it was referenced from, we should use axt:
+
+[0x0001783a]> pd 2
+;-- str.02x:
+; STRING XREF from 0x00005de0 (sub.strlen_d50)
+; CODE XREF from 0x00017838 (str.._s_s_s + 7)
+0x0001783a     .string "%%%02x" ; len=7
+;-- str.src_ls.c:
+; STRING XREF from 0x0000541b (sub.free_b04)
+; STRING XREF from 0x0000543a (sub.__assert_fail_41f + 27)
+; STRING XREF from 0x00005459 (sub.__assert_fail_41f + 58)
+; STRING XREF from 0x00005f9e (sub._setjmp_e30)
+; CODE XREF from 0x0001783f (str.02x + 5)
+0x00017841 .string "src/ls.c" ; len=9
+[0x0001783a]> axt
+sub.strlen_d50 0x5de0 [STRING] lea rcx, str.02x
+(nofunc) 0x17838 [CODE] jae str.02x
+There are also some useful commands under axt. Use axtg to generate radare2 commands which will help you to create graphs according to the XREFs.
+
+[0x08048320]> s main
+[0x080483e0]> axtg
+agn 0x8048337 "entry0 + 23"
+agn 0x80483e0 "main"
+age 0x8048337 0x80483e0
+Use axt* to split the radare2 commands and set flags on those corresponding XREFs.
+
+Also under ax is axg, which finds the path between two points in the file by showing an XREFs graph to reach the location or function. For example:
+
+:> axg sym.imp.printf
+- 0x08048a5c fcn 0x08048a5c sym.imp.printf
+  - 0x080483e5 fcn 0x080483e0 main
+  - 0x080483e0 fcn 0x080483e0 main
+    - 0x08048337 fcn 0x08048320 entry0
+  - 0x08048425 fcn 0x080483e0 main
+Use axg* to generate radare2 commands which will help you to create graphs using agn and age commands, according to the XREFs.
+
+Apart from predefined algorithms to identify functions there is a way to specify a function prelude with a configuration option anal.prelude. For example, like e anal.prelude = 0x554889e5 which means
+
+push rbp
+mov rbp, rsp
+on x86_64 platform. It should be specified before any analysis commands.
+
+Configuration
+Radare2 allows to change the behavior of almost any analysis stages or commands. There are different kinds of the configuration options:
+
+Flow control
+Basic blocks control
+References control
+IO/Ranges
+Jump tables analysis control
+Platform/target specific options
+Control flow configuration
+Two most commonly used options for changing the behavior of control flow analysis in radare2 are anal.hasnext and anal.jmp.after. The first one allows forcing radare2 to continue the analysis after the end of the function, even if the next chunk of the code wasn't called anywhere, thus analyzing all of the available functions. The latter one allows forcing radare2 to continue the analysis even after unconditional jumps.
+
+In addition to those we can also set anal.jmp.indir to follow the indirect jumps, continuing analysis; anal.pushret to analyze push ...; ret sequence as a jump; anal.nopskip to skip the NOP sequences at a function beginning.
+
+For now, radare2 also allows you to change the maximum basic block size with anal.bb.maxsize option . The default value just works in most use cases, but it's useful to increase that for example when dealing with obfuscated code. Beware that some of basic blocks control options may disappear in the future in favor of more automated ways to set those.
+
+For some unusual binaries or targets, there is an option anal.in=? that will only analyze executable regions by default, but you can force a different section or specify different boundaries. Radare2 doesn't try to analyze data sections as a code by default. But in some cases - malware, packed binaries, binaries for embedded systems, it is often a case. Thus - this option.
+
+Reference control
+The most crucial options that change the analysis results drastically. Sometimes some can be disabled to save the time and memory when analyzing big binaries.
+
+anal.jmp.ref - to allow references creation for unconditional jumps
+anal.jmp.cref - same, but for conditional jumps
+anal.datarefs - to follow the data references in code
+anal.refstr - search for strings in data references
+anal.strings - search for strings and creating references
+Note that strings references control is disabled by default because it increases the analysis time.
+
+Analysis ranges
+There are a few options for this:
+
+anal.limits - enables the range limits for analysis operations
+anal.from - starting address of the limit range
+anal.to - the corresponding end of the limit range
+anal.in - specify search boundaries for analysis. You can set it to io.maps, io.sections.exec, dbg.maps and many more. For example:
+To analyze a specific memory map with anal.from and anal.to, set anal.in = dbg.maps.
+To analyze in the boundaries set by anal.from and anal.to, set anal.in=range.
+To analyze in the current mapped segment or section, you can put anal.in=bin.segment or anal.in=bin.section, respectively.
+To analyze in the current memory map, specify anal.in=dbg.map.
+To analyze in the stack or heap, you can set anal.in=dbg.stack or anal.in=dbg.heap.
+To analyze in the current function or basic block, you can specify anal.in=anal.fcn or anal.in=anal.bb.
+Please see e anal.in=?? for the complete list.
+
+Jump tables
+Jump tables are one of the trickiest targets in binary reverse engineering. There are hundreds of different types, the end result depending on the compiler/linker and LTO stages of optimization. Thus radare2 allows enabling some experimental jump tables detection algorithms using anal.jmp.tbl option. Eventually, algorithms moved into the default analysis loops once they start to work on every supported platform/target/testcase. Two more options can affect the jump tables analysis results too:
+
+anal.jmp.indir - follow the indirect jumps, some jump tables rely on them
+anal.datarefs - follow the data references, some jump tables use those
+Platform specific controls
+There are two common problems when analyzing embedded targets: ARM/Thumb detection and MIPS GP value. In case of ARM binaries radare2 supports some auto-detection of ARM/Thumb mode switches, but beware that it uses partial ESIL emulation, thus slowing the analysis process. If you will not like the results, particular functions' mode can be overridden with afB command.
+
+The MIPS GP problem is even trickier. It is a basic knowledge that GP value can be different not only for the whole program, but also for some functions. To partially solve that there are options anal.gp and anal.gpfixed. The first one sets the GP value for the whole program or particular function. The latter allows to "constantify" the GP value if some code is willing to change its value, always resetting it if the case. Those are heavily experimental and might be changed in the future in favor of more automated analysis.
+
+Visuals
+One of the easiest way to see and check the changes of the analysis commands and variables is to perform a scrolling in a Vv special visual mode, allowing functions preview:
+
+vv
+
+When we want to check how analysis changes affect the result in the case of big functions, we can use minimap instead, allowing to see a bigger flow graph on the same screen size. To get into the minimap mode type VV then press p twice:
+
+vv2
+
+This mode allows you to see the disassembly of each node separately, just navigate between them using Tab key.
+
+Analysis hints
+It is not an uncommon case that analysis results are not perfect even after you tried every single configuration option. This is where the "analysis hints" radare2 mechanism comes in. It allows to override some basic opcode or meta-information properties, or even to rewrite the whole opcode string. These commands are located under ah namespace:
+
+Usage: ah[lba-]  Analysis Hints
+| ah?                show this help
+| ah? offset         show hint of given offset
+| ah                 list hints in human-readable format
+| ah.                list hints in human-readable format from current offset
+| ah-                remove all hints
+| ah- offset [size]  remove hints at given offset
+| ah* offset         list hints in radare commands format
+| aha ppc @ 0x42     force arch ppc for all addrs >= 0x42 or until the next hint
+| aha 0 @ 0x84       disable the effect of arch hints for all addrs >= 0x84 or until the next hint
+| ahb 16 @ 0x42      force 16bit for all addrs >= 0x42 or until the next hint
+| ahb 0 @ 0x84       disable the effect of bits hints for all addrs >= 0x84 or until the next hint
+| ahc 0x804804       override call/jump address
+| ahd foo a0,33      replace opcode string
+| ahe 3,eax,+=       set vm analysis string
+| ahf 0x804840       override fallback address for call
+| ahF 0x10           set stackframe size at current offset
+| ahh 0x804840       highlight this address offset in disasm
+| ahi[?] 10          define numeric base for immediates (2, 8, 10, 10u, 16, i, p, S, s)
+| ahj                list hints in JSON
+| aho call           change opcode type (see aho?) (deprecated, moved to "ahd")
+| ahp addr           set pointer hint
+| ahr val            set hint for return value of a function
+| ahs 4              set opcode size=4
+| ahS jz             set asm.syntax=jz for this opcode
+| aht [?] <type>     Mark immediate as a type offset (deprecated, moved to "aho")
+| ahv val            change opcode's val field (useful to set jmptbl sizes in jmp rax)
+One of the most common cases is to set a particular numeric base for immediates:
+
+[0x00003d54]> ahi?
+Usage: ahi [2|8|10|10u|16|bodhipSs] [@ offset]   Define numeric base
+| ahi <base>  set numeric base (2, 8, 10, 16)
+| ahi 10|d    set base to signed decimal (10), sign bit should depend on receiver size
+| ahi 10u|du  set base to unsigned decimal (11)
+| ahi b       set base to binary (2)
+| ahi o       set base to octal (8)
+| ahi h       set base to hexadecimal (16)
+| ahi i       set base to IP address (32)
+| ahi p       set base to htons(port) (3)
+| ahi S       set base to syscall (80)
+| ahi s       set base to string (1)
+
+[0x00003d54]> pd 2
+0x00003d54      0583000000     add eax, 0x83
+0x00003d59      3d13010000     cmp eax, 0x113
+[0x00003d54]> ahi d
+[0x00003d54]> pd 2
+0x00003d54      0583000000     add eax, 131
+0x00003d59      3d13010000     cmp eax, 0x113
+[0x00003d54]> ahi b
+[0x00003d54]> pd 2
+0x00003d54      0583000000     add eax, 10000011b
+0x00003d59      3d13010000     cmp eax, 0x113
+It is notable that some analysis stages or commands add the internal analysis hints, which can be checked with ah command:
+
+[0x00003d54]> ah
+ 0x00003d54 - 0x00003d54 => immbase=2
+[0x00003d54]> ah*
+ ahi 2 @ 0x3d54
+Sometimes we need to override jump or call address, for example in case of tricky relocation, which is unknown for radare2, thus we can change the value manually. The current analysis information about a particular opcode can be checked with ao command. We can use ahc command for performing such a change:
+
+[0x00003cee]> pd 2
+0x00003cee      e83d080100     call sub.__errno_location_530
+0x00003cf3      85c0           test eax, eax
+[0x00003cee]> ao
+address: 0x3cee
+opcode: call 0x14530
+mnemonic: call
+prefix: 0
+id: 56
+bytes: e83d080100
+refptr: 0
+size: 5
+sign: false
+type: call
+cycles: 3
+esil: 83248,rip,8,rsp,-=,rsp,=[],rip,=
+jump: 0x00014530
+direction: exec
+fail: 0x00003cf3
+stack: null
+family: cpu
+stackop: null
+[0x00003cee]> ahc 0x5382
+[0x00003cee]> pd 2
+0x00003cee      e83d080100     call sub.__errno_location_530
+0x00003cf3      85c0           test eax, eax
+[0x00003cee]> ao
+address: 0x3cee
+opcode: call 0x14530
+mnemonic: call
+prefix: 0
+id: 56
+bytes: e83d080100
+refptr: 0
+size: 5
+sign: false
+type: call
+cycles: 3
+esil: 83248,rip,8,rsp,-=,rsp,=[],rip,=
+jump: 0x00005382
+direction: exec
+fail: 0x00003cf3
+stack: null
+family: cpu
+stackop: null
+[0x00003cee]> ah
+ 0x00003cee - 0x00003cee => jump: 0x5382
+As you can see, despite the unchanged disassembly view the jump address in opcode was changed (jump option).
+
+If anything of the previously described didn't help, you can simply override shown disassembly with anything you like:
+
+
+[0x00003d54]> pd 2
+0x00003d54      0583000000     add eax, 10000011b
+0x00003d59      3d13010000     cmp eax, 0x113
+[0x00003d54]> "ahd myopcode bla, foo"
+[0x00003d54]> pd 2
+0x00003d54                     myopcode bla, foo
+0x00003d55      830000         add dword [rax], 0
+
+
+
+Managing variables
+Radare2 allows managing local variables, no matter their location, stack or registers. The variables' auto analysis is enabled by default but can be disabled with anal.vars configuration option.
+
+The main variables commands are located in afv namespace:
+
+Usage: afv  [rbs]
+| afv*                          output r2 command to add args/locals to flagspace
+| afv-([name])                  remove all or given var
+| afv=                          list function variables and arguments with disasm refs
+| afva                          analyze function arguments/locals
+| afvb[?]                       manipulate bp based arguments/locals
+| afvd name                     output r2 command for displaying the value of args/locals in the debugger
+| afvf                          show BP relative stackframe variables
+| afvn [new_name] ([old_name])  rename argument/local
+| afvr[?]                       manipulate register based arguments
+| afvR [varname]                list addresses where vars are accessed (READ)
+| afvs[?]                       manipulate sp based arguments/locals
+| afvt [name] [new_type]        change type for given argument/local
+| afvW [varname]                list addresses where vars are accessed (WRITE)
+| afvx                          show function variable xrefs (same as afvR+afvW)
+afvr, afvb and afvs commands are uniform but allow manipulation of register-based arguments and variables, BP/FP-based arguments and variables, and SP-based arguments and variables respectively. If we check the help for afvr we will get the way two others commands works too:
+
+|Usage: afvr [reg] [type] [name]
+| afvr                        list register based arguments
+| afvr*                       same as afvr but in r2 commands
+| afvr [reg] [name] ([type])  define register arguments
+| afvrj                       return list of register arguments in JSON format
+| afvr- [name]                delete register arguments at the given index
+| afvrg [reg] [addr]          define argument get reference
+| afvrs [reg] [addr]          define argument set reference
+Like many other things variables detection is performed by radare2 automatically, but results can be changed with those arguments/variables control commands. This kind of analysis relies heavily on preloaded function prototypes and the calling-convention, thus loading symbols can improve it. Moreover, after changing something we can rerun variables analysis with afva command. Quite often variables analysis is accompanied with types analysis, see afta command.
+
+The most important aspect of reverse engineering - naming things. Of course, you can rename variable too, affecting all places it was referenced. This can be achieved with afvn for any type of argument or variable. Or you can simply remove the variable or argument with afv- command.
+
+As mentioned before the analysis loop relies heavily on types information while performing variables analysis stages. Thus comes next very important command - afvt, which allows you to change the type of variable:
+
+[0x00003b92]> afvs
+var int local_8h @ rsp+0x8
+var int local_10h @ rsp+0x10
+var int local_28h @ rsp+0x28
+var int local_30h @ rsp+0x30
+var int local_32h @ rsp+0x32
+var int local_38h @ rsp+0x38
+var int local_45h @ rsp+0x45
+var int local_46h @ rsp+0x46
+var int local_47h @ rsp+0x47
+var int local_48h @ rsp+0x48
+[0x00003b92]> afvt local_10h char*
+[0x00003b92]> afvs
+var int local_8h @ rsp+0x8
+var char* local_10h @ rsp+0x10
+var int local_28h @ rsp+0x28
+var int local_30h @ rsp+0x30
+var int local_32h @ rsp+0x32
+var int local_38h @ rsp+0x38
+var int local_45h @ rsp+0x45
+var int local_46h @ rsp+0x46
+var int local_47h @ rsp+0x47
+var int local_48h @ rsp+0x48
+Less commonly used feature, which is still under heavy development - distinction between variables being read and written. You can list those being read with afvR command and those being written with afvW command. Both commands provide a list of the places those operations are performed:
+
+[0x00003b92]> afvR
+local_48h  0x48ee
+local_30h  0x3c93,0x520b,0x52ea,0x532c,0x5400,0x3cfb
+local_10h  0x4b53,0x5225,0x53bd,0x50cc
+local_8h  0x4d40,0x4d99,0x5221,0x53b9,0x50c8,0x4620
+local_28h  0x503a,0x51d8,0x51fa,0x52d3,0x531b
+local_38h
+local_45h  0x50a1
+local_47h
+local_46h
+local_32h  0x3cb1
+[0x00003b92]> afvW
+local_48h  0x3adf
+local_30h  0x3d3e,0x4868,0x5030
+local_10h  0x3d0e,0x5035
+local_8h  0x3d13,0x4d39,0x5025
+local_28h  0x4d00,0x52dc,0x53af,0x5060,0x507a,0x508b
+local_38h  0x486d
+local_45h  0x5014,0x5068
+local_47h  0x501b
+local_46h  0x5083
+local_32h
+[0x00003b92]>
+Type inference
+The type inference for local variables and arguments is well integrated with the command afta.
+
+Let's see an example of this with a simple hello_world binary
+
+[0x000007aa]> pdf
+|           ;-- main:
+/ (fcn) sym.main 157
+| sym.main ();
+| ; var int local_20h @ rbp-0x20
+| ; var int local_1ch @ rbp-0x1c
+| ; var int local_18h @ rbp-0x18
+| ; var int local_10h @ rbp-0x10
+| ; var int local_8h @ rbp-0x8
+| ; DATA XREF from entry0 (0x6bd)
+| 0x000007aa  push rbp
+| 0x000007ab  mov rbp, rsp
+| 0x000007ae  sub rsp, 0x20
+| 0x000007b2  lea rax, str.Hello          ; 0x8d4 ; "Hello"
+| 0x000007b9  mov qword [local_18h], rax
+| 0x000007bd  lea rax, str.r2_folks       ; 0x8da ; " r2-folks"
+| 0x000007c4  mov qword [local_10h], rax
+| 0x000007c8  mov rax, qword [local_18h]
+| 0x000007cc  mov rdi, rax
+| 0x000007cf  call sym.imp.strlen         ; size_t strlen(const char *s)
+After applying afta
+[0x000007aa]> afta
+[0x000007aa]> pdf
+| ;-- main:
+| ;-- rip:
+/ (fcn) sym.main 157
+| sym.main ();
+| ; var size_t local_20h @ rbp-0x20
+| ; var size_t size @ rbp-0x1c
+| ; var char *src @ rbp-0x18
+| ; var char *s2 @ rbp-0x10
+| ; var char *dest @ rbp-0x8
+| ; DATA XREF from entry0 (0x6bd)
+| 0x000007aa  push rbp
+| 0x000007ab  mov rbp, rsp
+| 0x000007ae  sub rsp, 0x20
+| 0x000007b2  lea rax, str.Hello          ; 0x8d4 ; "Hello"
+| 0x000007b9  mov qword [src], rax
+| 0x000007bd  lea rax, str.r2_folks       ; 0x8da ; " r2-folks"
+| 0x000007c4  mov qword [s2], rax
+| 0x000007c8  mov rax, qword [src]
+| 0x000007cc  mov rdi, rax                ; const char *s
+| 0x000007cf  call sym.imp.strlen         ; size_t strlen(const char *s)
+It also extracts type information from format strings like printf ("fmt : %s , %u , %d", ...), the format specifications are extracted from anal/d/spec.sdb
+
+You could create a new profile for specifying a set of format chars depending on different libraries/operating systems/programming languages like this :
+
+win=spec
+spec.win.u32=unsigned int
+Then change your default specification to newly created one using this config variable e anal.spec = win
+
+For more information about primitive and user-defined types support in radare2 refer to types chapter.
+
+
+
+Types
+Radare2 supports the C-syntax data types description. Those types are parsed by a C11-compatible parser and stored in the internal SDB, thus are introspectable with k command.
+
+Most of the related commands are located in t namespace:
+
+[0x00000000]> t?
+| Usage: t   # cparse types commands
+| t                          List all loaded types
+| tj                         List all loaded types as json
+| t <type>                   Show type in 'pf' syntax
+| t*                         List types info in r2 commands
+| t- <name>                  Delete types by its name
+| t-*                        Remove all types
+| tail [filename]            Output the last part of files
+| tc [type.name]             List all/given types in C output format
+| te[?]                      List all loaded enums
+| td[?] <string>             Load types from string
+| tf                         List all loaded functions signatures
+| tk <sdb-query>             Perform sdb query
+| tl[?]                      Show/Link type to an address
+| tn[?] [-][addr]            manage noreturn function attributes and marks
+| to -                       Open cfg.editor to load types
+| to <path>                  Load types from C header file
+| toe [type.name]            Open cfg.editor to edit types
+| tos <path>                 Load types from parsed Sdb database
+| tp  <type> [addr|varname]  cast data at <address> to <type> and print it (XXX: type can contain spaces)
+| tpv <type> @ [value]       Show offset formatted for given type
+| tpx <type> <hexpairs>      Show value for type with specified byte sequence (XXX: type can contain spaces)
+| ts[?]                      Print loaded struct types
+| tu[?]                      Print loaded union types
+| tx[f?]                     Type xrefs
+| tt[?]                      List all loaded typedefs
+Note that the basic (atomic) types are not those from C standard - not char, _Bool, or short. Because those types can be different from one platform to another, radare2 uses definite types like as int8_t or uint64_t and will convert int to int32_t or int64_t depending on the binary or debuggee platform/compiler.
+
+Basic types can be listed using t command. For the structured types you need to use ts, for unions use tu and for enums — te.
+
+[0x00000000]> t
+char
+char *
+double
+float
+gid_t
+int
+int16_t
+int32_t
+int64_t
+int8_t
+long
+long long
+pid_t
+short
+size_t
+uid_t
+uint16_t
+uint32_t
+uint64_t
+uint8_t
+unsigned char
+unsigned int
+unsigned short
+void *
+Loading types
+There are three easy ways to define a new type:
+
+Directly from the string using td command
+From the file using to <filename> command
+Open an $EDITOR to type the definitions in place using to -
+[0x00000000]> "td struct foo {char* a; int b;}"
+[0x00000000]> cat ~/radare2-regressions/bins/headers/s3.h
+struct S1 {
+    int x[3];
+    int y[4];
+    int z;
+};
+[0x00000000]> to ~/radare2-regressions/bins/headers/s3.h
+[0x00000000]> ts
+foo
+S1
+Also note there is a config option to specify include directories for types parsing
+
+[0x00000000]> e? dir.types
+dir.types: Default path to look for cparse type files
+[0x00000000]> e dir.types
+/usr/include
+Printing types
+Notice below we have used ts command, which basically converts the C type description (or to be precise it's SDB representation) into the sequence of pf commands. See more about print format.
+
+The tp command uses the pf string to print all the members of type at the current offset/given address:
+
+[0x00000000]> "td struct foo {char* a; int b;}"
+[0x00000000]> wx 68656c6c6f000c000000
+[0x00000000]> wz world @ 0x00000010 ; wx 17 @ 0x00000016
+[0x00000000]> px
+[0x00000000]> ts foo
+pf zd a b
+[0x00000000]> tp foo
+ a : 0x00000000 = "hello"
+ b : 0x00000006 = 12
+[0x00000000]> tp foo @ 0x00000010
+ a : 0x00000010 = "world"
+ b : 0x00000016 = 23
+Also, you could fill your own data into the struct and print it using tpx command
+
+[0x00000000]> tpx foo 414243440010000000
+ a : 0x00000000 = "ABCD"
+ b : 0x00000005 = 16
+Linking Types
+The tp command just performs a temporary cast. But if we want to link some address or variable with the chosen type, we can use tl command to store the relationship in SDB.
+
+[0x000051c0]> tl S1 = 0x51cf
+[0x000051c0]> tll
+(S1)
+ x : 0x000051cf = [ 2315619660, 1207959810, 34803085 ]
+ y : 0x000051db = [ 2370306049, 4293315645, 3860201471, 4093649307 ]
+ z : 0x000051eb = 4464399
+Moreover, the link will be shown in the disassembly output or visual mode:
+
+[0x000051c0 15% 300 /bin/ls]> pd $r @ entry0
+ ;-- entry0:
+ 0x000051c0      xor ebp, ebp
+ 0x000051c2      mov r9, rdx
+ 0x000051c5      pop rsi
+ 0x000051c6      mov rdx, rsp
+ 0x000051c9      and rsp, 0xfffffffffffffff0
+ 0x000051cd      push rax
+ 0x000051ce      push rsp
+(S1)
+ x : 0x000051cf = [ 2315619660, 1207959810, 34803085 ]
+ y : 0x000051db = [ 2370306049, 4293315645, 3860201471, 4093649307 ]
+ z : 0x000051eb = 4464399
+ 0x000051f0      lea rdi, loc._edata         ; 0x21f248
+ 0x000051f7      push rbp
+ 0x000051f8      lea rax, loc._edata         ; 0x21f248
+ 0x000051ff      cmp rax, rdi
+ 0x00005202      mov rbp, rsp
+Once the struct is linked, radare2 tries to propagate structure offset in the function at current offset, to run this analysis on whole program or at any targeted functions after all structs are linked you have aat command:
+
+[0x00000000]> aa?
+| aat [fcn]           Analyze all/given function to convert immediate to linked structure offsets (see tl?)
+Note sometimes the emulation may not be accurate, for example as below :
+
+|0x000006da  push rbp
+|0x000006db  mov rbp, rsp
+|0x000006de  sub rsp, 0x10
+|0x000006e2  mov edi, 0x20               ; "@"
+|0x000006e7  call sym.imp.malloc         ;  void *malloc(size_t size)
+|0x000006ec  mov qword [local_8h], rax
+|0x000006f0  mov rax, qword [local_8h]
+The return value of malloc may differ between two emulations, so you have to set the hint for return value manually using ahr command, so run tl or aat command after setting up the return value hint.
+
+[0x000006da]> ah?
+| ahr val            set hint for return value of a function
+Structure Immediates
+There is one more important aspect of using types in radare2 - using aht you can change the immediate in the opcode to the structure offset. Lets see a simple example of [R]SI-relative addressing
+
+[0x000052f0]> pd 1
+0x000052f0      mov rax, qword [rsi + 8]    ; [0x8:8]=0
+Here 8 - is some offset in the memory, where rsi probably holds some structure pointer. Imagine that we have the following structures
+
+[0x000052f0]> "td struct ms { char b[8]; int member1; int member2; };"
+[0x000052f0]> "td struct ms1 { uint64_t a; int member1; };"
+[0x000052f0]> "td struct ms2 { uint16_t a; int64_t b; int member1; };"
+Now we need to set the proper structure member offset instead of 8 in this instruction. At first, we need to list available types matching this offset:
+
+[0x000052f0]> ahts 8
+ms.member1
+ms1.member1
+Note, that ms2 is not listed, because it has no members with offset 8. After listing available options we can link it to the chosen offset at the current address:
+
+[0x000052f0]> aht ms1.member1
+[0x000052f0]> pd 1
+0x000052f0      488b4608       mov rax, qword [rsi + ms1.member1]    ; [0x8:8]=0
+Managing enums
+Printing all fields in enum using te command
+[0x00000000]> "td enum Foo {COW=1,BAR=2};"
+[0x00000000]> te Foo
+COW = 0x1
+BAR = 0x2
+Finding matching enum member for given bitfield and vice-versa
+[0x00000000]> te Foo 0x1
+COW
+[0x00000000]> teb Foo COW
+0x1
+Internal representation
+To see the internal representation of the types you can use tk command:
+
+[0x000051c0]> tk~S1
+S1=struct
+struct.S1=x,y,z
+struct.S1.x=int32_t,0,3
+struct.S1.x.meta=4
+struct.S1.y=int32_t,12,4
+struct.S1.y.meta=4
+struct.S1.z=int32_t,28,0
+struct.S1.z.meta=0
+[0x000051c0]>
+Defining primitive types requires an understanding of basic pf formats, you can find the whole list of format specifier in pf??:
+
+-----------------------------------------------------
+| format | explanation                              |
+|---------------------------------------------------|
+|  b     |  byte (unsigned)                         |
+|  c     |  char (signed byte)                      |
+|  d     |  0x%%08x hexadecimal value (4 bytes)     |
+|  f     |  float value (4 bytes)                   |
+|  i     |  %%i integer value (4 bytes)             |
+|  o     |  0x%%08o octal value (4 byte)            |
+|  p     |  pointer reference (2, 4 or 8 bytes)     |
+|  q     |  quadword (8 bytes)                      |
+|  s     |  32bit pointer to string (4 bytes)       |
+|  S     |  64bit pointer to string (8 bytes)       |
+|  t     |  UNIX timestamp (4 bytes)                |
+|  T     |  show Ten first bytes of buffer          |
+|  u     |  uleb128 (variable length)               |
+|  w     |  word (2 bytes unsigned short in hex)    |
+|  x     |  0x%%08x hex value and flag (fd @ addr)  |
+|  X     |  show formatted hexpairs                 |
+|  z     |  \0 terminated string                    |
+|  Z     |  \0 terminated wide string               |
+-----------------------------------------------------
+
+there are basically 3 mandatory keys for defining basic data types: X=type type.X=format_specifier type.X.size=size_in_bits For example, let's define UNIT, according to Microsoft documentation UINT is just equivalent of standard C unsigned int (or uint32_t in terms of TCC engine). It will be defined as:
+
+UINT=type
+type.UINT=d
+type.UINT.size=32
+Now there is an optional entry:
+
+X.type.pointto=Y
+
+This one may only be used in case of pointer type.X=p, one good example is LPFILETIME definition, it is a pointer to _FILETIME which happens to be a structure. Assuming that we are targeting only 32-bit windows machine, it will be defined as the following:
+
+LPFILETIME=type
+type.LPFILETIME=p
+type.LPFILETIME.size=32
+type.LPFILETIME.pointto=_FILETIME
+This last field is not mandatory because sometimes the data structure internals will be proprietary, and we will not have a clean representation for it.
+
+There is also one more optional entry:
+
+type.UINT.meta=4
+This entry is for integration with C parser and carries the type class information: integer size, signed/unsigned, etc.
+
+Structures
+Those are the basic keys for structs (with just two elements):
+
+X=struct
+struct.X=a,b
+struct.X.a=a_type,a_offset,a_number_of_elements
+struct.X.b=b_type,b_offset,b_number_of_elements
+The first line is used to define a structure called X, the second line defines the elements of X as comma separated values. After that, we just define each element info.
+
+For example. we can have a struct like this one:
+
+struct _FILETIME {
+    DWORD dwLowDateTime;
+    DWORD dwHighDateTime;
+}
+assuming we have DWORD defined, the struct will look like this
+
+ _FILETIME=struct
+struct._FILETIME=dwLowDateTime,dwHighDateTime
+struct._FILETIME.dwLowDateTime=DWORD,0,0
+struct._FILETIME.dwHighDateTime=DWORD,4,0
+Note that the number of elements field is used in case of arrays only to identify how many elements are in arrays, other than that it is zero by default.
+
+Unions
+Unions are defined exactly like structs the only difference is that you will replace the word struct with the word union.
+
+Function prototypes
+Function prototypes representation is the most detail oriented and the most important one of them all. Actually, this is the one used directly for type matching
+
+X=func
+func.X.args=NumberOfArgs
+func.x.arg0=Arg_type,arg_name
+.
+.
+.
+func.X.ret=Return_type
+func.X.cc=calling_convention
+It should be self-explanatory. Let's do strncasecmp as an example for x86 arch for Linux machines. According to man pages, strncasecmp is defined as the following:
+
+int strcasecmp(const char *s1, const char *s2, size_t n);
+When converting it into its sdb representation it will look like the following:
+
+strcasecmp=func
+func.strcasecmp.args=3
+func.strcasecmp.arg0=char *,s1
+func.strcasecmp.arg1=char *,s2
+func.strcasecmp.arg2=size_t,n
+func.strcasecmp.ret=int
+func.strcasecmp.cc=cdecl
+Note that the .cc part is optional and if it didn't exist the default calling-convention for your target architecture will be used instead. There is one extra optional key
+
+func.x.noreturn=true/false
+This key is used to mark functions that will not return once called, such as exit and _exit.
+
+Calling Conventions
+Radare2 uses calling conventions to help in identifying function formal arguments and return types. It is used also as a guide for basic function prototype and type propagation.
+
+[0x00000000]> afc?
+|Usage: afc[agl?]
+| afc convention  Manually set calling convention for current function
+| afc             Show Calling convention for the Current function
+| afc=([cctype])  Select or show default calling convention
+| afcr[j]         Show register usage for the current function
+| afca            Analyse function for finding the current calling convention
+| afcf[j] [name]  Prints return type function(arg1, arg2...), see afij
+| afck            List SDB details of call loaded calling conventions
+| afcl            List all available calling conventions
+| afco path       Open Calling Convention sdb profile from given path
+| afcR            Register telescoping using the calling conventions order
+[0x00000000]>
+To list all available calling conventions for current architecture using afcl command
+[0x00000000]> afcl
+amd64
+ms
+To display function prototype of standard library functions you have afcf command
+[0x00000000]> afcf printf
+int printf(const char *format)
+[0x00000000]> afcf fgets
+char *fgets(char *s, int size, FILE *stream)
+All this information is loaded via sdb under /libr/anal/d/cc-[arch]-[bits].sdb
+
+default.cc=amd64
+
+ms=cc
+cc.ms.name=ms
+cc.ms.arg1=rcx
+cc.ms.arg2=rdx
+cc.ms.arg3=r8
+cc.ms.arg3=r9
+cc.ms.argn=stack
+cc.ms.ret=rax
+cc.x.argi=rax is used to set the ith argument of this calling convention to register name rax
+
+cc.x.argn=stack means that all the arguments (or the rest of them in case there was argi for any i as counting number) will be stored in stack from left to right
+
+cc.x.argn=stack_rev same as cc.x.argn=stack except for it means argument are passed right to left
+
+Virtual Tables
+There is a basic support of virtual tables parsing (RTTI and others). The most important thing before you start to perform such kind of analysis is to check if the anal.cpp.abi option is set correctly, and change if needed.
+
+All commands to work with virtual tables are located in the av namespace. Currently, the support is very basic, allowing you only to inspect parsed tables.
+
+|Usage: av[?jr*] C++ vtables and RTTI
+| av           search for vtables in data sections and show results
+| avj          like av, but as json
+| av*          like av, but as r2 commands
+| avr[j@addr]  try to parse RTTI at vtable addr (see anal.cpp.abi)
+| avra[j]      search for vtables and try to parse RTTI at each of them
+The main commands here are av and avr. av lists all virtual tables found when r2 opened the file. If you are not happy with the result you may want to try to parse virtual table at a particular address with avr command. avra performs the search and parsing of all virtual tables in the binary, like r2 does during the file opening.
+
+
+
+Syscalls
+Radare2 allows manual search for assembly code looking like a syscall operation. For example on ARM platform usually they are represented by the svc instruction, on the others can be a different instructions, e.g. syscall on x86 PC.
+
+[0x0001ece0]> /ad/ svc
+...
+0x000187c2   # 2: svc 0x76
+0x000189ea   # 2: svc 0xa9
+0x00018a0e   # 2: svc 0x82
+...
+Syscalls detection is driven by asm.os, asm.bits, and asm.arch. Be sure to setup those configuration options accordingly. You can use asl command to check if syscalls' support is set up properly and as you expect. The command lists syscalls supported for your platform.
+
+[0x0001ece0]> asl
+...
+sd_softdevice_enable = 0x80.16
+sd_softdevice_disable = 0x80.17
+sd_softdevice_is_enabled = 0x80.18
+...
+If you setup ESIL stack with aei or aeim, you can use /as command to search the addresses where particular syscalls were found and list them.
+
+[0x0001ece0]> aei
+[0x0001ece0]> /as
+0x000187c2 sd_ble_gap_disconnect
+0x000189ea sd_ble_gatts_sys_attr_set
+0x00018a0e sd_ble_gap_sec_info_reply
+...
+To reduce searching time it is possible to restrict the searching range for only executable segments or sections with /as @e:search.in=io.maps.x
+
+Using the ESIL emulation radare2 can print syscall arguments in the disassembly output. To enable the linear (but very rough) emulation use asm.emu configuration variable:
+
+[0x0001ece0]> e asm.emu=true
+[0x0001ece0]> s 0x000187c2
+[0x000187c2]> pdf~svc
+   0x000187c2   svc 0x76  ; 118 = sd_ble_gap_disconnect
+[0x000187c2]>
+In case of executing aae (or aaaa which calls aae) command radare2 will push found syscalls to a special syscall. flagspace, which can be useful for automation purpose:
+
+[0x000187c2]> fs
+0    0 * imports
+1    0 * symbols
+2 1523 * functions
+3  420 * strings
+4  183 * syscalls
+[0x000187c2]> f~syscall
+...
+0x000187c2 1 syscall.sd_ble_gap_disconnect.0
+0x000189ea 1 syscall.sd_ble_gatts_sys_attr_set
+0x00018a0e 1 syscall.sd_ble_gap_sec_info_reply
+...
+It also can be interactively navigated through within HUD mode (V_)
+
+0> syscall.sd_ble_gap_disconnect
+ - 0x000187b2  syscall.sd_ble_gap_disconnect
+   0x000187c2  syscall.sd_ble_gap_disconnect.0
+   0x00018a16  syscall.sd_ble_gap_disconnect.1
+   0x00018b32  syscall.sd_ble_gap_disconnect.2
+   0x0002ac36  syscall.sd_ble_gap_disconnect.3
+When debugging in radare2, you can use dcs to continue execution until the next syscall. You can also run dcs* to trace all syscalls.
+
+[0xf7fb9120]> dcs*
+Running child until syscalls:-1 
+child stopped with signal 133
+--> SN 0xf7fd3d5b syscall 45 brk (0xffffffda)
+child stopped with signal 133
+--> SN 0xf7fd28f3 syscall 384 arch_prctl (0xffffffda 0x3001)
+child stopped with signal 133
+--> SN 0xf7fc81b2 syscall 33 access (0xffffffda 0xf7fd8bf1)
+child stopped with signal 133
+radare2 also has a syscall name to syscall number utility. You can return the syscall name of a given syscall number or vice versa, without leaving the shell.
+
+[0x08048436]> asl 1
+exit
+[0x08048436]> asl write
+4
+[0x08048436]> ask write
+0x80,4,3,iZi
+See as? for more information about the utility.
+
+Signatures
+Radare2 has its own format of the signatures, allowing to both load/apply and create them on the fly. They are available under the z command namespace:
+
+[0x00000000]> z?
+Usage: z[*j-aof/cs] [args]   # Manage zignatures
+| z            show zignatures
+| z.           find matching zignatures in current offset
+| zb[?][n=5]   search for best match
+| z*           show zignatures in radare format
+| zq           show zignatures in quiet mode
+| zj           show zignatures in json format
+| zk           show zignatures in sdb format
+| z-zignature  delete zignature
+| z-*          delete all zignatures
+| za[?]        add zignature
+| zg           generate zignatures (alias for zaF)
+| zo[?]        manage zignature files
+| zf[?]        manage FLIRT signatures
+| z/[?]        search zignatures
+| zc[?]        compare current zignspace zignatures with another one
+| zs[?]        manage zignspaces
+| zi           show zignatures matching information
+To load the created signature file you need to load it from SDB file using zo command or from the compressed SDB file using zoz command.
+
+To create signature you need to make function first, then you can create it from the function:
+
+$ r2 /bin/ls
+[0x000051c0]> aaa # this creates functions, including 'entry0'
+[0x000051c0]> zaf entry0 entry
+[0x000051c0]> z
+entry:
+  bytes: 31ed4989d15e4889e24883e4f050544c............48............48............ff..........f4
+  graph: cc=1 nbbs=1 edges=0 ebbs=1
+  offset: 0x000051c0
+[0x000051c0]>
+As you can see it made a new signature with a name entry from a function entry0. You can show it in JSON format too, which can be useful for scripting:
+
+[0x000051c0]> zj~{}
+[
+  {
+    "name": "entry",
+    "bytes": "31ed4989d15e4889e24883e4f050544c............48............48............ff..........f4",
+    "graph": {
+      "cc": "1",
+      "nbbs": "1",
+      "edges": "0",
+      "ebbs": "1"
+    },
+    "offset": 20928,
+    "refs": [
+    ]
+  }
+]
+[0x000051c0]>
+To remove it just run z-entry.
+
+If you want, instead, to save all created signatures, you need to save it into the SDB file using command zos myentry.
+
+Then we can apply them. Lets open a file again:
+
+$ r2 /bin/ls
+ -- Log On. Hack In. Go Anywhere. Get Everything.
+[0x000051c0]> zo myentry
+[0x000051c0]> z
+entry:
+  bytes: 31ed4989d15e4889e24883e4f050544c............48............48............ff..........f4
+  graph: cc=1 nbbs=1 edges=0 ebbs=1
+  offset: 0x000051c0
+[0x000051c0]>
+This means that the signatures were successfully loaded from the file myentry and now we can search matching functions:
+
+[0x000051c0]> z.
+[+] searching 0x000051c0 - 0x000052c0
+[+] searching function metrics
+hits: 1
+[0x000051c0]>
+Note that z. command just checks the signatures against the current address. To search signatures across the all file we need to do a bit different thing. There is an important moment though, if we just run it "as is" - it wont find anything:
+
+[0x000051c0]> z/
+[+] searching 0x0021dfd0 - 0x002203e8
+[+] searching function metrics
+hits: 0
+[0x000051c0]>
+Note the searching address - this is because we need to adjust the searching range first:
+
+[0x000051c0]> e search.in=io.section
+[0x000051c0]> z/
+[+] searching 0x000038b0 - 0x00015898
+[+] searching function metrics
+hits: 1
+[0x000051c0]>
+We are setting the search mode to io.section (it was file by default) to search in the current section (assuming we are currently in the .text section of course). Now we can check, what radare2 found for us:
+
+[0x000051c0]> pd 5
+;-- entry0:
+;-- sign.bytes.entry_0:
+0x000051c0      31ed           xor ebp, ebp
+0x000051c2      4989d1         mov r9, rdx
+0x000051c5      5e             pop rsi
+0x000051c6      4889e2         mov rdx, rsp
+0x000051c9      4883e4f0       and rsp, 0xfffffffffffffff0
+[0x000051c0]>
+Here we can see the comment of entry0, which is taken from the ELF parsing, but also the sign.bytes.entry_0, which is exactly the result of matching signature.
+
+Signatures configuration stored in the zign. config vars' namespace:
+
+[0x000051c0]> e? zign.
+       zign.autoload: Autoload all zignatures located in ~/.local/share/radare2/zigns
+          zign.bytes: Use bytes patterns for matching
+   zign.diff.bthresh: Threshold for diffing zign bytes [0, 1] (see zc?)
+   zign.diff.gthresh: Threshold for diffing zign graphs [0, 1] (see zc?)
+          zign.graph: Use graph metrics for matching
+           zign.hash: Use Hash for matching
+          zign.maxsz: Maximum zignature length
+          zign.mincc: Minimum cyclomatic complexity for matching
+          zign.minsz: Minimum zignature length for matching
+         zign.offset: Use original offset for matching
+         zign.prefix: Default prefix for zignatures matches
+           zign.refs: Use references for matching
+      zign.threshold: Minimum similarity required for inclusion in zb output
+          zign.types: Use types for matching
+[0x000051c0]>
+Finding Best Matches zb
+Often you know the signature should exist somewhere in a binary but z/ and z. still fail. This is often due to very minor differences between the signature and the function. Maybe the compiler switched two instructions, or your signature is not for the correct function version. In these situations the zb commands can still help point you in the right direction by listing near matches.
+
+[0x000040a0]> zb?
+Usage: zb[r?] [args]  # search for closest matching signatures
+| zb [n]           find n closest matching zignatures to function at current offset
+| zbr zigname [n]  search for n most similar functions to zigname
+The zb (zign best) command will show the top 5 closest signatures to a function. Each will contain a score between 1.0 and 0.0.
+
+[0x0041e390]> s sym.fclose
+[0x0040fc10]> zb
+0.96032  0.92400 B  0.99664 G   sym.fclose
+0.65971  0.35600 B  0.96342 G   sym._nl_expand_alias
+0.65770  0.37800 B  0.93740 G   sym.fdopen
+0.65112  0.35000 B  0.95225 G   sym.__run_exit_handlers
+0.62532  0.34800 B  0.90264 G   sym.__cxa_finalize
+In the above example, zb correctly associated the sym.fclose signature to the current function. The z/ and z. command would have failed to match here since both the Byte and Graph scores are less then 1.0. A 30% separation between the first and second place results is also a good indication of a correct match.
+
+The zbr (zign best reverse) accepts a zignature name and attempts to find the closet matching functions. Use an analysis command, like aa to find functions first.
+
+[0x00401b20]> aa
+[x] Analyze all flags starting with sym. and entry0 (aa)
+[0x00401b20]> zo ./libc.sdb
+[0x00401b20]> zbr sym.__libc_malloc 10
+0.94873  0.89800 B  0.99946 G   sym.malloc
+0.65245  0.40600 B  0.89891 G   sym._mid_memalign
+0.59470  0.38600 B  0.80341 G   sym._IO_flush_all_lockp
+0.59200  0.28200 B  0.90201 G   sym._IO_file_underflow
+0.57802  0.30400 B  0.85204 G   sym.__libc_realloc
+0.57094  0.35200 B  0.78988 G   sym.__calloc
+0.56785  0.34000 B  0.79570 G   sym._IO_un_link.part.0
+0.56358  0.36200 B  0.76516 G   sym._IO_cleanup
+0.56064  0.26000 B  0.86127 G   sym.intel_check_word.constprop.0
+0.55726  0.28400 B  0.83051 G   sym.linear_search_fdes
+
+
+Graph
+Uunderstanding the structure and flow of a program is crucial. While linear disassembly and text-based analysis have their place, graphs provide a powerful visual representation that can significantly enhance your understanding of complex code.
+
+Radare2's graph capabilities offer a multifaceted approach to visualizing various aspects of a program code structures:
+
+Control Flow Graphs (CFG): Visualize the logical flow between basic blocks within a function, making it easier to identify loops, conditional branches, and execution paths.
+
+Call Graphs: Map out the relationships between functions, showing which functions call others and how data potentially flows between them.
+
+String Reference Graphs: Illustrate where and how strings are used throughout the program, often providing valuable insights into the program's functionality.
+
+These graphical representations serve multiple purposes:
+
+Quickly identify complex structures and patterns that might be missed in text-based analysis.
+Facilitate easier navigation through large codebases.
+Aid in understanding the overall architecture and design of the program.
+Assist in locating potential vulnerabilities or points of interest for further investigation.
+In the following sections, we'll explore the various graph commands available in radare2, demonstrating how to generate, navigate, and interpret these visual aids to supercharge your reverse engineering workflow.
+
+Let's dive into the world of radare2 graphs and unlock new dimensions in your analysis!
+
+Commands
+Radare2 supports various types of graph available through commands starting with ag:
+
+[0x00005000]> ag?
+Usage: ag<graphtype><format> [addr]
+Graph commands:
+| aga[format]             data references graph
+| agA[format]             global data references graph
+| agc[format]             function callgraph
+| agC[format]             global callgraph
+| agd[format] [fcn addr]  diff graph
+| agf[format]             basic blocks function graph
+| agi[format]             imports graph
+| agr[format]             references graph
+| agR[format]             global references graph
+| agx[format]             cross references graph
+| agg[format]             custom graph
+| agt[format]             tree map graph
+| ag-                     clear the custom graph
+| agn[?] title body       add a node to the custom graph
+| age[?] title1 title2    add an edge to the custom graph
+
+Output formats:
+| <blank>                 ascii art
+| *                       r2 commands
+| b                       braile art rendering (agfb)
+| d                       graphviz dot
+| g                       graph Modelling Language (gml)
+| j                       json ('J' for formatted disassembly)
+| k                       sdb key-value
+| m                       mermaid
+| t                       tiny ascii art
+| v                       interactive ascii art
+| w [path]                write to path or display graph image (see graph.gv.format)
+Graph Output Formats
+The structure of the commands is as follows: ag <graph type> <output format>.
+
+For example, agid displays the imports graph in dot format, while aggj outputs the custom graph in JSON format.
+
+Here's a short description for every output format available:
+
+Ascii Art
+Command: agf
+
+Displays the graph directly to stdout using ASCII art to represent blocks and edges.
+
+Warning: displaying large graphs directly to stdout might prove to be computationally expensive and will make r2 not responsive for some time. In case of a doubt, prefer using the interactive view (explained below).
+
+Interactive Ascii Art
+Command: agfv
+
+Displays the ASCII graph in an interactive view similar to VV which allows to move the screen, zoom in / zoom out, ...
+
+Tiny Ascii Art
+Command: agft
+
+Displays the ASCII graph directly to stdout in tiny mode (which is the same as reaching the maximum zoom out level in the interactive view).
+
+Graphviz dot
+Command: agfd
+
+Prints the dot source code representing the graph, which can be interpreted by programs such as graphviz or online viewers like this
+
+JSON
+Command: agfj
+
+Prints a JSON string representing the graph.
+
+In case of the f format (basic blocks of function), it will have detailed information about the function and will also contain the disassembly of the function (use J format for the formatted disassembly).
+
+In all other cases, it will only have basic information about the nodes of the graph (id, title, body, and edges).
+
+Graph Modelling Language
+Command: agfg
+
+Prints the GML source code representing the graph, which can be interpreted by programs such as yEd
+
+SDB key-value
+Command: agfk
+
+Prints key-value strings representing the graph that was stored by sdb (radare2's string database).
+
+Create your own graph
+Commands: agn and age for nodes and edges, agg to render
+
+Prints r2 commands that would recreate the desired graph. The commands to construct the graph are agn [title] [body] to add a node and age [title1] [title2] to add an edge. The [body] field can be expressed in base64 to include special formatting (such as newlines).
+
+To easily execute the printed commands, it is possible to prepend a dot to the command (.agf*).
+
+This is a sample r2 script to create a graph using commands:
+
+
+[0x00000000]> e scr.utf8=0
+[0x00000000]> agn foo
+[0x00000000]> agn bar
+[0x00000000]> agn cow
+[0x00000000]> age foo bar
+[0x00000000]> age foo cow
+[0x00000000]> agg
+             .--------------------.
+             |  foo               |
+             `--------------------'
+                   t f
+                   | |
+    .--------------' |
+    |                '--------.
+    |                         |
+.--------------------.    .--------------------.
+|  bar               |    |  cow               |
+`--------------------'    `--------------------'
+[0x00000000]>
+Web / image
+Command: agfw
+
+Radare2 will convert the graph to dot format, use the dot program to convert it to a .gif image and then try to find an already installed viewer on your system (xdg-open, open, ...) and display the graph there.
+
+The extension of the output image can be set with the graph.extension config variable. Available extensions are png, jpg, gif, pdf, ps.
+
+Note: for particularly large graphs, the most recommended extension is svg as it will produce images of much smaller size
+
+If graph.web config variable is enabled, radare2 will try to display the graph using the browser (this feature is experimental and unfinished, and disabled by default.)
+
+</documentation>
+
+The user questions must be as if the user is very new at reverse-engineering and doesn't really exactly what to ask for. They should also ask for specific things, not just general questions about "how". The radare2_command should be valid and be able to be run.
+

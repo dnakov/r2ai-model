@@ -1,0 +1,6 @@
+q,a
+I want to see if this program does any GPU or hardware acceleration.,"afl~gpu,cuda,opencl"
+How do I find functions that might be handling exceptions?,"afl~exception,catch,throw"
+I want to see all the places where the program might be doing memory mapping.,axt @sym.mmap
+How can I find functions that look like they're doing data compression?,"afl~compress,zip,pack"
+I want to see what kind of system configuration the program reads.,axt @sym.sysconf
