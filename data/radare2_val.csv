@@ -1,6 +1,6 @@
 q,a
-I want to see if this program does any GPU or hardware acceleration.,"afl~gpu,cuda,opencl"
-How do I find functions that might be handling exceptions?,"afl~exception,catch,throw"
-I want to see all the places where the program might be doing memory mapping.,axt @sym.mmap
-How can I find functions that look like they're doing data compression?,"afl~compress,zip,pack"
-I want to see what kind of system configuration the program reads.,axt @sym.sysconf
+"I need to find all functions that use both stdin and stdout, what should I type?",axt @@ sym.imp.printf sym.imp.scanf~&
+How do I see what functions might be doing SQL operations?,"iz~SQL,sqlite,mysql"
+"I want to find all places where the program is using regular expressions, what command?",axt @@ sym.imp.regcomp sym.imp.regexec
+How can I find all functions that might be handling XML data?,"iz~xml,XML"
+"I need to see what functions are doing memory mapping operations, what do I type?",axt @@ sym.imp.mmap sym.imp.munmap
