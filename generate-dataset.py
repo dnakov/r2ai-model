@@ -73,8 +73,8 @@ def generate_dataset(num_examples=1000):
     df_train = df[:train_size]
     df_val = df[train_size:]
     
-    df_train.to_csv('data/radare2_train.csv', index=False)
-    df_val.to_csv('data/radare2_val.csv', index=False)
+    df_train.to_csv('data/radare2_train.tsv', sep='\t', index=False)
+    df_val.to_csv('data/radare2_val.tsv', sep='\t', index=False)
     
     print(f"Generated {len(df)} examples")
     print(f"Training examples: {len(df_train)}")
@@ -88,9 +88,9 @@ def generate_dataset(num_examples=1000):
         print("-" * 50)
     return df
 
-def validate_dataset(file_path='data/radare2_train.csv'):
+def validate_dataset(file_path='data/radare2_train.tsv'):
     """Validate the generated dataset"""
-    df = pd.read_csv(file_path)
+    df = pd.read_csv(file_path, sep='\t')
     
     # Basic validation
     print("\nDataset Statistics:")
@@ -102,36 +102,12 @@ def validate_dataset(file_path='data/radare2_train.csv'):
     # Check for duplicates
     duplicates = df.duplicated().sum()
     print(f"Duplicate entries: {duplicates}")
-
-# def format_dataset(file_path='data/radare2_train.csv'):
-#     df = pd.read_csv(file_path)
-#     df = pd.DataFrame(df, columns=['q', 'a'])
     
-#     # Save both train and validation sets
-#     train_size = int(len(df) * 0.95)
-    
-#     df_train = df[:train_size]
-#     # df_val = df[train_size:]
-    
-#     df_train.to_csv('data/radare2_train.csv', index=False)
-#     # df_val.to_csv('data/radare2_val.csv', index=False)
-    
-#     print(f"Generated {len(df)} examples")
-#     print(f"Training examples: {len(df_train)}")
-#     # print(f"Validation examples: {len(df_val)}")
-    
-#     # Display some examples
-#     print("\nSample examples:")
-#     for _, row in df.head(3).iterrows():
-#         print("\nQ:", row['q'])
-#         print("A:", row['a'])
-#         print("-" * 50)
-#     return df
-
 
 if __name__ == "__main__":
     # Generate dataset
     generate_dataset(num_examples=100)  # Generate 1500 examples (1425 train, 75 val)
-    # format_dataset()
+
     # Validate the generated dataset
     validate_dataset()
+

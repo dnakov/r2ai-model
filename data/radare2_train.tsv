@@ -1,0 +1,96 @@
+q	a
+How do I find all memory references to a register like RAX?	/ar rax
+I want to see what syscalls this program makes, what command?	/as
+How can I list all the flags in the binary?	f
+I need to see the stack variables in a function, what do I type?	afv
+How do I search for all function calls in the code?	/c call
+I want to see the file's entropy graph, what command?	p=e
+How can I find the size of a function?	afi
+I need to set a breakpoint at an address, what's the command?	db 0x<address>
+How do I display the disassembly in graph mode?	ag
+I want to see all sections marked as executable, what should I type?	iS~+x
+How can I find all strings containing 'password'?	iz~password
+What command shows me the program's imports and exports?	iiq;iE
+How do I show only the raw assembly instructions without addresses?	pdr
+I want to see the binary information in JSON format, what command?	ij
+How can I list all functions that call malloc?	axt sym.imp.malloc
+I need to see what's in the PLT section, what do I type?	iS~plt:0
+How do I display the bytes of a specific section?	pf @ section.<name>
+I want to find all unconditional jumps in the code, what command?	/c jmp
+How can I see what CPU architecture this binary is for?	i~arch
+I need to see all strings that look like URLs, what should I type?	iz~http
+How do I see what functions have loops in them?	afll
+I want to find all 'mov' instructions that use the RBP register, what do I type?	/am mov rbp
+How can I see what external functions this binary calls?	afl~imp.
+I need to see the raw bytes of the current function, what command?	prf
+How do I check if a specific address contains code or data?	fd @ 0x<address>
+I want to see all function arguments and local variables, what should I type?	afv*
+How can I find all places where the stack is being adjusted?	/am sub rsp
+I need to see what sections contain zeroes, what command?	iz~00
+How do I analyze all the switch statements in a function?	afj
+I want to see what bytes are modified during program execution, what command?	wcr
+How can I find all function epilogues?	/am leave
+I need to see the binary's hash values, what do I type?	it
+How do I check for crypto-related constants in the code?	/ac
+I want to see all memory comparison instructions, what command?	/am cmp
+How can I list all functions sorted by size?	aflsa
+I need to find where certain bytes are referenced, what do I type?	ax- @ 0x<address>
+How do I see what strings are used in a specific function?	pdf~str.
+I want to find all null-terminated strings, what command?	izz
+How can I see all the jump tables in a function?	afij
+I need to find potential backdoors or hidden functionality, what should I type?	/aj backdoor
+How do I find all memory writes to the stack?	/am mov [rsp
+I want to see what functions return void, how can I do that?	afl~ret.void
+How can I list all functions that have more than 100 instructions?	aflc 100
+I need to find all xor operations in the code, what command?	/am xor
+How do I see what data is in the .data section?	px @ section..data
+I want to find all memory allocations larger than 1000 bytes, what should I type?	/ad ~1000
+How can I see all the function names that look like constructors?	afl~_init
+I need to find where exception handling code is located, what command?	afl~exception
+How do I see what functions use floating-point operations?	/am movsd
+I want to find all places where registers are pushed onto the stack, what command?	/am push
+How can I see what functions modify global variables?	axg
+I need to find all system calls with specific numbers, what do I type?	/as~=1
+How do I see what functions have the most cross-references?	axt @@ fcn*~?
+I want to find all places where memory is being compared, what command?	/am cmp [r
+How can I see what functions are using encryption-related instructions?	/am aes
+I need to find all places where strings are being built, what do I type?	/am lea rcx, str.
+How do I see what functions are called only once?	afl~call:1
+I want to find all places where memory is being zeroed, what command?	/am xor eax, eax
+How can I see what functions contain anti-debugging checks?	/am int3
+I need to find all places where the program is doing file operations, what should I type?	axt @@ sym.imp.fopen sym.imp.fread sym.imp.fwrite
+How do I find all functions that don't return (like exit)?	afl~noreturn
+I want to see all memory addresses where 'printf' is called, what command?	axt sym.imp.printf
+How can I find potential buffer overflow vulnerabilities?	/am strcpy
+I need to see all conditional jumps in a function, what do I type?	pdf~je,jne,jg,jl
+How do I find all functions that use network-related calls?	axt @@ sym.imp.socket sym.imp.connect sym.imp.bind
+I want to see what's stored in all CPU registers at this point, what command?	dr
+How can I find all places where environment variables are accessed?	axt sym.imp.getenv
+I need to see if there are any hidden code sections, what should I type?	iS~hidden
+How do I find all places where the program is reading user input?	axt @@ sym.imp.scanf sym.imp.fgets sym.imp.gets
+I want to see all functions that handle signals, what command?	afl~signal
+How can I find where the command line arguments are processed?	pdf @main~argc
+I need to see all memory regions marked as writable, what do I type?	iS~+w
+How do I find all places where the program is doing math operations?	/am mul,div,add,sub
+I want to see what functions are the largest in the program, what command?	afls
+How can I find all places where memory is dynamically allocated?	axt @@ sym.imp.malloc sym.imp.calloc sym.imp.realloc
+I need to see what functions might be doing string operations, what do I type?	axt @@ sym.imp.strcpy sym.imp.strcat sym.imp.strlen
+How do I find all places where the program might crash?	/am ud2
+I want to see what functions are called during program initialization, what command?	afl~_init,_start
+How can I find all places where data is being written to files?	axt @@ sym.imp.fprintf sym.imp.fwrite sym.imp.fputs
+I need to find all functions that might be handling errors, what should I type?	afl~error,handle,exception
+How do I find what functions use both malloc and free?	axt @@ sym.imp.malloc sym.imp.free~&
+I want to see all instructions that change the stack pointer, what command?	/am rsp
+How can I find all places where the program is using random numbers?	axt @@ sym.imp.rand sym.imp.random
+I need to see what functions might be doing password checks, what do I type?	axt @@ sym.imp.strcmp sym.imp.strncmp
+How do I find all places where data is being encrypted?	axt @@ sym.imp.encrypt sym.imp.EVP_Encrypt
+I want to see all functions that don't have any calls to other functions, what command?	aflm
+How can I find all places where the program is using threads?	axt @@ sym.imp.pthread_create
+I need to see what functions are recursive, what should I type?	afxr
+How do I find all places where the program is doing bitwise operations?	/am and,or,xor,shl,shr
+I want to see what functions might be handling JSON data, what command?	iz~json
+How can I find all places where the program is using shared memory?	axt @@ sym.imp.shm_open sym.imp.mmap
+I need to see what functions are only called during cleanup, what do I type?	afl~_fini,cleanup
+How do I find all places where the program might be doing network encryption?	axt @@ sym.imp.SSL_read sym.imp.SSL_write
+I want to see what functions are using inline assembly, what command?	/am __asm
+How can I find all places where the program is checking permissions?	axt @@ sym.imp.chmod sym.imp.access
