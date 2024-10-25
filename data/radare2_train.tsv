@@ -1,103 +1,96 @@
 q	a
-I want to see all the functions that have a high number of basic blocks compared to their size. How can I find them?	aflj~{}..nbbs?@?.nbbs/(size/100)>1
-How do I find all the functions that have a call to malloc or any of its variants?	afl~malloc,
-I want to see all the functions that have a low number of incoming references. How can I filter for functions with less than 3 references?	aflj~{}..ninrefs?@?.ninrefs<3
-How can I find all the functions that have a high number of outgoing references, say more than 20?	aflj~{}..nrefs?@?.nrefs>20
-I want to see all the functions that have a specific type of basic block, like a switch block. How can I search for that?	aflt~switch
-How do I find all the functions that have a call to a specific library function, like strlen?	afl~sym.imp.strlen
-I want to see all the functions that have a high number of strings referenced, say more than 10. How can I find them?	aflj~{}..nstrings?@?.nstrings>10
-How can I find all the functions that have a specific type of instruction, like a floating-point instruction?	/af~fp:
-I want to see all the functions that have a low number of outgoing calls. How can I filter for functions with less than 3 calls?	aflj~{}..ncalls?@?.ncalls<3
-How do I find all the functions that have a high cyclomatic complexity compared to their size? Say, a complexity/size ratio greater than 0.2?	aflj~{}..cc?@?.cc/(size/100)>0.2
-I want to see all the functions that have a specific type of cross reference, like a data reference. How can I filter for that?	afl~DATA
-How can I find all the functions that have more than 5 unique basic block types?	aflj~{}..nblocks?@?.nblocks>5
-I want to see all the functions that have a high number of arithmetic instructions compared to their size. How can I find them?	aflj~{}..ninstr?@?.(addi+subi+muli+divi)/(ninstr/100)>0.5
-How do I find all the functions that have a specific type of string referenced, like a format string?	afl~format,
-I want to see all the functions that have a low number of local variables compared to their number of arguments. How can I filter for that?	aflj~{}..nlocals?@?.nlocals/nargs<0.5
-How can I find all the functions that have a specific type of loop, like a do-while loop?	/al dowhile
-I want to see all the functions that have a high number of conditional jumps compared to their size. How can I find them?	aflj~{}..ninstr?@?.(jz+jnz+je+jne+ja+jb+jg+jl+js+jns)/(ninstr/100)>0.3
-How do I find all the functions that have a call to a specific system call, like open?	afl~sym.imp.open
-I want to see all the functions that have a low number of basic blocks compared to their cyclomatic complexity. How can I filter for that?	aflj~{}..nbbs?@?.nbbs/cc<2
-How can I find all the functions that have a specific type of operand, like an immediate value?	afl~imm
-I want to see all the functions that have a high number of stack variables compared to their number of local variables. How can I find them?	aflj~{}..nlocals?@?.(nbp+nsp)/nlocals>0.8
-How do I find all the functions that have a call to a specific API function, like CreateFile?	afl~sym.imp.CreateFile
-I want to see all the functions that have a low number of incoming calls compared to their outgoing calls. How can I filter for that?	aflj~{}..nrefs?@?.ninrefs/nrefs<0.2
-How can I find all the functions that have a specific type of cross reference, like a code reference from a specific section?	axf @@= `iS~.text,vaddr,vsize,:tsv`
-I want to see all the functions that have a high number of local variables compared to their size. How can I find them?	aflj~{}..nlocals?@?.nlocals/(size/100)>0.1
-How do I find all the functions that have a call to a specific library function, like fprintf?	afl~sym.imp.fprintf
-I want to see all the functions that have a low number of basic blocks compared to their number of instructions. How can I filter for that?	aflj~{}..ninstr?@?.nbbs/ninstr<0.01
-How can I find all the functions that have a specific type of control flow transfer, like a tail call?	/af~call.
-I want to see all the functions that have a high number of pointer arguments compared to their total number of arguments. How can I find them?	aflj~{}..nargs?@?.npargs/nargs>0.8
-How do I find all the functions that have a call to a specific Windows API function, like GetProcAddress?	afl~sym.imp.GetProcAddress
-I want to see all the functions that have a low number of outgoing calls compared to their cyclomatic complexity. How can I filter for that?	aflj~{}..cc?@?.ncalls/cc<0.5
-How can I find all the functions that have a specific type of basic block, like a block with a single instruction?	aflt~:1[0]
-I want to see all the functions that have a high number of stack variables compared to their size. How can I find them?	aflj~{}..nlocals?@?.(nbp+nsp)/(size/100)>0.05
-How do I find all the functions that have a call to a specific cryptographic function, like AES_encrypt?	afl~sym.imp.AES_encrypt
-I want to see all the functions that have a low number of arithmetic instructions compared to their total number of instructions. How can I filter for that?	aflj~{}..ninstr?@?.(addi+subi+muli+divi)/ninstr<0.1
-How can I find all the functions that have a specific type of operand, like a memory reference?	afl~mem
-I want to see all the functions that have a high number of cross references compared to their size. How can I find them?	aflj~{}..nrefs?@?.nrefs/(size/100)>0.5
-How do I find all the functions that have a call to a specific network function, like socket?	afl~sym.imp.socket
-I want to see all the functions that have a low number of local variables compared to their cyclomatic complexity. How can I filter for that?	aflj~{}..nlocals?@?.nlocals/cc<1
-How can I find all the functions that have a specific type of basic block, like a block with a call instruction?	aflt~call
-I want to see all the functions that have a high number of pointer dereferences compared to their total number of instructions. How can I find them?	aflj~{}..ninstr?@?.ptr/ninstr>0.2
-How do I find all the functions that have a call to a specific string manipulation function, like strcpy?	afl~sym.imp.strcpy
-I want to see all the functions that have a low number of basic blocks that end with a return instruction. How can I filter for that?	aflj~{}..nbbs?@?.retbb/nbbs<0.5
-How can I find all the functions that have a specific type of control flow transfer, like a jump to a register?	/af~jmp.r
-I want to see all the functions that have a high number of conditional instructions compared to their total number of instructions. How can I find them?	aflj~{}..ninstr?@?.(jz+jnz+je+jne+ja+jb+jg+jl+js+jns)/ninstr>0.2
-How do I find all the functions that have a call to a specific memory allocation function, like realloc?	afl~sym.imp.realloc
-I want to see all the functions that have a low number of instructions that reference global variables. How can I filter for that?	aflj~{}..ninstr?@?.gvi/ninstr<0.1
-How can I find all the functions that have a specific type of basic block, like a block with a syscall instruction?	aflt~syscall
-I want to see all the functions that have a high number of stack variables compared to their number of pointer arguments. How can I find them?	aflj~{}..nlocals?@?.(nbp+nsp)/npargs>2
-How do I find all the functions that have a call to a specific error handling function, like perror?	afl~sym.imp.perror
-I want to see all the functions that have a low number of basic blocks that end with a call instruction. How can I filter for that?	aflj~{}..nbbs?@?.callbb/nbbs<0.3
-How can I find all the functions that have a specific type of operand, like a stack reference?	afl~stack
-I want to see all the functions that have a high number of instructions that reference local variables compared to their total number of instructions. How can I find them?	aflj~{}..ninstr?@?.lvi/ninstr>0.5
-How do I find all the functions that have a call to a specific file I/O function, like fopen?	afl~sym.imp.fopen
-I want to see all the functions that have a low number of outgoing calls that pass a pointer argument. How can I filter for that?	aflj~{}..nrefs?@?.pcalls/nrefs<0.2
-How can I find all the functions that have a specific type of control flow transfer, like a return instruction?	/af~ret
-I want to see all the functions that have a high number of basic blocks that have more than 10 instructions. How can I find them?	aflj~{}..nbbs?@?.bbs>10/nbbs>0.5
-How do I find all the functions that have a call to a specific threading function, like pthread_create?	afl~sym.imp.pthread_create
-I want to see all the functions that have a low number of instructions that reference string constants. How can I filter for that?	aflj~{}..ninstr?@?.sci/ninstr<0.05
-How can I find all the functions that have a specific type of basic block, like a block that ends with a conditional jump?	aflt~jcc
-I want to see all the functions that have a high number of pointer arguments compared to their number of stack variables. How can I find them?	aflj~{}..nlocals?@?.npargs/(nbp+nsp)>1
-How do I find all the functions that have a call to a specific Windows API function, like CreateProcess?	afl~sym.imp.CreateProcess
-I want to see all the functions that have a low number of basic blocks that have less than 5 instructions. How can I filter for that?	aflj~{}..nbbs?@?.bbs<5/nbbs>0.8
-How can I find all the functions that have a specific type of operand, like a base pointer reference?	afl~rbp,\[
-I want to see all the functions that have a high number of instructions that perform arithmetic operations compared to their total number of instructions. How can I find them?	aflj~{}..ninstr?@?.(add+sub+mul+div)/ninstr>0.3
-How do I find all the functions that have a call to a specific hashing function, like MD5_Update?	afl~sym.imp.MD5_Update
-I want to see all the functions that have a low number of outgoing calls that pass a string argument. How can I filter for that?	aflj~{}..nrefs?@?.scalls/nrefs<0.1
-How can I find all the functions that have a specific type of control flow transfer, like an indirect jump?	/af~jmp,\[
-I want to see all the functions that have a high number of basic blocks that end with a call to a library function. How can I find them?	aflj~{}..nbbs?@?.libcallbb/nbbs>0.6
-How do I find all the functions that have a call to a specific memory copying function, like memcpy?	afl~sym.imp.memcpy
-I want to see all the functions that have a low number of instructions that perform bit manipulation operations. How can I filter for that?	aflj~{}..ninstr?@?.(and+or+xor+shl+shr)/ninstr<0.1
-How can I find all the functions that have a specific type of basic block, like a block that ends with a non-returning call?	aflt~call,\(
-I want to see all the functions that have a high number of local variables compared to their number of outgoing calls. How can I find them?	aflj~{}..nlocals?@?.nlocals/ncalls>10
-How do I find all the functions that have a call to a specific Windows API function, like VirtualAlloc?	afl~sym.imp.VirtualAlloc
-I want to see all the functions that have a low number of basic blocks that have more than 20 instructions. How can I filter for that?	aflj~{}..nbbs?@?.bbs>20/nbbs<0.1
-How can I find all the functions that have a specific type of operand, like a floating-point immediate?	afl~fimm
-I want to see all the functions that have a high number of instructions that access the stack compared to their total number of instructions. How can I find them?	aflj~{}..ninstr?@?.(stack+stack.p+stack.r+stack.w)/ninstr>0.4
-How do I find all the functions that have a call to a specific string comparison function, like strcmp?	afl~sym.imp.strcmp
-I want to see all the functions that have a low number of outgoing calls that pass an integer argument. How can I filter for that?	aflj~{}..nrefs?@?.icalls/nrefs<0.3
-How can I find all the functions that have a specific type of control flow transfer, like a jump to a constant address?	/af~jmp,0x
-I want to see all the functions that have a high number of basic blocks that have between 5 and 10 instructions. How can I find them?	aflj~{}..nbbs?@?.bbs>=5&&bbs<=10/nbbs>0.7
-How do I find all the functions that have a call to a specific dynamic memory allocation function, like calloc?	afl~sym.imp.calloc
-I want to see all the functions that have a low number of instructions that perform data transfer operations. How can I filter for that?	aflj~{}..ninstr?@?.(mov+lea+cmov)/ninstr<0.2
-How can I find all the functions that have a specific type of basic block, like a block that starts with a conditional jump?	aflt~^jcc
-I want to see all the functions that have a high number of pointer dereferences compared to their number of local variables. How can I find them?	aflj~{}..nlocals?@?.ptr/nlocals>5
-How do I find all the functions that have a call to a specific Windows API function, like GetModuleHandle?	afl~sym.imp.GetModuleHandle
-I want to see all the functions that have a low number of basic blocks that end with a jump instruction. How can I filter for that?	aflj~{}..nbbs?@?.jmpbb/nbbs<0.4
-How can I find all the functions that have a specific type of operand, like a stack pointer reference?	afl~rsp,
-I want to see all the functions that have a high number of instructions that perform comparisons compared to their total number of instructions. How can I find them?	aflj~{}..ninstr?@?.(cmp+test)/ninstr>0.25
-How do I find all the functions that have a call to a specific sorting function, like qsort?	afl~sym.imp.qsort
-I want to see all the functions that have a low number of outgoing calls that pass a floating-point argument. How can I filter for that?	aflj~{}..nrefs?@?.fcalls/nrefs<0.05
-How can I find all the functions that have a specific type of control flow transfer, like a return from a non-void function?	/af~ret,!void
-I want to see all the functions that have a high number of basic blocks that have an average instruction count greater than 8. How can I find them?	aflj~{}..nbbs?@?.bbs_size/nbbs>8
-How do I find all the functions that have a call to a specific Windows API function, like CreateThread?	afl~sym.imp.CreateThread
-I want to see all the functions that have a low number of instructions that perform stack manipulation operations. How can I filter for that?	aflj~{}..ninstr?@?.(push+pop+pushf+popf+pusha+popa+enter+leave)/ninstr<0.15
-How can I find all the functions that have a specific type of basic block, like a block that ends with a non-conditional jump?	aflt~^jmp,
-I want to see all the functions that have a high number of local variables compared to their number of basic blocks. How can I find them?	aflj~{}..nlocals?@?.nlocals/nbbs>5
-How do I find all the functions that have a call to a specific memory setting function, like memset?	afl~sym.imp.memset
-I want to see all the functions that have a low number of outgoing calls that pass a pointer to a struct. How can I filter for that?	aflj~{}..nrefs?@?.scalls/nrefs<0.2
-How can I find all the functions that have a specific type of operand, like a reference to a C++ class?	afl~obj.vtable
-I want to see all the functions that have a high number of instructions that perform floating-point operations compared to their total number of instructions. How can I find them?	aflj~{}..ninstr?@?.(fadd+fsub+fmul+fdiv+fcomp)/ninstr>0.2
-How do I find all the functions that have a call to a specific Windows API function, like ReadFile?	afl~sym.imp.ReadFile
+How do I find all functions that might be handling JSON data?	afl~json,parse,stringify
+I want to see all places where the program is reading user input. How do I find those?	axt@@=sym.gets sym.fgets sym.scanf sym.readline
+How can I find all the places where the program is writing to standard output?	axt@@=sym.printf sym.puts sym.fputs sym.write
+I want to see if this program uses any compression functions. How do I search?	afl~zip,compress,inflate,deflate
+How do I find all the places where random numbers are generated?	axt@@=sym.rand sym.random sym.srand
+I want to see all functions that might be doing HTTP requests. How do I find those?	afl~http,curl,wget,request
+How can I find all the places where command line arguments are processed?	axt@@=sym.getopt sym.argc sym.argv
+I want to see all functions that might be handling XML data. How do I find those?	afl~xml,parse,dom,xpath
+How do I find all the places where shared libraries are loaded dynamically?	axt@@=sym.dlopen sym.dlsym sym.LoadLibrary
+I want to see all functions that might be doing database operations. How do I find those?	afl~sql,database,query
+How can I find all the places where process IDs are being manipulated?	axt@@=sym.getpid sym.fork sym.waitpid
+I want to see all the places where file permissions are being changed. How do I find those?	axt@@=sym.chmod sym.chown sym.umask
+How do I find all functions that might be handling SSL/TLS operations?	afl~ssl,tls,encrypt,decrypt
+I want to see all places where the program is doing logging. How do I find those?	axt@@=sym.syslog sym.log sym.fprintf
+How can I find all the places where child processes are being created?	axt@@=sym.fork sym.vfork sym.spawn
+I want to see all functions that might be handling configuration files. How do I find those?	afl~config,ini,conf,parse
+How do I find all the places where signals are being blocked or unblocked?	axt@@=sym.sigprocmask sym.sigblock sym.sigsetmask
+I want to see all functions that might be doing audio processing. How do I find those?	afl~audio,sound,pcm,wave
+How can I find all the places where shared memory is being accessed?	axt@@=sym.shmget sym.shmat sym.shmctl
+I want to see all functions that might be handling image data. How do I find those?	afl~image,png,jpeg,bitmap
+How do I find all the places where message queues are being used?	axt@@=sym.msgget sym.msgsnd sym.msgrcv
+I want to see all functions that might be doing Unicode conversion. How do I find those?	afl~unicode,utf,wchar,iconv
+How can I find all the places where process priorities are being changed?	axt@@=sym.nice sym.setpriority
+I want to see all functions that might be handling timestamps. How do I find those?	afl~time,date,clock,timestamp
+How do I find all the places where environment variables are being accessed?	axt@@=sym.getenv sym.environ
+How do I find all functions that might be handling mouse or keyboard input?	afl~mouse,keyboard,input,event
+I want to see all places where the program is doing graphics operations. How do I find those?	afl~draw,paint,render,canvas
+How can I find all the places where the program is using regular expressions?	axt@@=sym.regcomp sym.regexec sym.regex
+I want to see all functions that might be handling PDF operations. How do I find those?	afl~pdf,document,page
+How do I find all the places where the program is doing DNS lookups?	axt@@=sym.gethostbyname sym.getaddrinfo sym.dns
+I want to see all functions that might be handling ZIP files. How do I find those?	afl~zip,archive,compress,extract
+How can I find all the places where the program is using SSL certificates?	afl~cert,ssl,x509,verify
+I want to see all functions that might be doing video processing. How do I find those?	afl~video,codec,stream,frame
+How do I find all the places where the program is using mutexes?	axt@@=sym.pthread_mutex_lock sym.pthread_mutex_unlock
+I want to see all functions that might be handling CSV data. How do I find those?	afl~csv,parse,delimiter
+How can I find all the places where the program is doing memory mapping?	axt@@=sym.mmap sym.munmap sym.MapViewOfFile
+I want to see all functions that might be handling email operations. How do I find those?	afl~mail,smtp,imap,pop3
+How do I find all the places where the program is using semaphores?	axt@@=sym.sem_wait sym.sem_post sym.semop
+I want to see all functions that might be doing bluetooth operations. How do I find those?	afl~bluetooth,ble,rfcomm
+How can I find all the places where the program is handling exceptions?	axt@@=sym.__cxa_throw sym.try_catch sym.except
+I want to see all functions that might be doing GPU operations. How do I find those?	afl~gpu,cuda,opencl,shader
+How do I find all the places where the program is using timers?	axt@@=sym.settimer sym.alarm sym.sleep
+I want to see all functions that might be handling USB devices. How do I find those?	afl~usb,device,endpoint
+How can I find all the places where the program is doing IPC?	axt@@=sym.pipe sym.msgget sym.shmget
+I want to see all functions that might be handling WebSocket operations. How do I find those?	afl~websocket,ws,socket
+How do I find all the places where the program is doing memory allocation alignment?	axt@@=sym.aligned_alloc sym.posix_memalign
+I want to see all functions that might be handling OAuth operations. How do I find those?	afl~oauth,token,auth
+How can I find all the places where the program is doing Base32 encoding?	afl~base32,encode,decode
+I want to see all functions that might be handling YAML data. How do I find those?	afl~yaml,parse,serialize
+How do I find all the places where the program is using condition variables?	axt@@=sym.pthread_cond_wait sym.pthread_cond_signal
+How do I find all functions that might be handling protocol buffers?	afl~protobuf,serialize,message
+I want to see all places where the program is doing UTF-8 validation. How do I find those?	afl~utf8,unicode,validate
+How can I find all the places where the program is doing RSA operations?	afl~rsa,encrypt,decrypt,sign
+I want to see all functions that might be handling MQTT messages. How do I find those?	afl~mqtt,publish,subscribe
+How do I find all the places where the program is doing memory barriers?	axt@@=sym.__sync_synchronize sym.memory_barrier
+I want to see all functions that might be handling WebRTC operations. How do I find those?	afl~webrtc,rtc,stream,peer
+How can I find all the places where the program is doing SHA-256 hashing?	axt@@=sym.SHA256_Init sym.SHA256_Update sym.SHA256_Final
+I want to see all functions that might be handling GraphQL queries. How do I find those?	afl~graphql,query,resolver
+How do I find all the places where the program is using atomic operations?	axt@@=sym.__atomic_load sym.__atomic_store
+I want to see all functions that might be handling JWT tokens. How do I find those?	afl~jwt,token,verify
+How can I find all the places where the program is doing LDAP queries?	afl~ldap,directory,bind
+I want to see all functions that might be handling WebAssembly. How do I find those?	afl~wasm,module,instance
+How do I find all the places where the program is using SIMD instructions?	afl~simd,sse,avx,neon
+I want to see all functions that might be handling gRPC calls. How do I find those?	afl~grpc,rpc,stream
+How can I find all the places where the program is doing elliptic curve operations?	afl~ecc,ecdsa,curve
+I want to see all functions that might be handling Redis operations. How do I find those?	afl~redis,cache,hset
+How do I find all the places where the program is doing zero-copy operations?	afl~zerocopy,mmap,sendfile
+I want to see all functions that might be handling Kafka messages. How do I find those?	afl~kafka,producer,consumer
+How can I find all the places where the program is doing DNS-over-HTTPS?	afl~doh,dns,https
+I want to see all functions that might be handling WebSocket frames. How do I find those?	afl~websocket,frame,mask
+How do I find all the places where the program is using spinlocks?	axt@@=sym.pthread_spin_lock sym.pthread_spin_unlock
+I want to see all functions that might be handling OAuth2 flows. How do I find those?	afl~oauth2,authorize,token
+How can I find all the places where the program is doing CBOR encoding?	afl~cbor,encode,decode
+I want to see all functions that might be handling MessagePack data. How do I find those?	afl~msgpack,pack,unpack
+How do I find all the places where the program is using hardware acceleration?	afl~gpu,opencl,cuda,acc
+How do I find all functions that might be handling TLS certificate validation?	afl~verify,certificate,x509
+I want to see all places where the program is doing memory fence operations. How do I find those?	axt@@=sym.__sync_fence sym.atomic_fence
+How can I find all the places where the program is handling TOTP/2FA?	afl~totp,otp,2fa,authenticator
+I want to see all functions that might be doing IPv6 operations. How do I find those?	afl~ipv6,inet6,sockaddr_in6
+How do I find all the places where the program is using vectorized operations?	afl~vector,simd,parallel
+I want to see all functions that might be handling WebAuthn/FIDO. How do I find those?	afl~webauthn,fido,credential
+How can I find all the places where the program is doing Merkle tree operations?	afl~merkle,tree,hash
+I want to see all functions that might be handling QUIC protocol. How do I find those?	afl~quic,stream,datagram
+How do I find all the places where the program is using bloom filters?	afl~bloom,filter,probabilistic
+I want to see all functions that might be handling SNI (Server Name Indication). How do I find those?	afl~sni,servername,tls_ext
+How can I find all the places where the program is doing rate limiting?	afl~ratelimit,throttle,bucket
+I want to see all functions that might be handling DTLS. How do I find those?	afl~dtls,datagram,secure
+How do I find all the places where the program is using ring buffers?	afl~ring,circular,buffer
+I want to see all functions that might be handling OCSP stapling. How do I find those?	afl~ocsp,stapling,revocation
+How can I find all the places where the program is doing CRC checks?	afl~crc,checksum,cyclic
+I want to see all functions that might be handling HSTS. How do I find those?	afl~hsts,strict,transport
+How do I find all the places where the program is using read-write locks?	axt@@=sym.pthread_rwlock_rdlock sym.pthread_rwlock_wrlock
+I want to see all functions that might be handling ALPN negotiation. How do I find those?	afl~alpn,protocol,negotiation
+How can I find all the places where the program is doing HMAC operations?	afl~hmac,mac,keyed
+I want to see all functions that might be handling DANE/TLSA. How do I find those?	afl~dane,tlsa,dnssec

@@ -1,7 +1,6 @@
 q	a
-I want to see all the functions that have a low number of basic blocks that have less than 3 incoming edges. How can I filter for that?	aflj~{}..nbbs?@?.bbinc<3/nbbs>0.6
-How can I find all the functions that have a specific type of control flow transfer, like a jump to a location outside the function?	/af~jmp,0x
-I want to see all the functions that have a high number of pointer arguments compared to their number of outgoing calls. How can I find them?	aflj~{}..nargs?@?.npargs/ncalls>3
-How do I find all the functions that have a call to a specific string length function, like strlen?	afl~sym.imp.strlen
-I want to see all the functions that have a low number of instructions that perform flag manipulation operations. How can I filter for that?	aflj~{}..ninstr?@?.(cmc+stc+clc+sti+cli)/ninstr<0.05
-How can I find all the functions that have a specific type of basic block, like a block that starts with a non-conditional jump?	aflt~^jmp,
+How do I find all the places where the program is using memory pools?	afl~pool,allocator,arena
+I want to see all functions that might be handling CORS. How do I find those?	afl~cors,origin,preflight
+How can I find all the places where the program is doing HPACK compression?	afl~hpack,http2,header
+I want to see all functions that might be handling CSP headers. How do I find those?	afl~csp,security,policy
+How do I find all the places where the program is using barrier synchronization?	axt@@=sym.pthread_barrier_wait sym.barrier_sync

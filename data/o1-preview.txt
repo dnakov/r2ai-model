@@ -1,0 +1,303 @@
+Here are 100 examples of high-level user queries and the corresponding radare2 commands:
+
+1. **Question:** How can I disassemble the function at address 0x401000?
+   - **Command:** `pdf @ 0x401000`
+
+2. **Question:** I want to search for the string "password" in the binary.
+   - **Command:** `/ password`
+
+3. **Question:** How can I list all functions in the binary?
+   - **Command:** `afl`
+
+4. **Question:** I need to set a breakpoint at address 0x400123.
+   - **Command:** `db 0x400123`
+
+5. **Question:** How do I step over the next instruction during debugging?
+   - **Command:** `dso`
+
+6. **Question:** How can I view the hexdump of 64 bytes at the current position?
+   - **Command:** `px 64`
+
+7. **Question:** I want to write the value 0x90 at address 0x400500.
+   - **Command:** `wx 90 @ 0x400500`
+
+8. **Question:** How can I analyze all functions in the binary?
+   - **Command:** `aa`
+
+9. **Question:** I want to see the list of strings in the binary.
+   - **Command:** `iz`
+
+10. **Question:** How can I display the registers while debugging?
+    - **Command:** `dr`
+
+11. **Question:** How do I search for the opcode "mov eax, ebx"?
+    - **Command:** `/a mov eax, ebx`
+
+12. **Question:** I need to analyze the function at address 0x401500.
+    - **Command:** `af @ 0x401500`
+
+13. **Question:** How can I write the string "Hello" at the current position?
+    - **Command:** `w Hello`
+
+14. **Question:** How can I display information about the opened file?
+    - **Command:** `i`
+
+15. **Question:** How do I open a file called "test.bin" in radare2?
+    - **Command:** `o test.bin`
+
+16. **Question:** I want to find all references to the function named 'main'.
+    - **Command:** `axt sym.main`
+
+17. **Question:** How can I list all imports of the binary?
+    - **Command:** `ii`
+
+18. **Question:** How do I assemble the instruction "nop" at the current position?
+    - **Command:** `wa nop`
+
+19. **Question:** I need to set the block size to 128 bytes.
+    - **Command:** `b 128`
+
+20. **Question:** How can I show all flags in the binary?
+    - **Command:** `f`
+
+21. **Question:** How do I rename the function at address 0x401000 to "my_func"?
+    - **Command:** `afn my_func @ 0x401000`
+
+22. **Question:** I want to dump the disassembly of the current function into a file.
+    - **Command:** `pdf > function.asm`
+
+23. **Question:** How can I view the call graph of the binary?
+    - **Command:** `agC`
+
+24. **Question:** I need to find the base address of the binary.
+    - **Command:** `iI`
+
+25. **Question:** How can I search for the hexadecimal pattern "DE AD BE EF"?
+    - **Command:** `/x deadbeef`
+
+26. **Question:** How do I display the entropy of the file?
+    - **Command:** `p=e`
+
+27. **Question:** I want to see the comments at the current address.
+    - **Command:** `CC.`
+
+28. **Question:** How can I set a flag at address 0x400123 called "my_flag"?
+    - **Command:** `f my_flag @ 0x400123`
+
+29. **Question:** How do I display the stack trace?
+    - **Command:** `dbt`
+
+30. **Question:** How can I dump the hexadecimal values of the next 256 bytes into a file?
+    - **Command:** `px 256 > dump.hex`
+
+31. **Question:** I want to list all cross-references to address 0x401000.
+    - **Command:** `axt @ 0x401000`
+
+32. **Question:** How do I change the architecture to x86?
+    - **Command:** `e asm.arch = x86`
+
+33. **Question:** How can I evaluate the expression 0x400 + 0x200?
+    - **Command:** `?v 0x400 + 0x200`
+
+34. **Question:** I need to see the help for the 'af' command.
+    - **Command:** `af?`
+
+35. **Question:** How can I print the value of the EAX register?
+    - **Command:** `dr eax`
+
+36. **Question:** I want to view the content of memory at address 0x500000.
+    - **Command:** `px @ 0x500000`
+
+37. **Question:** How do I search for sections with high entropy?
+    - **Command:** `/s`
+
+38. **Question:** How can I list all breakpoints I've set?
+    - **Command:** `db`
+
+39. **Question:** I need to continue execution until the next syscall.
+    - **Command:** `dcs`
+
+40. **Question:** How can I list all the threads of the process?
+    - **Command:** `dp`
+
+41. **Question:** How do I see the comments in the disassembly view?
+    - **Command:** `e asm.comments = true`
+
+42. **Question:** I want to analyze the current function.
+    - **Command:** `af`
+
+43. **Question:** How can I rename a flag from 'flag.old' to 'flag.new'?
+    - **Command:** `fr flag.old flag.new`
+
+44. **Question:** I need to change the endianness to big endian.
+    - **Command:** `e cfg.bigendian = true`
+
+45. **Question:** How do I continue execution until the function 'main' is called?
+    - **Command:** `dcu main`
+
+46. **Question:** How can I show the function calls from the current function?
+    - **Command:** `agc`
+
+47. **Question:** I want to see the usage of the 'px' command.
+    - **Command:** `px?`
+
+48. **Question:** How can I search for a wide string "hello"?
+    - **Command:** `/w hello`
+
+49. **Question:** How do I list all plugins available in radare2?
+    - **Command:** `L`
+
+50. **Question:** I need to disassemble 10 instructions.
+    - **Command:** `pd 10`
+
+51. **Question:** How can I enable the instruction cache?
+    - **Command:** `e io.cache = true`
+
+52. **Question:** I want to quit radare2.
+    - **Command:** `q`
+
+53. **Question:** How do I mark the current offset for later use?
+    - **Command:** `f my_mark`
+
+54. **Question:** How can I return to the offset I previously marked?
+    - **Command:** `s my_mark`
+
+55. **Question:** I need to write assembly instructions into the binary.
+    - **Command:** `wa [instruction]` (e.g., `wa nop`)
+
+56. **Question:** How do I undo the last seek operation?
+    - **Command:** `s-`
+
+57. **Question:** How can I see the data types in the binary?
+    - **Command:** `ts`
+
+58. **Question:** I want to dump all the strings into a file.
+    - **Command:** `iz > strings.txt`
+
+59. **Question:** How do I compare two files?
+    - **Command:** `cmp file1 file2`
+
+60. **Question:** How can I open the visual mode?
+    - **Command:** `V`
+
+61. **Question:** I need to print the call stack.
+    - **Command:** `dbt`
+
+62. **Question:** How do I generate shellcode for a 'nop' instruction?
+    - **Command:** `g nop`
+
+63. **Question:** How can I set a hardware breakpoint on write at address 0x400800?
+    - **Command:** `dbw 0x400800`
+
+64. **Question:** I want to see the value of a memory address in decimal.
+    - **Command:** `?v [addr]` (e.g., `?v @ 0x400500`)
+
+65. **Question:** How do I list all the sections in the binary?
+    - **Command:** `iS`
+
+66. **Question:** How can I disable color output in radare2?
+    - **Command:** `e scr.color = false`
+
+67. **Question:** I need to list all the variables in the current function.
+    - **Command:** `afv`
+
+68. **Question:** How can I set a comment at the current address?
+    - **Command:** `CC [comment text]`
+
+69. **Question:** I want to load types from a C header file.
+    - **Command:** `to [header.h]` (e.g., `to types.h`)
+
+70. **Question:** How do I step into the next instruction during debugging?
+    - **Command:** `dsi`
+
+71. **Question:** I need to display the current function in graph view.
+    - **Command:** `VV`
+
+72. **Question:** How can I search for code that accesses the EAX register?
+    - **Command:** `pd 100 ~ eax`
+
+73. **Question:** How do I set the variable 'foo' to value 'bar'?
+    - **Command:** `e foo = bar`
+
+74. **Question:** I need to see what commands I've run in radare2.
+    - **Command:** `!`
+
+75. **Question:** How can I find functions that call 'main'?
+    - **Command:** `axf sym.main`
+
+76. **Question:** How do I list all the symbols in the binary?
+    - **Command:** `is`
+
+77. **Question:** I want to view the hexadecimal representation of the next 64 bytes.
+    - **Command:** `p8 64`
+
+78. **Question:** How can I open a shell within radare2?
+    - **Command:** `sh`
+
+79. **Question:** How do I define a structure type in radare2?
+    - **Command:** `td struct myStruct { int a; char b; }`
+
+80. **Question:** I need to save the current project.
+    - **Command:** `Ps`
+
+81. **Question:** How do I enable debug mode on the current file?
+    - **Command:** `ood`
+
+82. **Question:** How can I see if a function never returns?
+    - **Command:** `tn @ [function address]` (e.g., `tn @ sym.exit`)
+
+83. **Question:** How can I set a variable to a specific type?
+    - **Command:** `afvt [varname] [new_type]` (e.g., `afvt local_10h char*`)
+
+84. **Question:** I want to see the exports of the binary.
+    - **Command:** `iE`
+
+85. **Question:** How do I search for a string ignoring case?
+    - **Command:** `/i [string]` (e.g., `/i hello`)
+
+86. **Question:** How can I create a new flag space?
+    - **Command:** `fs+ [flagspace_name]` (e.g., `fs+ myspace`)
+
+87. **Question:** I need to load a radare2 plugin.
+    - **Command:** `L [pluginname]` (e.g., `L foo.plugin`)
+
+88. **Question:** How do I check the entropy of data at address 0x4000?
+    - **Command:** `p=e @ 0x4000`
+
+89. **Question:** How can I print the immediate value of the current instruction?
+    - **Command:** `ao~val`
+
+90. **Question:** I want to see the environment variables used by radare2.
+    - **Command:** `en`
+
+91. **Question:** How do I display the timestamp as a human-readable date?
+    - **Command:** `pt`
+
+92. **Question:** How can I set an alias for a function?
+    - **Command:** `fa [name] [alias]` (e.g., `fa sym.old_function new_alias`)
+
+93. **Question:** How can I disassemble the next 20 bytes as ARM code?
+    - **Command:** `e asm.arch = arm; pd 20`
+
+94. **Question:** I need help understanding the 'axt' command.
+    - **Command:** `axt?`
+
+95. **Question:** How do I set a breakpoint that triggers on a syscall?
+    - **Command:** `dbs`
+
+96. **Question:** How can I list all the classes in an Objective-C binary?
+    - **Command:** `ic`
+
+97. **Question:** I want to find dead code in the binary.
+    - **Command:** `aae`
+
+98. **Question:** How do I perform a basic automatic analysis?
+    - **Command:** `aaa`
+
+99. **Question:** How can I find and list all magic headers in the binary?
+    - **Command:** `/m`
+
+100. **Question:** I need to calculate the SHA256 hash of the current block.
+    - **Command:** `ph sha256`
+
+These examples cover a variety of radare2 commands and functionalities, aimed at new users seeking specific tasks in reverse-engineering.
