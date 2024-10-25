@@ -4,22 +4,33 @@ You're a helpful assistant and your goal is to come up with high-level user quer
 
   
 Command Syntax
-In a single line we can describe the syntax of the radare2 commands like this:
-
- .- ignore special characters, same as full command quotes "?e hi > ho"
- |    .- interpret the output of the command or run a script `.?`
- |   /   .-- the repeat prefix operator, run a command N times   .------------.
- |  |   /     . the command to run                               | , = csv    |
- |  |  |    /    . command suffix output modifier --------------<  j = json   |
- |  |  |   |    /                                                | * = r2cmds |
- |  |  |   |   |                                                 `------------'
+Command Format:
 ['][.][N][cmd[,?*j]][~filter][@[@[@]]addr!size][|>pipe] ; another command
-                           |  | | |  \________/ | |     |
-                           |  | | |      |      |  \    `--- cmd separator
- output filter modifier _.'  /  | |      |       \  `-- redirect to file
-   @ temporal seek  --------'  /  |       \       `--- pipe to system shell
-       @@ foreach operator ---'   |        `--- foreach modifiers @? @@? @@@?
-                                   `--- advanced foreach (addr+size on items)
+
+Components Explained:
+
+' (quote)     - Ignore special characters (like in "?e hi > ho")
+. (dot)       - Interpret output of command or run script '.?' 
+N             - Repeat prefix operator, runs command N times
+cmd           - The actual command to run
+
+Output Modifiers:
+,            - CSV format
+j            - JSON format
+*            - r2cmds format
+~filter      - Output filter modifier
+@            - Temporal seek
+@@           - Foreach operator
+@@@          - Advanced foreach operator (with addr+size on items)
+addr!size    - Address and size specification
+|            - Pipe to system shell
+>            - Redirect to file
+;            - Command separator
+
+When you see text like this:
+[0x00000000]>
+this is radare2's shell-like prompt. User enters commands after that.
+
 People who use Vim daily and are familiar with its commands will find themselves at home. You will see this format used throughout the book. Commands are identified by a single case-sensitive character [a-zA-Z].
 
 As an exercise for the reader you may want to read the following lines and understand the purpose of the syntax with examples.
@@ -84,7 +95,7 @@ You may find that ~ is very similar to using the unix | pipe, but this
 
 As you may expect appending a question mark will display the help message.
 
-[0x00000000]> ~?
+[0x00000000]>[0x00000000]> ~?
 Usage: [command]~[modifier][word,word][endmodifier][[column]][:line]
 modifier:
 |  &            all words must match to grep the line
@@ -1616,7 +1627,7 @@ Basic commands:
 * f~...   - search for strings or hexadecimal patterns
 * q       - quit (alias for ^D or exit)
 
-?
+[0x00000000]> ?
 Usage: [.][times][cmd][~grep][@[@iter]addr!size][|>pipe] ; ...
 Append '?' to any char command to get detailed help
 Prefix with number to repeat command N times (f.ex: 3x)
@@ -1670,7 +1681,7 @@ Prefix with number to repeat command N times (f.ex: 3x)
 | ?>?                     output redirection
 | ?|?                     help for '|' (pipe)
 
-"?
+[0x00000000]> "?
 Usage: "["..|.."]  quote the command to avoid evaluating special characters
 | "?                    show this help, NOTE that a single quote is simpler and works the same
 | "?e hello \"world\""  print (hello "world")
@@ -1680,14 +1691,14 @@ y;x)
 | ""@addr""[cmd]        call a command with a temporal seek (EXPERIMENTAL)
 | ""?e x;y";"?e y;x     run two commands ignoring special chars (prints x;y";"?e y;x)
 
-*?
+[0x00000000]> *?
 Usage: *<addr>[=[0x]value]  Pointer read/write data/values
 | *entry0=cc           write trap in entrypoint
 | *entry0+10=0x804800  write value in delta address
 | *entry0              read byte at given address
 | */                   end multiline comment. (use '/*' to start mulitiline comment
 
-.?
+[0x00000000]> .?
 Usage: .[r2cmd] | [file] | [!command] | [(macro)]  # define macro or interpret r2, r_lang,
     cparse, d, es6, exe, go, js, lsp, pl, py, rb, sh, vala or zig file
 | .                  repeat last command backward
@@ -1704,7 +1715,7 @@ Usage: .[r2cmd] | [file] | [!command] | [(macro)]  # define macro or interpret r
 | .(foo 1 2 3)       run macro 'foo' with args 1, 2, 3
 | ./ ELF             interpret output of command /m ELF as r. commands
 
-,?
+[0x00000000]> ,?
 Usage: ,[,.-/*jhr] [file]  # load table data
 | ,                   display table
 | , [table-query]     filter and print table. See ,? for more details
@@ -1746,7 +1757,7 @@ RTableQuery> comma separated. 'c' stands for column name.
  :header        show column headers (see :quiet and :noheader)
  :quiet         do not print column names header
 
- -?
+[0x00000000]> -?
 Usage: -  open editor and run the r2 commands in the saved document
 | '-' '.-' '. -'   those three commands do the same
 | -8              same as s-8, but shorter to type (see +? command)
@@ -1772,7 +1783,7 @@ Usage: -  open editor and run the r2 commands in the saved document
 _?
 | _  print last output
 
-=?
+[0x00000000]> =?
 Usage:  =[:!+-=ghH] [...]   # connect with other instances of r2
 
 remote commands:
@@ -1804,7 +1815,7 @@ examples:
 | =+http://localhost:9090/cmd/  connect to: r2 -c'=h 9090' bin
 | o rap://:9090/                start the rap server on tcp port 9090
 
-/?
+[0x00000000]> /?
 Usage: /[!bf] [arg]  Search stuff (see 'e??search' for options)
 Use io.va for searching in non virtual addressing spaces
 | / foo\x00                         search for string 'foo\0'
@@ -1841,7 +1852,7 @@ Use io.va for searching in non virtual addressing spaces
 | /z min max                        search for strings of given size
 | /* [comment string]               add multiline comment, end it with '*/'
 
-!?
+[0x00000000]> !?
 Usage: !<cmd>    Run given command as in system(3)
 | !                        list all commands in the shell history
 | !ls                      execute 'ls' in shell
@@ -1875,7 +1886,7 @@ Environment:
 | RABIN2_DEMANGLE   demangle or not
 | RABIN2_PDBSERVER  e pdb.server
 
-#?
+[0x00000000]> #?
 Usage: #!<interpreter>  [<args>] [<file] [<<eof]
 | #                                   comment - do nothing
 | #!                                  list all available interpreters
@@ -1889,7 +1900,7 @@ Usage: #!<interpreter>  [<args>] [<file] [<<eof]
 | #!<lang>                            enter interactive prompt for given language plugin
 | #!pipe node -e 'console.log(123)''  run program with arguments inside an r2pipe environment
 
-a?
+[0x00000000]> a?
 Usage: a  [abdefFghoprxstc] [...]
 | a                alias for aai - analysis information
 | a:[cmd]          run a command implemented by an analysis plugin (like : for io)
@@ -1919,7 +1930,7 @@ Usage: a  [abdefFghoprxstc] [...]
 | avg[?] [.]       manage global variables
 | ax[?]            manage refs/xrefs (see also afx?)b
 
-b?
+[0x00000000]> b?
 Usage: b[f] [arg]  change working block size
 | b 32     set block size to 33
 | b=32     same as 'b 32'
@@ -1933,7 +1944,7 @@ Usage: b[f] [arg]  change working block size
 | bj       display block size information in JSON
 | bm 1M    set max block size
 
-c?
+[0x00000000]> c?
 Usage: c[?dfx] [argument]   # Compare
 | c [string]               compare a plain with escaped chars string
 | c* [string]              same as c, but printing r2 commands instead
@@ -1962,7 +1973,7 @@ Usage: c[?dfx] [argument]   # Compare
 | cx* [hexpair]            compare hexpair string (output r2 commands)
 | cX [addr]                Like 'cc' but using hexdiff output
 
-C?
+[0x00000000]> C?
 Usage: C[-LCvsdfm*?][*?] [...]   # Metadata management
 | C                                              list meta info in human friendly form
 | C*                                             list meta info in r2 commands
@@ -1992,7 +2003,7 @@ Usage: C[-LCvsdfm*?][*?] [...]   # Metadata management
 | Cv[?][bsr]                                     add comments to args
 | Cz[@addr]                                      add string (see Cs?)
 
-d?
+[0x00000000]> d?
 Usage: d   # Debug commands
 | d:[?] [cmd]              run custom debug plugin command
 | db[?]                    breakpoints commands
@@ -2019,7 +2030,7 @@ Usage: d   # Debug commands
 | dx[?][aers]              execute code in the child process
 | date [-b]                use -b for beat time
 
-e?
+[0x00000000]> e?
 Usage: e [var[=value]]  Evaluable vars
 | e?asm.bytes        show description
 | e??                list config vars with description
@@ -2046,7 +2057,7 @@ Usage: e [var[=value]]  Evaluable vars
 | ev [key]           list config vars in verbose format
 | evj [key]          list config vars in verbose format in JSON
 
-f?
+[0x00000000]> f?
 Usage: f [?] [flagname]   # Manage offset-name flags
 | f                         list flags (will only list flags from selected flagspaces)
 | f name 12 @ 33            set flag 'name' with length 12 at offset 33
@@ -2096,7 +2107,7 @@ Usage: f [?] [flagname]   # Manage offset-name flags
 | fx[d]                     show hexdump (or disasm) of flag:flagsize
 | fz[?][name]               add named flag zone -name to delete. see fz?[name]
 
-g?
+[0x00000000]> g?
 Usage: g[wcilper] [arg]  Go compile shellcodes using asm.arch/bits/os
 | g                   compile the shellcode
 | g foo.r             compile r_egg source file
@@ -2112,7 +2123,7 @@ Usage: g[wcilper] [arg]  Go compile shellcodes using asm.arch/bits/os
 | gS                  show the current configuration
 | gw                  compile and write
 
-i?
+[0x00000000]> i?
 Usage: i  Get info from opened file (see rabin2's manpage)
 | i[*jq]       show info of current file (in JSON)
 | ia           list archs found in current binary (same as rabin2 -A)
@@ -2146,7 +2157,7 @@ Usage: i  Get info from opened file (see rabin2's manpage)
 | iw           show try/catch blocks
 | iz[?]        strings in data sections (in JSON/Base64)
 
-k?
+[0x00000000]> k?
 Usage: k[s] [key[=value]]  Sdb Query
 | k anal/**                 list namespaces under anal
 | k anal/meta/*             list kv from anal > meta namespaces
@@ -2159,7 +2170,7 @@ Usage: k[s] [key[=value]]  Sdb Query
 | ko [file.sdb] [ns]        open file into namespace
 | ks [ns]                   enter the sdb query shell
 
-l?
+[0x00000000]> l?
 Usage: l[erls] [arg]  Internal less (~..) and file listing (!ls)
 | lu [path]                same as #!lua
 | ll [path]                same as ls -l
@@ -2172,7 +2183,7 @@ Usage: l[erls] [arg]  Internal less (~..) and file listing (!ls)
 | ls -q [path]             quiet output (one file per line)
 | le[ss] [path]            same as cat file~.. (or less)
 
-L?
+[0x00000000]> L?
 Usage: L[acio]  [-name][ file]
 | L             show this help
 | L blah.dylib  load plugin file
@@ -2195,7 +2206,7 @@ Usage: L[acio]  [-name][ file]
 | Ls[qj]        list assembler plugins
 | Lt[j]         list color themes (eco)
 
-m?
+[0x00000000]> m?
 Usage: m[-?*dgy] [...]   Mountpoints management
 | m /mnt ext2 0                mount ext2 fs at /mnt with delta 0 on IO
 | m /mnt                       mount fs at /mnt with autodetect fs and current offset
@@ -2221,7 +2232,7 @@ Usage: m[-?*dgy] [...]   Mountpoints management
 | mal                          list available r2 docs
 | man [page]                   man=manpage reading (see mal)
 
-o?
+[0x00000000]> o?
 Usage: o [file] ([offset])  Open and close files, maps, and banks
 | o                         list opened files
 | o [file] 0x4000 rwx       map file at 0x4000
@@ -2250,7 +2261,7 @@ Usage: o [file] ([offset])  Open and close files, maps, and banks
 | ox fd fdx                 exchange the descs of fd and fdx and keep the mapping
 | open [file]               use system xdg-open/open on a file
 
-p?
+[0x00000000]> p?
 Usage: p[=68abcdDfiImrstuxz] [arg|len] [@addr]
 | p[b|B|xb] [len] ([S])   bindump N bits skipping S bytes
 | p[iI][df] [len]         print N ops/bytes (f=func) (see pi? and pdi)
@@ -2295,7 +2306,7 @@ Usage: p[=68abcdDfiImrstuxz] [arg|len] [@addr]
 | pushd [dir]             cd to dir and push current directory to stack
 | popd[-a][-h]            pop dir off top of stack and cd to it
 
-P?
+[0x00000000]> P?
 Usage: P[?.+-*cdilnsS] [file]  Project management
 | P [file]          open project (formerly Po)
 | P.                show current loaded project (see prj.name)
@@ -2317,7 +2328,7 @@ Usage: P[?.+-*cdilnsS] [file]  Project management
 | NOTE:             see the other 'e??prj.' evars for more options.
 | NOTE:             project are stored in dir.projects
 
-q?
+[0x00000000]> q?
 Usage: q[!][!] [retval]
 | q            quit program
 | q!           force quit (no questions)
@@ -2328,7 +2339,7 @@ Usage: q[!][!] [retval]
 | q[y/n][y/n]  quit, chose to kill process, chose to save project
 | Q            same as q!!
 
-r?
+[0x00000000]> r?
 Usage: r[+-][ size]  Resize file
 | r                     display file size
 | rj                    display the file size in JSON format
@@ -2351,7 +2362,7 @@ Usage: r[+-][ size]  Resize file
 | r2 [file]             launch r2 (same for rax2, rasm2, ...)
 | reset                 reset console settings (clear --hard)
 
-s?
+[0x00000000]> s?
 Usage: s   # Help for the seek commands. See ?$? to see all variables
 | s               print current address
 | s addr          seek to address
@@ -2387,7 +2398,7 @@ Usage: s   # Help for the seek commands. See ?$? to see all variables
 | ss[?]           seek silently (without adding an entry to the seek history)
 | sort [file]     sort the contents of the file
 
-t?
+[0x00000000]> t?
 Usage: t  Parse, manage, and print C types
 | t                             list all loaded types
 | tj                            list all loaded types as json
@@ -2411,7 +2422,7 @@ Usage: t  Parse, manage, and print C types
 | tu[?]                         print loaded union types
 | tx[?]                         type xrefs
 
-T?
+[0x00000000]> T?
 Usage: T  [-][ num|msg] # text-log utility with timestamps
 | T          list all Text log messages
 | T message  add new log message
@@ -2427,7 +2438,7 @@ Usage: T  [-][ num|msg] # text-log utility with timestamps
 | T=[.]      pull logs from remote r2 instance specified by http.sync
 | T=&        start background thread syncing with the remote server
 
-u?
+[0x00000000]> u?
 Usage: u  uname or undo write/seek
 | u         show system uname (alias for uname)
 | uw        alias for wc (requires: e io.cache=true)
@@ -2437,7 +2448,7 @@ Usage: u  uname or undo write/seek
 | uniq      filter rows to avoid duplicates
 | uname[?]  uname - show system information
 
-v?
+[0x00000000]> v?
 Usage: v[*i]
 | v             open visual panels
 | v test        load saved layout with name test
@@ -2449,7 +2460,7 @@ Usage: v[*i]
 V?
 | V  visual mode (Vv: func/var, VV: graph mode, ...)
 
-w?
+[0x00000000]> w?
 Usage: w[x] [str] [<file] [<<EOF] [@addr]
 | w[1248][+-][n]                increment/decrement byte,word..
 | w foobar                      write string 'foobar'
@@ -2481,7 +2492,7 @@ Usage: w[x] [str] [<file] [<<EOF] [@addr]
 | wu [unified-diff-patch]       see 'cu'
 | wz string                     write zero terminated string (like w + \x00)
 
-x?
+[0x00000000]> x?
 Usage: px[0afoswqWqQ][f]   # Print heXadecimal
 | px                show hexdump
 | px--[n]           context hexdump (the hexdump version of pd--3)
@@ -2512,7 +2523,7 @@ Usage: px[0afoswqWqQ][f]   # Print heXadecimal
 | pxx               show N bytes of hex-less hexdump
 | pxX               show N words of hex-less hexdump
 
-y?
+[0x00000000]> y?
 Usage: y[fptxy] [len] [[@]addr]   # See wd? for memcpy, same as 'yf'.
 | y!                 open cfg.editor to edit the clipboard
 | y 16 0x200         copy 16 bytes into clipboard from 0x200
@@ -2538,7 +2549,7 @@ Usage: y[fptxy] [len] [[@]addr]   # See wd? for memcpy, same as 'yf'.
 | yy                 paste contents of clipboard at current seek
 | yz [len]           copy nul-terminated string (up to blocksize) into clipboard
 
-z?
+[0x00000000]> z?
 Usage: z[*j-aof/cs] [args]   # Manage zignatures
 | z ([addr])   show/list zignatures
 | z.           find matching zignatures in current offset
@@ -2560,7 +2571,7 @@ Usage: z[*j-aof/cs] [args]   # Manage zignatures
 | zs[?]        manage zignspaces
 | zi [text]    show zignatures matching information
 
-???
+[0x00000000]> ???
 Usage: ?[?[?]] expression
 | ?! [cmd]                         run cmd if $? == 0
 | ? eip-0x804800                   show all representation result for this math expr
@@ -2606,7 +2617,7 @@ Usage: ?[?[?]] expression
 | ?_ hudfile                       load hud menu with given file
 | [cmd]?*                          recursive help for the given cmd
 
-?@?
+[0x00000000]> ?@?
 Usage: [.:"][#]<cmd>[*] [`cmd`] [@ addr] [~grep] [|syscmd] [>[>]file]
 | 0                   alias for 's 0'
 | 0xaddr              alias for 's 0x..'
@@ -2664,5 +2675,7 @@ Usage: [.:"][#]<cmd>[*] [`cmd`] [@ addr] [~grep] [|syscmd] [>[>]file]
 | |cmd                pipe output to command (pd|less) (.dr*)
 </all-commands>
 
+<guidelines>
 The user questions must be as if the user is very new at reverse-engineering and doesn't really exactly what to ask for. They should also ask for specific things, not just general questions about "how". The radare2_command should be valid and be able to be run.
-
+Make sure you come up with a variety of different questions that utilize a variety of different commands.
+</guidelines>

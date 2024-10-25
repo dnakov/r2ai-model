@@ -1,7 +1,7 @@
 q	a
-How do I find functions that handle GPU computations?	afl~gpu,cuda,opencl
-Where are all the places this program uses character encodings?	axt@@=sym.imp.iconv
-How can I find all the places where DNS records are updated?	afl~dns,update,record
-I want to see all the places where memory barriers are used	/at mfence,sfence,lfence
-How do I find functions that handle message queues?	axt@@=sym.imp.mq_open,sym.imp.mq_send
-Where does this program handle video streams?	afl~video,stream,codec
+I want to see all the functions that have a low number of basic blocks that have less than 3 incoming edges. How can I filter for that?	aflj~{}..nbbs?@?.bbinc<3/nbbs>0.6
+How can I find all the functions that have a specific type of control flow transfer, like a jump to a location outside the function?	/af~jmp,0x
+I want to see all the functions that have a high number of pointer arguments compared to their number of outgoing calls. How can I find them?	aflj~{}..nargs?@?.npargs/ncalls>3
+How do I find all the functions that have a call to a specific string length function, like strlen?	afl~sym.imp.strlen
+I want to see all the functions that have a low number of instructions that perform flag manipulation operations. How can I filter for that?	aflj~{}..ninstr?@?.(cmc+stc+clc+sti+cli)/ninstr<0.05
+How can I find all the functions that have a specific type of basic block, like a block that starts with a non-conditional jump?	aflt~^jmp,
