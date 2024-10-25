@@ -1,0 +1,309 @@
+Certainly! Below are 100 high-level user queries tailored for someone new to reverse engineering, along with the corresponding radare2 commands that address each query. These examples cover a wide range of functionalities within radare2 to provide comprehensive guidance.
+
+---
+
+1. **User Query:** How do I open a binary file named `example.exe`?
+   **radare2 Command:** `o example.exe`
+
+2. **User Query:** I want to analyze all functions in the binary.
+   **radare2 Command:** `aaa`
+
+3. **User Query:** How do I seek to the entry point of the binary?
+   **radare2 Command:** `s entry0`
+
+4. **User Query:** Show me the first 100 hexadecimal bytes of the binary.
+   **radare2 Command:** `px 100`
+
+5. **User Query:** Disassemble 20 instructions starting from the current address.
+   **radare2 Command:** `pd 20`
+
+6. **User Query:** How do I list all functions found in the analysis?
+   **radare2 Command:** `afl`
+
+7. **User Query:** I want to see the disassembly of the `main` function.
+   **radare2 Command:** `pdf @ sym.main`
+
+8. **User Query:** How can I print the contents at the address stored in the `esp` register?
+   **radare2 Command:** `px 200 @ esp`
+
+9. **User Query:** Dump the `main` function's buffer as a C byte array to `main.c`.
+   **radare2 Command:** `pc > main.c @ sym.main`
+
+10. **User Query:** Replace every symbol with a NOP instruction.
+    **radare2 Command:** `wx 90 @@ sym.*`
+
+11. **User Query:** Grep for instructions that use the `eax` register within the first 2000 instructions.
+    **radare2 Command:** `pd 2000 | grep eax`
+
+12. **User Query:** Step through the debugger 10 times.
+    **radare2 Command:** `10ds`
+
+13. **User Query:** Show me 20 hexadecimal bytes at the stack pointer.
+    **radare2 Command:** `px 20 @ rsp`
+
+14. **User Query:** Write a NOP sled to a file named `nop_sled.c`.
+    **radare2 Command:** `pc > nop_sled.c`
+
+15. **User Query:** How do I rename the function at address `0x080485a5` to `new_func`?
+    **radare2 Command:** `afvn new_func 0x080485a5`
+
+16. **User Query:** I want to set a breakpoint at the `main` function.
+    **radare2 Command:** `db sym.main`
+
+17. **User Query:** Continue execution in the debugger until the next breakpoint.
+    **radare2 Command:** `dc`
+
+18. **User Query:** Show all imported functions in JSON format.
+    **radare2 Command:** `iij`
+
+19. **User Query:** List all sections of the binary.
+    **radare2 Command:** `iS`
+
+20. **User Query:** Search for the string "password" in the binary.
+    **radare2 Command:** `/c "password"`
+
+21. **User Query:** How do I list all loaded types?
+    **radare2 Command:** `t`
+
+22. **User Query:** Define a new struct named `MyStruct` with a `char a` and `int b`.
+    **radare2 Command:** `"td struct MyStruct {char a; int b;}"`
+
+23. **User Query:** Cast the data at address `0x08048648` to `MyStruct` and print it.
+    **radare2 Command:** `tp MyStruct @ 0x08048648`
+
+24. **User Query:** Calculate the size of the string at address `0x080487cf`.
+    **radare2 Command:** `?vi 0x080487cf`
+
+25. **User Query:** How do I compare two files `file1.bin` and `file2.bin`?
+    **radare2 Command:** `cmp file1.bin file2.bin`
+
+26. **User Query:** Show the control flow graph of the `main` function in DOT format.
+    **radare2 Command:** `agc.d @ sym.main`
+
+27. **User Query:** Export the list of functions to a JSON file.
+    **radare2 Command:** `aflj > functions.json`
+
+28. **User Query:** Find all references to the string "Hello World".
+    **radare2 Command:** `axt "Hello World"`
+
+29. **User Query:** How do I visualize the call graph of the binary?
+    **radare2 Command:** `agc.d`
+
+30. **User Query:** I want to list all virtual tables in the binary.
+    **radare2 Command:** `av`
+
+31. **User Query:** Search for syscall instructions in the binary.
+    **radare2 Command:** `/ad/ svc`
+
+32. **User Query:** Show all environment variables set by radare2.
+    **radare2 Command:** `e`
+
+33. **User Query:** How do I execute the shell command `ls` from within radare2?
+    **radare2 Command:** `!ls`
+
+34. **User Query:** Pipe the disassembly of `main` to `grep` for the `call` instruction.
+    **radare2 Command:** `pdf @ sym.main | grep call`
+
+35. **User Query:** How can I load FLIRT signatures from `libc.sdb`?
+    **radare2 Command:** `zo libc.sdb`
+
+36. **User Query:** Generate a signature for the `entry0` function.
+    **radare2 Command:** `zaf entry0 entry`
+
+37. **User Query:** List all currently loaded signatures in JSON format.
+    **radare2 Command:** `zj`
+
+38. **User Query:** Find functions that best match the `malloc` signature.
+    **radare2 Command:** `zbr sym.__libc_malloc 10`
+
+39. **User Query:** Display the virtual address corresponding to the physical address `0x4000`.
+    **radare2 Command:** `?P 0x4000`
+
+40. **User Query:** Get the physical address for the virtual address `0x080485a5`.
+    **radare2 Command:** `?p 0x080485a5`
+
+41. **User Query:** How do I view the current seek offset in hexadecimal?
+    **radare2 Command:** `?v`
+
+42. **User Query:** Convert the string "test" to its hexadecimal representation.
+    **radare2 Command:** `?x "test"`
+
+43. **User Query:** I want to list all loaded enums.
+    **radare2 Command:** `te`
+
+44. **User Query:** Add a comment "Initialize variables" at address `0x08048648`.
+    **radare2 Command:** `CC "Initialize variables" @ 0x08048648`
+
+45. **User Query:** Remove all comments from the binary.
+    **radare2 Command:** `CC-`
+
+46. **User Query:** Show the comments in JSON format.
+    **radare2 Command:** `Cjj`
+
+47. **User Query:** How do I list all loaded plugins?
+    **radare2 Command:** `Ll`
+
+48. **User Query:** Mount an ext2 filesystem located at `/dev/sdb1` to `/mnt`.
+    **radare2 Command:** `m /mnt ext2 0`
+
+49. **User Query:** List all current mount points.
+    **radare2 Command:** `m`
+
+50. **User Query:** Push the current directory onto the stack and change to `/tmp`.
+    **radare2 Command:** `pushd /tmp`
+
+51. **User Query:** Pop the last directory from the stack and change back to it.
+    **radare2 Command:** `popd`
+
+52. **User Query:** How do I list all basic block references?
+    **radare2 Command:** `afjj`
+
+53. **User Query:** I want to visualize the basic blocks of the `foo` function.
+    **radare2 Command:** `agf.d @ sym.foo`
+
+54. **User Query:** Search for the hexadecimal pattern `0x90 0x90 0x90` in the binary.
+    **radare2 Command:** `/x 909090`
+
+55. **User Query:** How do I decode a base64 string `SGVsbG8=` and write it to address `0x08049000`?
+    **radare2 Command:** `w6e SGVsbG8= @ 0x08049000`
+
+56. **User Query:** List all loaded union types.
+    **radare2 Command:** `tu`
+
+57. **User Query:** How can I display the stack frames in the debugger?
+    **radare2 Command:** `dr`
+
+58. **User Query:** Rename the symbol `fcn.08048648` to `init`.
+    **radare2 Command:** `fr init fcn.08048648`
+
+59. **User Query:** Show the sizes of all functions in the binary.
+    **radare2 Command:** `afll`
+
+60. **User Query:** How do I check the endianness of the binary?
+    **radare2 Command:** `e asm.endian`
+
+61. **User Query:** Set the architecture to ARM.
+    **radare2 Command:** `e asm.arch=arm`
+
+62. **User Query:** How do I list all imported libraries?
+    **radare2 Command:** `iL`
+
+63. **User Query:** Find all references to the function `printf`.
+    **radare2 Command:** `axt sym.imp.printf`
+
+64. **User Query:** Visualize the control flow graph of the `main` function using Graphviz.
+    **radare2 Command:** `agc.d @ sym.main > cfg.dot`
+
+65. **User Query:** Convert a sequence of bytes `0xDEADBEEF` into a string.
+    **radare2 Command:** `?x DEADBEEF`
+
+66. **User Query:** Show all reachable functions from the `main` function.
+    **radare2 Command:** `aflj | jq '.[] | select(.refs | contains("sym.main"))'`
+
+67. **User Query:** How do I set the stack frame size for the current function to 0x30?
+    **radare2 Command:** `afS 0x30`
+
+68. **User Query:** Create a new flag named `myFlag` at address `0x08049000` with size 8.
+    **radare2 Command:** `f myFlag 8 @ 0x08049000`
+
+69. **User Query:** List all flags in the current flagspace.
+    **radare2 Command:** `f`
+
+70. **User Query:** Remove the flag named `oldFlag`.
+    **radare2 Command:** `f-oldFlag`
+
+71. **User Query:** How do I list all function arguments for `main`?
+    **radare2 Command:** `afv @ sym.main`
+
+72. **User Query:** Show the type of the variable `local_10h` in `main`.
+    **radare2 Command:** `afvt local_10h`
+
+73. **User Query:** How can I export all current flags to a file?
+    **radare2 Command:** `fj > flags.json`
+
+74. **User Query:** Import flags from a JSON file named `import_flags.json`.
+    **radare2 Command:** `fj import_flags.json`
+
+75. **User Query:** Show the hexadecimal value of the register `eax`.
+    **radare2 Command:** `dr eax`
+
+76. **User Query:** How do I visualize the string reference graph?
+    **radare2 Command:** `agd.g`
+
+77. **User Query:** Dump the memory from address `0x08048000` to `0x08049000` into a file named `dump.bin`.
+    **radare2 Command:** `axg0x08048000 0x08049000 > dump.bin`
+
+78. **User Query:** Set the calling convention of the `add` function to `cdecl`.
+    **radare2 Command:** `afc cdecl @ sym.add`
+
+79. **User Query:** List all available calling conventions for the current architecture.
+    **radare2 Command:** `afcl`
+
+80. **User Query:** Show the internal analysis hints at address `0x08048648`.
+    **radare2 Command:** `ah 0x08048648`
+
+81. **User Query:** Disable the automatic analysis of function arguments.
+    **radare2 Command:** `e anal.vars=false`
+
+82. **User Query:** How do I search for all conditional jumps in the binary?
+    **radare2 Command:** `/a jmp`
+
+83. **User Query:** Print a tree map graph of all functions.
+    **radare2 Command:** `agtt`
+
+84. **User Query:** Reload the binary after making changes.
+    **radare2 Command:** `o-`
+    **Followed by:**
+    `o example.exe`
+
+85. **User Query:** Show the current file's sections with their permissions.
+    **radare2 Command:** `iS`
+
+86. **User Query:** How do I list all register-based arguments of a function?
+    **radare2 Command:** `afvr @ sym.main`
+
+87. **User Query:** Execute a script named `fix_flags.r2`.
+    **radare2 Command:** `. fix_flags.r2`
+
+88. **User Query:** Search for hexadecimal bytes `0xCAFEBABE` in the binary.
+    **radare2 Command:** `/x CAFEBABE`
+
+89. **User Query:** How can I reset all analysis data and start fresh?
+    **radare2 Command:** `aaa -c`
+
+90. **User Query:** Visualize the call graph in an interactive ASCII art view.
+    **radare2 Command:** `agc.v`
+
+91. **User Query:** List all loaded debuggers.
+    **radare2 Command:** `dL`
+
+92. **User Query:** Change the endianness to big endian.
+    **radare2 Command:** `e asm.endian=big`
+
+93. **User Query:** Compare the current binary with another binary `another.exe`.
+    **radare2 Command:** `cmp example.exe another.exe`
+
+94. **User Query:** How do I display the stack trace in the debugger?
+    **radare2 Command:** `dbt`
+
+95. **User Query:** Rename a variable in the current function from `var1` to `counter`.
+    **radare2 Command:** `afv=counter var1 @ sym.current_function`
+
+96. **User Query:** Show all virtual table entries in the binary.
+    **radare2 Command:** `av`
+
+97. **User Query:** How do I list all basic block information for the function `init`?
+    **radare2 Command:** `afb @ sym.init`
+
+98. **User Query:** Write the disassembly of the `init` function to a file named `init.asm`.
+    **radare2 Command:** `pdf @ sym.init > init.asm`
+
+99. **User Query:** I want to see all strings referenced by the binary in a table format.
+    **radare2 Command:** `izj > strings.json`
+
+100. **User Query:** How do I visualize the data reference graph of the binary?
+     **radare2 Command:** `agd.d`
+
+---
+
+These examples should provide a comprehensive starting point for using radare2 effectively. As you become more familiar with the tool, you can explore more advanced commands and customize your analysis further.
