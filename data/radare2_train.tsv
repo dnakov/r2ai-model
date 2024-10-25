@@ -1,96 +1,115 @@
 q	a
-How do I find all memory references to a register like RAX?	/ar rax
-I want to see what syscalls this program makes, what command?	/as
-How can I list all the flags in the binary?	f
-I need to see the stack variables in a function, what do I type?	afv
-How do I search for all function calls in the code?	/c call
-I want to see the file's entropy graph, what command?	p=e
-How can I find the size of a function?	afi
-I need to set a breakpoint at an address, what's the command?	db 0x<address>
-How do I display the disassembly in graph mode?	ag
-I want to see all sections marked as executable, what should I type?	iS~+x
-How can I find all strings containing 'password'?	iz~password
-What command shows me the program's imports and exports?	iiq;iE
-How do I show only the raw assembly instructions without addresses?	pdr
-I want to see the binary information in JSON format, what command?	ij
-How can I list all functions that call malloc?	axt sym.imp.malloc
-I need to see what's in the PLT section, what do I type?	iS~plt:0
-How do I display the bytes of a specific section?	pf @ section.<name>
-I want to find all unconditional jumps in the code, what command?	/c jmp
-How can I see what CPU architecture this binary is for?	i~arch
-I need to see all strings that look like URLs, what should I type?	iz~http
-How do I see what functions have loops in them?	afll
-I want to find all 'mov' instructions that use the RBP register, what do I type?	/am mov rbp
-How can I see what external functions this binary calls?	afl~imp.
-I need to see the raw bytes of the current function, what command?	prf
-How do I check if a specific address contains code or data?	fd @ 0x<address>
-I want to see all function arguments and local variables, what should I type?	afv*
-How can I find all places where the stack is being adjusted?	/am sub rsp
-I need to see what sections contain zeroes, what command?	iz~00
-How do I analyze all the switch statements in a function?	afj
-I want to see what bytes are modified during program execution, what command?	wcr
-How can I find all function epilogues?	/am leave
-I need to see the binary's hash values, what do I type?	it
-How do I check for crypto-related constants in the code?	/ac
-I want to see all memory comparison instructions, what command?	/am cmp
-How can I list all functions sorted by size?	aflsa
-I need to find where certain bytes are referenced, what do I type?	ax- @ 0x<address>
-How do I see what strings are used in a specific function?	pdf~str.
-I want to find all null-terminated strings, what command?	izz
-How can I see all the jump tables in a function?	afij
-I need to find potential backdoors or hidden functionality, what should I type?	/aj backdoor
-How do I find all memory writes to the stack?	/am mov [rsp
-I want to see what functions return void, how can I do that?	afl~ret.void
-How can I list all functions that have more than 100 instructions?	aflc 100
-I need to find all xor operations in the code, what command?	/am xor
-How do I see what data is in the .data section?	px @ section..data
-I want to find all memory allocations larger than 1000 bytes, what should I type?	/ad ~1000
-How can I see all the function names that look like constructors?	afl~_init
-I need to find where exception handling code is located, what command?	afl~exception
-How do I see what functions use floating-point operations?	/am movsd
-I want to find all places where registers are pushed onto the stack, what command?	/am push
-How can I see what functions modify global variables?	axg
-I need to find all system calls with specific numbers, what do I type?	/as~=1
-How do I see what functions have the most cross-references?	axt @@ fcn*~?
-I want to find all places where memory is being compared, what command?	/am cmp [r
-How can I see what functions are using encryption-related instructions?	/am aes
-I need to find all places where strings are being built, what do I type?	/am lea rcx, str.
-How do I see what functions are called only once?	afl~call:1
-I want to find all places where memory is being zeroed, what command?	/am xor eax, eax
-How can I see what functions contain anti-debugging checks?	/am int3
-I need to find all places where the program is doing file operations, what should I type?	axt @@ sym.imp.fopen sym.imp.fread sym.imp.fwrite
-How do I find all functions that don't return (like exit)?	afl~noreturn
-I want to see all memory addresses where 'printf' is called, what command?	axt sym.imp.printf
-How can I find potential buffer overflow vulnerabilities?	/am strcpy
-I need to see all conditional jumps in a function, what do I type?	pdf~je,jne,jg,jl
-How do I find all functions that use network-related calls?	axt @@ sym.imp.socket sym.imp.connect sym.imp.bind
-I want to see what's stored in all CPU registers at this point, what command?	dr
-How can I find all places where environment variables are accessed?	axt sym.imp.getenv
-I need to see if there are any hidden code sections, what should I type?	iS~hidden
-How do I find all places where the program is reading user input?	axt @@ sym.imp.scanf sym.imp.fgets sym.imp.gets
-I want to see all functions that handle signals, what command?	afl~signal
-How can I find where the command line arguments are processed?	pdf @main~argc
-I need to see all memory regions marked as writable, what do I type?	iS~+w
-How do I find all places where the program is doing math operations?	/am mul,div,add,sub
-I want to see what functions are the largest in the program, what command?	afls
-How can I find all places where memory is dynamically allocated?	axt @@ sym.imp.malloc sym.imp.calloc sym.imp.realloc
-I need to see what functions might be doing string operations, what do I type?	axt @@ sym.imp.strcpy sym.imp.strcat sym.imp.strlen
-How do I find all places where the program might crash?	/am ud2
-I want to see what functions are called during program initialization, what command?	afl~_init,_start
-How can I find all places where data is being written to files?	axt @@ sym.imp.fprintf sym.imp.fwrite sym.imp.fputs
-I need to find all functions that might be handling errors, what should I type?	afl~error,handle,exception
-How do I find what functions use both malloc and free?	axt @@ sym.imp.malloc sym.imp.free~&
-I want to see all instructions that change the stack pointer, what command?	/am rsp
-How can I find all places where the program is using random numbers?	axt @@ sym.imp.rand sym.imp.random
-I need to see what functions might be doing password checks, what do I type?	axt @@ sym.imp.strcmp sym.imp.strncmp
-How do I find all places where data is being encrypted?	axt @@ sym.imp.encrypt sym.imp.EVP_Encrypt
-I want to see all functions that don't have any calls to other functions, what command?	aflm
-How can I find all places where the program is using threads?	axt @@ sym.imp.pthread_create
-I need to see what functions are recursive, what should I type?	afxr
-How do I find all places where the program is doing bitwise operations?	/am and,or,xor,shl,shr
-I want to see what functions might be handling JSON data, what command?	iz~json
-How can I find all places where the program is using shared memory?	axt @@ sym.imp.shm_open sym.imp.mmap
-I need to see what functions are only called during cleanup, what do I type?	afl~_fini,cleanup
-How do I find all places where the program might be doing network encryption?	axt @@ sym.imp.SSL_read sym.imp.SSL_write
-I want to see what functions are using inline assembly, what command?	/am __asm
-How can I find all places where the program is checking permissions?	axt @@ sym.imp.chmod sym.imp.access
+How do I find all functions that handle signals?	axt@@=sym.imp.signal,sym.imp.sigaction
+Where can I see all the constant numbers used in this program?	afl,refs/cols,:quiet~0x
+How do I find functions that might be handling JSON data?	iz~json,parse,stringify
+I want to see all the places where memory is being freed. Where are they?	axt @sym.imp.free
+How can I find functions that use regular expressions?	axt@@=sym.imp.regex,sym.imp.regcomp
+Where are all the places this program does string comparisons?	axt@@=sym.imp.strcmp,sym.imp.strncmp
+How do I find all the cross-references to a specific function?	axf @sym.main
+I want to see what SSL/encryption functions this program uses	afl~ssl,tls,encrypt
+How can I find all the places where arrays are accessed?	/at mov dword [~array
+Where does this program handle XML data?	iz~xml,xpath
+How do I find all functions that do mathematical calculations?	/at mul,div,add,sub @e:search.in=anal.fcn
+I want to see all the network ports this program might use	iz~port=[0-9]{1,5}
+How can I find all the exception handling code?	afl~except,catch,throw
+Where are all the places this program writes to stdout?	axt@@=sym.imp.printf,sym.imp.puts
+How do I find functions that might be processing command line args?	axt@@=sym.imp.argc,sym.imp.argv
+I want to see all the string constants in the program	iz
+How can I find all the places where threads are created?	axt@@=sym.imp.pthread_create
+Where does this program do base64 encoding/decoding?	afl~base64,encode,decode
+How do I find all the places where files are closed?	axt @sym.imp.fclose
+I want to see all the places where environment variables are set	axt @sym.imp.setenv
+How can I find all the switch-case statements?	af;agf~switch
+Where are all the places this program checks permissions?	axt@@=sym.imp.access,sym.imp.chmod
+How do I find functions that use hash tables?	afl~hash,table,map
+I want to see all the places where directories are accessed	axt@@=sym.imp.opendir,sym.imp.readdir
+How can I find all the places where time functions are used?	axt@@=sym.imp.time,sym.imp.gettimeofday
+Where does this program use random numbers?	axt@@=sym.imp.rand,sym.imp.random
+How do I find all the places where paths are manipulated?	axt@@=sym.imp.realpath,sym.imp.basename
+I want to see all the places where processes are spawned	axt@@=sym.imp.fork,sym.imp.execve
+How can I find all the places where URLs are processed?	iz~http://,https://,ftp://
+Where are all the places this program does sorting?	axt@@=sym.imp.qsort,sym.imp.sort
+How do I find all functions that handle mouse input?	afl~mouse,click,cursor
+Where are all the places this program reads from stdin?	axt@@=sym.imp.getchar,sym.imp.fgets
+How can I find all the SQL queries in the program?	iz~SELECT,INSERT,UPDATE,DELETE
+I want to see all the places where shared libraries are loaded	axt@@=sym.imp.dlopen,sym.imp.LoadLibrary
+How do I find functions that deal with timestamps?	axt@@=sym.imp.mktime,sym.imp.strftime
+Where are all the places this program uses mutexes?	axt@@=sym.imp.pthread_mutex_lock,sym.imp.pthread_mutex_unlock
+How can I find all the places where audio is processed?	afl~audio,sound,wav
+I want to see all the places where compression happens	afl~compress,zip,gzip
+How do I find functions that handle keyboard events?	afl~keyboard,keypress,keydown
+Where does this program do Unicode processing?	axt@@=sym.imp.wcstombs,sym.imp.mbstowcs
+How can I find all the places where checksums are calculated?	afl~checksum,crc,md5
+I want to see all the places where semaphores are used	axt@@=sym.imp.sem_wait,sym.imp.sem_post
+How do I find functions that work with configuration files?	afl~config,conf,ini
+Where are all the places this program uses sockets?	axt@@=sym.imp.socket,sym.imp.bind,sym.imp.listen
+How can I find all the places where images are processed?	afl~image,png,jpeg
+I want to see all the places where child processes are waited for	axt@@=sym.imp.wait,sym.imp.waitpid
+How do I find functions that handle window management?	afl~window,gui,display
+Where does this program do memory mapping?	axt@@=sym.imp.mmap,sym.imp.munmap
+How can I find all the places where timers are set?	axt@@=sym.imp.alarm,sym.imp.setitimer
+I want to see all the places where pipes are created	axt@@=sym.imp.pipe,sym.imp.mkfifo
+How do I find functions that handle DNS lookups?	axt@@=sym.imp.gethostbyname,sym.imp.getaddrinfo
+Where are all the places this program does base conversion?	afl~atoi,atof,itoa
+How can I find all the places where localization is used?	axt@@=sym.imp.setlocale,sym.imp.gettext
+I want to see all the places where user IDs are checked	axt@@=sym.imp.getuid,sym.imp.geteuid
+How do I find functions that handle asynchronous I/O?	afl~async,aio,select
+Where does this program generate or validate certificates?	afl~cert,x509,ssl
+How can I find all the places where dates are parsed?	afl~date,calendar,time
+I want to see all the places where environment paths are used	axt @sym.imp.getenv~PATH
+How do I find functions that handle process priorities?	axt@@=sym.imp.nice,sym.imp.setpriority
+Where are all the places this program uses shared memory?	axt@@=sym.imp.shmget,sym.imp.shmat
+How do I find all functions that process XML data?	afl~xml,xpath,dom
+Where are all the places this program validates email addresses?	iz~email,@,validate
+How can I find all memory leak detection code?	axt@@=sym.imp.valgrind,sym.imp.mtrace
+I want to see all the places where signals are blocked	axt@@=sym.imp.sigprocmask,sym.imp.sigblock
+How do I find functions that handle UTF-8 encoding?	afl~utf,unicode,mb
+Where does this program parse command line flags?	axt@@=sym.imp.getopt,sym.imp.argparse
+How can I find all the places where floating point math is used?	/at fld,fst,fadd,fmul
+I want to see all the places where temporary directories are created	axt@@=sym.imp.mkdtemp,sym.imp.tmpdir
+How do I find functions that handle HTTP requests?	afl~http,request,GET,POST
+Where are all the places this program does string formatting?	axt@@=sym.imp.sprintf,sym.imp.snprintf
+How can I find all the places where files are locked?	axt@@=sym.imp.flock,sym.imp.lockf
+I want to see all the places where process groups are managed	axt@@=sym.imp.setpgid,sym.imp.getpgrp
+How do I find functions that handle zip files?	afl~zip,archive,compress
+Where does this program verify checksums?	afl~verify,check,sum
+How can I find all the places where binary data is serialized?	afl~serialize,marshal,pack
+I want to see all the places where resource limits are set	axt@@=sym.imp.setrlimit,sym.imp.getrlimit
+How do I find functions that handle IPC?	afl~ipc,message,queue
+Where are all the places this program generates random data?	axt@@=sym.imp.rand,sym.imp.urandom
+How can I find all the places where directory entries are read?	axt@@=sym.imp.readdir,sym.imp.scandir
+I want to see all the places where symbolic links are followed	axt@@=sym.imp.readlink,sym.imp.symlink
+How do I find functions that handle matrix operations?	afl~matrix,multiply,transform
+Where does this program validate user input?	afl~validate,sanitize,check
+How can I find all the places where system information is queried?	axt@@=sym.imp.sysinfo,sym.imp.uname
+I want to see all the places where process masks are set	axt@@=sym.imp.umask,sym.imp.setmask
+How do I find functions that handle memory pools?	afl~pool,allocator,heap
+Where are all the places this program uses message digests?	afl~digest,hash,sha
+How can I find all the places where file permissions are changed?	axt@@=sym.imp.chmod,sym.imp.chown
+I want to see all the places where terminal settings are modified	axt@@=sym.imp.tcsetattr,sym.imp.ioctl
+How do I find functions that handle protocol buffers?	afl~protobuf,serialize,message
+Where does this program do bitmap operations?	afl~bitmap,bmp,mask
+How do I find all functions that do Base32 encoding?	afl~base32,encode,decode
+Where are all the places this program handles MIME types?	iz~mime,content-type
+How can I find all interrupt handler functions?	afl~interrupt,handler,isr
+I want to see all the places where spinlocks are used	axt@@=sym.imp.pthread_spin_lock,sym.imp.pthread_spin_unlock
+How do I find functions that parse JSON Web Tokens?	iz~jwt,token,bearer
+Where does this program handle USB devices?	afl~usb,device,endpoint
+How can I find all the places where process affinity is set?	axt@@=sym.imp.sched_setaffinity
+I want to see all the places where DNS records are queried	axt@@=sym.imp.res_query,sym.imp.dns_lookup
+How do I find functions that handle OAuth authentication?	iz~oauth,token,auth
+Where are all the places this program uses LDAP?	afl~ldap,directory,bind
+How can I find all the places where graphics are rendered?	afl~render,draw,canvas
+I want to see all the places where virtual memory is managed	axt@@=sym.imp.mprotect,sym.imp.madvise
+How do I find functions that handle WebSocket connections?	iz~websocket,ws://
+Where does this program parse CSV data?	afl~csv,comma,parse
+How can I find all the places where system logs are written?	axt@@=sym.imp.syslog,sym.imp.openlog
+I want to see all the places where atomic operations are used	/at lock xadd,xchg
+How do I find functions that handle SMTP protocol?	iz~smtp,mail,ehlo
+Where are all the places this program uses vector operations?	/at vmovdqu,vaddps
+How can I find all the places where hardware is detected?	afl~detect,probe,hardware
+I want to see all the places where sessions are managed	iz~session,cookie,token
+How do I find functions that handle RSS feeds?	iz~rss,feed,xml
+Where does this program validate digital signatures?	afl~signature,verify,sign
+How can I find all the places where caches are managed?	afl~cache,flush,invalidate
+I want to see all the places where process priorities are changed	axt@@=sym.imp.setpriority,sym.imp.nice

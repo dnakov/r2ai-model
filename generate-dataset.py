@@ -24,7 +24,7 @@ def generate_pair():
             model=model,
             max_tokens=max_tokens,
             temperature=temperature,
-            system=prompt,
+            system=prompt + "\n\n<examples>\n" + json.dumps(examples()) + "\n</examples>",
             messages=messages
         )
         print(response)        
@@ -102,7 +102,11 @@ def validate_dataset(file_path='data/radare2_train.tsv'):
     # Check for duplicates
     duplicates = df.duplicated().sum()
     print(f"Duplicate entries: {duplicates}")
-    
+
+# read data/radare2_ok.tsv and convert to json array    
+def examples():
+    df = pd.read_csv('data/radare2_ok.tsv', sep='\t')
+    return df.to_dict('records')
 
 if __name__ == "__main__":
     # Generate dataset
