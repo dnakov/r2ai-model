@@ -1,0 +1,26 @@
+q	a
+I think there's a jump table in this function. How can I find its location?	CCf~cases
+How to determine the switch table destinations?	afb.
+How do I find out what type of file this is? Like if it's ELF or PE or something?	i~^format[1]
+I want to see all the loops in a function. Is there a way to highlight or find them?	/abf
+I want to find places where the program might be using command line arguments. Where would I look?	axt@@=reloc.optind reloc.optarg sym.imp.getopt_long sym.imp.getopt
+How do I see what's in the data section? I want to look at initialized variables.	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+I'm trying to find where malloc is called. How can I see references to memory allocation?	axt @sym.malloc
+How do I check if this binary is stripped? I want to see if it has debug symbols.	i~stripped
+I want to see all the network-related functions this program might use. How do I search for those?	afl~socket,connect,bind
+How can I find all the comparison instructions in a function? Like cmp or test	/at cmp @e:search.in=anal.fcn
+I want to find all functions that are bigger than 100 bytes. How can I do that?	afl,size/gt/100,name/cols,:quiet
+How do I see what libraries this program needs to run? Like its dependencies?	il
+How can I see if there are any hidden or suspicious strings in the binary?	izz
+How do I check what CPU architecture this binary is compiled for?	i~arch,bits
+I want to find all the places where a global variable is being used. How do I do that?	axt@address
+I want to look at the biggest functions in the program	afl,size/sort/dec,./head/10,addr/cols/size/name
+How do I sort functions by size?	aflss
+I want to see what math operations a function is doing. How do I find arithmetic instructions?	/at add,sub,mul,div@e:search.in=anal.fcn
+I want to see what binary operations a function is doing. How do I find logic binary instructions?	/at shl,shr,rol,ror,sal,sar,xor@e:search.in=anal.fcn
+I want to see if there are any URLs addresses hidden in the binary. How do I search?	iz~http://,https://,www
+How can I find all the switch statements in a function?	pdr~switch
+I want to see if this program creates any child processes. How do I find fork calls?	axt @sym.fork
+I want to see all the places where data is being copied in memory. How do I find memcpy calls?	axt @sym.memcpy
+I want to see what happens right after the program starts. Where's the initialization code?	pdf@entry0
+How do I find all the functions that use floating-point math?	afn.@@=`/af fpu~[0]`
