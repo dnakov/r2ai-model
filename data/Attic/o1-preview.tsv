@@ -1,0 +1,101 @@
+q	a
+How can I disassemble the function at address 0x401000?	pdf @ 0x401000
+I want to search for the string "password" in the binary.	/ password
+How can I list all functions in the binary?	afl
+I need to set a breakpoint at address 0x400123.	db 0x400123
+How do I step over the next instruction during debugging?	dso
+How can I view the hexdump of 64 bytes at the current position?	px 64
+I want to write the value 0x90 at address 0x400500.	wx 90 @ 0x400500
+How can I analyze all functions in the binary?	aa
+I want to see the list of strings in the binary.	iz
+How can I display the registers while debugging?	dr
+How do I search for the opcode "mov eax, ebx"?	/a mov eax, ebx
+I need to analyze the function at address 0x401500.	af @ 0x401500
+How can I write the string "Hello" at the current position?	w Hello
+How can I display information about the opened file?	i
+How do I open a file called "test.bin" in radare2?	o test.bin
+I want to find all references to the function named 'main'.	axt sym.main
+How can I list all imports of the binary?	ii
+How do I assemble the instruction "nop" at the current position?	wa nop
+I need to set the block size to 128 bytes.	b 128
+How can I show all flags in the binary?	f
+How do I rename the function at address 0x401000 to "my_func"?	afn my_func @ 0x401000
+I want to dump the disassembly of the current function into a file.	pdf > function.asm
+How can I view the call graph of the binary?	agC
+I need to find the base address of the binary.	iI
+How can I search for the hexadecimal pattern "DE AD BE EF"?	/x deadbeef
+How do I display the entropy of the file?	p=e
+I want to see the comments at the current address.	CC.
+How can I set a flag at address 0x400123 called "my_flag"?	f my_flag @ 0x400123
+How do I display the stack trace?	dbt
+How can I dump the hexadecimal values of the next 256 bytes into a file?	px 256 > dump.hex
+I want to list all cross-references to address 0x401000.	axt @ 0x401000
+How do I change the architecture to x86?	e asm.arch = x86
+How can I evaluate the expression 0x400 + 0x200?	?v 0x400 + 0x200
+I need to see the help for the 'af' command.	af?
+How can I print the value of the EAX register?	dr eax
+I want to view the content of memory at address 0x500000.	px @ 0x500000
+How do I search for sections with high entropy?	/s
+How can I list all breakpoints I've set?	db
+I need to continue execution until the next syscall.	dcs
+How can I list all the threads of the process?	dp
+How do I see the comments in the disassembly view?	e asm.comments = true
+I want to analyze the current function.	af
+How can I rename a flag from 'flag.old' to 'flag.new'?	fr flag.old flag.new
+I need to change the endianness to big endian.	e cfg.bigendian = true
+How do I continue execution until the function 'main' is called?	dcu main
+How can I show the function calls from the current function?	agc
+I want to see the usage of the 'px' command.	px?
+How can I search for a wide string "hello"?	/w hello
+How do I list all plugins available in radare2?	L
+I need to disassemble 10 instructions.	pd 10
+How can I enable the instruction cache?	e io.cache = true
+I want to quit radare2.	q
+How do I mark the current offset for later use?	f my_mark
+How can I return to the offset I previously marked?	s my_mark
+I need to write assembly instructions into the binary.	wa [instruction]
+How do I undo the last seek operation?	s-
+How can I see the data types in the binary?	ts
+I want to dump all the strings into a file.	iz > strings.txt
+How do I compare two files?	cmp file1 file2
+How can I open the visual mode?	V
+I need to print the call stack.	dbt
+How do I generate shellcode for a 'nop' instruction?	g nop
+How can I set a hardware breakpoint on write at address 0x400800?	dbw 0x400800
+I want to see the value of a memory address in decimal.	?v [addr]
+How do I list all the sections in the binary?	iS
+How can I disable color output in radare2?	e scr.color = false
+I need to list all the variables in the current function.	afv
+How can I set a comment at the current address?	CC [comment text]
+I want to load types from a C header file.	to [header.h]
+How do I step into the next instruction during debugging?	dsi
+I need to display the current function in graph view.	VV
+How can I search for code that accesses the EAX register?	pd 100 ~ eax
+How do I set the variable 'foo' to value 'bar'?	e foo = bar
+I need to see what commands I've run in radare2.	!
+How can I find functions that call 'main'?	axf sym.main
+How do I list all the symbols in the binary?	is
+I want to view the hexadecimal representation of the next 64 bytes.	p8 64
+How can I open a shell within radare2?	sh
+How do I define a structure type in radare2?	td struct myStruct { int a; char b; }
+I need to save the current project.	Ps
+How do I enable debug mode on the current file?	ood
+How can I see if a function never returns?	tn @ [function address]
+How can I set a variable to a specific type?	afvt [varname] [new_type]
+I want to see the exports of the binary.	iE
+How do I search for a string ignoring case?	/i [string]
+How can I create a new flag space?	fs+ [flagspace_name]
+I need to load a radare2 plugin.	L [pluginname]
+How do I check the entropy of data at address 0x4000?	p=e @ 0x4000
+How can I print the immediate value of the current instruction?	ao~val
+I want to see the environment variables used by radare2.	en
+How do I display the timestamp as a human-readable date?	pt
+How can I set an alias for a function?	fa [name] [alias]
+How can I disassemble the next 20 bytes as ARM code?	e asm.arch = arm; pd 20
+I need help understanding the 'axt' command.	axt?
+How do I set a breakpoint that triggers on a syscall?	dbs
+How can I list all the classes in an Objective-C binary?	ic
+I want to find dead code in the binary.	aae
+How do I perform a basic automatic analysis?	aaa
+How can I find and list all magic headers in the binary?	/m
+I need to calculate the SHA256 hash of the current block.	ph sha256
