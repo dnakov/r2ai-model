@@ -1,0 +1,97 @@
+q	a
+What command shows all functions in the binary?	afl
+How can I analyze all the functions in a binary?	aa
+How do I list all sections in the binary?	iS
+What command disassembles 10 instructions at the current address?	pd 10
+How can I get the architecture and OS info of the binary?	i
+How do I see all imports in the binary?	ii
+What command lists all the strings in the binary?	iz
+How can I seek to the entry point of the binary?	s entry0
+How do I display the control flow graph for the current function?	agf
+What command disassembles the current function?	pdf
+How do I find functions that contain the "main" symbol?	/c main
+How can I print a hexdump of 64 bytes at the current address?	px 64
+What command loads a script file in radare2?	. scriptfile
+How can I display information on libraries required by the binary?	il
+How do I start debugging a binary in radare2?	ood binaryfile
+What command executes a single instruction in debugging mode?	ds
+How do I set a breakpoint at a specific address?	db address
+How can I continue execution until the next breakpoint?	dc
+What command quits radare2?	q
+How can I list all symbols in the binary?	is
+What command searches for a specific hex pattern?	/x hexpattern
+How do I show all segments in the binary?	iS
+What command sets the architecture to x86?	e asm.arch=x86
+How can I display registers in debugging mode?	dr
+How do I show a hexdump of the entire data segment?	px @ data
+What command lists all flag space names?	f*
+How can I view all comments in the current function?	CC*
+How do I show the current instruction pointer?	dr?PC
+What command lists all classes and fields (r2frida)?	:ic
+How do I display the disassembly in visual mode?	V
+How can I see the list of commands in the shell?	?
+What command shows detailed memory mappings?	dm
+How do I find the calling convention of the binary?	e anal.cc
+How can I get an ASCII view of the bytes at the current address?	pxa
+What command sets the analysis depth to a specific value?	e anal.depth=value
+How do I follow conditional jumps in the analysis?	e anal.jmp.cref=true
+What command sets the value for the data segment register?	e anal.ds=value
+How can I analyze the jump tables in the binary?	e anal.jmp.tbl=true
+How do I run a specific script when radare2 starts?	r2 -i scriptfile
+What command displays all functions with their offsets?	aflj
+How do I display flags in JSON format?	fj
+How can I print zero-terminated strings in memory?	pz
+What command shows all exported functions?	iE
+How do I show the list of imports with JSON output?	iij
+What command saves the current radare2 session?	Ps
+How do I restore a radare2 session from a project file?	Po
+How can I convert hexadecimal to ASCII?	pxa
+What command prints the offset as hexadecimal?	pxh
+How do I seek to a specific offset within the binary?	s offset
+What command changes the endianess of the disassembly?	e asm.endian
+How can I remove all breakpoints in the debugger?	db-
+What command prints the current stack pointer?	dr?SP
+How do I change the maximum block size for disassembly?	e asm.bytes=64
+What command sets a comment at the current location?	CC comment
+How do I display an ASCII art graph of the current function?	ag
+What command disassembles a function in radare2?	pdf
+How can I show the list of current registers?	dr
+What command clears all flags in radare2?	f-*
+How do I specify a calling convention for system calls?	e anal.syscc
+What command prints a fortune message in radare2?	fo
+How can I change the verbosity of analysis warnings?	e anal.verbose=true
+What command lists all string references?	axt
+How do I specify a temporary file size limit?	e io.cache.size
+What command runs ESIL emulation?	ae
+How can I quit the radare2 shell?	q
+What command prints binary bytes as instructions?	pi
+How do I create a new flag in radare2?	f flagname
+What command removes a specific flag?	f- flagname
+How can I add a visual comment at a specific address?	CC address
+What command displays hex values in pairs?	p8
+How do I load a binary file in radare2?	r2 filename
+What command enables debugging with ESIL?	ae
+How can I set an alias for a specific command?	e cmd.alias
+What command writes a value to memory at a given address?	wv value @ address
+How do I execute a command with system permissions?	! command
+What command prints a list of all segments?	iSS
+How can I seek to the end of the binary?	s $
+What command shows the list of variables in the binary?	av
+How do I seek to a specific symbol in radare2?	s sym.symbolname
+What command prints 32-bit values in little endian?	pd
+How can I dump memory to a file?	wtf dumpfile
+What command allows you to resize a file in radare2?	r resize
+How do I add a note to the current address?	CC note
+What command views all API symbols in the binary?	ie
+How can I show metadata of a file?	file filedata
+What command shows a list of currently used plugins?	L
+How do I list all available commands for help?	?
+What command adds a format flag to memory?	Cf
+How can I initialize the binary analysis engine?	aa
+What command maps a new file region in memory?	om
+How do I write to a specific offset?	wv value
+What command creates a new project?	Po projectname
+How can I retrieve the number of functions?	afl?
+What command runs a predefined set of commands?	~
+How do I execute a system shell command in radare2?	! shellcommand
+What command enables byte disassembly?	pd
