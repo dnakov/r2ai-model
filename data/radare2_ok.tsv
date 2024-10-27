@@ -24,3 +24,86 @@ I want to see if this program creates any child processes. How do I find fork ca
 I want to see all the places where data is being copied in memory. How do I find memcpy calls?	axt @sym.memcpy
 I want to see what happens right after the program starts. Where's the initialization code?	pdf@entry0
 How do I find all the functions that use floating-point math?	afn.@@=`/af fpu~[0]`
+I want to analyze all functions in the binary	aaa
+How do I seek to the entry point of the binary?	s entry0
+Disassemble 20 instructions starting from the current address	pd 20
+How do I list all functions found in the analysis?	afl
+I want to see the disassembly of the `main` function	pdf @ main
+How can I print the contents at the address stored in the `esp` register?	px 200 @r:esp
+Dump the `main` function's buffer as a C byte array to `main.c`	pcf @ main > main.c
+Replace every symbol with a RET instruction.	wao ret0 @@ sym.*
+NOP the current instruction	wao nop
+Grep for instructions that use the `eax` register within the first 2000 instructions.	pd 2000~eax
+Step through the debugger 10 times.	10ds
+Show me 20 hexadecimal bytes at the stack pointer.	px 20 @r:SP
+How do I rename the function at address `0x080485a5` to `new_func`?	afn new_func @ 0x080485a5
+I want to set a breakpoint at the `main` function.	db sym.main
+Continue execution in the debugger until the next breakpoint.	dc
+Show all imported functions in JSON format.	iij
+List all sections of the binary.	iS
+Search for the string "password" in the binary.	/ password
+How do I list all loaded types (structs, enums, ..)?	t
+Define a new struct named `MyStruct` with a `char a` and `int b`.	'td struct MyStruct {char a; int b;};
+Calculate the size of the string at address `0x080487cf`	ps@0x100007d58~?.
+Show the control flow graph of the `main` function in DOT format.	agfc @ sym.main`
+Export the list of functions to a JSON file.	aflj > functions.json
+How do I visualize the call graph of the binary?	agcd`
+Search for syscall instructions in the binary	/as
+Show all environment variables set by radare2	%
+How do I execute the shell command `ls` from within radare2?	!ls
+Pipe the disassembly of `main` to `grep` for the `call` instruction.	pdf @ sym.main | grep call
+How can I load FLIRT signatures from `libc.flirt`?	zfs libc.flirt
+How can I load Radare2 function signatures from `libc.sdb`?	zo libc.sdb;z/
+Generate a signature for the `entry0` function.	zaf entry0
+List all currently loaded signatures in JSON format.	zj
+Display the virtual address corresponding to the physical address `0x4000`.	?P 0x4000
+Display the physical address corresponding to the virtual address `0x80585a5`.	?P 0x80485a5
+How do I view the current seek offset?	s
+How do I view the current seek offset in decimal?	?vi $$
+I want to list all loaded enums.	te
+Add a comment "Initialize variables" at address `0x08048648`.	'@0x08048648'CC Initialize variables
+Remove all comments from the binary.	CC-*
+Show the comments in JSON format.	CCj
+How do I list all loaded core plugins?	Lc
+How do I list all loaded bin parser plugins?	Lb
+How do I list all loaded arch plugins?	La
+Mount an ext2 filesystem located at offset 0 to `/mnt`.	m /mnt ext2 0
+List all current mount points.	m
+Push the current directory onto the stack and change to `/tmp`.	pushd /tmp
+Pop the last directory from the stack and change back to it.	popd
+I want to visualize the basic blocks of the `foo` function.	afb @ sym.foo
+Search for the hexadecimal pattern `0x90 0x90 0x90` in the binary.	/x 909090
+How do I decode a base64 string `SGVsbG8=` and write it to address `0x08049000`?	w6e SGVsbG8= @ 0x08049000
+List all loaded union types.	tu
+How can I display the stack frames or backtrace in the debugger?	dbt
+Rename the symbol `fcn.08048648` to `init`.	fr init fcn.08048648
+Show the sizes of all functions in the binary.	afl,size/cols/name
+How do I check the endianness of the binary?	e arch.endian
+Set the architecture to ARM.	e asm.arch=arm
+How do I list all imported libraries?	il
+Find all references to the function `printf`.	axt sym.imp.printf
+Visualize the control flow graph of the `main` function using Graphviz.	agfd main > cfg.dot
+Convert a string into a list of bytes	?x hello
+Show all reachable functions from the `main` function.	aflm.@main
+How do I set the stack frame size for the current function to 0x30?	afS 0x30
+Create a new flag named `myFlag` at address `0x08049000` with size 8.	f myFlag 8 = 0x08049000`
+List all flags in the current flagspace.	f
+List all flag spaces	fs
+Remove the flag named `oldFlag`.	f-oldFlag
+How can I export all current flags to a file?	fj > flags.json
+How can I export all current flags as radare2 comments?	f* > flags.r2
+Import flags from a an r2 script	. flags.r2file named `import_flags.json`.
+Show the value of the register `eax`.	dr eax
+Dump the memory from address `0x08048000` to `0x08049000` into a file named `dump.bin`.	wtf dump.bin 0x1000 @ 0x8048000
+List all available calling conventions for the current architecture.	afcl
+How do I search for all conditional jumps in the binary?	/at jmp
+Reload the current binary in read-write	o+
+Show the current file's sections with their permissions.	iS
+How do I list all register-based arguments of a function?	afvr @ sym.main
+Execute a script named `fix_flags.r2`.	. fix_flags.r2
+Search for hexadecimal bytes `0xCAFEBABE` inside the binary.	/v4 0xCAFEBABE
+Visualize the call graph in an interactive ASCII art view.	agcv
+Change the endianness to big endian.	e cfg.bigendian=true
+Compare the current binary with another binary `another.exe`.	!radiff2 $R2_FILE another.exe
+How do I display the stack trace in the debugger?	dbt
+Rename a variable in the current function from `var1` to `counter`.	afvn counter
