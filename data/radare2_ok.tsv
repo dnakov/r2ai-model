@@ -89,6 +89,7 @@ How do I set the stack frame size for the current function to 0x30?	afS 0x30
 Create a new flag named `myFlag` at address `0x08049000` with size 8.	f myFlag 8 = 0x08049000`
 List all flags in the current flagspace.	f
 List all flag spaces	fs
+How do I create a new flag named `hint.foo` in the address 0x8123?	f hint.foo=0x8123
 Remove the flag named `oldFlag`.	f-oldFlag
 How can I export all current flags to a file?	fj > flags.json
 How can I export all current flags as radare2 comments?	f* > flags.r2
@@ -107,3 +108,111 @@ Change the endianness to big endian.	e cfg.bigendian=true
 Compare the current binary with another binary `another.exe`.	!radiff2 $R2_FILE another.exe
 How do I display the stack trace in the debugger?	dbt
 Rename a variable in the current function from `var1` to `counter`.	afvn counter
+How do you calculate the checksum of a basic block?	ph crc32 $Fs
+How do you find the hexadecimal pattern a0cc33?	/x a0cc33
+Disable colors in the commands output.	e scr.color=0
+How to display the local variables in the current function?	afv
+Change the program counter to 0x5000	dr PC=0x5000
+Initialize the stack and register state for emulation	aeim
+How can I analyze all the symbols in a binary?	aa
+Which option should I set to analyze consecutive functions to improve code coverage?	e anal.hasnext=true
+What target operating system (OS) is the current binary suposed to run?	e~^os[1]
+How do I see all imports in the binary?	ii
+What command lists all the strings in the binary?	iz
+How do I change the current address 12 instructions or opcodes forward?	so 12
+How do I display the control flow graph for the current function?	agf
+What command disassembles the current function?	pdf
+How can I print a hexdump of 64 bytes at the current address?	px 64
+How to scan and analyze the binary for references to the sym.imp.puts symbol?	/r sym.imp.puts
+How to start debugging the current binary?	ood
+What command executes a single instruction in debugging mode?	ds
+What command quits radare2?	q
+How can I list all symbols in the binary?	is
+How can I display registers in debugging mode?	dr
+What command lists all classes and methods?	ic
+How do I show the current instruction pointer	dr?PC
+What command shows detailed memory mappings when debugging?	dm
+How do I find out the current calling convention of the binary?	e anal.cc
+How do I display flags in JSON format?	fj
+How can I print zero-terminated strings in memory?	ps
+What command shows all exported symbols?	iE
+How do I show the list of imports with JSON output?	iij
+How can I remove all breakpoints in the debugger?	db-*
+How do I remove all flags?	f-*
+What command prints the current stack pointer?	dr?SP
+How do I change the burrent block size to 512 bytes?	b 512
+How to extend the file size with 128 bytes more?	r+128
+How do I chang the size of the file to 512KB?	r 512K
+What command prints a fortune message in radare2?	fo
+How to perform a step into using the ESIL emulation?	aes
+What command disassembles the hexadecimal bytes `90c3` for x86-32?	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+How to nop one instruction in the current address?	wao nop @ $$
+What command writes the 32bit value 0x123 in little endian to the given address?	wv4 0x123 @ address
+How to disable the virtual addressing to work with physical offsets?	e io.va=false
+How to use virtual addressing defined by the IO maps?	e io.va=true
+Search for aligned 32bit values that represent valid mapped addresses in the current memory layout?	aav
+How can I seek to the end of the binary?
+How do I seek to the symbol named 'sym.boo' in radare2?	s sym.boo
+How can I dump the current block (defined with the `b` command) to `file.bin`?	wtf file.bin
+What command displays the program entrypoint address?	ie
+How do I list all available commands for help?	?*
+How can I perform all the experimental analysis?	aaaaa
+What command enumerates all the memory maps that associate virtual addressing ranges to physical offsets and its associated file?	om
+How do I write the value 0x32 in little endian 16bit?	wv2 0x32
+How can I retrieve the number of functions?	aflc
+What is the name of the current working file?	o.
+How do I list all the files opened?	o
+How can I disassemble the function at address 0x401000?	pdf @ 0x401000
+How can I analyze a function in the current seek address?	af
+Analyze function in the current address and the called ones recursively	afr
+How do I step over the next instruction during debugging?	dso
+How can I view the hexdump of 64 bytes at the current position?	px 64
+How do I search for the opcode "mov eax, ebx"?	'/a mov eax, ebx`
+How do I assemble and search for the bytes as instructions for "mov x19, x1"?	/a mov x19,x1
+How can I write the string "Hello" at the current position?	'w Hello
+How do I open a file called "test.bin" in radare2?	o test.bin
+How can I display information about the opened file?	i
+Decompile the current function using r2ghidra	pdg
+How to decompile the function named sym.main with r2dec	pdd @ sym.main
+How do I assemble the instruction "nop" at the current position?	wa nop
+I need to set the block size to 128 bytes.	b 128
+How do I display the entropy of the file?	p=e
+I want to see the comments at the current address.	CC.
+I want to list all cross-references to address 0x401000.	axt @ 0x401000
+How can I evaluate the expression 0x400 + 0x200?	?v 0x400 + 0x200
+I need to see the help for the 'af' command.	af?
+How can I print the value of the EAX register?	dr?eax
+I want to view 32 bytes in hexadecimal at address 0x500000.	px 32 @ 0x500000
+How do I list the sections with their computed entropy value?	iS entropy
+I need to continue execution until the next syscall.	dcs
+How can I list all the processes in the system?	dp
+How can I list all the threads of the current debugged process?	dpt
+How do I disable the comments in the disassembly view?	e asm.comments = false
+How can I rename a flag from 'flag.old' to 'flag.new'?	fr flag.new flag.old
+I need to change the endianness to big endian.	e cfg.bigendian = true
+How do I continue execution until the function 'main' is called?	dcu main
+I want to see the usage of the 'px' command.	px?
+How can I search for a wide string (utf-16) "hello"?	/w hello
+How to scan the memory for known magic file headers	/m@e:search.align=4
+How can I enable the IO write cache layer to avoid modifying the real file?	e io.cache = true
+I want to quickly quit radare2 right now.	q!
+How do I undo the last seek operation?	s-
+I want to dump all the strings into a strings.txt file	iz > strings.txt
+How can I set a hardware breakpoint to stop the execution when the process writes anything at address 0x400800?	dbw 0x400800
+I want to see the value of the address 0x400500 in decimal.	?vi [0x400500]
+I need to list all the variables in the current function.	afv
+How can I search disassemble the whole section and filter the lines matching "eax"	output pd $SS @ $S ~eax
+Where is the current section address?	?v $S
+How to find out the size of the current section?	?v $SS
+How can I find functions that call 'main'?	axt sym.main
+I want to view the hexpair string representation of the next 64 bytes.	p8 64
+How do I define a structure type in radare2?	'td struct myStruct { int a; char b; };
+How do I define an enum type in radare2?	'td enum myEnum { NONE, ONE, TWO, LAST };
+How do I search for the string 'hello' ignoring case?	/i hello
+How can I create a new flag space named 'findings'?	fs findings
+How can I print the immediate value of the current instruction?	ao~^val[1]
+Whats the destination for the jump/branch/call at address 0x580034?	?v $j @ 0x580034
+How do I display the executable headers of the current binary?	iH
+Emulate all the executable regions to find out computed references to strings	aae
+What option must be set to create flags for every new string referenced from the analysis?	e anal.strings=true
+I need to calculate the SHA256 hash of the current block.	ph sha256

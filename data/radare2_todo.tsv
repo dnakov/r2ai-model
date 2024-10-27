@@ -110,3 +110,9 @@ I want to see all the places where the program uses synchronization primitives.,
 How do I find functions that might be implementing caches?,"afl~cache,buffer,temp"
 I want to see what kind of math libraries this program links against.,ii~math
 How can I find all the recursive functions in the program?,afl~recursive
+37. **Question:** How do I search for sections with high entropy?
+    - **Command:** `/s`
+82. **Question:** How can I see if a function never returns?
+    - **Command:** `tn @ [function address]` (e.g., `tn @ sym.exit`)
+88. **Question:** How do I check the entropy of data at address 0x4000?
+    - **Command:** `p=e @ 0x4000`
