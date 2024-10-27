@@ -1,0 +1,95 @@
+q	a
+How do you tweak the disassembly output in radare2?	Use the command `e asm.` to modify the disassembly settings.
+What is the command to check if you have set up your ~/.radare2rc today?	There isn't a specific command to check this. You can simply open the file with `nano ~/.radare2rc` to see if it has been modified.
+In visual mode, what key toggles cursor mode?	Press 'c' to toggle cursor mode.
+What key can you use to navigate using the cursor?	Use the Tab key to navigate.
+How can you mark an offset in visual mode?	Move the cursor to the desired offset and press ','. Then, press '.' to go back to the marked offset.
+How do you debug a program from the graph view ('ag') in radare2?	Use standard radare2 commands like `dc`, `dsc`, or `ds` while in the graph view.
+What are the keys to adjust the screen width in visual mode?	Use the '[' and ']' keys to adjust the screen width.
+How do you select your architecture in radare2?	Use the command `e asm.arch=<arch>` or `r2 -a <arch>` from the shell.
+How can you move between your search hits in visual mode?	Use the 'n' and 'N' keys to move between search hits.
+What is the command to save your projects?	Use `Ps <project-filename>` to save your projects.
+How can you change the block size in visual mode?	Use the 'b <block-size>' command or enter radare2 commands with ':' in visual mode.
+What command should you use to open a file in read-write mode?	Use `r2 -w <path>` to open a file in read-write mode.
+How do you print the contents of the current block?	Use the 'p' command to print the contents of the current block.
+What is the layout command format?	The layout command format is: `<repeat><command><bytes>@<offset>`. Example: `3x20@0x33`.
+How do you toggle colors in visual mode?	Press 'C' in visual mode to toggle colors.
+What command is used for copying and pasting bytes in visual mode?	Use 'c' for cursor mode and 'y' and 'Y' for copying and pasting bytes.
+How can you move around the bytes using arrow keys?	Use the keys h,j,k,l to move around the bytes.
+What command is used to seek at relative offsets?	Use 's +<offset>' or 's -<offset>' to seek at relative offsets.
+How can you invert the block bytes in visual mode?	Use the 'I' key to invert the block bytes in visual mode.
+How do you switch between print modes in visual mode?	Use the 'p' and 'P' keys to switch between print modes.
+How can you add comments in visual mode?	Use the ';' key to add comments in visual mode, or the 'CC' command from the radare2 shell.
+What commands are used for assembling opcodes in visual mode?	Use the 'a' and 'A' keys to assemble opcodes in visual mode, which are bindings to the 'wa' and 'wA' commands.
+What command is used to find expanded AES keys in memory?	Use the command '/ca' to find expanded AES keys in memory.
+How do you find wide-char strings with the '/w <string>' command?	Use the command '/w <string>' to find wide-char strings.
+How can you enable ascii-art jump lines in disassembly?	Set 'e asm.lines=true' to enable ascii-art jump lines in disassembly. Other options like 'asm.lines.out' and 'asm.linestyle' may also be interesting.
+How do you control the signal handlers of the child process?	Use the 'dk' command to control the signal handlers of the child process.
+How can you get a free shell in radare2?	Use the command 'ragg2 -i exec -x' to get a free shell.
+How do you interpret radare2 scripts with '. <path-to-script>'?	Use the command '. <path-to-script>' to interpret radare2 scripts.
+What can you use '?' as a suffix for?	'?' can be used to understand how most commands work.
+How do you step through your seek history with 'u' and 'U'?	Use 'u' (undo) and 'U' (redo) to step through your seek history.
+How can you calculate hashes of portions of a file?	Use the `hasher` to calculate hashes of portions of a file.
+How can you zoom out to see the entropy of the whole file?	Use 'zoom.byte=entropy' and press 'z' in visual mode to zoom out to see the entropy of the whole file.
+How can you find strings in zoom mode?	Use 'zoom.byte=printable' in zoom mode ('z' in Visual mode) to find strings.
+How do you add colors to your screen?	Use the command 'e scr.color=X' where 1 is 16 colors, 2 is 256 colors, and 3 is 16M colors.
+How do you move the comment margin with 'asm.cmt.margin'?	Use the command 'asm.cmt.margin' to move the comment margin.
+How can you execute a command on the visual prompt?	Use cmd.vprompt to execute a command on the visual prompt.
+How can you reduce the delta used for flag resolving by address?	Use the command 'cfg.delta' to reduce the delta used for flag resolving by address.
+How can you disable these messages with 'e cfg.fortunes = false'?	Use the command 'e cfg.fortunes = false' to disable these messages.
+How can you change your fortune types?	Use the command 'e cfg.fortunes.type = fun,tips,nsfw' to change your fortune types.
+How can you show offsets in graphs?	Use the command 'e graph.offset = true' to show offsets in graphs.
+How can you execute a command every time a breakpoint is hit?	Use the command 'e cmd.bp = !my-program' to execute a command every time a breakpoint is hit.
+How can you disassemble in Intel syntax?	Use the command 'e asm.syntax = intel' to disassemble in Intel syntax.
+How can you change the UID of the debugged process?	Use the command 'child.uid' to change the UID of the debugged process (requires root).
+How can you enhance your graphs?	Increase the size of the block and graph.depth eval variable to enhance your graphs.
+How can you control the height of the terminal on serial consoles?	Use the command 'e scr.height' to control the height of the terminal on serial consoles.
+How can you emulate the base address of a file?	Use the command 'e file.baddr' to emulate the base address of a file.
+How can you bindiff two files?	Use the command '$ radiff2 /bin/true /bin/false' to bindiff two files.
+How can you execute commands on a temporary offset?	Append '@ offset' to your command to execute commands on a temporary offset.
+How can you drop verbosity temporarily?	Prefix commands with ':' to temporarily drop verbosity.
+How can you change the graph block definition?	Use the command 'graph.callblocks, graph.jmpblocks, graph.flagblocks' to change the graph block definition.
+How can you see the source line related to the current seek?	Use the command 'id' to see the source line related to the current seek.
+How can you analyze socket connections with the socket plugin?	Use the command 'radare2 socket://www.foo.com:80' to analyze socket connections. Use 'w' to send data.
+How can you debug a program using 'dbg://<path-to-program>'?	Use the command 'dbg://<path-to-program>' to debug a program.
+How can you edit configuration and track flags in visual mode?	Use 'e' and 't' in Visual mode to edit configuration and track flags.
+How can you get the import/export symbols of any binary?	Use the command 'rabin2 -ris' to get the import/export symbols of any binary.
+How can you maintain your ~/.radare_history?	Maintain your ~/.radare_history by adding the relevant commands to your history file.
+How can you enable the PAGER with 'e scr.pager=less -R'?	Use the command 'e scr.pager=less -R' to enable the PAGER.
+How can you show offsets in 16-bit segment addressing mode?	Use the command 'e asm.offset=true' to show offsets in 16-bit segment addressing mode.
+How can you evaluate math expressions in radare2?	Use the command '? (0x34+22)*4' to evaluate math expressions.
+How can you load debug information at startup?	Set 'e bin.dbginfo=true' to load debug information at startup.
+How can you rename a function in radare2?	Use the command 'afn <newname> @ <offset>' to rename a function.
+How can you redefine descriptive commands?	You can redefine descriptive commands in the hud file or using the 'V_' command.
+How can you get information of the binary in JSON format?	Pass '-j' to rabin2 to get the information of the binary in JSON format.
+How can you launch your programs with rarun2?	Use rarun2 to launch your programs with a predefined environment.
+How can you update to the latest version of radare2?	You are probably using an old version of r2, go checkout the git!
+How can you run your own r2 scripts in awk?	Use the r2awk program to run your own r2 scripts in awk.
+How can you disable automatic string search when loading the binary?	Use the command '-e bin.strings=false' to disable automatic string search when loading the binary.
+How is radare2 described?	Radare2 is a unix-like reverse engineering framework.
+What is the intended purpose of the blank space in the code?	The code was intentionally left blank, try 'e asm.arch = ws'.
+What should you do if you want a premium r2 experience?	Use the command 'r2pm -i r2premium; echo "e cfg.fortunes.type = nsfw" >> ~/.radare2rc' for a premium r2 experience.
+How can you run the io plugin cmd callback?	Use the command ':' to run the io plugin cmd callback. Many io plugins provide useful features, find them out!
+How can you display all local variables and argument types and names?	Set 'asm.var.summary' to 0 to display all local variables and argument types and names.
+How can you use registers in math expressions?	You can use registers in math expressions, for example: 'wx 1234 @ esp - 2'.
+How do you enable HTTP authentication in radare2?	Use the commands 'e http.auth = 1' and 'e http.authfile = <path>' to enable HTTP authentication.
+What is the purpose of 'e asm.lines=true'?	Enable ascii-art jump lines in disassembly. This feature makes the disassembly output more readable by adding ASCII art lines that represent jumps and control flow.
+How can you disable the loading of debug information at startup?	Set 'e bin.dbginfo=false' to disable the loading of debug information at startup.
+What command can be used to set 'e asm.arch=<arch>'?	The command 'e asm.arch=<arch>' can be used to select the architecture for disassembly.
+How can you use 'ragg2' to get a free shell?	Use the command 'ragg2 -i exec -x' to get a free shell using ragg2.
+How can you find wide-char strings with '/w <string>'?	Use the command '/w <string>' to find wide-char strings in a binary.
+How can you analyze socket connections with radare2?	Use the command 'radare2 socket://www.foo.com:80' to analyze socket connections. You can then send data using the 'w' command.
+What is the purpose of 'e scr.color=X'?	Set 'e scr.color=X' to change the color scheme, where X can be 1, 2, or 3 for 16, 256, or 16M colors respectively.
+How can you switch between visual and visual panel modes?	Use the 'V' or 'v' commands to switch between visual and visual panel modes respectively.
+How can you toggle between disasm and graph views?	Use the space key to toggle between disasm and graph views.
+What does 'aa' command do in radare2?	The 'aa' command performs automatic analysis on the binary, and the more 'a' you add after 'aa', the more analysis steps are executed.
+What is the purpose of 'e graph.offset=true'?	This command enables the display of offsets in graphs, making it easier to understand the structure of the binary.
+How can you load flags of symbols from all modules in the debugger?	Use the command '.dmm*' to load the flags of the symbols of all modules loaded in the debugger.
+What is the purpose of 'e cfg.fortunes.type = fun,tips,nsfw'?	This command sets the fortune types to fun, tips, and nsfw, allowing you to choose the type of fortunes you want to receive.
+How can you find known magic headers in a binary?	Use the command '/m' to carve for known magic headers in a binary. This can help you identify the type of data or the format of a binary section.
+What is the purpose of 'e asm.var.summary = 0'?	This command enables the display of all local variables and argument types and names in the disassembly output.
+How can you use registers in math expressions in radare2?	You can use registers like 'esp', 'ebp', 'eax', etc., in math expressions. For example, 'wx 1234 @ esp - 2' writes the value 1234 to the memory location two bytes below the current value of 'esp'.
+What is the purpose of 'e http.auth = 1' and 'e http.authfile = <path>'?	These commands enable HTTP authentication for radare2 sessions. 'e http.auth = 1' enables authentication, and 'e http.authfile = <path>' specifies the path to the file containing the authentication credentials.
+How can you use 'ragg2' to get a free shell?	Use the command 'ragg2 -i exec -x' to get a free shell using ragg2.
+What is the purpose of 'e asm.lines=true'?	Enable ascii-art jump lines in disassembly. This feature makes the disassembly output more readable by adding ASCII art lines that represent jumps and control flow.
+How can you disable the loading of debug information at startup?	Set 'e bin.dbginfo=false' to disable the loading of debug information at startup.
