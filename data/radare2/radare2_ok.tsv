@@ -216,3 +216,42 @@ How do I display the executable headers of the current binary?	iH
 Emulate all the executable regions to find out computed references to strings	aae
 What option must be set to create flags for every new string referenced from the analysis?	e anal.strings=true
 I need to calculate the SHA256 hash of the current block.	ph sha256
+Find functions that best match the `malloc` signature.	zbr sym.__libc_malloc 10`
+Which functions are using network-related imports?	iiccx network
+List functions calling imports that interact with the console, like printing text or reading from stdin	iiccx console
+Graphviz graph with all the references to `exit`	ag-;.axtg sym.imp.exit;aggd
+Find all references to the string containing 'usage'	axtq `izq~usage[0]`
+I want to list all C++ virtual tables in the binary.	av
+Compute entropy of the current section	ph entropy $SS @ $S
+Compute entropy value of the current function	ph entropy $FS @ $FB
+Compute entropy value of the current basic block	ph entropy $Fs @ $Fb
+How do I check the entropy of 4KB of data at address 0x4000?	ph entropy $K @ 0x4000
+List all functions that can not return	tn~0x
+Which imports use format strings	iicc format
+Which imports interact with the network?	iicc network
+Which functions work with files?	iiccx file
+Which functions work with directories?	iiccx dir
+Which functions use imports that depend on global variables and are not thread safe or reentrant?	iiccx global
+Functions calling memcpy	axtq@sym.imp.memcpy
+How do I look for functions that might be handling XML or JSON data?	afl~xml,json,parse
+Give a name to all unnamed functions based on their strings and function calls	aan
+Autoname all functions	aan
+Suggest a new name for the current function	afna
+What is the name of the current function?	afn
+Seek to the next function	sn
+Seek to the previous function	sp
+Find the next function prelude and seen there	snp
+How can I find places where the program is writing to files?	axt @sym.fwrite
+How can I find all the recursive functions in the program?	aflmr
+Which math imports is this program using?	iicc math
+Which functions are using math imports?	iiccx math
+Is the program using the ncurses library?	il~ncurses
+I want to see what kind of memory alignment the architecture uses. How do I find alignment checks?	aia~^codealign[1]
+I want to see what kind of cleanup operations happen at program exit.,axt @sym.atexit
+How can I display all the stack backtrace in the debugger?	dbt
+Disable the automatic analysis of function arguments before calling `af` or `aa`.	e anal.vars=false
+Display function signature containing return and arguments types	afs
+See the default calling convention used in this binary	e anal.cc
+How do I compare two files `file1.bin` and `file2.bin`?	radiff2 -x file1.bin file2.bin
+Set the calling convention of the `add` function to `cdecl`.	afc cdecl @ sym.add
+List all the available calling conventions:	afcl

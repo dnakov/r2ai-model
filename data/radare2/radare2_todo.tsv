@@ -1,20 +1,8 @@
 4. **User Query:** Show me the first 100 hexadecimal bytes of the binary.
-   **radare2 Command:** `px 100`
+   **radare2 Command:** `px 100@e:io.va=0@0` # problem is that priorized fd maybe its not the bin
 
 23. **User Query:** Cast the data at address `0x08048648` to `MyStruct` and print it.
     **radare2 Command:** `tp MyStruct @ 0x08048648`
-
-25. **User Query:** How do I compare two files `file1.bin` and `file2.bin`?
-    **radare2 Command:** `cmp file1.bin file2.bin`
-
-28. **User Query:** Find all references to the string "Hello World".
-    **radare2 Command:** `axt "Hello World"`
-
-30. **User Query:** I want to list all virtual tables in the binary.
-    **radare2 Command:** `av`
-
-38. **User Query:** Find functions that best match the `malloc` signature.
-    **radare2 Command:** `zbr sym.__libc_malloc 10`
 
 52. **User Query:** How do I list all basic block references?
     **radare2 Command:** `afjj`
@@ -28,11 +16,6 @@
     **radare2 Command:** `afc cdecl @ sym.add`
 80. **User Query:** Show the internal analysis hints at address `0x08048648`.
     **radare2 Command:** `ah 0x08048648`
-81. **user query:** disable the automatic analysis of function arguments.
-    **radare2 command:** `e anal.vars=false`
-94. **User Query:** How do I display the stack trace in the debugger?
-    **radare2 Command:** `dbt`
-How can I display the stack frames in the debugger?	dbt
 100. **User Query:** How do I visualize the data reference graph of the binary?
      **radare2 Command:** `agd.d`
 q,a
@@ -48,7 +31,6 @@ How can I see if this program has any anti-debugging tricks? Like checking for d
 How do I find places where the program might be using passwords or encryption keys?,"iz~password,key,secret"
 How do I look for functions that might be handling user input?,"afl~input,read,scanf,gets"
 How can I find functions that look like they're doing string operations?,"afl~str,strcpy,strcat"
-How can I find places where the program is writing to files?,axt @sym.fwrite
 I want to see all the places where the program might be making network connections.,axt @sym.connect
 How do I find functions that contain a lot of jump instructions?,"pd 100 @sym.main~jmp,je,jne"
 I want to look for potential buffer overflow vulnerabilities. How do I find unsafe string functions?,axt @sym.strcpy
@@ -62,7 +44,6 @@ How do I find functions that might be doing logging or debugging?,"afl~log,debug
 I want to see all the places where the program checks return values. How do I find error checks?,pd 100~cmp.*?eax
 How can I find functions that use a lot of stack space? Maybe they have buffer overflows.,afl~stack
 I want to see if this program creates any temporary files. How do I find those operations?,axt @sym.tmpfile
-How do I look for functions that might be handling XML or JSON data?,"afl~xml,json,parse"
 I want to find where the program might be executing shell commands.,axt @sym.system
 How can I see all the comparison operations in a loop?,"pd 100 @sym.main~loop,cmp"
 I want to find functions that look like they're doing authentication.,"afl~auth,login,verify"
@@ -93,14 +74,12 @@ I want to see if this program creates any child processes or threads.,"axt @sym.
 How do I find functions that might be doing data encoding/decoding?,"afl~encode,decode,convert"
 I want to see all the places where the program might be loading plugins.,axt @sym.dlopen
 How can I find functions that might be implementing state machines?,"afl~state,transition"
-I want to see what kind of cleanup operations happen at program exit.,axt @sym.atexit
 How do I find places where the program might be doing pointer arithmetic?,pd 100~lea
 How do I see what functions get called right when the program starts up?,axt @sym._init
 I want to find all the places where data is being written to memory. How do I see mov instructions?,pd 100 @sym.main~mov
 How can I look for functions that might contain infinite loops?,pd 100~jmp.*0x
 I want to see if this program does any DNA or genomic analysis. How do I search for bio-related functions?,"afl~dna,gene,sequence"
 How do I find all the places where the program is doing string comparisons?,axt @sym.strcmp
-I want to see what kind of memory alignment the program uses. How do I find alignment checks?,pd 100~and.*0xf
 How can I find functions that might be implementing custom protocols?,"afl~protocol,packet,parse"
 I want to see all the places where the program might be doing audio processing.,"afl~audio,sound,wav"
 How do I find functions that might be handling Unicode strings?,"afl~unicode,utf,wchar"
@@ -108,11 +87,3 @@ I want to see what kind of timer functions this program uses.,axt @sym.setitimer
 How can I find places where the program might be doing checksum calculations?,"afl~checksum,crc,hash"
 I want to see all the places where the program uses synchronization primitives.,axt @sym.pthread_mutex_lock
 How do I find functions that might be implementing caches?,"afl~cache,buffer,temp"
-I want to see what kind of math libraries this program links against.,ii~math
-How can I find all the recursive functions in the program?,afl~recursive
-37. **Question:** How do I search for sections with high entropy?
-    - **Command:** `/s`
-82. **Question:** How can I see if a function never returns?
-    - **Command:** `tn @ [function address]` (e.g., `tn @ sym.exit`)
-88. **Question:** How do I check the entropy of data at address 0x4000?
-    - **Command:** `p=e @ 0x4000`
