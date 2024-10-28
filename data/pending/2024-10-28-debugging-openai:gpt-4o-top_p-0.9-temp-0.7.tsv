@@ -1,0 +1,103 @@
+q	a
+How can I set a breakpoint at address 0x401000?	db 0x401000
+How can I continue execution until the next breakpoint?	dc
+What command lists all current breakpoints?	db
+How do I remove a breakpoint at address 0x401000?	db- 0x401000
+How can I step through one instruction?	ds
+How can I view the current CPU registers?	dr
+What command shows the backtrace of the current execution?	dbt
+How can I attach to a running process with PID 1234?	dpa 1234
+How do I detach from the current process?	dp-
+How can I list all threads of the current process?	dpt
+What command can be used to step over the current instruction?	dso
+How do I disable a breakpoint at address 0x401000?	dbd 0x401000
+How can I enable a previously disabled breakpoint at address 0x401000?	dbe 0x401000
+What command allows you to continue until a specific address?	dcu 0x401000
+How can I execute a command when a breakpoint is hit at address 0x401000?	dbc 0x401000 <cmd>
+How can I add a watchpoint on memory access at address 0x401000?	dbw 0x401000 rw
+How can I print the current instruction pointer?	dr PC
+What command shows the list of file descriptors?	dd
+How can I send a signal to the debugged process?	dk <signal>
+How do I display the memory maps of the debugged process?	dm
+What command allows you to continue until a return instruction?	dcr
+How can I modify the value of a CPU register?	dr <register>=<value>
+How can I continue execution after a breakpoint?	dc
+How can I list all loaded modules in the debugged process?	dmm
+How can I view the list of loaded libraries?	dml
+What command is used to reopen the current file in debug mode?	ood
+How do I list all signals and their handlers?	dk
+How can I set a hardware breakpoint at address 0x401000?	dbH 0x401000
+What command is used to block until a process with PID 1234 exits?	dw 1234
+How can I trace all executed instructions?	dtr
+How do I continue until a specified syscall is reached?	dcs <syscall>
+How can I disable all breakpoints?	db-*
+What command is used to open a process for debugging?	do
+How can I print the values of all registers in JSON format?	drj
+What command allows you to step back through instructions?	dsb
+How can I continue until a specific function is called?	dcc <function>
+How do I list the memory snapshots?	dms
+What command shows the list of all attachable processes?	dpl
+How can I step over a syscall?	dso
+How can I continue until the next program code is executed?	dcp
+How can I print a list of all memory regions?	dm
+How can I generate a core dump of the current process?	dg <file>
+How can I enable a breakpoint trace?	dbte <addr>
+How do I continue until a conditional jump is reached?	dcu <addr>
+What command allows you to continue execution until a fork occurs?	dcf
+How can I modify the permissions of a memory page?	dmp <addr> <size> <perms>
+How can I create a new thread?	dptn
+What command is used to continue execution until an exception occurs?	dce
+How can I change the debug handler?	dh <handler>
+How can I execute code in the child process?	dx <code>
+How can I list all traced instructions?	dt
+How can I print the current backtrace in JSON format?	dbtj
+How can I create a snapshot of the current memory state?	dms.
+What command can be used to remove a breakpoint by index?	dbi- <index>
+How can I perform a syscall injection?	dxs <name> [args]
+How can I attach to the next forked process?	dpc
+How can I print the backtrace with local variables?	dbtv
+How can I continue execution until a specific module is loaded?	dmm <module>
+How can I list all debugger handlers?	dL
+How can I reset all breakpoints?	db-*
+How can I open a core file for debugging?	oc <file>
+How can I execute a shell command when a breakpoint is hit?	dbc <addr> <cmd>
+How do I list all the traced disassembled instructions?	dtd
+How can I change the current debugged process?	dp=<pid>
+How can I continue execution until the next call instruction?	dcc
+How do I continue execution until a specified address is reached?	dcu <address>
+How can I continue until a syscall is encountered?	dcs
+What command allows you to execute code and restore the state?	dxr <code>
+How can I show the current process ID?	dpq
+How can I continue execution until a specific register condition?	dsi <cond>
+How do I continue execution until an unknown call is encountered?	dccu
+How can I continue until a specific range of addresses?	dcu [from] [to]
+How can I kill the debugged process?	dk <signal>
+How can I continue until the next instruction with a specific type?	dso
+How do I list the current process and its children?	dp
+How can I execute an egg expression in the child process?	dxe <egg-expr>
+How do I display the memory maps in JSON format?	dmj
+How can I continue execution until a specific instruction is reached?	dsu <address>
+How can I swap the current thread?	dpt=<thread>
+How can I execute opcodes in the child process?	dx <hexpairs>
+How can I list all open file descriptors in r2 commands?	dd*
+How can I continue execution until the next syscall with a specific name?	dcs <name>
+How can I view the list of debugger signal handlers?	dk
+How can I list the current thread ID?	dpt.
+How do I continue execution until the next return instruction?	dcr
+What command lists all the traced instructions in JSON format?	dtj
+How can I list the current backtrace in ASCII art?	dbta
+How do I continue execution until the next program code is reached?	dcp
+How can I list all attached process IDs?	dpl
+How can I continue execution until a specified range of addresses?	dcu [from] [to]
+How do I continue execution until the next call is reached?	dcc
+How can I list all hardware breakpoints?	drx
+How can I step until an instruction with a specific type is reached?	dsuo <optype>
+How can I continue execution until a specific function is called?	dcc <function>
+How do I continue execution until the next syscall is reached?	dcs
+How can I execute a command at a breakpoint and continue until a condition?	dbC <addr> <cmd>
+How can I continue execution until a specific instruction with a condition?	dsi <cond>
+How can I set a breakpoint command at an address?	dbc <addr> <cmd>
+What command lists the memory maps of the debugged process?	dm
+How do I continue execution until a program code is encountered?	dcp
+How can I detach from a process?	dp-
+How can I list the current process ID?	dpq

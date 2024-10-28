@@ -1,0 +1,103 @@
+q	a
+How can I list all the environment variables within radare2?	%
+How do I execute a command on a remote server via r_io_system?	=! cmd
+How do I open a file at a specific address?	o [file] [addr]
+How can I change the block size to 64 bytes?	b 64
+I want to list all functions found in the binary. What command should I use?	afl
+How can I list all the sections in the binary?	iS
+What command do I use to show the current seek position?	s
+How can I disassemble the next 10 instructions?	pd 10
+How do I display the hexadecimal dump of the current block?	px
+How can I search for a specific string in the binary?	/ foo
+What command will list all the imports in the binary?	ii
+How can I see all the comments in the binary?	CC
+How do I rename a function at the current offset?	afn <newname>
+How can I display the entropy of the current block?	p=e
+How do I set a breakpoint at the entry point of the binary?	db entry0
+How can I view the list of all available radare2 commands?	?
+What command allows me to save the current session as a project?	Ps <project-name>
+How do I analyze the binary to find all functions?	aa
+How can I print the ASCII table within radare2?	?a
+How do I start a TCP server on port 9090?	=t9090
+How can I list all plugins available in radare2?	L
+How do I calculate the MD5 hash of the current block?	ph md5
+How can I convert the current block to a base64 encoded string?	p6e
+How do I seek to a specific address in the binary?	s 0x400000
+How can I assemble an opcode at the current offset?	wa <opcode>
+How do I display all function names in the binary?	afln
+How can I list all debug registers?	drx
+How do I display the call graph of the current function?	agc
+How can I start a web server on port 8080?	=h8080
+How do I list all threads of the current process?	dpt
+How can I display the pseudo C code of the current function?	pdc
+How do I print the current block as a C byte array?	pc
+How can I display the binary info in JSON format?	ij
+How do I enable color output in radare2?	e scr.color=3
+How can I quit radare2 without saving the session?	q!
+How do I set the architecture to x86?	e asm.arch=x86
+How can I show all the flags in the binary?	f
+How do I list all the classes in the binary?	ic
+How can I display the relocations in the binary?	ir
+How do I add a new flag at a specific address?	f <name> <size> @ <addr>
+How can I display the function signature at the current offset?	afs
+How do I search for all references to a specific address?	/r <addr>
+How can I display the list of all segments in the binary?	iSS
+How do I execute a shell command from within radare2?	!<command>
+How can I display the list of all imports in JSON format?	iij
+How do I show the current configuration variables?	e
+How can I display the last 10 lines of a file?	tail 10 <file>
+How do I write a nop instruction at the current offset?	wa nop
+How can I display the current register values?	dr
+How do I set a comment at the current offset?	CC <comment>
+How can I search for an opcode in the binary?	/a <opcode>
+How do I list all the symbols in the binary?	is
+How can I export the disassembly to a file?	pd > disassembly.txt
+How do I change the endianness to little?	e cfg.bigendian=false
+How can I view the history of commands executed?	!
+How do I create a new session server?	=l
+How can I show the value of the instruction pointer?	dr PC
+How do I find all functions calling a specific function?	axf <function>
+How can I calculate the CRC32 of the current block?	ph crc32
+How do I list all the exports in the binary?	iE
+How can I disassemble a function and print it as JSON?	pdfj
+How do I revert the last seek operation?	s-
+How can I display the help for a specific command?	<command>?
+How do I enable tracing of the child process?	dte
+How can I list all the basic blocks in the current function?	afb
+How do I execute the same command on multiple addresses?	<command> @@ <addresses>
+How can I start a gdb server on port 4444?	=g 4444
+How do I list all the memory maps of the process?	dm
+How can I show the list of all open files?	o
+How do I search for ROP gadgets in the binary?	/R
+How can I show the current instruction in ESIL?	pie
+How do I display the size of the binary?	iS
+How can I calculate the number of printable characters in the block?	p=p
+How do I set the block size to the size of the file?	b=s
+How can I display the list of all segments?	iSS
+How do I show the current flagspace?	fs
+How can I disable all breakpoints?	db-*
+How do I list all the sections in the binary as JSON?	iSj
+How can I enable ESIL emulation?	aei
+How do I show the current configuration in JSON?	ej
+How can I list all the libraries used by the binary?	il
+How do I calculate the SHA1 hash of the current block?	ph sha1
+How can I set a temporary seek to an address?	<command> @ <addr>
+How do I find all the xrefs to the current function?	axf
+How can I remove a flag at the current offset?	f-
+How do I display the list of all types in the binary?	t
+How can I show the path to the executable being debugged?	dpe
+How do I list all the commands used in the current session?	!!
+How can I show the call trace?	dt
+How do I display the list of all imports in a table?	ii,
+How can I show the current architecture?	e asm.arch
+How do I list all the available interpreters?	#!
+How can I display the size of a specific section?	iSS <section>
+How do I display the comments in JSON format?	CCj
+How can I list all the signatures in the binary?	zs
+How do I show the list of all relocations as JSON?	irj
+How can I display the program header information?	iH
+How do I change the instruction syntax to AT&T?	e asm.syntax=att
+How can I save the current state of the registers?	dr > registers.txt
+How do I calculate the SHA256 hash of the current block?	ph sha256
+How can I view the sections of the binary in JSON format?	iSj
+How do I set the architecture to ARM?	e asm.arch=arm

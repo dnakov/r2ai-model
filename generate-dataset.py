@@ -1,26 +1,25 @@
 import anthropic
+import openai
 import pandas as pd
 import time
 from tqdm import tqdm
 import random
 import os
 import json
+from r2ai.auto import ChatAuto
+
 from datetime import datetime
 today = datetime.now().strftime("%Y-%m-%d")
-# Initialize Claude client
-client = anthropic.Anthropic(
-    api_key=os.environ["ANTHROPIC_API_KEY"]
-)
-
-model = "claude-3-5-sonnet-20241022"
+model = "openai/gpt-4o"
+# model = "claude-3-5-sonnet-20241022"
 # model = "claude-3-opus-20240229"
-# max_tokens = 4096
-max_tokens = 8192
+# max_tokens = 4095
+max_tokens = 16000
 temperature = 0.7
 top_p = 0.9
-persona = 'vulnerability researcher'
-messages = [{"role": "user", "content": f"""generate many examples that would be applicable to a {persona}"""}]
-def generate_pair():
+
+llm = ChatAuto(model=model, max_tokens=max_tokens, temperature=temperature, top_p=top_p, timeout=120)
+def generate_pair(messages):
     commands = open("data/sources/all_commands.txt", "r").read()
     fortunes = open("data/sources/fortunes.tips", "r").read()
     prompt = f"""You're a helpful assistant who is extremely knowledgeable about the reverse engineering, malware analysis and security space in general. 
@@ -47,20 +46,13 @@ The radare2_command should be valid and be able to be run.
 Datetime: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 """
     text = ""
+
     try:
-        response = client.messages.create(
-            model=model,
-            max_tokens=max_tokens,
-            temperature=temperature,
-            system=prompt,
-            messages=messages
-        )
-        print(response)        
+        response = llm.chat(messages=[{"role": "system", "content": prompt}, *messages], stream=False)
         # Parse response
-        messages.append({"role": "assistant", "content": response.content[0].text})
-        text = response.content[0].text
-        
-        data = json.loads(text)
+        text = response['content']
+        messages.append({"role": "assistant", "content": text})
+        data = json.loads(text.replace("```json", "").replace("```", ""))
         if(len(data) > 0):
             print(data)
             return data
@@ -69,14 +61,14 @@ Datetime: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
         print(f"Error generating pair: {e}")
         return []
 
-def generate_dataset(num_examples=1000):
+def generate_dataset(file_path, num_examples=1000, messages=[], category=None):
     """Generate multiple examples and save to CSV"""
     
     data = []
-    pbar = tqdm(total=num_examples, desc="Generating examples")
-    lines = generate_pair()
+    pbar = tqdm(total=num_examples, desc=f"Generating examples for {category}")
+    lines = generate_pair(messages)
     while len(data) < num_examples:
-        lines = generate_pair()
+        lines = generate_pair(messages)
         
         if len(lines) > 0:
             data.extend(lines)
@@ -101,7 +93,7 @@ def generate_dataset(num_examples=1000):
     df_train = df
     # df_val = df[train_size:]
 
-    df_train.to_csv(f'data/pending/{today}-{model}-{persona.replace(" ", "_")}-top_p-{top_p}-temp-{temperature}.tsv', sep='\t', index=False)
+    df_train.to_csv(file_path, sep='\t', index=False)
     # df_val.to_csv(f'data/pending/{today}_radare2_val.tsv', sep='\t', index=False)
     
     print(f"Generated {len(df)} examples")
@@ -137,8 +129,11 @@ def examples():
     return df.sample(n=10).to_dict('records')
 
 if __name__ == "__main__":
-    # Generate dataset
-    generate_dataset(num_examples=100)  # Generate 1500 examples (1425 train, 75 val)
-
-    # Validate the generated dataset
-    validate_dataset()
+    # categories = ["malware", "forensics", "crypto", "general", "vulnerability", "exploit", "reverse engineering", "binary analysis", "binary patching", "debugging"]
+    categories = ["crypto", "general", "vulnerability", "exploit", "reverse engineering", "binary analysis", "binary patching", "debugging"]
+    num_examples = 100
+    for category in categories:
+        messages = [{"role": "user", "content": f"""generate {num_examples} examples that would be applicable to this category: {category}. Respond in JSON format: [{{"q": "<question>", "a": "<radare2_command>"}}, ...] and NOTHING ELSE."""}]
+        file_path = f'data/pending/{today}-{category.replace(" ", "_")}-{model.replace("/", ":")}-top_p-{top_p}-temp-{temperature}.tsv'
+        generate_dataset(file_path=file_path, num_examples=num_examples, messages=messages, category=category)  # Generate 1500 examples (1425 train, 75 val)
+        validate_dataset(file_path=file_path)

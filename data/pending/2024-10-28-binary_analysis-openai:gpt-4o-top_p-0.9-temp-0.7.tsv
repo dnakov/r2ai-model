@@ -1,0 +1,101 @@
+q	a
+How can I analyze the binary to find all functions?	aaa
+Identify all the strings present in the binary.	iz
+List all the imported symbols from the binary.	ii
+Show detailed information about the binary headers.	ih
+Find all cross-references to the function at address 0x400650.	axt 0x400650
+Display all the sections in the binary.	iS
+Decompile the function at the current address.	pdd
+What is the entry point of this binary?	ie
+Identify the architecture of the binary.	e asm.arch
+List all exported symbols in the binary.	iE
+Show a list of all functions in the binary.	afl
+Print the disassembly of the current function.	pdf
+Find all occurrences of the instruction 'call eax'.	/a call eax
+List all the relocations in the binary.	ir
+What is the base address of the binary?	e file.baddr
+How can I view the main function's address?	iM
+Show all the comments in the binary.	CC
+Extract and display the resources embedded in the binary.	iR
+List all symbols from the binary.	is
+Show all the function signatures found in the binary.	afsj
+Generate a call graph of the binary.	agC
+Display all the libraries used by the binary.	il
+How do I list all the memory maps of the process?	dm
+What are the main sections of the binary?	iS
+Identify the imports of the binary and classify them by type.	iic
+List all classes, methods, and fields in the binary.	ic
+Print the pseudocode for the current function.	pdc
+What is the size of the binary file?	e file.size
+Display the entropy of the binary.	p=e
+Find all jump instructions in the binary.	/a jmp
+How can I list all basic blocks in the current function?	afb
+What is the compiler used for this binary?	iI
+List all the types found in the binary.	ts
+Show the cyclomatic complexity of functions.	afCc
+List all the segments in the binary.	iSS
+Display all local variables in the current function.	afv
+Show the current seek offset in the binary.	s
+Identify the syscall numbers used in the binary.	as
+List all vtables found in the binary.	av
+Display the assembly instructions of the current block.	pdr
+Find all conditional jumps in the binary.	/a j
+List all the comments in the current function.	CCf
+How do I display the entry point address?	ie
+Show all the data references in the binary.	ax
+What are the entry points of the binary?	ie
+List all imports from the binary.	ii
+What is the format of this binary?	e bin.format
+Analyze all syscalls in the binary.	aas
+Display a summary of the current function.	pdsf
+Find all ROP gadgets in the binary.	/R
+List all NOP instructions in the binary.	/a nop
+Show all exported functions.	iE
+What are the global variables in the binary?	avg
+List all indirect calls in the binary.	/r
+Show all the imports grouped by class.	iic
+Display the binary's version information.	iV
+Show the list of all methods in a class.	ic
+Identify the compiler flags used.	iI
+List all the exported symbols.	iE
+Find all loops in the binary.	/af
+Display the DWARF information.	id
+Show the entry point and constructors.	iee
+List all the resources in the binary.	iR
+Identify the endianess of the binary.	e asm.endian
+Display all function arguments.	afva
+Find all data references to a specific address.	/r 0x400650
+How can I view all the known magic patterns?	pm
+List all the types in the binary.	ts
+Show the offsets of all function calls.	aac
+Display all the hidden symbols.	is
+List all the data sections.	iS
+What is the binary type?	e bin.type
+Show the current seek address.	s
+List all the exported classes.	ic
+Find all instructions that use a specific register.	/ar
+Show all the segments in the binary.	iSS
+What are the privileges required by the binary?	iI
+Display all imported functions.	ii
+List all function calls in the binary.	aac
+Show the binary's architecture.	e asm.arch
+What are the symbols in the binary?	is
+Display all the class hierarchies.	icg
+List all the functions in the binary.	afl
+Show all the global data references.	agA
+What are the main symbols in the binary?	is
+Display all the file headers.	ih
+Identify all the function signatures.	afs
+Show all the relocations in the binary.	ir
+What are the entry points in the binary?	ie
+List all the exported symbols by name.	iE
+Display all the imports classified by type.	iic
+What is the endianness of the binary?	e asm.endian
+Show all the indirect calls in the binary.	/r
+Find all functions that call a specific function.	axt
+List all the section hashes.	iS
+Show the architecture of the binary.	e asm.arch
+What are the imported classes?	iic
+Display all the imported methods.	iic
+What is the format of the binary file?	e bin.format
+List all the global variables.	avg

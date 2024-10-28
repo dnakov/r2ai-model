@@ -1,0 +1,180 @@
+q	a
+How do I replace a series of instructions with a jump to another address?	wa 'jmp 0x004024A0'
+Patch a function to skip its body and return immediately.	wa ret @ sym.func
+Change the first instruction of the 'main' function to a NOP.	wa nop @ sym.main
+Overwrite a specific byte at 0x004025B0 with 0x77.	wx 77 @ 0x004025B0
+How can I insert a sequence of NOPs to bypass a check?	wa nop;nop;nop;nop;nop
+Patch an instruction to load a constant value into a register.	wa 'mov eax, 0x10'
+Replace a byte with 0x99 at 0x004026C0.	wx 99 @ 0x004026C0
+How do I change a MOV instruction to a SUB?	wa 'sub eax, eax'
+Patch a loop to jump directly to its end.	wa 'jmp sym.loop_end'
+Overwrite the instruction at 0x004027D0 with a NOP.	wa nop @ 0x004027D0
+Patch a call to another function at the current offset.	wa 'call sym.another_func'
+How can I write a sequence of bytes to a specific address?	wx 12345678 @ 0x004028E0
+Replace a conditional jump with an unconditional one.	wa 'jmp'
+Overwrite a series of bytes with a specific pattern.	wx deadbeef
+How do I patch a function to always return success?	wa 'xor eax, eax; inc eax; ret'
+Change a byte at offset 0x004029F0 to 0x42.	wx 42 @ 0x004029F0
+Patch an instruction to jump to a failure handler.	wa 'jmp sym.failure_handler'
+How can I insert a breakpoint instruction at the start of a function?	wa int3 @ sym.func_start
+Replace a byte at the current offset with 0x88.	wx 88
+Overwrite the current instruction with an immediate load.	wa 'mov ebx, 0x2'
+Patch a loop condition to be always false.	wa 'jmp 0x00402A00'
+How do I replace a call with a return instruction?	wa ret
+Change the first byte of a function to a NOP.	wx 90 @ sym.func
+Patch an instruction to be a NOP at 0x00402B10.	wa nop @ 0x00402B10
+Overwrite a call instruction to jump to a different function.	wa 'jmp sym.new_func'
+How do I replace a jump instruction with a return?	wa ret
+Patch a function prologue to skip initialization code.	wa nop;nop;nop
+Change a MOV instruction to a NOP at the current offset.	wa nop
+Overwrite the bytes at 0x00402C20 with 0x1234.	wx 1234 @ 0x00402C20
+How can I insert a trap instruction at a specific offset?	wa trap @ 0x00402D30
+Patch a series of NOPs to bypass security checks.	wa nop;nop;nop;nop
+Replace a byte with 0x66 at 0x00402E40.	wx 66 @ 0x00402E40
+How do I write a jump to a handler at the current offset?	wa 'jmp sym.handler'
+Patch a function to immediately return an error code.	wa 'mov eax, -1; ret'
+Overwrite an instruction to load zero into a register.	wa 'mov ecx, 0'
+Replace a jump instruction with its opposite condition.	wa 'jne'
+How can I write a NOP instruction at the entry of a loop?	wa nop @ sym.loop_start
+Patch a call to a NOP at the current offset.	wa nop
+Change a byte at offset 0x00402F50 to 0x11.	wx 11 @ 0x00402F50
+Overwrite the first instruction of a function with a NOP.	wa nop @ sym.func
+How do I insert a breakpoint at the end of a function?	wa int3 @ sym.func_end
+Patch a loop to exit immediately with a jump.	wa 'jmp sym.loop_exit'
+Replace a MOV instruction with a load of a constant value.	wa 'mov edx, 0x7'
+How can I replace a call with a jump to another function?	wa 'jmp sym.alt_func'
+Patch a byte at the current offset to 0x22.	wx 22
+Overwrite a return instruction at the end of a function.	wa ret @ sym.func_end
+How do I write a NOP at the current offset?	wa nop
+Patch a jump instruction to point to the start of a function.	wa 'jmp sym.func_start'
+Replace a conditional branch with a NOP.	wa nop
+Overwrite a byte at 0x00403060 with 0x33.	wx 33 @ 0x00403060
+How can I insert a 'ret' instruction at the start of a function?	wa ret @ sym.func_start
+Patch an instruction to call a different function.	wa 'call sym.diff_func'
+Change a MOV instruction to a NOP at 0x00403170.	wa nop @ 0x00403170
+Overwrite a series of bytes with NOPs.	wx 9090909090
+How do I replace a jump with a return instruction?	wa ret
+Patch a function entry to do nothing and return immediately.	wa ret @ sym.func_entry
+Replace a byte at the current offset with 0x44.	wx 44
+Overwrite an instruction with a jump to a new address.	wa 'jmp 0x00403280'
+How can I change a call to a jump?	wa 'jmp sym.target'
+Patch a loop to skip its body and continue.	wa 'jmp sym.loop_continue'
+Replace a byte at 0x00403390 with 0x99.	wx 99 @ 0x00403390
+Overwrite a function prologue with NOPs to disable it.	wa nop;nop;nop;nop
+How do I insert a trap instruction at the current offset?	wa trap
+Patch a jump to point to a new handler function.	wa 'jmp sym.new_handler'
+Change the first byte of a function to a NOP.	wx 90 @ sym.func
+Overwrite an instruction to load a fixed value.	wa 'mov eax, 0x3'
+How can I replace a jump with a NOP?	wa nop
+Patch a loop to always execute its body.	wa 'jmp sym.loop_body'
+Replace a call instruction with a return at the current offset.	wa ret
+Overwrite a byte at 0x004034A0 with 0xAA.	wx aa @ 0x004034A0
+How do I write a NOP instruction at the start of a function?	wa nop @ sym.func_start
+Patch a series of instructions with a jump to a handler.	wa 'jmp sym.handler'
+Change a MOV instruction to a load immediate.	wa 'mov ebx, 0x8'
+Overwrite the current instruction with a NOP.	wa nop
+How can I insert a 'hlt' instruction at a specific offset?	wa hlt @ 0x004035B0
+Patch a function to return a success code.	wa 'mov eax, 0; ret'
+Replace a byte with 0x55 at 0x004036C0.	wx 55 @ 0x004036C0
+Overwrite a call instruction with a direct jump.	wa 'jmp sym.direct_jump'
+How do I patch a loop to break immediately?	wa 'jmp sym.loop_break'
+Patch a conditional jump to always be taken.	wa 'jmp 0x004037D0'
+Replace a byte at the current offset with 0x66.	wx 66
+Overwrite an instruction to perform a NOP operation.	wa nop
+How can I insert a breakpoint at the start of a function?	wa int3 @ sym.func_start
+Patch a call to point to a new function.	wa 'call sym.new_func'
+Change the first byte of a function to a NOP.	wx 90 @ sym.func
+Overwrite a series of bytes with a specific pattern.	wx cafebabe
+How do I replace a MOV instruction with a SUB?	wa 'sub ecx, ecx'
+Patch a loop to skip its condition check.	wa 'jmp sym.loop_skip'
+Replace a byte with 0x77 at 0x004038E0.	wx 77 @ 0x004038E0
+Overwrite a function's entry point with a NOP.	wa nop @ sym.func_entry
+How do I write a NOP instruction at the end of a function?	wa nop @ sym.func_end
+Patch a jump to bypass a security check.	wa 'jmp sym.bypass'
+Change a byte at offset 0x004039F0 to 0x88.	wx 88 @ 0x004039F0
+How can I insert a sequence of NOPs to disable a function?	wa nop;nop;nop;nop @ sym.func
+Patch a MOV instruction to load a constant value.	wa 'mov edx, 0x5'
+Replace a byte with 0xAA at 0x00403A10.	wx aa @ 0x00403A10
+How do I change a jump instruction to point to a new location?	wa 'jmp 0x00403B20'
+Patch a loop to run only once.	wa 'jmp sym.loop_once'
+Overwrite the instruction at 0x00403C30 with a NOP.	wa nop @ 0x00403C30
+Patch a call to a function at the current offset.	wa 'call sym.func'
+How can I write a specific sequence of bytes to an address?	wx 11223344 @ 0x00403D40
+Replace a conditional jump with an unconditional one.	wa 'jmp'
+Overwrite a series of bytes with a new pattern.	wx deadbeef
+How do I patch a function to always return zero?	wa 'xor eax, eax; ret'
+Change a byte at offset 0x00403E50 to 0x99.	wx 99 @ 0x00403E50
+Patch an instruction to jump to an error handler.	wa 'jmp sym.error_handler'
+How can I insert a breakpoint instruction at a specific point?	wa int3 @ 0x00403F60
+Replace a byte at the current offset with 0x77.	wx 77
+Overwrite the current instruction with an immediate load.	wa 'mov ebx, 0x4'
+Patch a loop condition to always be false.	wa 'jmp 0x00404070'
+How do I replace a call with a return instruction?	wa ret
+Change the first byte of a function to a NOP.	wx 90 @ sym.func
+Patch an instruction to be a NOP at 0x00404180.	wa nop @ 0x00404180
+Overwrite a call instruction to jump to a different function.	wa 'jmp sym.alt_func'
+How do I replace a jump instruction with a return?	wa ret
+Patch a function prologue to skip initialization code.	wa nop;nop;nop
+Change a MOV instruction to a NOP at the current offset.	wa nop
+Overwrite the bytes at 0x00404290 with 0x5678.	wx 5678 @ 0x00404290
+How can I insert a trap instruction at a specific offset?	wa trap @ 0x004043A0
+Patch a series of NOPs to bypass security checks.	wa nop;nop;nop;nop
+Replace a byte with 0x66 at 0x004044B0.	wx 66 @ 0x004044B0
+How do I write a jump to a handler at the current offset?	wa 'jmp sym.handler'
+Patch a function to immediately return an error code.	wa 'mov eax, -1; ret'
+Overwrite an instruction to load zero into a register.	wa 'mov ecx, 0'
+Replace a jump instruction with its opposite condition.	wa 'jne'
+How can I write a NOP instruction at the entry of a loop?	wa nop @ sym.loop_start
+Patch a call to a NOP at the current offset.	wa nop
+Change a byte at offset 0x004045C0 to 0x11.	wx 11 @ 0x004045C0
+Overwrite the first instruction of a function with a NOP.	wa nop @ sym.func
+How do I insert a breakpoint at the end of a function?	wa int3 @ sym.func_end
+Patch a loop to exit immediately with a jump.	wa 'jmp sym.loop_exit'
+Replace a MOV instruction with a load of a constant value.	wa 'mov edx, 0x7'
+How can I replace a call with a jump to another function?	wa 'jmp sym.alt_func'
+Patch a byte at the current offset to 0x22.	wx 22
+Overwrite a return instruction at the end of a function.	wa ret @ sym.func_end
+How do I write a NOP at the current offset?	wa nop
+Patch a jump instruction to point to the start of a function.	wa 'jmp sym.func_start'
+Replace a conditional branch with a NOP.	wa nop
+Overwrite a byte at 0x004046D0 with 0x33.	wx 33 @ 0x004046D0
+How can I insert a 'ret' instruction at the start of a function?	wa ret @ sym.func_start
+Patch an instruction to call a different function.	wa 'call sym.diff_func'
+Change a MOV instruction to a NOP at 0x004047E0.	wa nop @ 0x004047E0
+Overwrite a series of bytes with NOPs.	wx 9090909090
+How do I replace a jump with a return instruction?	wa ret
+Patch a function entry to do nothing and return immediately.	wa ret @ sym.func_entry
+Replace a byte at the current offset with 0x44.	wx 44
+Overwrite an instruction with a jump to a new address.	wa 'jmp 0x004048F0'
+How can I change a call to a jump?	wa 'jmp sym.target'
+Patch a loop to skip its body and continue.	wa 'jmp sym.loop_continue'
+Replace a byte at 0x00404900 with 0x99.	wx 99 @ 0x00404900
+Overwrite a function prologue with NOPs to disable it.	wa nop;nop;nop;nop
+How do I insert a trap instruction at the current offset?	wa trap
+Patch a jump to point to a new handler function.	wa 'jmp sym.new_handler'
+Change the first byte of a function to a NOP.	wx 90 @ sym.func
+Overwrite an instruction to load a fixed value.	wa 'mov eax, 0x3'
+How can I replace a jump with a NOP?	wa nop
+Patch a loop to always execute its body.	wa 'jmp sym.loop_body'
+Replace a call instruction with a return at the current offset.	wa ret
+Overwrite a byte at 0x00404A10 with 0xAA.	wx aa @ 0x00404A10
+How do I write a NOP instruction at the start of a function?	wa nop @ sym.func_start
+Patch a series of instructions with a jump to a handler.	wa 'jmp sym.handler'
+Change a MOV instruction to a load immediate.	wa 'mov ebx, 0x8'
+Overwrite the current instruction with a NOP.	wa nop
+How can I insert a 'hlt' instruction at a specific offset?	wa hlt @ 0x00404B20
+Patch a function to return a success code.	wa 'mov eax, 0; ret'
+Replace a byte with 0x55 at 0x00404C30.	wx 55 @ 0x00404C30
+Overwrite a call instruction with a direct jump.	wa 'jmp sym.direct_jump'
+How do I patch a loop to break immediately?	wa 'jmp sym.loop_break'
+Patch a conditional jump to always be taken.	wa 'jmp 0x00404D40'
+Replace a byte at the current offset with 0x66.	wx 66
+Overwrite an instruction to perform a NOP operation.	wa nop
+How can I insert a breakpoint at the start of a function?	wa int3 @ sym.func_start
+Patch a call to point to a new function.	wa 'call sym.new_func'
+Change the first byte of a function to a NOP.	wx 90 @ sym.func
+Overwrite a series of bytes with a specific pattern.	wx cafebabe
+How do I replace a MOV instruction with a SUB?	wa 'sub ecx, ecx'
+Patch a loop to skip its condition check.	wa 'jmp sym.loop_skip'
+Replace a byte with 0x77 at 0x00404E50.	wx 77 @ 0x00404E50
+Overwrite a function's entry point with a NOP.	wa nop @ sym.func_entry

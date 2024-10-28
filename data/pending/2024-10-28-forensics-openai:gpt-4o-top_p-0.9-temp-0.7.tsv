@@ -1,0 +1,188 @@
+q	a
+How do I list all sections in the binary file?	iS
+How can I extract strings from the data section of a binary?	iz
+How do I check the entropy of the entire binary file?	p=e
+How can I search for a specific hexadecimal pattern in the binary?	/x <hexpattern>
+How do I list all imports from the binary?	ii
+How can I display the file's metadata?	i
+How do I extract the binary's entrypoint address?	ie
+How can I compare two binary files?	cmp <file1> <file2>
+How do I calculate the MD5 hash of the current block?	ph md5
+How can I view the binary's headers?	ih
+How do I search for all ROP gadgets in the binary?	/R
+How can I identify known file signatures within the binary?	/m
+How do I find all functions that reference a specific address?	axf <address>
+How can I export the strings found in the binary to a file?	iz > strings.txt
+How do I analyze and list all functions within the binary?	afl
+How can I search for wide strings in the binary?	/w <string>
+How do I perform a search for crypto materials within the binary?	/c
+How can I list all the symbols in the binary?	is
+How do I identify the architecture of the binary?	iI
+How can I extract all the comments from the binary?	CC
+How do I find all xrefs to a specific function?	axt <function>
+How can I disassemble the entire binary?	pd $s
+How do I identify and list all magic numbers in the binary?	/m
+How can I dump the binary's imports in JSON format?	iij
+How do I perform a search for all known file systems in the binary?	/mm
+How can I check the binary for code obfuscation patterns?	/R
+How do I list all the sections in a binary in JSON format?	iSj
+How can I extract resource information from the binary?	iR
+How do I perform an analysis to find all basic blocks in the binary?	abb
+How can I find all cross-references to a data address?	axt <data address>
+How do I view the dynamic symbols in the binary?	id
+How can I view the hexadecimal representation of the binary's data?	px
+How do I display the binary's imports using a table query?	ii,[table-query]
+How can I find all the libraries the binary depends on?	il
+How do I list all exported symbols in the binary?	iE
+How can I extract all the relocation entries from the binary?	ir
+How do I find all the known magic patterns in the binary?	/m
+How can I search for specific assembly instructions in the binary?	/a <instruction>
+How do I view all the segments in the binary?	iS
+How can I list all the headers in the binary?	ih
+How do I find all the classes and methods defined in the binary?	ic
+How can I identify the entrypoint and main address of the binary?	iM
+How do I extract the DWARF debug information from the binary?	id
+How can I dump the binary's symbols in JSON format?	isj
+How do I perform a search for all function preludes in the binary?	/pp
+How can I list all the segments in the binary in JSON format?	iSj
+How do I identify all the code references to a given address?	axt <address>
+How can I list all the imports and their calling functions?	iic
+How do I calculate the SHA1 hash of the current block?	ph sha1
+How can I view the file's version information?	iV
+How do I check the binary for known cryptographic keys?	/ca
+How can I find all references to a specific symbol?	/r <symbol>
+How do I search for all known filesystem headers in the binary?	/mm
+How can I list all the exports in the binary using JSON format?	iEj
+How do I view the binary's signature information?	iT
+How can I extract the binary's version information in JSON format?	iVj
+How do I search for all string references in the binary?	/s
+How can I find all functions that call a specific function?	axf <function>
+How do I identify the binary's calling conventions?	afc
+How can I extract all the resources from a binary?	iR
+How do I find all the functions that are called by a specific function?	aflx <function>
+How can I export all functions in the binary to a file?	afl > functions.txt
+How do I check the binary for potential buffer overflow patterns?	/R
+How can I list all function signatures in the binary?	afsj
+How do I find all the loops in the binary's functions?	afCl
+How can I identify the binary's code obfuscation techniques?	/R
+How do I view the binary's sections and their entropy?	iS; p=e
+How can I extract all the comments in the binary in JSON format?	CCj
+How do I list all the data references in a specific function?	afxd <function>
+How can I search for a sequence of bytes in the binary?	/x <bytes>
+How do I find all the conditionals in a specific function?	afxc <function>
+How can I identify all the functions in the binary?	afl
+How do I search for all magic numbers in the binary?	/m
+How can I list all the strings in the binary using JSON format?	izj
+How do I calculate the CRC32 hash of the current block?	ph crc32
+How can I view all the functions with no-return attributes?	afln; tnf
+How do I list all the imported symbols in a binary using a table query?	ii,[table-query]
+How can I search for all file signatures in the binary?	/m
+How do I find all the syscalls used by the binary?	as
+How can I list all the libraries the binary imports?	il
+How do I find all the exported functions in the binary?	iE
+How can I identify the binary's main function address?	iM
+How do I extract all the imported functions from the binary?	ii
+How can I search for all the known magic headers in the binary?	/mm
+How do I list all the global variables in the binary?	avg
+How can I identify all the classes and methods within the binary?	ic
+How do I search for a specific opcode sequence in the binary?	/a <opcode sequence>
+How can I list all the functions and their relationships?	aa
+How do I extract the binary's strings in a specific section?	iz
+How can I calculate the hash of a specific section in the binary?	ph <hash> @ <section>
+How do I find all the indirect calls in the binary?	axtj @ sym.imp.*
+How can I identify the binary's entrypoint function?	ie
+How do I extract all the comments from the binary in a specific section?	CC @ <section>
+How can I search for all the cryptographic materials in the binary?	/c
+How do I find all the branches in a specific function?	afxb <function>
+How can I list all the strings in the binary's .data section?	iz @ section.data
+How do I calculate the entropy of a specific section in the binary?	p=e @ <section>
+How can I list all the function calls in the binary?	afC
+How do I find all the conditional jumps in the binary?	axt @ sym.imp.*
+How do I list all the sections and their sizes in the binary?	iS,[table-query]
+How can I identify all the functions that reference a specific data address?	axf <data address>
+How do I list all the class hierarchies in the binary?	icg
+How can I find all the functions with a specific signature?	afs <signature>
+How do I export all the strings from the binary into a CSV file?	iz > strings.csv
+How can I identify the binary's calling convention types?	tcc
+How do I perform a search for all binary headers in the binary?	/mb
+How can I list all the imported functions and their addresses?	iij
+How do I find all syscall invocations in the binary?	as
+How can I view the binary's exported symbols with their addresses?	iE
+How do I search for all known encryption algorithms used in the binary?	/c
+How can I find all the functions that use specific registers?	aar
+How do I list all the functions and their sizes in the binary?	afll
+How can I extract all the segments from the binary?	iSS
+How do I identify the binary's debug information if present?	id
+How can I view all the classes and their methods in the binary?	ic
+How do I list all the functions with their start addresses?	afl
+How can I find all the functions that are exported?	iE
+How do I search for all instances of a specific opcode in the binary?	/a <opcode>
+How can I identify all the segments with executable permissions?	iS
+How do I extract all the functions and their calling conventions?	afc
+How can I list all the imports and their resolved addresses?	ii
+How do I find all the functions that have a specific attribute?	afla
+How can I view all the cross-references in the binary?	ax
+How do I extract all the headers from the binary in JSON format?	ihj
+How can I identify the binary's function calling conventions?	afc
+How do I list all the exported functions with their attributes?	iE
+How can I search for all the known cryptographic algorithms in the binary?	/c
+How do I find all the functions with indirect calls?	axfi
+How can I view the binary's segments and their sizes?	iS
+How do I identify all the symbols with specific attributes?	is
+How can I find all the functions with no-return attributes?	tnf
+How do I list all the functions with their calling conventions?	afc
+How can I extract all the relocations from the binary?	ir
+How do I search for all known cryptographic keys in the binary?	/ca
+How can I identify all the classes and their fields in the binary?	ic
+How do I find all functions that modify specific registers?	aar
+How can I list all the imports and their resolved symbols?	ii
+How do I extract all the DWARF information from the binary?	id
+How can I search for all the known magic headers in the binary?	/mm
+How do I identify all the functions with specific attributes?	afla
+How can I find all the functions with a specific return type?	afs
+How do I view the binary's imports and their resolved addresses?	ii
+How can I list all the functions and their relationships in JSON format?	aflj
+How do I extract all the functions from the binary in JSON format?	aflj
+How can I identify the binary's entrypoint and main functions?	iM
+How do I search for all the known filesystem headers in the binary?	/mm
+How can I find all the functions with specific parameter types?	afs
+How do I list all the functions with their parameter types?	afs
+How can I extract all the strings from the binary in JSON format?	izj
+How do I identify all the functions with specific calling conventions?	afc
+How can I view all the functions with specific attributes in JSON format?	aflj
+How do I extract all the imports from the binary in JSON format?	iij
+How can I search for all the known magic patterns in the binary?	/m
+How do I identify all the functions with specific return types?	afs
+How can I list all the functions with their attributes in JSON format?	aflj
+How do I extract all the relocations from the binary in JSON format?	irj
+How can I find all the functions with specific attributes in JSON format?	aflj
+How do I view all the functions with specific calling conventions?	afc
+How can I identify all the segments with specific attributes?	iS
+How do I search for all the known cryptographic algorithms in the binary?	/c
+How can I find all the functions with specific parameter types in JSON format?	afsj
+How do I list all the functions with their parameter types in JSON format?	afsj
+How can I extract all the strings from the binary in JSON format?	izj
+How do I identify all the functions with specific calling conventions in JSON format?	afcj
+How can I view all the functions with specific attributes in JSON format?	aflj
+How do I extract all the imports from the binary in JSON format?	iij
+How can I search for all the known magic patterns in the binary?	/m
+How do I identify all the functions with specific return types in JSON format?	afsj
+How can I list all the functions with their attributes in JSON format?	aflj
+How do I extract all the relocations from the binary in JSON format?	irj
+How can I find all the functions with specific attributes in JSON format?	aflj
+How do I view all the functions with specific calling conventions in JSON format?	afcj
+How can I identify all the segments with specific attributes in JSON format?	iSj
+How do I search for all the known cryptographic algorithms in the binary in JSON format?	/cj
+How can I find all the functions with specific parameter types in JSON format?	afsj
+How do I list all the functions with their parameter types in JSON format?	afsj
+How can I extract all the strings from the binary in JSON format?	izj
+How do I identify all the functions with specific calling conventions in JSON format?	afcj
+How can I view all the functions with specific attributes in JSON format?	aflj
+How do I extract all the imports from the binary in JSON format?	iij
+How can I search for all the known magic patterns in the binary in JSON format?	/mj
+How do I identify all the functions with specific return types in JSON format?	afsj
+How can I list all the functions with their attributes in JSON format?	aflj
+How do I extract all the relocations from the binary in JSON format?	irj
+How can I find all the functions with specific attributes in JSON format?	aflj
+How do I view all the functions with specific calling conventions in JSON format?	afcj
+How can I identify all the segments with specific attributes in JSON format?	iSj

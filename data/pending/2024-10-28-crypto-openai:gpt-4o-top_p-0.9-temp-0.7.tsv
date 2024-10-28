@@ -1,0 +1,101 @@
+q	a
+How can I search for AES keys in the memory of the binary?	/ca aes
+What command can I use to find public keys in the binary?	/cp
+How can I search for a specific cryptographic hash in the binary?	/h sha256 <digest>
+How do I find GPG keys and signatures in the binary?	/cg
+How can I find DER-encoded certificates in the binary?	/cd
+What command lists all available hash plugins?	ph
+How do I calculate the MD5 hash of the current block?	ph md5
+How to calculate the SHA1 hash of a specific section?	ph sha1 @ section_name
+What command would you use to decode base64 encoded strings?	p6d
+How can I encode a string using base64?	?b64 <string>
+How can I find SM4 keys in memory?	/ca sm4
+How do I search for a collision in a cryptographic algorithm?	/cc sha256 <digest>
+How can I find ASN1/DER private keys in the binary?	/cr
+What command do I use to decode an ASN1 OID?	pFo
+How do I encrypt the current block with AES?	poE aes <key> <iv>
+How do I decrypt the current block using a specific algorithm?	poD <algorithm> <key> <iv>
+How can I calculate the CRC32 hash of the current block?	ph crc32
+How to perform a binary magic search to identify cryptographic libraries?	/m
+How can I find the known constant tables from hash algorithms?	/ck
+How do I display the entropy of the current block?	p=e
+What command do I use to find PEM encoded certificates?	/cd
+How do I list the cryptographic algorithms supported by radare2?	Lh
+How can I convert a string to its hexadecimal representation?	?x <string>
+What command can I use to perform a base64 encoding of a string?	?b64 <string>
+How do I hash a string using SHA-256?	?h sha256 <string>
+How can I find ASN1/DER certificates in the binary?	/cd
+What command helps in finding Rabin Karp matching strings?	/k
+How do I analyze all cryptographic references in a binary?	/c
+How can I search for a wide string 'crypto' in the binary?	/w crypto
+How do I find data encoded with base64 in the binary?	/b64
+How can I look for cryptographic functions in the binary?	/r sym.crypto
+What command would you use to decode a hexadecimal string?	?x- <hexstring>
+How do I calculate a SHA-512 hash of a given file?	ph sha512 @ <filename>
+How can I search for Magic headers related to cryptography?	/m
+How do I calculate the entropy for a section of the binary?	p=e @ section_name
+What command allows me to search for cryptographic preambles?	/p
+How do I encode data in hexpairs?	?x <data>
+How can I search for password strings in the binary?	/w password
+How do I decode a base64 string from the binary?	p6d <len>
+How can I calculate the hash of a function?	ph sha256 @ sym.function_name
+What command can I use to scan for known cryptographic filesystems?	/mm
+How do I encrypt a block with a key using XOR?	pox <key>
+How do I find signatures of cryptographic algorithms in memory?	/s
+What command can calculate the entropy of a given function?	p=e @ sym.function_name
+How can I list all sections of a binary that may contain crypto?	iS
+How do I calculate the SHA-3 hash of a memory region?	ph sha3 @ <memory_region>
+What command would you use to find known cryptographic protocols?	/m
+How can I find the digital signature in a binary?	/c
+How do I perform a search for cryptographic patterns in the binary?	/p
+How do I calculate the Adler32 hash of a section?	ph adler32 @ section_name
+How do I find and decode ASN1 DER data structures?	/cd
+How do I identify magic numbers related to cryptography?	/m
+How can I find and extract private keys from the binary?	/cr
+How do I search for a specific string related to cryptography?	/s crypto
+How can I calculate the Whirlpool hash of a block?	ph whirlpool
+How do I identify cryptographic libraries loaded in memory?	/m
+What command can be used to add entropy calculations to analysis?	aep <len>
+How do I check if a binary section is encrypted?	p=e @ section_name
+How can I find cryptographic padding in the binary?	/c
+What command helps me find base64 encoded data?	/b64
+How do I search for cryptographic functions using ESIL?	/re
+How can I find all cryptographic hash functions in the binary?	/r hash
+How do I display the entropy of a given section in the binary?	p=e @ section_name
+How can I find the presence of cryptographic constants?	/ck
+How do I calculate the Tiger hash of the current block?	ph tiger
+How do I search for cryptographic data using YARA rules?	/y <rule>
+How can I find cryptographic keys in the binary?	/ca
+What command lists all potential cryptographic functions?	/r sym.crypto
+How do I identify binary data that matches cryptographic signatures?	/m
+How can I find cryptographic initialization vectors in memory?	/ca
+How do I calculate the entropy of a file to check for encryption?	p=e
+How do I find wide strings related to cryptography?	/w crypto
+How can I search for cryptographic constants using a mask?	/x <mask>
+How do I decrypt a block with a given key?	poD <algo> <key> <iv>
+What command would you use to list all cryptographic imports?	ii
+How can I perform a cryptographic analysis on a section?	/c
+How do I search for ASN1 encoded data in the binary?	/cd
+How can I find cryptographic libraries via symbols?	/m
+How do I search for cryptographic protocols in the binary?	/m
+How do I calculate the GOST hash of a given section?	ph gost @ section_name
+How can I identify cryptographic algorithm implementations?	/r sym.crypto
+What command can find cryptographic preambles in the binary?	/p
+How do I find cryptographic hash function calls?	/r sym.hash
+How can I search for ASN1 encoded certificates?	/cd
+How do I calculate the SHA-256 hash of a binary header?	ph sha256 @ iH
+How can I find and decode DER encoded data?	/cd
+How do I search for cryptographic signatures using regex?	/e <regex>
+How do I search for encrypted sections in the binary?	p=e
+How can I find cryptographic algorithms in the binary?	/r sym.crypto
+How do I search for cryptographic symbols in imports?	ii
+How can I decode base64 encoded cryptographic data?	p6d
+How do I find data signatures related to cryptography?	/s
+How can I search for cryptographic function references?	/r sym.crypto
+What command can calculate the SHA-384 hash of a block?	ph sha384
+How do I find cryptographic libraries in the binary?	/m
+How can I identify cryptographic functions in the binary?	/r sym.crypto
+How do I list all cryptographic exports in the binary?	iE
+How can I find cryptographic key expansions in memory?	/ca
+How do I search for cryptographic routines using YARA?	/y <rule>
+How do I find cryptographic preambles in the binary?	/p
