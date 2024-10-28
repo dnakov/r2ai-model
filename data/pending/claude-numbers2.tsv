@@ -1,0 +1,165 @@
+Category	Question	Command
+Code Analysis	How do I calculate the offset between current position and end of function?	?v $FE-$$
+Code Analysis	How do I display all instructions from current position to end of basic block?	pD $Fe-$$
+Code Analysis	How can I check if I'm at the last instruction of a basic block?	?v $e
+Code Analysis	How do I get size of current section for memory scanning?	?v $SS
+Code Analysis	How do I disassemble n bytes before current function?	pd $FB-$$ @ $$
+Code Analysis	How do I calculate distance to next function for gap analysis?	?v ($FB@$$+$FS)-$$
+Code Analysis	How do I get size of data at flag for buffer analysis?	?v $s{main}
+Code Analysis	How do I disassemble whole function with offset annotations?	pD $FS @ $FB
+Code Analysis	How do I calculate total size of all basic blocks in function?	?v $FSS
+Code Analysis	How do I check distance between current instruction and jump target?	?v $j-$$
+Exploit Dev	How do I calculate offset to return address on stack?	?v $r{rsp}-$B
+Exploit Dev	How do I find distance between base and debug map for ASLR analysis?	?v $D-$B
+Exploit Dev	How do I calculate size needed for buffer overflow to reach saved EIP?	?v $r{ebp}-$r{esp}+4
+Exploit Dev	How do I get current block size for heap overflow calculation?	?v $b
+Exploit Dev	How do I find offset between program base and specific function for ROP?	?v $FB-$DB
+Exploit Dev	How do I calculate distance to next readable memory page?	?v $MM-$$
+Exploit Dev	How do I get stack frame size for local variable analysis?	?v $r{rbp}-$r{rsp}
+Exploit Dev	How do I find offset between two consecutive function calls?	?v $Cn-$C{n-1}
+Exploit Dev	How do I calculate padding needed to align stack?	?v 16-($r{rsp}%16)
+Exploit Dev	How do I get size of memory region for heap spray?	?v $MM
+Firmware Analysis	How do I get size of firmware section for extraction?	?v $SS
+Firmware Analysis	How do I calculate checksum range from section start?	?v $S+$SS
+Firmware Analysis	How do I find offset between two memory-mapped regions?	?v $M-$B
+Firmware Analysis	How do I get size of bootloader section?	?v $s{bootloader}
+Firmware Analysis	How do I calculate flash page boundaries?	?v $$-($$ % 4096)
+Malware Analysis	How do I find size of encrypted code section?	?v $s{.text}
+Malware Analysis	How do I calculate offset to embedded payload?	?v $Dn-$FB
+Malware Analysis	How do I get distance between two anti-debug checks?	?v $Xn-$X{n-1}
+Malware Analysis	How do I measure size of unpacking stub?	?v $Fe-$FB
+Malware Analysis	How do I find offset to API resolution code?	?v $Ja-$FB
+Forensics	How do I calculate file slack space size?	?v $s-($o+$SS)
+Forensics	How do I get sector alignment padding?	?v 512-($o%512)
+Forensics	How do I find size of embedded file structure?	?v $s{embedded_file}
+Forensics	How do I calculate partition boundary offset?	?v $M+(($MM/512)*512)
+Forensics	How do I get size of corrupted section?	?v $e{corrupted_end}-$S
+Debug	How do I calculate size of heap chunk header?	?v $r{rsp}+16-$r{rsp}
+Debug	How do I find distance to next breakpoint?	?v $Cn-$$
+Debug	How do I get size of allocated memory block?	?v $MM-$M
+Debug	How do I calculate offset to heap metadata?	?v $r{rax}-8
+Debug	How do I find distance to stack cookie?	?v $r{rbp}-8-$r{rsp}
+Function Analysis	How do I get size of function prologue?	?v $i2-$FB
+Function Analysis	How do I calculate number of basic blocks?	?v $FI/$Fi
+Function Analysis	How do I find offset to function epilogue?	?v $FE-$I1
+Function Analysis	How do I get size of largest basic block?	?v $Fs
+Function Analysis	How do I calculate function complexity metric?	?v ($Fj*2)+$Ff
+Memory Analysis	How do I find size of memory page?	?v $MM-($MM%4096)
+Memory Analysis	How do I calculate heap chunk size?	?v $r{rax}&(~7)
+Memory Analysis	How do I get offset to next aligned address?	?v ($$+15)&(~15)
+Memory Analysis	How do I find distance between heap chunks?	?v $Dn-$D{n-1}
+Memory Analysis	How do I calculate memory region overlap?	?v ($M+$MM)-$D
+Code Coverage	How do I get size of uncovered code region?	?v $Fe-($FB+$Fi)
+Code Coverage	How do I calculate basic block coverage ratio?	?v ($Fi/$FS)*100
+Code Coverage	How do I find size of executed instructions?	?v $i{n}-$FB
+Code Coverage	How do I get distance between covered blocks?	?v $Fe-$Fb
+Code Coverage	How do I calculate function coverage percentage?	?v ($FSS/$FS)*100
+Binary Diffing	How do I find offset between similar functions?	?v $FB-($FB@$B)
+Binary Diffing	How do I calculate size difference of patches?	?v $FS-($FS@$B)
+Binary Diffing	How do I get distance between modified instructions?	?v $i{n}-$i{n-1}
+Binary Diffing	How do I find size of added code section?	?v $SS-($SS@$B)
+Binary Diffing	How do I calculate patch alignment padding?	?v 16-($FS%16)
+Anti-Debug	How do I find offset to timing check code?	?v $Ja-$FB
+Anti-Debug	How do I calculate size of self-modifying code?	?v $Fe-$Ff
+Anti-Debug	How do I get distance between integrity checks?	?v $Xn-$X{n-1}
+Anti-Debug	How do I find offset to debugger detection?	?v $Cn-$FB
+Anti-Debug	How do I calculate checksum verification size?	?v $FS-($Fe-$Ff)
+Vulnerability Analysis	How do I find distance to stack buffer?	?v $r{rbp}-16-$r{rsp}
+Vulnerability Analysis	How do I calculate size of unsafe memcpy?	?v $v
+Vulnerability Analysis	How do I get offset to format string?	?v $m-$B
+Vulnerability Analysis	How do I find size of integer overflow?	?v $w
+Vulnerability Analysis	How do I calculate heap buffer overflow size?	?v $Dn-$m
+ROP Analysis	How do I find offset to ROP gadget?	?v $I1-$FB
+ROP Analysis	How do I calculate gadget chain length?	?v ($i3-$FB)*4
+ROP Analysis	How do I get distance between gadgets?	?v $Xn-$X{n-1}
+ROP Analysis	How do I find size of stack pivot?	?v $Fe-$j
+ROP Analysis	How do I calculate ROP payload alignment?	?v 8-($r{rsp}%8)
+Shell Code	How do I get size of position-independent code?	?v $FS-($j-$FB)
+Shell Code	How do I calculate encoder stub size?	?v $Fi
+Shell Code	How do I find offset to shellcode payload?	?v $m-$FB
+Shell Code	How do I get distance to return address?	?v $r{rsp}-$r{rbp}
+Shell Code	How do I calculate null-free region size?	?v $Fe-($FB+$i1)
+Crypto Analysis	How do I find size of encryption key?	?v $s{key_data}
+Crypto Analysis	How do I calculate offset to S-box?	?v $Dn-$B
+Crypto Analysis	How do I get distance between round functions?	?v $Cn-$C{n-1}
+Crypto Analysis	How do I find size of decryption routine?	?v $FE-$Ff
+Crypto Analysis	How do I calculate block cipher padding?	?v 16-($SS%16)
+Stack Analysis	How do I find offset to stack canary?	?v $r{rbp}-8
+Stack Analysis	How do I calculate stack frame alignment?	?v ($r{rsp}+15)&(~15)
+Stack Analysis	How do I get size of saved registers?	?v $r{rbp}-$I1
+Stack Analysis	How do I find distance to return address?	?v $r{rbp}+8-$r{rsp}
+Stack Analysis	How do I calculate stack variable space?	?v $r{rbp}-16-$r{rsp}
+Control Flow	How do I find offset to false branch?	?v $Ff-$FB
+Control Flow	How do I calculate size of loop body?	?v $Fe-$j
+Control Flow	How do I get distance between conditional jumps?	?v $Ja-$J{a-1}
+Control Flow	How do I find size of switch table?	?v $Fj-$j
+Control Flow	How do I calculate branch alignment padding?	?v 16-($j%16)
+Data Analysis	How do I find offset to global variable?	?v $Dn-$B
+Data Analysis	How do I calculate size of data structure?	?v $s{struct}
+Data Analysis	How do I get distance between array elements?	?v $w
+Data Analysis	How do I find size of string table?	?v $e{strings_end}-$S
+Data Analysis	How do I calculate data section alignment?	?v 4096-($SS%4096)
+Import Analysis	How do I find offset to import table?	?v $Dn-$DB
+Import Analysis	How do I calculate size of import directory?	?v $s{.idata}
+Import Analysis	How do I get distance between imported functions?	?v $Xn-$X{n-1}
+Import Analysis	How do I find size of import name table?	?v $SS-($S-$DB)
+Import Analysis	How do I calculate import thunk alignment?	?v 8-($o%8)
+Export Analysis	How do I find offset to export table?	?v $Dn-$DB
+Export Analysis	How do I calculate size of export directory?	?v $s{.edata}
+Export Analysis	How do I get distance between exported functions?	?v $Xn-$X{n-1}
+Export Analysis	How do I find size of export name table?	?v $SS-($S-$DB)
+Export Analysis	How do I calculate export ordinal table size?	?v $w*($SS/4)
+Resource Analysis	How do I find offset to resource section?	?v $S{.rsrc}-$DB
+Resource Analysis	How do I calculate size of resource directory?	?v $s{.rsrc}
+Resource Analysis	How do I get distance between resource entries?	?v 8*$w
+Resource Analysis	How do I find size of resource data?	?v $SS-($S-$DB)
+Resource Analysis	How do I calculate resource alignment?	?v 8-($SS%8)
+Thread Analysis	How do I find offset to thread context?	?v $r{rdi}
+Thread Analysis	How do I calculate thread stack size?	?v $MM
+Thread Analysis	How do I get distance between thread locals?	?v $w
+Thread Analysis	How do I find size of thread data?	?v $s{tls}
+Thread Analysis	How do I calculate thread stack alignment?	?v 16-($r{rsp}%16)
+Exception Analysis	How do I find offset to exception handler?	?v $Xn-$FB
+Exception Analysis	How do I calculate size of exception table?	?v $s{.pdata}
+Exception Analysis	How do I get distance between catch blocks?	?v $Fe-$Ff
+Exception Analysis	How do I find size of exception data?	?v $SS-($S-$DB)
+Exception Analysis	How do I calculate exception frame size?	?v $r{rbp}-$r{rsp}
+Relocation Analysis	How do I find offset to relocation table?	?v $Dn-$DB
+Relocation Analysis	How do I calculate size of relocation section?	?v $s{.reloc}
+Relocation Analysis	How do I get distance between relocations?	?v $w
+Relocation Analysis	How do I find size of relocation block?	?v $SS-($S-$DB)
+Relocation Analysis	How do I calculate relocation alignment?	?v 4-($SS%4)
+Symbol Analysis	How do I find offset to symbol table?	?v $Dn-$DB
+Symbol Analysis	How do I calculate size of symbol section?	?v $s{.symtab}
+Symbol Analysis	How do I get distance between symbols?	?v 18*$w
+Symbol Analysis	How do I find size of string table?	?v $s{.strtab}
+Symbol Analysis	How do I calculate symbol alignment?	?v 4-($o%4)
+Debug Info	How do I find offset to debug directory?	?v $Dn-$DB
+Debug Info	How do I calculate size of debug section?	?v $s{.debug}
+Debug Info	How do I get distance between line numbers?	?v 4*$w
+Debug Info	How do I find size of debug symbols?	?v $SS-($S-$DB)
+Debug Info	How do I calculate debug data alignment?	?v 4-($SS%4)
+PE Analysis	How do I find offset to PE header?	?v $S{pe}-$B
+PE Analysis	How do I calculate size of optional header?	?v $s{opthdr}
+PE Analysis	How do I get distance between sections?	?v $SS
+PE Analysis	How do I find size of headers?	?v $S
+PE Analysis	How do I calculate file alignment?	?v 512-($o%512)
+ELF Analysis	How do I find offset to program headers?	?v $Dn-$B
+ELF Analysis	How do I calculate size of section headers?	?v $s{shdr}
+ELF Analysis	How do I get distance between segments?	?v $MM
+ELF Analysis	How do I find size of dynamic section?	?v $s{.dynamic}
+ELF Analysis	How do I calculate segment alignment?	?v 4096-($MM%4096)
+Mach-O Analysis	How do I find offset to load commands?	?v $Dn-$B
+Mach-O Analysis	How do I calculate size of commands?	?v $s{lcmds}
+Mach-O Analysis	How do I get distance between segments?	?v $MM
+Mach-O Analysis	How do I find size of linkedit?	?v $s{__LINKEDIT}
+Mach-O Analysis	How do I calculate segment alignment?	?v 4096-($MM%4096)
+Network Analysis	How do I find offset to packet payload?	?v $Dn-$FB
+Network Analysis	How do I calculate size of packet header?	?v $i2-$FB
+Network Analysis	How do I get distance between packets?	?v $MM
+Network Analysis	How do I find size of network buffer?	?v $s{buffer}
+Network Analysis	How do I calculate packet alignment?	?v 4-($SS%4)
+Kernel Analysis	How do I find offset to kernel base?	?v $D-$DB
+Kernel Analysis	How do I calculate size of kernel section?	?v $s{.text}
+Kernel Analysis	How do I get distance between drivers?	?v $MM
+Kernel Analysis	How do I find size of

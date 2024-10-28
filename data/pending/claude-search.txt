@@ -1,0 +1,120 @@
+Question	Command
+How do I search for the string "/bin/sh" in memory?	/ /bin/sh
+How do I find all function preludes in the binary?	/pp
+How do I search for AES encryption keys in memory?	/ca aes
+How do I find references to a specific function at address 0x4000?	/r 0x4000
+How do I search for cross-references to system calls?	/as
+How do I find all write operations to a specific memory address?	/rw
+How do I search for sequences of assembly instructions that form infinite loops?	/aI
+How do I locate potential RSA private keys in memory?	/cr
+How do I find all backward jumps that might indicate loops?	/ab
+How do I search for UTF-16/wide-char strings?	/w
+How do I find instructions that use a specific immediate value like 0x1337?	/ai 0x1337
+How do I search for byte sequences using wildcards?	/x ff..33
+How do I find all call references in the code?	/rc
+How do I search for specific assembly instruction patterns case-sensitively?	/ac
+How do I locate PGP/GPG keys and signatures in memory?	/cg
+How do I find all graph paths between two functions?	/g
+How do I search for specific assembly instructions backwards from current position?	/b
+How do I find sections in the binary with similar entropy?	/s
+How do I search for common file signatures and headers?	/mb
+How do I find all read operations to memory?	/rr
+How do I search for specific instruction types like arithmetic operations?	/at
+How do I locate potential cryptographic constant tables?	/ck
+How do I find executable memory regions?	/rx
+How do I search for specific assembly instruction sequences?	/ad
+How do I find all cross-references to a specific address?	/ra
+How do I search for potential malware signatures in memory?	/m
+How do I find instructions matching a specific CPU family?	/af
+How do I search for specific bytes with a binary mask?	/x 9090cd80:ffff7ff0
+How do I locate potential SSL/TLS certificates?	/cd
+How do I find all syscalls in the analyzed code?	/asq
+How do I search for specific immediate values within a range?	/ai 0x100 0x200
+How do I find common magic bytes patterns?	/m
+How do I search for strings of a specific length?	/z
+How do I find ROP gadgets containing specific instructions?	/R
+How do I search for specific bytes ignoring case?	/i
+How do I find all functions that reference a specific string?	/r
+How do I locate potential cryptographic keys in memory?	/c
+How do I search for instruction patterns in disassembly?	/ad
+How do I find all cross-references to imported functions?	/ra
+How do I search for specific assembly mnemonics?	/am
+How do I find potential stack pivots for ROP chains?	/R
+How do I search for specific byte patterns backwards?	/b
+How do I locate potential shellcode patterns?	/x
+How do I find all write operations in the code?	/rw
+How do I search for specific instruction sequences with JSON output?	/adj
+How do I find potential format string vulnerabilities?	/s
+How do I search for specific CPU instructions?	/a
+How do I locate standard function prologs?	/pp
+How do I find all memory regions with execute permissions?	/rx
+How do I search for specific opcode patterns?	/x
+How do I find references to specific memory addresses?	/r
+How do I search for common cryptographic constants?	/ck
+How do I locate potential buffer overflow targets?	/s
+How do I find instructions using specific registers?	/a
+How do I search for specific byte sequences in memory?	/x
+How do I find all functions containing specific instructions?	/aF
+How do I locate potential heap spray patterns?	/s
+How do I search for specific instruction types in analyzed code?	/at
+How do I find references to specific imported functions?	/r
+How do I search for common exploit patterns?	/x
+How do I locate potential ROP gadget entry points?	/R
+How do I find all cross-references to data sections?	/r
+How do I search for specific byte patterns with masks?	/x
+How do I locate potential stack canary checks?	/a
+How do I find all function epilogs?	/a ret
+How do I search for specific instruction sequences quietly?	/adq
+How do I locate potential ASLR bypass gadgets?	/R
+How do I find all memory write operations?	/rw
+How do I search for specific register usage patterns?	/a
+How do I locate potential format string patterns?	/s
+How do I find cross-references to specific data?	/r
+How do I search for common encryption constants?	/ck
+How do I locate potential integer overflow patterns?	/s
+How do I find instructions accessing specific memory regions?	/r
+How do I search for specific byte sequences case-insensitively?	/i
+How do I locate potential use-after-free patterns?	/s
+How do I find all function calls to a specific address?	/rc
+How do I search for specific assembly patterns with JSON output?	/aj
+How do I locate potential race condition patterns?	/s
+How do I find all cross-references to specific strings?	/r
+How do I search for common vulnerability patterns?	/s
+How do I locate potential null pointer dereference patterns?	/s
+How do I find instructions using specific memory addresses?	/r
+How do I search for specific byte patterns in analyzed code?	/x
+How do I locate potential double-free patterns?	/s
+How do I find all references to specific functions?	/r
+How do I search for common exploit techniques?	/x
+How do I locate potential command injection patterns?	/s
+How do I find instructions modifying specific registers?	/a
+How do I search for specific instruction sequences in functions?	/ad
+How do I locate potential buffer underflow patterns?	/s
+How do I find all memory read operations?	/rr
+How do I search for specific opcode patterns with masks?	/x
+How do I locate potential type confusion patterns?	/s
+How do I find cross-references to specific memory regions?	/r
+How do I search for common shellcode signatures?	/x
+How do I locate potential integer underflow patterns?	/s
+How do I find instructions accessing stack variables?	/a
+How do I search for specific byte sequences with wildcards?	/x
+How do I locate potential off-by-one patterns?	/s
+How do I find all references to specific opcodes?	/r
+How do I search for common ROP gadget patterns?	/R
+How do I locate potential memory leak patterns?	/s
+How do I find instructions using specific immediate values?	/ai
+How do I search for specific function patterns?	/a
+How do I locate potential stack overflow patterns?	/s
+How do I find all cross-references to system calls?	/as
+How do I search for common vulnerability signatures?	/s
+How do I locate potential privilege escalation patterns?	/s
+How do I find instructions modifying control flow?	/a
+How do I search for specific byte patterns in memory regions?	/x
+How do I locate potential information disclosure patterns?	/s
+How do I find cross-references to specific registers?	/r
+How do I search for common exploit primitives?	/x
+How do I locate potential memory corruption patterns?	/s
+How do I find instructions using specific addressing modes?	/a
+How do I search for specific instruction sequences in loops?	/ad
+How do I locate potential type confusion vulnerabilities?	/s
+How do I find all references to specific memory patterns?	/r

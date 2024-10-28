@@ -1,0 +1,140 @@
+Question	Answer
+Print the current function as hex?	pxf
+What's the command to see hex with comments?	pxc
+Display raw bytes in hexadecimal format	px
+Looking for null-terminated strings	psz
+Convert current block to JSON format	pj
+Which command shows entropy visualization?	p=e
+Raw bytes output of current block	pr
+Create QR code from these 32 bytes	pq 32
+Calculate MD5 hash of this section	ph md5
+Display words as 32-bit hex values	pxw
+Need to see N instructions disassembled	pd
+List all strings in current block	psb
+Can you show me bits in bitmap format?	pxB
+What prints the current time?	pt.
+Command for 64-bit hex quadwords?	pxq
+Give me entropy bars for this data	p-e
+Show me 16-bit values in hex please	pxh
+Print strings until null byte found	psz
+Need octal representation of data	pxo
+Decode this base64 data	p6d
+Command for raw bytes with offsets?	prl
+Get annotated hex visualization	pxa
+Show UTF-16 unicode strings	psu
+What's used for 32-bit wide strings?	psW
+Decompress and show gunzipped content	prg
+Space-separated hex pairs command?	p8
+Fun way to view hex with emojis	pxe
+Display data bits in hex format	pxb
+Output pascal string format	psp
+Hex dump until hitting zero	px0
+Convert 4 bytes to signed decimal	pxd4
+View 8-byte hex values	pv8
+Basic block in hex format	pxb
+Need strings wrapped to screen width	pss
+Decompress LZ4 data block	prgl
+Parse and show ASN1/DER data	pFa
+Decode protobuf content	pFb
+Print strings with escape sequences	psx
+One hex value per line output	pxH
+Show hex word references	pxr
+Convert to DOS timestamp	ptd
+What's the NTFS time command?	ptn
+HFS timestamp conversion	pth
+UNIX timestamp display format	pt
+Print BEAT internet time	ptb
+Get 1-byte unsigned ints	pxu1
+Convert to 2-byte signed ints	pxd2
+Sparse hexdump visualization	pxs
+Color palette for bytes	prc
+Clean hex dump without addresses	pxx
+String output until newline	psn
+Generate C array from bytes	pcc
+Python byte array format	pcp
+Convert to Kotlin byte array	pck
+Bytes as Rust array	pcr
+Golang byte array syntax	pcg
+Java array representation	pcv
+Swift array output format	pcz
+Generate YARA pattern	pcy
+Create shellscript from bytes	pcS
+Format bytes as JSON	pcj
+JavaScript array output	pcJ
+Objective-C bytes format	pco
+Clean C format without comments	pcq
+Space-separated number list	pcn
+Show raw image content	pri
+Generate bit patterns	pp
+Create debruijn sequence	ppd
+Sequential byte pattern	pp1
+Word pattern generator	pp2
+Dword pattern output	pp4
+Generate qword pattern	pp8
+Print ASCII alphabet pattern	ppa
+Generate PIN patterns	ppn
+Fill buffer with 0xFF	ppf
+Zero-filled buffer output	pp0
+Parse X509 certificate	pFx
+Decode PKCS7 format	pFp
+Show ASN1 object identifiers	pFo
+Parse iOS PLIST binary	pFB
+Decode Android XML binary	pFA
+Decompress XZ block	pFX
+Raw bytes with line numbers	prl
+Show printable chars with offsets	prx
+Find null-terminated raw strings	prz
+View operation color map	pxA
+Display data in zoom mode	pz
+Calculate byte entropy in zoom	pze
+Count flags in zoom view	pzf
+Show first byte in zoom	pzh
+Count printable chars in zoom	pzp
+List strings in zoom range	pzs
+Count zero bytes in zoom	pz0
+Tally 0xFF bytes in zoom	pzF
+2-byte swap endianness	po2
+4-byte endian conversion	po4
+Add value to current bytes	poa
+Perform AND operation	poA
+Divide current bytes	pod
+Multiply byte values	pom
+Apply OR operation	poo
+XOR with given value	pox
+Shift bytes left	pol
+Right shift operation	por
+Subtract from current bytes	pos
+Encrypt block of data	poE
+Decrypt current block	poD
+Generate block signature	poS
+Format hex pairs as JSON	p8j
+Convert hex pairs to commands	p8*
+Show bytes in decimal	p8d
+Function bytes as hex pairs	p8f
+Hex pairs with column layout	p8x
+Print N bytes as bits	pB
+Show bit stream format	pb
+Convert to hex pairs	p8
+Visualize bytes as bars	p=
+Show function call count	p=c
+Count jumps in block	p=j
+Find invalid instructions	p=i
+Count syscall instructions	p=s
+Character count in strings	p=z
+How many zero bytes?	p=0
+Count 0xFF occurrences	p=F
+Tally printable characters	p=p
+Analyze basic block	p=b
+List flags and marks	p=m
+Show byte statistics	p=d
+Create 16-bit waveform	p=2
+Parse C++ string at offset	ps+
+Extract Swift immediate string	pso
+Read wide character string	psw
+Parse 32-bit wide string	psW
+What shows all string types?	psa
+String at current position	psi
+Find printable string	ps
+Get string in JSON format	psj
+2-byte length pascal string	psp2
+4-byte pascal string format	psp4
