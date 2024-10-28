@@ -1,0 +1,12 @@
+How do I enumerate all the threads of the current process?	:dpt
+Which is the target CPU architecture used in the current session?	:i~^arch
+What is the target Operating System for the current binary?	:i~^os
+Which libraries are loaded in memory?	:ilq
+Enumerate the memory regions with read-write permissions:	:dm~rw-$
+List all named memory maps	:dmm
+Show the current register values	:dr*
+Show sections for the binary in the current address	:iS
+Enumerate all libraries loaded in memory in JSON format	:ilj
+Show which symbols are imported from other libraries on the current binary	:ii
+Show exports symbols from the current binary	:iE
+List all defined classes	:ic
