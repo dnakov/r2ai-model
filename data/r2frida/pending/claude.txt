@@ -1,0 +1,173 @@
+# R2frida Mobile Reverse Engineering Q&A Guide
+
+## Process Attachment & Basic Operations
+
+Q1: How do you attach to a process by name?
+A: `:attach Snapchat`
+
+Q2: How do you attach to a process by PID?
+A: `:attach 1234`
+
+Q3: How do you list all loaded modules?
+A: `:il`
+
+Q4: How do you search for specific module?
+A: `:il~Facebook`
+
+Q5: How do you list exports of a module?
+A: `:ie libSystem.B.dylib`
+
+Q6: How do you list imports of a module?
+A: `:ii libSystem.B.dylib`
+
+## Memory Operations
+
+Q7: How do you search for a string in memory?
+A: `:/ password`
+
+Q8: How do you search for a hex pattern?
+A: `:x 90909090`
+
+Q9: How do you write a string to memory?
+A: `:wx hello @ address`
+
+Q10: How do you dump memory region?
+A: `:dd filepath`
+
+Q11: How do you list memory regions?
+A: `:dm`
+
+Q12: How do you search for specific memory permissions?
+A: `:dm rwx`
+
+## Function Analysis
+
+Q13: How do you list all Objective-C classes?
+A: `:ic`
+
+Q14: How do you list methods of an Objective-C class?
+A: `:ic [ClassName]`
+
+Q15: How do you list Java classes (Android)?
+A: `:ic java`
+
+Q16: How do you trace function calls?
+A: `:dt func_name`
+
+Q17: How do you hook a native function?
+A: `:di func_name`
+
+## Symbol Resolution
+
+Q18: How do you resolve a symbol address?
+A: `:is symbol_name`
+
+Q19: How do you list all symbols?
+A: `:is`
+
+Q20: How do you find references to a symbol?
+A: `:iE symbol_name`
+
+## Debugging Operations
+
+Q21: How do you set a breakpoint?
+A: `:db address`
+
+Q22: How do you list all breakpoints?
+A: `:db`
+
+Q23: How do you delete a breakpoint?
+A: `:db- address`
+
+Q24: How do you continue execution?
+A: `:dc`
+
+Q25: How do you single step?
+A: `:ds`
+
+## Information Gathering
+
+Q26: How do you show process information?
+A: `:i`
+
+Q27: How do you list currently running threads?
+A: `:dpt`
+
+Q28: How do you get binary entrypoint?
+A: `:ie`
+
+Q29: How do you show binary information?
+A: `:i*`
+
+Q30: How do you list environment variables?
+A: `:env`
+
+## File System Operations
+
+Q31: How do you list files in app bundle (iOS)?
+A: `:ls /var/containers/Bundle/Application/*`
+
+Q32: How do you read a file?
+A: `:cat filepath`
+
+Q33: How do you write to a file?
+A: `:write filepath`
+
+Q34: How do you show current working directory?
+A: `:pwd`
+
+## SSL Pinning & Network
+
+Q35: How do you disable SSL pinning (iOS)?
+A: `:eval ObjC.classes.NSURLSession.setTrustAllCerts(true)`
+
+Q36: How do you intercept network calls?
+A: `:dtf libSystem.B.dylib exports`
+
+## Android Specific
+
+Q37: How do you list Android activities?
+A: `:ic android.app.Activity`
+
+Q38: How do you hook Java method?
+A: `:java className.methodName`
+
+Q39: How do you list loaded dex files?
+A: `:il~*.dex`
+
+Q40: How do you trace Java method calls?
+A: `:dt java_method`
+
+## iOS Specific
+
+Q41: How do you list all UIViewController instances?
+A: `:ic UIViewController`
+
+Q42: How do you monitor UserDefaults?
+A: `:dtf NSUserDefaults.*`
+
+Q43: How do you list keychain items?
+A: `:eval ObjC.classes.KeychainAccess.allItems()`
+
+Q44: How do you bypass jailbreak detection?
+A: `:eval ObjC.classes.JailbreakDetection.setEnabled_(false)`
+
+## Advanced Operations
+
+Q45: How do you execute custom scripts?
+A: `:. script.js`
+
+Q46: How do you set a watchpoint?
+A: `:dw address`
+
+Q47: How do you trace syscalls?
+A: `:dt syscall`
+
+Q48: How do you profile memory allocations?
+A: `:dm alloc`
+
+Q49: How do you monitor file operations?
+A: `:dtf open`
+
+Q50: How do you dump all strings?
+A: `:iz`

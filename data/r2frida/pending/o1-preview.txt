@@ -1,0 +1,100 @@
+How do I inject a custom Frida script into the target process?
+css
+Copy code
+\. [script.js]
+How do I find all references to a function in r2frida?
+css
+Copy code
+axt [address]
+How do I search for a hex pattern in memory?
+bash
+Copy code
+/x [hex_pattern]
+How do I display help for r2frida commands?
+Copy code
+\?
+How do I get information about the target process?
+css
+Copy code
+\i
+How do I disassemble code at a specific address?
+less
+Copy code
+pd [number_of_instructions] @ [address]
+How do I set a breakpoint on a Java method in Android?
+php
+Copy code
+\db <class_name>.<method_name>
+How do I list all loaded libraries in the process?
+Copy code
+\il
+How do I call an Objective-C method in the target process using r2frida?
+less
+Copy code
+\dc objc:[class_name method_name]
+How do I get the base address of a module?
+php
+Copy code
+\iM <module_name>
+How do I display the call stack of the current thread?
+Copy code
+\bt
+How do I set a hardware breakpoint at a specific address?
+css
+Copy code
+\dbhb [address]
+How do I dump the memory of a specific address range?
+css
+Copy code
+\dm [start_address] [size]
+How do I show a hexdump of memory at a specific address?
+less
+Copy code
+px [size] @ [address]
+How do I perform a format string on the target?
+css
+Copy code
+?v [format_string]
+How do I evaluate an expression in r2frida?
+css
+Copy code
+? [expression]
+How do I intercept and modify a function's arguments in r2frida?
+css
+Copy code
+\dtt [function_address]
+How do I exit r2frida?
+css
+Copy code
+q
+How do I connect to a remote device over USB in r2frida?
+arduino
+Copy code
+r2 frida://usb/[process_name_or_pid]
+How do I load symbols from a module?
+csharp
+Copy code
+\is [module_name]
+How do I list all functions in the current module?
+Copy code
+afl
+How do I find and replace a pattern in memory?
+less
+Copy code
+/x [hex_pattern]; wx [replacement_bytes] @ [address]
+How do I display the value of a variable in the target process?
+css
+Copy code
+\e [variable_name]
+How do I set a watchpoint on a memory address?
+css
+Copy code
+\dbw [address]
+How do I list all environment variables in the target process?
+bash
+Copy code
+\env
+How do I call a function at a specific address with arguments in r2frida?
+css
+Copy code
+\dc [address]([arguments])

@@ -1,0 +1,285 @@
+Here are 100 questions with their respective answers and commands for performing common actions in r2frida:
+
+How do I run a JavaScript expression in Frida?
+Command: :eval <javascript-code>
+How can I list all memory regions in the target process?
+Command: :dm
+How can I check the Frida version being used?
+Command: :?V
+How to set an environment variable in the target process?
+Command: :env <key>=<value>
+How do I evaluate Cycript code in Frida?
+Command: :<space> <cycript-code>
+How can I search for a hex string in memory?
+Command: :/x <hex-string>
+How do I list all imports in the target process?
+Command: :ii
+How do I place a breakpoint at a specific address?
+Command: :db <address>
+How to show all threads in the target process?
+Command: :dpt
+How do I display registers of a specific thread?
+Command: :dr.<thread-id>
+How do I continue the execution after a breakpoint?
+Command: :dc
+How do I inject a library using Frida's new API?
+Command: :dl2 <libname> [main]
+How can I dump binary headers of the current module?
+Command: :ih
+How to list all libraries loaded in the process?
+Command: :il
+How can I modify the permissions of a memory page?
+Command: :dmp <address> <size> <perms>
+How can I run a script from within Frida?
+Command: :. <script-file>
+How do I allocate memory in the target process?
+Command: :dma <size>
+How can I see information about the target?
+Command: :i
+How to trace a function call at a specific address?
+Command: :dt <address>
+How can I unload a framework bundle in iOS?
+Command: :dlf- <path>
+How to trace register values at a specific address?
+Command: :dtr <address> <regs>
+How do I evaluate a Swift expression in the target process?
+Command: :t <swift-module-name>
+How to list all Objective-C protocols in the target?
+Command: :ip
+How can I search for a value in memory based on its width?
+Command: :/v[1248] <value>
+How do I list all sections in the target module?
+Command: :iS
+How to set an r2frida breakpoint at a function symbol?
+Command: :db <symbol>
+How can I intercept and modify the return value of a function?
+Command: :di <addr>
+How do I call a target symbol with given arguments?
+Command: :dxc <symbol|address> <args>
+How can I export heap chunks as r2 flags?
+Command: :dmh*
+How to list Objective-C classes in the target?
+Command: :ic
+How to start the Chrome tools debugger?
+Command: :d.
+How do I allocate a wide string in the heap?
+Command: :dmaw <string>
+How to trace all threads for a specified duration?
+Command: :dts <seconds>
+How can I retrieve the target's current PID?
+Command: :dp
+How do I execute an r2 command through Frida?
+Command: :r <r2cmd>
+How can I modify an existing breakpoint's associated command?
+Command: :dbnc <address> <command>
+How can I retrieve the crash report if the app crashed?
+Command: :dkr
+How to list all named squashed maps?
+Command: :dmm
+How can I list the segments in the target module?
+Command: :iSS
+How to open an UIAlert dialog in the target app?
+Command: :?E <title> <message>
+How can I retrieve the address of a symbol in a library?
+Command: :isa <library> <symbol>
+How do I search for a pattern across all memory regions?
+Command: :/ <pattern>
+How to view all exports in a specific library?
+Command: :iE <lib>
+How can I allocate and initialize a string on the heap?
+Command: :dmas <string>
+How to trace an address or symbol using the stalker?
+Command: :dtsf <address|symbol>
+How do I list all heap allocations in JSON format?
+Command: :dmhj
+How to close a file descriptor in the target process?
+Command: :dd <fd>
+How can I find the SELinux context of a file?
+Command: :chcon <file>
+How to perform inverse symbol resolution at an address?
+Command: :fd <address>
+How can I run Objective-C methods of a specific protocol?
+Command: :ip <protocol>
+How do I inject Java code with Frida?
+Command: :j <java-expression>
+How to load a framework bundle in iOS?
+Command: :dlf <path>
+How can I duplicate a file descriptor in the target?
+Command: :dd <fd> <newfd>
+How to list all thread registers?
+Command: :dr
+How do I export heap allocations to a file?
+Command: :dmh*
+How to start a debug trace log?
+Command: :dtl <msg>
+How do I run a JavaScript function in a Java.perform block?
+Command: :j <js-expression>
+How can I parse the binary headers in JSON format?
+Command: :ihj
+How to search for a wide string in memory?
+Command: :/w <string>
+How can I modify the return value after a function call?
+Command: :dif <addr>
+How to change the SELinux context of a file in Android?
+Command: :chcon <file>
+How do I list all memory-mapped regions?
+Command: :dm*
+How can I retrieve information about memory segments?
+Command: :iSS
+How to trace all functions of a specific class?
+Command: :ic <class>
+How do I set an r2frida configuration variable?
+Command: :e <var>=<value>
+How can I clear all existing traces?
+Command: :dt-*
+How to check whether a target process is active?
+Command: :dp
+How can I show the address of the current segment?
+Command: :iSS.
+How to open a debug trace console?
+Command: :dtl <message>
+How to inject a specific SELinux context in a target process?
+Command: :chcon <file>
+How to parse binary headers of the current module?
+Command: :ih
+How can I define an Objective-C method in a protocol?
+Command: :ip <protocol>
+How to retrieve and display current threads in JSON format?
+Command: :dptj
+How to search for a pattern across all segments?
+Command: :/ <pattern>
+How can I allocate a wide string?
+Command: :dmaw <string>
+How to find symbols by export name?
+Command: :iE <lib>
+How to kill all Frida memory allocations?
+Command: :dma-
+How do I list methods in a class?
+Command: :ic <class>
+**How can I modify existing
+How can I retrieve the crash report if the app crashed?
+Command: :dkr
+How to list all named squashed maps?
+Command: :dmm
+How can I list the segments in the target module?
+Command: :iSS
+How to open an UIAlert dialog in the target app?
+Command: :?E <title> <message>
+How can I retrieve the address of a symbol in a library?
+Command: :isa <library> <symbol>
+How do I search for a pattern across all memory regions?
+Command: :/ <pattern>
+How to view all exports in a specific library?
+Command: :iE <lib>
+How can I allocate and initialize a string on the heap?
+Command: :dmas <string>
+How to trace an address or symbol using the stalker?
+Command: :dtsf <address|symbol>
+How do I list all heap allocations in JSON format?
+Command: :dmhj
+How to close a file descriptor in the target process?
+Command: :dd <fd>
+How can I find the SELinux context of a file?
+Command: :chcon <file>
+How to perform inverse symbol resolution at an address?
+Command: :fd <address>
+How can I run Objective-C methods of a specific protocol?
+Command: :ip <protocol>
+How do I inject Java code with Frida?
+Command: :j <java-expression>
+How to load a framework bundle in iOS?
+Command: :dlf <path>
+How can I duplicate a file descriptor in the target?
+Command: :dd <fd> <newfd>
+How to list all thread registers?
+Command: :dr
+How do I export heap allocations to a file?
+Command: :dmh*
+How to start a debug trace log?
+Command: :dtl <msg>
+How do I run a JavaScript function in a Java.perform block?
+Command: :j <js-expression>
+How can I parse the binary headers in JSON format?
+Command: :ihj
+How to search for a wide string in memory?
+Command: :/w <string>
+How can I modify the return value after a function call?
+Command: :dif <addr>
+How to change the SELinux context of a file in Android?
+Command: :chcon <file>
+How do I list all memory-mapped regions?
+Command: :dm*
+How can I retrieve information about memory segments?
+Command: :iSS
+How to trace all functions of a specific class?
+Command: :ic <class>
+How do I set an r2frida configuration variable?
+Command: :e <var>=<value>
+How can I clear all existing traces?
+Command: :dt-*
+How to check whether a target process is active?
+Command: :dp
+How can I show the address of the current segment?
+Command: :iSS.
+How to open a debug trace console?
+Command: :dtl <message>
+How to inject a specific SELinux context in a target process?
+Command: :chcon <file>
+How to parse binary headers of the current module?
+Command: :ih
+How can I define an Objective-C method in a protocol?
+Command: :ip <protocol>
+How to retrieve and display current threads in JSON format?
+Command: :dptj
+How to search for a pattern across all segments?
+Command: :/ <pattern>
+How can I allocate a wide string?
+Command: :dmaw <string>
+How to find symbols by export name?
+Command: :iE <lib>
+How to kill all Frida memory allocations?
+Command: :dma-
+How do I list methods in a class?
+Command: :ic <class>
+How can I modify existing heap allocations?
+Command: :dma-
+How do I set custom heap values in Frida?
+Command: :dma <size> <value>
+How can I run a custom command through JavaScript?
+Command: :eval <javascript-code>
+How to load libraries in the target with Frida?
+Command: :dl <libname>
+How can I close a debug console?
+Command: :dt-*
+How to send custom signals to target process?
+Command: :dk <pid> <signal>
+How can I use JSON to list memory segments?
+Command: :iSSj
+How do I check if SELinux is applied to a file?
+Command: :chcon <file>
+How to list all current trace sessions?
+Command: :dt-*
+How can I display function header?
+Command: :dth <symbol|addr>
+How do I inject dynamic memory segments?
+Command: :dma <size>
+How can I trace threads dynamically?
+Command: :dts
+How do I list heap chunks dynamically?
+Command: :dmh
+How can I display thread registers in real-time?
+Command: :dr
+How do I load symbols in Frida?
+Command: :dl <symbol>
+How can I allocate dynamic values on Frida's heap?
+Command: :dma <size> <value>
+How to start SELinux in Frida?
+Command: :chcon <file>
+How can I intercept network APIs?
+Command: :db <network-api-address>
+How do I generate stack traces in Frida?
+Command: :dtf <address>
+How can I examine stack segments in real-time?
+Command: :dr
+How to map data using Frida symbols?
+Command: :is <symbol>

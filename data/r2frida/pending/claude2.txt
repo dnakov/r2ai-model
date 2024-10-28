@@ -1,0 +1,389 @@
+# Extended R2frida Command Reference Q&A
+
+## Basic Operations
+
+Q51: How do you run a custom frida expression?
+A: `: 'console.log("hello")'`
+
+Q52: How do you execute a script file?
+A: `:. myscript.js`
+
+Q53: How do you show the target Frida version?
+A: `:?V`
+
+Q54: How do you display a message from the agent?
+A: `:?e Message from agent`
+
+Q55: How do you show a UIAlert dialog (iOS)?
+A: `:?E "Title" "Message"`
+
+## Memory Search Operations
+
+Q56: How do you search for wide strings?
+A: `:/w Hello`
+
+Q57: How do you search for specific byte width values?
+A: `:/v4 1234`
+
+Q58: How do you search hex patterns with JSON output?
+A: `:/xj 90909090`
+
+Q59: How do you search strings with JSON output?
+A: `:/j password`
+
+Q60: How do you search 8-byte values?
+A: `:/v8 0x1122334455667788`
+
+## File Descriptor Operations
+
+Q61: How do you list file descriptors?
+A: `:dd`
+
+Q62: How do you list file descriptors in JSON format?
+A: `:ddj`
+
+Q63: How do you duplicate a file descriptor?
+A: `:ddf 3 4`
+
+Q64: How do you close a file descriptor?
+A: `:dd- 3`
+
+## Function Interception
+
+Q65: How do you replace a function's return value with 1?
+A: `:di1 function_name`
+
+Q66: How do you replace a function's return value with 0?
+A: `:di0 function_name`
+
+Q67: How do you intercept with custom value?
+A: `:div function_name`
+
+Q68: How do you intercept after function execution?
+A: `:dif1 function_name`
+
+Q69: How do you intercept with string return?
+A: `:dis function_name`
+
+## Signal & Process Control
+
+Q70: How do you send a signal to a process?
+A: `:dk 1234 SIGKILL`
+
+Q71: How do you get crash report?
+A: `:dkr`
+
+Q72: How do you show current process ID?
+A: `:dp`
+
+## Library Management
+
+Q73: How do you load a shared library?
+A: `:dl libname.so`
+
+Q74: How do you load a library using newer Frida API?
+A: `:dl2 libname.so main`
+
+Q75: How do you load an iOS Framework?
+A: `:dlf /path/to/Framework.framework`
+
+Q76: How do you unload an iOS Framework?
+A: `:dlf- /path/to/Framework.framework`
+
+## Memory Management
+
+Q77: How do you allocate heap memory?
+A: `:dma 1024`
+
+Q78: How do you allocate string in heap?
+A: `:dmas "Hello World"`
+
+Q79: How do you allocate wide string in heap?
+A: `:dmaw "Hello Wide World"`
+
+Q80: How do you list live heap allocations?
+A: `:dmal`
+
+Q81: How do you free heap allocation?
+A: `:dma- address`
+
+Q82: How do you copy memory to new allocation?
+A: `:dmad source_addr size`
+
+## Memory Information
+
+Q83: How do you list heap chunks?
+A: `:dmh`
+
+Q84: How do you export heap chunks as r2 flags?
+A: `:dmh*`
+
+Q85: How do you get heap chunks in JSON?
+A: `:dmhj`
+
+Q86: How do you show heap allocation maps?
+A: `:dmhm`
+
+## Page Permissions
+
+Q87: How do you change page permissions?
+A: `:dmp address size rwx`
+
+## Thread Operations
+
+Q88: How do you list all threads?
+A: `:dpt`
+
+Q89: How do you show current thread registers?
+A: `:dr.`
+
+## Tracing Operations
+
+Q90: How do you clear specific trace?
+A: `:dt- address`
+
+Q91: How do you clear all traces?
+A: `:dt-*`
+
+Q92: How do you trace current offset?
+A: `:dt.`
+
+Q93: How do you trace with format?
+A: `:dtf address "ix"`
+
+Q94: How do you trace all threads?
+A: `:dts 5`
+
+Q95: How do you trace using stalker?
+A: `:dtsf function_name`
+
+## Symbol Resolution
+
+Q96: How do you get binary headers?
+A: `:ih`
+
+Q97: How do you list exports from library?
+A: `:iE libname`
+
+Q98: How do you show section at current address?
+A: `:iS.`
+
+Q99: How do you list segments in JSON?
+A: `:iSSj`
+
+## Environment & Configuration
+
+Q100: How do you get environment variable?
+A: `:env VARIABLE_NAME`
+
+Q101: How do you set environment variable?
+A: `:env VARIABLE_NAME=value`
+
+## Java Integration
+
+Q102: How do you run Java expression?
+A: `:j Java.use("android.app.Activity")`
+
+## Swift Analysis
+
+Q103: How do you list Swift types?
+A: `:t ModuleName`
+
+## Chrome Debugging
+
+Q104: How do you start Chrome debugger?
+A: `:d.`
+
+## SELinux Management
+
+Q105: How do you change SELinux context?
+A: `:chcon /path/to/file`
+
+## Header Analysis
+
+Q106: How do you get headers in JSON?
+A: `:ihj`
+
+Q107: How do you get headers as r2 commands?
+A: `:ih*`
+
+## Register Operations
+
+Q108: How do you trace register values?
+A: `:dtr address rax rbx rcx`
+
+## Function Headers
+
+Q109: How do you define function header?
+A: `:dth function_name z:str i:int v:hex`
+
+## Logging
+
+Q110: How do you manage trace logs?
+A: `:dtl "log message"`
+
+Q111: How do you clear trace logs?
+A: `:dtl-*`
+
+## Additional Binary Information
+
+Q112: How do you list segments at current address?
+A: `:iSS.`
+
+Q113: How do you get inverse symbol resolution?
+A: `:fd address`
+
+## Advanced Execution
+
+Q114: How do you call target function with args?
+A: `:dxc function_name arg1 arg2`
+
+## Configuration
+
+Q115: How do you list config variables?
+A: `:e`
+
+Q116: How do you set config variable?
+A: `:e var.name=value`
+
+## Protocol Analysis (iOS)
+
+Q117: How do you list protocol methods?
+A: `:ip ProtocolName`
+
+## Named Maps
+
+Q118: How do you list named squashed maps?
+A: `:dmm`
+
+## Debug Logging
+
+Q119: How do you enable debug trace logging?
+A: `:dtl msg`
+
+Q120: How do you export debug trace logs?
+A: `:dtl*`
+
+## Module Information
+
+Q121: How do you get current module info?
+A: `:i`
+
+Q122: How do you list sections with flags?
+A: `:iS*`
+
+## Function Analysis
+
+Q123: How do you trace stalker with JSON output?
+A: `:dtsfj function_name`
+
+Q124: How do you trace with header definition?
+A: `:dth function_name x:0 y:1`
+
+## Memory Regions
+
+Q125: How do you list memory regions as r2 commands?
+A: `:dm*`
+
+Q126: How do you get memory regions in JSON?
+A: `:dmj`
+
+## Breakpoint Management
+
+Q127: How do you list breakpoints?
+A: `:dbn`
+
+Q128: How do you delete breakpoint by address?
+A: `:dbn -address`
+
+Q129: How do you associate command with breakpoint?
+A: `:dbnc address "px 32"`
+
+Q130: How do you remove all breakpoints?
+A: `:db-*`
+
+## Advanced Search
+
+Q131: How do you search 16-bit values?
+A: `:/v2 value`
+
+Q132: How do you search 32-bit values?
+A: `:/v4 value`
+
+## Symbol Operations
+
+Q133: How do you show symbol address?
+A: `:isa libname symbol_name`
+
+Q134: How do you list all symbols with flags?
+A: `:is*`
+
+## Cycript Integration
+
+Q135: How do you evaluate Cycript code?
+A: `: cycript_code`
+
+## Core Operations
+
+Q136: How do you run r2 core command?
+A: `:r px 32`
+
+## Evaluation Context
+
+Q137: How do you evaluate JS in agent?
+A: `:eval JavaScript.code()`
+
+## Thread Analysis
+
+Q138: How do you trace thread for specific time?
+A: `:dtsj 10`
+
+## Binary Sections
+
+Q139: How do you list sections with JSON?
+A: `:iSj`
+
+## Library Analysis
+
+Q140: How do you list imports with flags?
+A: `:ii*`
+
+## Advanced Interception
+
+Q141: How do you intercept with immediate value?
+A: `:dii function_name`
+
+Q142: How do you intercept after call with zero?
+A: `:dif0 function_name`
+
+## Memory Operations
+
+Q143: How do you list heap chunks maps?
+A: `:dmhm`
+
+Q144: How do you copy memory to allocation?
+A: `:dmad source size`
+
+## Process Information
+
+Q145: How do you get process environment?
+A: `:env`
+
+Q146: How do you list all environment variables?
+A: `:env *`
+
+## Framework Management
+
+Q147: How do you load multiple frameworks?
+A: `:dlf framework1.framework framework2.framework`
+
+Q148: How do you unload multiple frameworks?
+A: `:dlf- framework1.framework framework2.framework`
+
+## Debug Operations
+
+Q149: How do you trace with stalker for JSON output?
+A: `:dtsj 5`
+
+Q150: How do you show module sections?
+A: `:iS`
