@@ -20,8 +20,8 @@ top_p = 0.9
 
 llm = ChatAuto(model=model, max_tokens=max_tokens, temperature=temperature, top_p=top_p, timeout=120)
 def generate_pair(messages):
-    commands = open("data/sources/all_commands.txt", "r").read()
-    fortunes = open("data/sources/fortunes.tips", "r").read()
+    commands = open("data/radare2/sources/all_commands.txt", "r").read()
+    fortunes = open("data/radare2/sources/fortunes.tips", "r").read()
     prompt = f"""You're a helpful assistant who is extremely knowledgeable about the reverse engineering, malware analysis and security space in general. 
 You're a pro at using radare2 for many different tasks. Your job is to enumerate all possible ways someone could use radare2 to answer a question. 
 You should come up with a variety of different questions that utilize a variety of different commands. 
@@ -125,7 +125,7 @@ def validate_dataset(file_path='data/radare2_train.tsv'):
 
 # read data/radare2_ok.tsv and convert to json array    
 def examples():
-    df = pd.read_csv('data/radare2_ok.tsv', sep='\t')
+    df = pd.read_csv('data/radare2/radare2_ok.tsv', sep='\t')
     return df.sample(n=10).to_dict('records')
 
 if __name__ == "__main__":
