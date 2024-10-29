@@ -108,7 +108,7 @@ def generate_dataset(file_path, num_examples=1000, messages=[], category=None):
         print("-" * 50)
     return df
 
-def validate_dataset(file_path='data/radare2_train.tsv'):
+def validate_dataset(file_path='data/radare2/radare2_train.tsv'):
     """Validate the generated dataset"""
     df = pd.read_csv(file_path, sep='\t')
     
@@ -134,6 +134,6 @@ if __name__ == "__main__":
     num_examples = 100
     for category in categories:
         messages = [{"role": "user", "content": f"""generate {num_examples} examples that would be applicable to this category: {category}. Respond in JSON format: [{{"q": "<question>", "a": "<radare2_command>"}}, ...] and NOTHING ELSE."""}]
-        file_path = f'data/pending/{today}-{category.replace(" ", "_")}-{model.replace("/", ":")}-top_p-{top_p}-temp-{temperature}.tsv'
+        file_path = f'data/radare2/pending/{today}-{category.replace(" ", "_")}-{model.replace("/", ":")}-top_p-{top_p}-temp-{temperature}.tsv'
         generate_dataset(file_path=file_path, num_examples=num_examples, messages=messages, category=category)  # Generate 1500 examples (1425 train, 75 val)
         validate_dataset(file_path=file_path)

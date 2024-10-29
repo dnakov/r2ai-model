@@ -1,0 +1,3779 @@
+q	a
+I think there's a jump table in this function. How can I find its location?	CCf~cases
+jump table location	CCf~cases
+show jump table	CCf~cases
+find cases	CCf~cases
+locate jump table in function	CCf~cases
+Where is the jump table?	CCf~cases
+How do I see switch cases?	CCf~cases
+Display function's jump table	CCf~cases
+cases	CCf~cases
+switch cases location	CCf~cases
+Find switch statement locations	CCf~cases
+Can you show me where the switch cases are?	CCf~cases
+Looking for jump table address	CCf~cases
+Need to find switch cases in current function	CCf~cases
+Where can I find the switch statement cases?	CCf~cases
+Show me all case statements	CCf~cases
+How to determine the switch table destinations?	afb.
+switch	afb.
+switch table	afb.
+switch destinations	afb.
+Show switch table destinations	afb.
+Display switch destinations	afb.
+Get switch table info	afb.
+How can I see switch destinations?	afb.
+How to view switch table destinations?	afb.
+What's the command for switch destinations?	afb.
+List switch table destinations	afb.
+Print switch destinations	afb.
+How do I find switch table destinations in radare2?	afb.
+Show me the switch table	afb.
+What command shows switch destinations?	afb.
+Display switch table info	afb.
+How to analyze switch destinations?	afb.
+View switch table	afb.
+Get switch destinations	afb.
+Show me switch table analysis	afb.
+List all switch destinations	afb.
+How do I find out what type of file this is? Like if it's ELF or PE or something?	i~^format[1]
+file type	i~^format[1]
+what format is this file	i~^format[1]
+format	i~^format[1]
+show me the file format	i~^format[1]
+what kind of file is this	i~^format[1]
+tell me the binary format	i~^format[1]
+check if this is ELF or PE	i~^format[1]
+display file format	i~^format[1]
+what's the format of this binary	i~^format[1]
+determine file type	i~^format[1]
+is this an ELF file	i~^format[1]
+can you tell me the format of this file	i~^format[1]
+show file type information	i~^format[1]
+what format am I working with	i~^format[1]
+identify file format	i~^format[1]
+I want to see all the loops in a function. Is there a way to highlight or find them?	/abf
+loops	/abf
+show loops	/abf
+find loops	/abf
+display all loops	/abf
+highlight loops	/abf
+locate loops	/abf
+can you show me the loops	/abf
+where are the loops	/abf
+how do I see loops in this function	/abf
+display function loops	/abf
+show me all the loops in the current function	/abf
+I need to find all loops in this function	/abf
+highlight all loops in the current function	/abf
+is there a way to see loops	/abf
+can you display the loop structures	/abf
+I want to find places where the program might be using command line arguments. Where would I look?	axt@@=reloc.optind reloc.optarg sym.imp.getopt_long sym.imp.getopt
+arguments	axt@@=reloc.optind reloc.optarg sym.imp.getopt_long sym.imp.getopt
+command line args	axt@@=reloc.optind reloc.optarg sym.imp.getopt_long sym.imp.getopt
+Where can I find command line argument usage?	axt@@=reloc.optind reloc.optarg sym.imp.getopt_long sym.imp.getopt
+Show me where command line arguments are processed	axt@@=reloc.optind reloc.optarg sym.imp.getopt_long sym.imp.getopt
+Find argument parsing locations	axt@@=reloc.optind reloc.optarg sym.imp.getopt_long sym.imp.getopt
+How to locate command line argument handling?	axt@@=reloc.optind reloc.optarg sym.imp.getopt_long sym.imp.getopt
+getopt usage	axt@@=reloc.optind reloc.optarg sym.imp.getopt_long sym.imp.getopt
+Where does this program parse its arguments?	axt@@=reloc.optind reloc.optarg sym.imp.getopt_long sym.imp.getopt
+Find all references to argument parsing functions	axt@@=reloc.optind reloc.optarg sym.imp.getopt_long sym.imp.getopt
+Show argument handling code locations	axt@@=reloc.optind reloc.optarg sym.imp.getopt_long sym.imp.getopt
+Where are command line parameters processed?	axt@@=reloc.optind reloc.optarg sym.imp.getopt_long sym.imp.getopt
+Locate argument parsing code	axt@@=reloc.optind reloc.optarg sym.imp.getopt_long sym.imp.getopt
+How do I see what's in the data section? I want to look at initialized variables.	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+print data section	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+show data section	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+initialized variables	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+data section contents	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+view data section	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+examine data section	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+display initialized variables in data section	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+how can I see the data section?	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+what command shows the data section?	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+how to view initialized data?	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+show me the contents of data section	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+what's in the data section?	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+how do I print data section variables?	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+where can I find initialized variables?	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+data section dump	pxr $SS @@= `iS,name/str/data,vaddr/cols,:tsv~0x`
+I'm trying to find where malloc is called. How can I see references to memory allocation?	axt @sym.malloc
+find malloc	axt @sym.malloc
+malloc references	axt @sym.malloc
+malloc calls	axt @sym.malloc
+Where is malloc used	axt @sym.malloc
+Show me malloc cross references	axt @sym.malloc
+malloc xrefs	axt @sym.malloc
+How do I see where malloc is referenced	axt @sym.malloc
+Find all calls to malloc	axt @sym.malloc
+List all references to malloc function	axt @sym.malloc
+Show cross references to memory allocation	axt @sym.malloc
+Where in the code is malloc being called	axt @sym.malloc
+memory allocation references	axt @sym.malloc
+I need to see all places where malloc is used	axt @sym.malloc
+Find malloc function references in binary	axt @sym.malloc
+xrefs to malloc	axt @sym.malloc
+How do I check if this binary is stripped? I want to see if it has debug symbols.	i~stripped
+symbols	i~stripped
+stripped	i~stripped
+check stripped	i~stripped
+is binary stripped	i~stripped
+check debug symbols	i~stripped
+debug symbols check	i~stripped
+check if stripped binary	i~stripped
+are debug symbols present	i~stripped
+how to check if binary is stripped	i~stripped
+check if executable has debug symbols	i~stripped
+can you tell me if this binary is stripped	i~stripped
+is this executable stripped or not	i~stripped
+verify if binary contains debug symbols	i~stripped
+check stripped status of binary	i~stripped
+how to verify if debug symbols exist	i~stripped
+does this binary have debug information	i~stripped
+check if program has debug symbols	i~stripped
+tell me if this binary is stripped	i~stripped
+verify debug symbols presence	i~stripped
+show stripped status	i~stripped
+I want to see all the network-related functions this program might use. How do I search for those?	afl~socket,connect,bind
+search network functions	afl~socket,connect,bind
+network functions	afl~socket,connect,bind
+Show me network related functions	afl~socket,connect,bind
+networking	afl~socket,connect,bind
+Find functions related to networking	afl~socket,connect,bind
+List all network functions	afl~socket,connect,bind
+network calls	afl~socket,connect,bind
+Show functions for network operations	afl~socket,connect,bind
+Display networking-related function list	afl~socket,connect,bind
+How can I find network-related functions?	afl~socket,connect,bind
+What network functions are in this binary?	afl~socket,connect,bind
+socket functions	afl~socket,connect,bind
+List functions with socket or connect	afl~socket,connect,bind
+Show me all networking capabilities	afl~socket,connect,bind
+Find network-related function names	afl~socket,connect,bind
+How can I find all the comparison instructions in a function? Like cmp or test	/at cmp @e:search.in=anal.fcn
+search cmp	/at cmp @e:search.in=anal.fcn
+Find cmp instructions	/at cmp @e:search.in=anal.fcn
+Where are the cmp instructions	/at cmp @e:search.in=anal.fcn
+Show me all comparison instructions	/at cmp @e:search.in=anal.fcn
+locate cmp	/at cmp @e:search.in=anal.fcn
+Find test instructions	/at test @e:search.in=anal.fcn
+Where are test instructions in this function	/at test @e:search.in=anal.fcn
+search test	/at test @e:search.in=anal.fcn
+Show me all test instructions in the function	/at test @e:search.in=anal.fcn
+comparisons	/at cmp @e:search.in=anal.fcn
+Find all test and cmp instructions	/at test,cmp @e:search.in=anal.fcn
+Where are all the comparison ops	/at test,cmp @e:search.in=anal.fcn
+Show comparison instructions in current function	/at test,cmp @e:search.in=anal.fcn
+Find all test and cmp in function	/at test,cmp @e:search.in=anal.fcn
+search comparison instructions	/at test,cmp @e:search.in=anal.fcn
+I want to find all functions that are bigger than 100 bytes. How can I do that?	afl,size/gt/100,name/cols,:quiet
+size	afl,size/gt/100,name/cols,:quiet
+functions larger than 100 bytes	afl,size/gt/100,name/cols,:quiet
+Show functions bigger than 100	afl,size/gt/100,name/cols,:quiet
+List all functions with size > 100	afl,size/gt/100,name/cols,:quiet
+Find functions bigger than 200 bytes	afl,size/gt/200,name/cols,:quiet
+Display functions larger than 50 bytes	afl,size/gt/50,name/cols,:quiet
+What functions are bigger than 150 bytes?	afl,size/gt/150,name/cols,:quiet
+How do I see functions larger than 300 bytes?	afl,size/gt/300,name/cols,:quiet
+Show me functions with size greater than 250	afl,size/gt/250,name/cols,:quiet
+List functions exceeding 400 bytes	afl,size/gt/400,name/cols,:quiet
+Find all functions bigger than 500	afl,size/gt/500,name/cols,:quiet
+Which functions are larger than 75 bytes in size?	afl,size/gt/75,name/cols,:quiet
+Display functions with size exceeding 125 bytes	afl,size/gt/125,name/cols,:quiet
+Show functions larger than 175 bytes in the binary	afl,size/gt/175,name/cols,:quiet
+List all functions with more than 225 bytes	afl,size/gt/225,name/cols,:quiet
+How do I see what libraries this program needs to run? Like its dependencies?	il
+dependencies	il
+libraries	il
+shared libraries	il
+list dependencies	il
+show dependencies	il
+linked libraries	il
+list shared libraries	il
+What libraries does this binary need?	il
+Show me the linked libraries	il
+How can I see the library dependencies?	il
+What are the shared libraries required by this program?	il
+Display all linked libraries	il
+Can you show me what libraries are needed?	il
+List all library dependencies for this binary	il
+What external libraries does this executable use?	il
+Show the shared library dependencies	il
+How do I check what libraries are linked?	il
+Display program dependencies	il
+List all required shared libraries	il
+What dynamic libraries are needed for this program?	il
+How can I see if there are any hidden or suspicious strings in the binary?	izz
+strings	izz
+show strings	izz
+list strings	izz
+find strings	izz
+extract strings	izz
+How to extract strings from binary?	izz
+How do I see all strings in the binary?	izz
+Show me all strings in the executable	izz
+Can you display all strings from the binary?	izz
+What command shows hidden strings?	izz
+List all possible strings in the binary	izz
+Extract all string data from executable	izz
+Display every string found in binary	izz
+How to find suspicious strings?	izz
+Show embedded strings	izz
+Get all strings from binary file	izz
+Print strings from executable	izz
+What's the command for string extraction?	izz
+How to see text strings in binary?	izz
+Search for embedded text in binary	izz
+How do I check what CPU architecture this binary is compiled for?	i~arch,bits
+arch	i~arch,bits
+architecture	i~arch,bits
+binary arch	i~arch,bits
+binary architecture	i~arch,bits
+check architecture	i~arch,bits
+check binary architecture	i~arch,bits
+check cpu architecture	i~arch,bits
+cpu arch	i~arch,bits
+display architecture	i~arch,bits
+find architecture	i~arch,bits
+get architecture	i~arch,bits
+show architecture	i~arch,bits
+show binary architecture	i~arch,bits
+show cpu architecture	i~arch,bits
+what architecture is this binary	i~arch,bits
+what architecture is this executable	i~arch,bits
+what arch is this	i~arch,bits
+what cpu architecture is this binary	i~arch,bits
+what is the architecture of this binary	i~arch,bits
+which architecture is this binary compiled for	i~arch,bits
+I want to find all the places where a global variable is being used. How do I do that?	axt@address
+references	axt@address
+xrefs	axt@address
+where is this used	axt@address
+find references	axt@address
+show xrefs to address	axt@address
+How can I find cross references to a specific address?	axt@address
+What command shows where a variable is referenced?	axt@address
+Display all cross references to this location	axt@address
+Find all code that uses this address	axt@address
+Where is this global variable referenced?	axt@address
+Show me everywhere this address is used	axt@address
+List all references to this memory location	axt@address
+How do I see what code accesses this variable?	axt@address
+Find all places that reference this address	axt@address
+What's referencing this location?	axt@address
+I want to look at the biggest functions in the program	afl,size/sort/dec,./head/10,addr/cols/size/name
+Look at biggest functions	afl,size/sort/dec,./head/10,addr/cols/size/name
+Show largest functions	afl,size/sort/dec,./head/10,addr/cols/size/name
+Display top 5 largest functions	afl,size/sort/dec,./head/5,addr/cols/size/name
+What are the 15 biggest functions?	afl,size/sort/dec,./head/15,addr/cols/size/name
+List largest functions by size	afl,size/sort/dec,./head/10,addr/cols/size/name
+biggest functions	afl,size/sort/dec,./head/10,addr/cols/size/name
+Show me the 20 largest functions in binary	afl,size/sort/dec,./head/20,addr/cols/size/name
+Display top 3 functions by size	afl,size/sort/dec,./head/3,addr/cols/size/name
+What are the 7 biggest functions in the program?	afl,size/sort/dec,./head/7,addr/cols/size/name
+List top 12 functions by size	afl,size/sort/dec,./head/12,addr/cols/size/name
+Show 8 largest functions	afl,size/sort/dec,./head/8,addr/cols/size/name
+Display biggest functions in program	afl,size/sort/dec,./head/10,addr/cols/size/name
+largest functions in binary	afl,size/sort/dec,./head/10,addr/cols/size/name
+What are the biggest functions?	afl,size/sort/dec,./head/10,addr/cols/size/name
+Show me the largest functions	afl,size/sort/dec,./head/10,addr/cols/size/name
+How do I sort functions by size?	aflss
+sort functions by size	aflss
+sort all functions by size	aflss
+functions sorted by size	aflss
+sort funcs size	aflss
+How do I get a list of functions sorted by their size?	aflss
+What command sorts functions based on size?	aflss
+Show me functions ordered by size	aflss
+Display functions sorted by their size	aflss
+list functions ordered by size	aflss
+Can you sort the functions according to their size?	aflss
+What's the command to see functions in size order?	aflss
+I need functions listed by size	aflss
+Show functions from largest to smallest	aflss
+order functions by size	aflss
+What's the radare2 command for size-based function sorting?	aflss
+I want to see what math operations a function is doing. How do I find arithmetic instructions?	/at add,sub,mul,div@e:search.in=anal.fcn
+search arithmetic	/at add,sub,mul,div@e:search.in=anal.fcn
+arithmetic instructions	/at add,sub,mul,div@e:search.in=anal.fcn
+Show me math operations	/at add,sub,mul,div@e:search.in=anal.fcn
+Find calculations	/at add,sub,mul,div@e:search.in=anal.fcn
+Where are the math operations in this function?	/at add,sub,mul,div@e:search.in=anal.fcn
+math	/at add,sub,mul,div@e:search.in=anal.fcn
+arithmetic ops	/at add,sub,mul,div@e:search.in=anal.fcn
+Show all arithmetic instructions in function	/at add,sub,mul,div@e:search.in=anal.fcn
+Find math instructions	/at add,sub,mul,div@e:search.in=anal.fcn
+locate arithmetic operations	/at add,sub,mul,div@e:search.in=anal.fcn
+Where can I find math calculations?	/at add,sub,mul,div@e:search.in=anal.fcn
+Show me where calculations happen	/at add,sub,mul,div@e:search.in=anal.fcn
+Find add sub mul div	/at add,sub,mul,div@e:search.in=anal.fcn
+arithmetic analysis	/at add,sub,mul,div@e:search.in=anal.fcn
+How do I see math instructions?	/at add,sub,mul,div@e:search.in=anal.fcn
+I want to see what binary operations a function is doing. How do I find logic binary instructions?	/at shl,shr,rol,ror,sal,sar,xor@e:search.in=anal.fcn
+search binary operations	/at shl,shr,rol,ror,sal,sar,xor@e:search.in=anal.fcn
+Show me binary operations in function	/at shl,shr,rol,ror,sal,sar,xor@e:search.in=anal.fcn
+binary operations	/at shl,shr,rol,ror,sal,sar,xor@e:search.in=anal.fcn
+Find all bit shifts and rotations	/at shl,shr,rol,ror,sal,sar,xor@e:search.in=anal.fcn
+How can I locate binary logic instructions?	/at shl,shr,rol,ror,sal,sar,xor@e:search.in=anal.fcn
+Where are the bit manipulation instructions?	/at shl,shr,rol,ror,sal,sar,xor@e:search.in=anal.fcn
+Show bit operations	/at shl,shr,rol,ror,sal,sar,xor@e:search.in=anal.fcn
+List all binary logic in current function	/at shl,shr,rol,ror,sal,sar,xor@e:search.in=anal.fcn
+Find shifts and rotations	/at shl,shr,rol,ror,sal,sar,xor@e:search.in=anal.fcn
+Display binary instructions in function	/at shl,shr,rol,ror,sal,sar,xor@e:search.in=anal.fcn
+Where are the bit shifts?	/at shl,shr,rol,ror,sal,sar,xor@e:search.in=anal.fcn
+Locate XOR operations	/at shl,shr,rol,ror,sal,sar,xor@e:search.in=anal.fcn
+I want to see if there are any URLs addresses hidden in the binary. How do I search?	iz~http://,https://,www
+search urls	iz~http://,https://,www
+urls in binary	iz~http://,https://,www
+find urls	iz~http://,https://,www
+show urls	iz~http://,https://,www
+locate urls in binary	iz~http://,https://,www
+How can I find URLs in the binary?	iz~http://,https://,www
+Display all URLs from the binary	iz~http://,https://,www
+Search for web addresses	iz~http://,https://,www
+Can you show me all URLs in this file?	iz~http://,https://,www
+Where can I find URLs in this binary?	iz~http://,https://,www
+Find all web addresses in the executable	iz~http://,https://,www
+Show me any HTTP or HTTPS URLs	iz~http://,https://,www
+Extract URLs from binary	iz~http://,https://,www
+List all web addresses found	iz~http://,https://,www
+Search for HTTP and HTTPS links	iz~http://,https://,www
+How can I find all the switch statements in a function?	pdr~switch
+find switch	pdr~switch
+switch statements	pdr~switch
+locate switch	pdr~switch
+show switch	pdr~switch
+get switch statements	pdr~switch
+find all switch statements	pdr~switch
+where are the switch statements	pdr~switch
+show me switch statements in function	pdr~switch
+display all switch statements	pdr~switch
+locate all switch statements in current function	pdr~switch
+can you find switch statements in this function	pdr~switch
+how do I see switch statements in the function	pdr~switch
+show me where the switch statements are	pdr~switch
+find switch statements in current function	pdr~switch
+list all switch statements	pdr~switch
+I want to see if this program creates any child processes. How do I find fork calls?	axt @sym.fork
+fork	axt @sym.fork
+Show fork calls	axt @sym.fork
+Find fork calls	axt @sym.fork
+Where are the fork calls	axt @sym.fork
+Locate fork system calls	axt @sym.fork
+How to find process creation	axt @sym.fork
+Find child process creation	axt @sym.fork
+Show me where fork is called	axt @sym.fork
+List all references to fork	axt @sym.fork
+Where does this program create new processes	axt @sym.fork
+Cross references to fork	axt @sym.fork
+Find all locations where fork is used	axt @sym.fork
+Show fork cross references	axt @sym.fork
+Display fork references	axt @sym.fork
+Find process spawning locations	axt @sym.fork
+I need to see where fork is called from	axt @sym.fork
+Can you show me where this binary calls fork	axt @sym.fork
+List all code locations that call fork	axt @sym.fork
+Show me the cross references to the fork function	axt @sym.fork
+Where in the code does it spawn new processes	axt @sym.fork
+I want to see all the places where data is being copied in memory. How do I find memcpy calls?	axt @sym.memcpy
+memcpy	axt @sym.memcpy
+Show memcpy calls	axt @sym.memcpy
+Find memcpy	axt @sym.memcpy
+Where is memcpy used	axt @sym.memcpy
+Locate memcpy references	axt @sym.memcpy
+Find all memcpy calls in binary	axt @sym.memcpy
+How can I see where memcpy is referenced	axt @sym.memcpy
+Show me all cross-references to memcpy	axt @sym.memcpy
+List all places where memcpy is called	axt @sym.memcpy
+Display memcpy xrefs	axt @sym.memcpy
+I need to find all instances of memory copying using memcpy	axt @sym.memcpy
+Where in the code is memcpy being used	axt @sym.memcpy
+Show all code locations that call memcpy	axt @sym.memcpy
+Find every instance where memcpy is referenced	axt @sym.memcpy
+List all cross-references to the memcpy function	axt @sym.memcpy
+I want to see what happens right after the program starts. Where's the initialization code?	pdf@entry0
+entry	pdf@entry0
+entry point	pdf@entry0
+initialization	pdf@entry0
+program start	pdf@entry0
+startup code	pdf@entry0
+Where can I find the entry point code?	pdf@entry0
+How do I view the entry point function?	pdf@entry0
+Show me what happens at program start	pdf@entry0
+Can you display the entry point disassembly?	pdf@entry0
+I need to see the program's initialization routine	pdf@entry0
+What's the first code that runs in this program?	pdf@entry0
+Display the entry point instructions	pdf@entry0
+Show the program's entry point function	pdf@entry0
+How do I examine the program's starting code?	pdf@entry0
+Where does the program begin execution?	pdf@entry0
+How do I find all the functions that use floating-point math?	afn.@@=`/af fpu~[0]`
+search floating point functions	afn.@@=`/af fpu~[0]`
+Show me functions using fpu	afn.@@=`/af fpu~[0]`
+List all fpu functions	afn.@@=`/af fpu~[0]`
+floating point	afn.@@=`/af fpu~[0]`
+fpu functions	afn.@@=`/af fpu~[0]`
+Where are the floating point calculations?	afn.@@=`/af fpu~[0]`
+Find functions with floating point operations	afn.@@=`/af fpu~[0]`
+Which functions perform floating point math?	afn.@@=`/af fpu~[0]`
+Locate all FPU instructions	afn.@@=`/af fpu~[0]`
+Show floating point function names	afn.@@=`/af fpu~[0]`
+List functions containing FPU instructions	afn.@@=`/af fpu~[0]`
+Where is floating point math used?	afn.@@=`/af fpu~[0]`
+Find FPU operations	afn.@@=`/af fpu~[0]`
+floating point math locations	afn.@@=`/af fpu~[0]`
+Show me where float calculations happen	afn.@@=`/af fpu~[0]`
+I want to analyze all functions in the binary	aaa
+analyze	aaa
+analyze binary	aaa
+analyze all	aaa
+analyze everything	aaa
+analyze functions	aaa
+run full analysis	aaa
+perform complete analysis	aaa
+analyze all functions	aaa
+do complete binary analysis	aaa
+run deep analysis	aaa
+analyze entire binary	aaa
+perform full binary analysis	aaa
+analyze all code and data	aaa
+run comprehensive analysis	aaa
+how to analyze everything in the binary	aaa
+what command analyzes all functions	aaa
+analyze the whole program	aaa
+run complete program analysis	aaa
+analyze binary thoroughly	aaa
+how to analyze all functions and data	aaa
+How do I seek to the entry point of the binary?	s entry0
+seek entry point	s entry0
+seek to entry	s entry0
+entry point	s entry0
+goto entry	s entry0
+entry	s entry0
+How can I navigate to the program's entry point?	s entry0
+How to jump to entry point?	s entry0
+Where is the entry point?	s entry0
+Move to entry point	s entry0
+Navigate to entry	s entry0
+Can you help me seek to the entry point?	s entry0
+Jump to program start	s entry0
+How do I go to the entry point address?	s entry0
+Seek program entry	s entry0
+Take me to entry point	s entry0
+Disassemble 20 instructions starting from the current address	pd 20
+disassemble 20	pd 20
+show next 20 instructions	pd 20
+disassemble	pd 20
+disassemble current instructions	pd 20
+display next 20 assembly instructions	pd 20
+disassemble from here	pd 20
+show me 20 instructions	pd 20
+disassemble 15 instructions from current position	pd 15
+disassemble next 15	pd 15
+show assembly	pd 20
+disassemble 10 instructions from here	pd 10
+show next 10 assembly instructions	pd 10
+disassemble 25 instructions	pd 25
+display 25 instructions from current address	pd 25
+show next 30 assembly instructions starting from current position	pd 30
+disassemble 30	pd 30
+show me assembly code	pd 20
+display instructions	pd 20
+next instructions	pd 20
+disassemble from current point	pd 20
+How do I list all functions found in the analysis?	afl
+functions	afl
+list functions	afl
+show functions	afl
+all functions	afl
+function list	afl
+display functions	afl
+What functions are in this binary?	afl
+How can I see all functions?	afl
+Show me the list of functions	afl
+Can you display all functions found in analysis?	afl
+List all the functions from analysis	afl
+How do I view the function list?	afl
+Print all functions	afl
+Give me the function list	afl
+What's the command to list functions?	afl
+Display all analyzed functions	afl
+Show function analysis results	afl
+How can I get a list of all functions?	afl
+What command shows all functions?	afl
+List every function in the binary	afl
+I want to see the disassembly of the `main` function	pdf @ main
+disassembly main	pdf @ main
+show main function	pdf @ main
+disassemble main	pdf @ main
+print main function	pdf @ main
+disassemble main function	pdf @ main
+can you show me the disassembly of main	pdf @ main
+display main function disassembly	pdf @ main
+show me the assembly code for main	pdf @ main
+print disassembly of main	pdf @ main
+main disassembly	pdf @ main
+how do I see main's disassembly	pdf @ main
+what's the assembly code for main	pdf @ main
+view main function	pdf @ main
+show assembly main	pdf @ main
+disasm main	pdf @ main
+How can I print the contents at the address stored in the `esp` register?	px 200 @r:esp
+peek esp	px 200 @r:esp
+show esp memory	px 200 @r:esp
+print esp	px 200 @r:esp
+print esp memory	px 200 @r:esp
+print 200 bytes at esp	px 200 @r:esp
+display memory at esp register	px 200 @r:esp
+What's in the esp register?	px 200 @r:esp
+Can you show me the memory contents at esp?	px 200 @r:esp
+dump esp memory contents	px 200 @r:esp
+print memory at stack pointer	px 200 @r:esp
+How do I examine the memory at esp?	px 200 @r:esp
+Show me 200 bytes starting at esp	px 200 @r:esp
+memory dump esp	px 200 @r:esp
+What data is stored at the esp address?	px 200 @r:esp
+peek stack pointer memory	px 200 @r:esp
+Dump the `main` function's buffer as a C byte array to `main.c`	pcf @ main > main.c
+dump main as c array	pcf @ main > main.c
+export main function as c buffer	pcf @ main > main.c
+dump main to c file	pcf @ main > main.c
+save main as c array	pcf @ main > main.c
+export main	pcf @ main > main.c
+dump main function buffer to output.c	pcf @ main > output.c
+export main as c bytes	pcf @ main > main.c
+dump sym.main as c array	pcf @ sym.main > main.c
+save main function bytes to file	pcf @ main > main.c
+export main function to source.c	pcf @ main > source.c
+dump main buffer	pcf @ main > main.c
+save main as c bytes	pcf @ main > main.c
+export main function bytes	pcf @ main > main.c
+dump main function as c array to file	pcf @ main > main.c
+create c array from main	pcf @ main > main.c
+Replace every symbol with a RET instruction.	wao ret0 @@ sym.*
+symbols ret	wao ret0 @@ sym.*
+replace symbols with ret	wao ret0 @@ sym.*
+replace all symbols with ret	wao ret0 @@ sym.*
+replace every symbol with ret	wao ret0 @@ sym.*
+replace each symbol with a ret instruction	wao ret0 @@ sym.*
+convert symbols to ret	wao ret0 @@ sym.*
+substitute symbols with ret	wao ret0 @@ sym.*
+transform symbols to ret	wao ret0 @@ sym.*
+change all symbols to ret instruction	wao ret0 @@ sym.*
+modify symbols to ret	wao ret0 @@ sym.*
+how to replace all symbols with ret instructions	wao ret0 @@ sym.*
+what command replaces symbols with ret	wao ret0 @@ sym.*
+convert all symbol locations to ret	wao ret0 @@ sym.*
+replace function symbols with ret	wao ret0 @@ sym.*
+change every symbol to return instruction	wao ret0 @@ sym.*
+NOP the current instruction	wao nop
+nop instruction	wao nop
+nop current	wao nop
+how to nop	wao nop
+nop this	wao nop
+replace with nop	wao nop
+nop here	wao nop
+replace current instruction with nop	wao nop
+how to replace current instruction with nop	wao nop
+convert to nop	wao nop
+make this instruction do nothing	wao nop
+replace with no operation	wao nop
+turn this into nop	wao nop
+change instruction to nop	wao nop
+nop the instruction at cursor	wao nop
+how can I nop this instruction	wao nop
+Grep for instructions that use the `eax` register within the first 2000 instructions.	pd 2000~eax
+instructions with eax	pd 2000~eax
+find eax register usage	pd 2000~eax
+show eax instructions	pd 2000~eax
+search first 2000 instructions for eax	pd 2000~eax
+eax	pd 2000~eax
+display instructions containing eax register	pd 2000~eax
+grep eax in disassembly	pd 2000~eax
+show me where eax is used	pd 2000~eax
+find all eax occurrences in first 2k instructions	pd 2000~eax
+locate eax usage	pd 2000~eax
+search first 2000 lines for eax register	pd 2000~eax
+filter instructions with eax	pd 2000~eax
+show 2000 instructions filtered by eax	pd 2000~eax
+find eax in first 2k lines	pd 2000~eax
+grep first 2000 disassembled lines for eax	pd 2000~eax
+Step through the debugger 10 times.	10ds
+step	10ds
+step 10	10ds
+step through debugger	10ds
+step debugger 10	10ds
+step 10 times	10ds
+execute 10 steps	10ds
+move forward 10 steps	10ds
+step through the debugger 10 times	10ds
+advance debugger 10 steps	10ds
+run 10 debug steps	10ds
+can you step 10 times in the debugger	10ds
+execute next 10 instructions in debugger	10ds
+make 10 steps in debug mode	10ds
+debug step 10	10ds
+forward 10 steps in debugger	10ds
+Show me 20 hexadecimal bytes at the stack pointer.	px 20 @r:SP
+bytes at sp	px 20 @r:SP
+show stack bytes	px 20 @r:SP
+display bytes at stack pointer	px 20 @r:SP
+hexdump stack pointer	px 20 @r:SP
+hex at sp	px 20 @r:SP
+show me 16 hex bytes at sp	px 16 @r:SP
+display 32 bytes at stack pointer	px 32 @r:SP
+show 8 bytes at sp	px 8 @r:SP
+hex dump 24 bytes from stack pointer	px 24 @r:SP
+display 40 hex bytes at sp	px 40 @r:SP
+stack hex 12 bytes	px 12 @r:SP
+show me hexadecimal data at stack pointer	px 20 @r:SP
+dump 64 bytes from sp	px 64 @r:SP
+hexdump	px 20 @r:SP
+stack bytes hexadecimal	px 20 @r:SP
+display 48 hex bytes from stack pointer	px 48 @r:SP
+show 28 bytes at sp in hex	px 28 @r:SP
+hex dump stack 36 bytes	px 36 @r:SP
+dump 56 hex bytes from sp	px 56 @r:SP
+stack pointer hex view	px 20 @r:SP
+How do I rename the function at address `0x080485a5` to `new_func`?	afn new_func @ 0x080485a5
+rename function at 0x080484b0 to main	afn main @ 0x080484b0
+How to rename function at 0x08048620 to init?	afn init @ 0x08048620
+rename 0x080485d0 to cleanup	afn cleanup @ 0x080485d0
+rename function 0x08048730 to parse_input	afn parse_input @ 0x08048730
+What's the command to rename function at address 0x080486f0 to handle_error?	afn handle_error @ 0x080486f0
+How do I name the function at 0x08048550 process_data?	afn process_data @ 0x08048550
+rename 0x080485c0 validate	afn validate @ 0x080485c0
+How to rename function at address 0x08048700 to exit_handler?	afn exit_handler @ 0x08048700
+rename function 0x080484e0 to setup	afn setup @ 0x080484e0
+What command renames the function at 0x08048600 to check_password?	afn check_password @ 0x08048600
+How do I rename the function at 0x080485f0 to malloc_wrapper?	afn malloc_wrapper @ 0x080485f0
+rename function 0x08048580 to free_wrapper	afn free_wrapper @ 0x08048580
+What's the command to rename 0x080486a0 to debug_print?	afn debug_print @ 0x080486a0
+How to rename the function at 0x080486c0 to log_error?	afn log_error @ 0x080486c0
+rename 0x08048640 to parse_args	afn parse_args @ 0x08048640
+I want to set a breakpoint at the `main` function.	db sym.main
+breakpoint main	db sym.main
+set breakpoint main	db sym.main
+add breakpoint at main	db sym.main
+breakpoint at main function	db sym.main
+set break main	db sym.main
+break main	db sym.main
+How do I set a breakpoint at main?	db sym.main
+Can you help me set a breakpoint at the main function?	db sym.main
+I need to stop execution at main	db sym.main
+Put breakpoint main	db sym.main
+Add break main	db sym.main
+Create breakpoint at main function	db sym.main
+Please set a breakpoint at main	db sym.main
+Stop at main	db sym.main
+I want the program to pause at main	db sym.main
+Continue execution in the debugger until the next breakpoint.	dc
+continue	dc
+resume execution	dc
+run until breakpoint	dc
+continue debugging	dc
+keep running	dc
+run until next break	dc
+continue program execution	dc
+resume until next breakpoint	dc
+run program until it breaks	dc
+continue until next break	dc
+proceed with execution until breakpoint	dc
+run until next debugging stop	dc
+resume program until breakpoint hit	dc
+continue debugging session	dc
+How do I continue execution?	dc
+What command runs until next breakpoint?	dc
+How to resume program execution in radare2?	dc
+Continue execution until next break?	dc
+What's the command to keep running until breakpoint?	dc
+Show all imported functions in JSON format.	iij
+imports	iij
+list imports	iij
+Show imports	iij
+Display imports	iij
+Show imported functions	iij
+Display imported functions	iij
+List all imports	iij
+List all imported functions	iij
+Can you show me the imports?	iij
+What are the imported functions?	iij
+Show me all imports in JSON	iij
+Display all imported functions as JSON	iij
+Get imports in JSON format	iij
+List imports as JSON	iij
+Show JSON formatted imports	iij
+I need to see all imports in JSON format	iij
+Could you display the imported functions in JSON?	iij
+Print all imports in JSON format	iij
+Get a JSON list of all imports	iij
+Show me the JSON output of all imported functions	iij
+List all sections of the binary.	iS
+sections	iS
+show sections	iS
+display sections	iS
+list sections	iS
+binary sections	iS
+what are the sections	iS
+show me all sections	iS
+display all sections	iS
+list all sections	iS
+can you show the sections	iS
+what sections are in the binary	iS
+show me the sections in the binary	iS
+display all sections in the binary	iS
+list all sections in the executable	iS
+what are all the sections in this file	iS
+could you show me the sections of this binary	iS
+i need to see all sections	iS
+display the section list	iS
+show section information	iS
+can you list the sections of this executable	iS
+"Search for the string ""password"" in the binary."	/ password
+search	/ password
+find password	/ password
+locate password	/ password
+search for password	/ password
+/ password	/ password
+How to find password string	/ password
+Where is password string	/ password
+Can you find password	/ password
+Look for password	/ password
+Search binary for password	/ password
+Find string password in binary	/ password
+How to search for the string password	/ password
+Locate string password in file	/ password
+Search the binary file for password	/ password
+Where can I find password string	/ password
+How do I search for password	/ password
+Find all password occurrences	/ password
+Search occurrences of password	/ password
+Locate all instances of password	/ password
+How to search password string in binary	/ password
+How do I list all loaded types (structs, enums, ..)?	t
+types	t
+show types	t
+list types	t
+display types	t
+What types are loaded?	t
+How can I see all types?	t
+Show me the loaded types	t
+Display all types in radare2	t
+List structs and enums	t
+How to view all loaded types?	t
+Can you show the types?	t
+Print loaded types	t
+Display available types	t
+What types are defined?	t
+Show struct and enum definitions	t
+List all type definitions	t
+How do I see the types?	t
+View loaded type definitions	t
+Display struct and enum types	t
+Show me all types	t
+Define a new struct named `MyStruct` with a `char a` and `int b`.	'td struct MyStruct {char a; int b;};
+struct	td struct MyStruct {char a; int b;};
+Define struct	td struct MyStruct {char a; int b;};
+Create a struct called MyStruct	td struct MyStruct {char a; int b;};
+Define a new struct MyStruct	td struct MyStruct {char a; int b;};
+How to define MyStruct	td struct MyStruct {char a; int b;};
+Define struct with char and int	td struct MyStruct {char a; int b;};
+Create a structure definition	td struct MyStruct {char a; int b;};
+Define new struct with members	td struct MyStruct {char a; int b;};
+How do I create a struct definition in radare2	td struct MyStruct {char a; int b;};
+Define a C struct in radare2	td struct MyStruct {char a; int b;};
+Make a new struct	td struct MyStruct {char a; int b;};
+Create struct definition	td struct MyStruct {char a; int b;};
+Define data structure	td struct MyStruct {char a; int b;};
+How to create a struct with char and int members	td struct MyStruct {char a; int b;};
+Define C structure	td struct MyStruct {char a; int b;};
+Calculate the size of the string at address `0x080487cf`	ps@0x100007d58~?.
+Calculate size of string at 0x100007d58	ps@0x100007d58~?.
+String size 0x080487cf	ps@0x080487cf~?.
+Get string length 0x4d2a00	ps@0x4d2a00~?.
+How long is string at 0x2f000	ps@0x2f000~?.
+What's the size of string at address 0x1000	ps@0x1000~?.
+Length 0xfff	ps@0xfff~?.
+string length 0x7fff	ps@0x7fff~?.
+Calculate string size 0x8048000	ps@0x8048000~?.
+Find length of string at 0x555000	ps@0x555000~?.
+size 0x1234	ps@0x1234~?.
+string size calculation 0xdeadbeef	ps@0xdeadbeef~?.
+Get size of string at memory address 0x4000	ps@0x4000~?.
+How many chars in string at 0x804800	ps@0x804800~?.
+Length of string located at 0x400000	ps@0x400000~?.
+Find string size 0x8049000	ps@0x8049000~?.
+Show the control flow graph of the `main` function in DOT format.	agfc @ sym.main`
+control flow graph dot	agfc @ sym.main
+dot graph main	agfc @ sym.main
+generate control flow graph	agfc @ sym.main
+Show me the control flow graph for main	agfc @ sym.main
+Display CFG in DOT format	agfc @ sym.main
+Create DOT graph of main function	agfc @ sym.main
+Export main's control flow as DOT	agfc @ sym.main
+CFG DOT	agfc @ sym.main
+Generate DOT format control flow graph for the main function	agfc @ sym.main
+Can you show the control flow graph of main in DOT notation?	agfc @ sym.main
+dot format cfg main	agfc @ sym.main
+control flow visualization dot	agfc @ sym.main
+main function cfg dot	agfc @ sym.main
+Show control flow in DOT	agfc @ sym.main
+Generate DOT graph	agfc @ sym.main
+Export the list of functions to a JSON file.	aflj > functions.json
+functions	aflj > functions.json
+list functions json	aflj > functions.json
+export functions	aflj > functions.json
+export functions json	aflj > functions.json
+export function list	aflj > functions.json
+dump functions	aflj > functions.json
+save functions	aflj > functions.json
+output functions json	aflj > functions.json
+How do I export functions to JSON?	aflj > functions.json
+How can I save the list of functions as JSON?	aflj > functions.json
+Export all function information to a JSON file	aflj > functions.json
+Save function list as JSON	aflj > functions.json
+Write functions to JSON file	aflj > functions.json
+Get functions in JSON format and save to file	aflj > functions.json
+Export the function analysis results as JSON	aflj > functions.json
+How do I visualize the call graph of the binary?	agcd`
+visualize call graph	agcd
+show call graph	agcd
+call graph visualization	agcd
+display call graph	agcd
+call graph diagram	agcd
+generate call graph	agcd
+How can I see the call graph?	agcd
+What command shows the call graph?	agcd
+Can you display the function call graph?	agcd
+How to visualize function calls?	agcd
+What's the command for call graph visualization?	agcd
+Show me the program's call graph	agcd
+Display function call relationships	agcd
+Generate a visual representation of function calls	agcd
+How do I create a call graph diagram?	agcd
+Call graph analysis command	agcd
+Search for syscall instructions in the binary	/as
+search syscall	/as
+syscall instructions	/as
+find syscall	/as
+locate syscalls	/as
+where are syscalls	/as
+show me all syscall instructions in the binary	/as
+can you find syscall instructions	/as
+search for syscall opcodes	/as
+locate all syscall instructions in current binary	/as
+find all system calls	/as
+how can I find syscall instructions	/as
+where are the syscall instructions located	/as
+search binary for syscalls	/as
+show syscall locations	/as
+list all syscalls	/as
+find system call instructions in code	/as
+locate every syscall instruction	/as
+search assembly for syscalls	/as
+show me syscall positions	/as
+find all instances of syscall instructions	/as
+Show all environment variables set by radare2	%
+env	%
+environment	%
+environment vars	%
+Show environment variables	%
+Display environment variables	%
+List environment variables	%
+Print all environment variables	%
+What are the environment variables?	%
+Display all env vars	%
+Show env variables in radare2	%
+List all environment variables in r2	%
+How can I see environment variables?	%
+Display current environment variables	%
+Show me the env vars	%
+Print env	%
+What environment variables are set?	%
+Show environment settings	%
+Display r2 environment variables	%
+List current env vars	%
+Show all env settings	%
+How do I execute the shell command `ls` from within radare2?	!ls
+execute ls	!ls
+shell ls	!ls
+run ls	!ls
+how to run ls command	!ls
+run shell command ls	!ls
+execute system command ls	!ls
+ls from radare2	!ls
+system ls	!ls
+How can I list files using ls from radare2?	!ls
+What's the command to run ls from within r2?	!ls
+execute shell ls command in radare2	!ls
+run ls from r2	!ls
+How do I use ls while in radare2?	!ls
+list directory contents from r2	!ls
+shell list files	!ls
+external ls	!ls
+How to list files without leaving radare2?	!ls
+What's the syntax for running ls in r2?	!ls
+list current directory from radare2	!ls
+How to execute ls command in r2?	!ls
+Pipe the disassembly of `main` to `grep` for the `call` instruction.	pdf @ sym.main | grep call
+disassembly main grep call	pdf @ sym.main | grep call
+show main calls	pdf @ sym.main | grep call
+find calls in main	pdf @ sym.main | grep call
+display main function calls	pdf @ sym.main | grep call
+grep call instructions in main	pdf @ sym.main | grep call
+search for call instructions in main function	pdf @ sym.main | grep call
+list all calls in main	pdf @ sym.main | grep call
+calls	pdf @ sym.main | grep call
+show me all the calls in the main function	pdf @ sym.main | grep call
+find all function calls in main	pdf @ sym.main | grep call
+get call instructions from main	pdf @ sym.main | grep call
+show main function's call instructions	pdf @ sym.main | grep call
+locate calls in main function	pdf @ sym.main | grep call
+extract call instructions from main	pdf @ sym.main | grep call
+filter main disassembly for calls	pdf @ sym.main | grep call
+How can I load FLIRT signatures from `libc.flirt`?	zfs libc.flirt
+Load FLIRT signatures	zfs libc.flirt
+How to load FLIRT sigs	zfs libc.flirt
+Load signatures from file	zfs libc.flirt
+FLIRT signatures	zfs libc.flirt
+Load FLIRT database	zfs libc.flirt
+How do I load FLIRT signatures?	zfs libc.flirt
+Can you help me load FLIRT signatures from a file?	zfs libc.flirt
+What's the command to load FLIRT sigs from libc.flirt?	zfs libc.flirt
+Load FLIRT database from libc.flirt	zfs libc.flirt
+I need to load FLIRT signatures, what's the command?	zfs libc.flirt
+How to use FLIRT signatures in radare2?	zfs libc.flirt
+What's the proper way to load FLIRT signatures?	zfs libc.flirt
+Command for loading FLIRT signatures	zfs libc.flirt
+Import FLIRT signatures	zfs libc.flirt
+How to import FLIRT database?	zfs libc.flirt
+How can I load Radare2 function signatures from `libc.sdb`?	zo libc.sdb;z/
+signatures	zo libc.sdb;z/
+load signatures	zo libc.sdb;z/
+load function signatures	zo libc.sdb;z/
+How to load signatures in r2?	zo libc.sdb;z/
+How do I load libc signatures?	zo libc.sdb;z/
+Load signatures from libc database	zo libc.sdb;z/
+Import function signatures from libc	zo libc.sdb;z/
+Can you help me load libc signatures in radare2?	zo libc.sdb;z/
+What's the command to load libc function signatures?	zo libc.sdb;z/
+How to import signatures from libc.sdb?	zo libc.sdb;z/
+Load and analyze libc signatures	zo libc.sdb;z/
+I need to load function signatures from libc database	zo libc.sdb;z/
+What's the proper way to load libc signatures in r2?	zo libc.sdb;z/
+Command for loading libc function signatures	zo libc.sdb;z/
+How do I import signatures from the libc database?	zo libc.sdb;z/
+Generate a signature for the `entry0` function.	zaf entry0
+signatures	zaf entry0
+generate signature entry0	zaf entry0
+create signature for entry0	zaf entry0
+signature entry0	zaf entry0
+make signature for entry0 function	zaf entry0
+create function signature entry0	zaf entry0
+generate function signature for entry0	zaf entry0
+how to create signature for entry0	zaf entry0
+signature generation entry0	zaf entry0
+create entry0 signature	zaf entry0
+generate entry0 signature	zaf entry0
+how do I generate a signature for entry0	zaf entry0
+what's the command to create entry0 signature	zaf entry0
+make a signature for the entry0 function	zaf entry0
+function signature entry0	zaf entry0
+List all currently loaded signatures in JSON format.	zj
+signatures	zj
+show signatures	zj
+display signatures	zj
+list signatures	zj
+get all signatures	zj
+loaded signatures	zj
+What signatures are loaded?	zj
+How can I see all loaded signatures?	zj
+Show me the signatures in JSON format	zj
+Display all currently loaded signatures as JSON	zj
+List loaded signatures in JSON	zj
+Can you show the signatures in JSON?	zj
+Print all signatures in JSON format	zj
+Give me a JSON list of signatures	zj
+Display loaded signatures as JSON output	zj
+What signatures are currently in memory?	zj
+Show the complete list of signatures in JSON	zj
+List every loaded signature in JSON format	zj
+Output all signatures as JSON	zj
+Get signature list in JSON format	zj
+Display the virtual address corresponding to the physical address `0x4000`.	?P 0x4000
+physical to virtual	?P 0x4000
+Convert physical address 0x8000 to virtual	?P 0x8000
+What is the virtual address for physical 0x1000?	?P 0x1000
+physical to virtual address 0xA000	?P 0xA000
+?P physical address 0x2000	?P 0x2000
+Convert physical 0x5000 to virtual address	?P 0x5000
+physical address 0x7500 to virtual	?P 0x7500
+Map physical 0xB000 to virtual	?P 0xB000
+What's the virtual address for physical 0x9000?	?P 0x9000
+Convert 0x3000 physical to virtual address	?P 0x3000
+physical to virtual conversion 0x6000	?P 0x6000
+Map 0xC000 from physical to virtual	?P 0xC000
+Get virtual address of physical 0xD000	?P 0xD000
+Convert physical memory address 0xE000	?P 0xE000
+?P address 0xF000	?P 0xF000
+Display the physical address corresponding to the virtual address `0x80585a5`.	?P 0x80485a5
+physical address	?P 0x80485a5
+convert virtual to physical address	?P 0x80485a5
+What is physical address of 0x80485a5	?P 0x80485a5
+?P 0x80485a5	?P 0x80485a5
+Show me physical address for 0x80485a5	?P 0x80485a5
+virtual to physical	?P 0x80485a5
+Get physical address from virtual 0x80485a5	?P 0x80485a5
+Convert 0x80485a5 to physical	?P 0x80485a5
+What's the physical location of virtual address 0x80485a5?	?P 0x80485a5
+How do I find the physical address for virtual address 0x80485a5?	?P 0x80485a5
+Display physical address for 0x80485a5	?P 0x80485a5
+Convert virtual address 0x80485a5 to physical address	?P 0x80485a5
+Find physical address of virtual 0x80485a5	?P 0x80485a5
+Map virtual 0x80485a5 to physical	?P 0x80485a5
+Translate 0x80485a5 to physical address	?P 0x80485a5
+How do I view the current seek offset?	s
+seek	s
+current offset	s
+where am I	s
+position	s
+offset	s
+What is my current position in the file?	s
+Tell me where I am in the file	s
+Show me the current seek position	s
+What offset am I at?	s
+Display current seek offset	s
+s	s
+How can I check my current position?	s
+What's my current location in the file?	s
+Show seek	s
+Display offset	s
+Where am I positioned in the file?	s
+current seek	s
+What's my seek position?	s
+Show current offset value	s
+Tell me the seek position	s
+How do I view the current seek offset in decimal?	?vi $$
+seek	?vi $$
+current offset decimal	?vi $$
+show seek decimal	?vi $$
+offset decimal	?vi $$
+What's the current seek position in decimal?	?vi $$
+decimal seek	?vi $$
+How can I see the current offset in decimal format?	?vi $$
+print current seek decimal	?vi $$
+Show me the decimal value of current seek	?vi $$
+Convert current seek to decimal	?vi $$
+What's $$ in decimal?	?vi $$
+current position decimal	?vi $$
+How do I display the seek value in decimal?	?vi $$
+decimal value of current offset	?vi $$
+Show current seek as decimal number	?vi $$
+I want to list all loaded enums.	te
+enums	te
+show enums	te
+list enums	te
+display enums	te
+loaded enums	te
+enum list	te
+print enums	te
+what enums are loaded	te
+can you show me all enums	te
+display all loaded enums	te
+show me the list of enums	te
+what are the available enums	te
+list all enum definitions	te
+show loaded enum values	te
+display current enum list	te
+"Add a comment ""Initialize variables"" at address `0x08048648`."	'@0x08048648'CC Initialize variables
+comment	'@0x08048648'CC Initialize variables
+Add comment at 0x08048648	'@0x08048648'CC Initialize variables
+Add a comment at address 0x08048648	'@0x08048648'CC Initialize variables
+"Write ""Initialize variables"" at 0x08048648"	'@0x08048648'CC Initialize variables
+"Comment ""Initialize variables"" at 0x08048648"	'@0x08048648'CC Initialize variables
+Put comment at address 0x08048648	'@0x08048648'CC Initialize variables
+"Add the comment ""Initialize variables"" at this address: 0x08048648"	'@0x08048648'CC Initialize variables
+How to add a comment at 0x08048648?	'@0x08048648'CC Initialize variables
+Can you help me add a comment at address 0x08048648?	'@0x08048648'CC Initialize variables
+Write comment at memory location 0x08048648	'@0x08048648'CC Initialize variables
+Add inline comment at 0x08048648	'@0x08048648'CC Initialize variables
+Place comment at specified address 0x08048648	'@0x08048648'CC Initialize variables
+"Insert ""Initialize variables"" comment at 0x08048648"	'@0x08048648'CC Initialize variables
+Add descriptive comment at memory address 0x08048648	'@0x08048648'CC Initialize variables
+How to insert comment at 0x08048648?	'@0x08048648'CC Initialize variables
+Remove all comments from the binary.	CC-*
+comments	CC-*
+delete comments	CC-*
+remove comments	CC-*
+clear comments	CC-*
+erase comments	CC-*
+remove all comments from file	CC-*
+how to remove comments	CC-*
+delete all comments in binary	CC-*
+clear all comments from current file	CC-*
+remove every comment	CC-*
+how do I delete all comments	CC-*
+erase all comments from the binary file	CC-*
+remove comments from analysis	CC-*
+get rid of all comments	CC-*
+how to clear all comments from binary	CC-*
+Show the comments in JSON format.	CCj
+comments	CCj
+show comments json	CCj
+display comments as json	CCj
+list comments in json	CCj
+json comments	CCj
+get comments json format	CCj
+output comments json	CCj
+view comments in json	CCj
+print comments json	CCj
+dump comments as json	CCj
+can you show the comments in json?	CCj
+how do I see comments in json format?	CCj
+display all comments in json format	CCj
+export comments as json	CCj
+give me the comments in json	CCj
+How do I list all loaded core plugins?	Lc
+plugins	Lc
+show plugins	Lc
+list plugins	Lc
+core plugins	Lc
+show core plugins	Lc
+list core plugins	Lc
+display core plugins	Lc
+What plugins are loaded?	Lc
+How can I see loaded plugins?	Lc
+Show me all loaded plugins	Lc
+What core plugins are currently loaded?	Lc
+Display all loaded core plugins	Lc
+Can you show the core plugins?	Lc
+I need to see loaded plugins	Lc
+How do I check what plugins are loaded?	Lc
+How do I list all loaded bin parser plugins?	Lb
+plugins	Lb
+list bin plugins	Lb
+show bin plugins	Lb
+bin parsers	Lb
+loaded bin parsers	Lb
+What bin plugins are available?	Lb
+Show me the available binary parsers	Lb
+How can I see all bin plugins?	Lb
+List the binary parser plugins	Lb
+Display available bin parsers	Lb
+Which bin plugins are loaded?	Lb
+Show bin parser list	Lb
+What binary formats are supported?	Lb
+Can you show me the bin plugins?	Lb
+How to view bin parser plugins?	Lb
+How do I list all loaded arch plugins?	La
+plugins	La
+arch plugins	La
+Show arch plugins	La
+List architecture plugins	La
+Display arch plugins	La
+What arch plugins are loaded?	La
+Show me the architecture plugins	La
+List all architecture plugins	La
+Display loaded architecture plugins	La
+How can I see the arch plugins?	La
+What architectures are supported?	La
+Show available architectures	La
+List supported CPU architectures	La
+Display installed arch plugins	La
+architectures	La
+How do I check available architectures?	La
+Show me what CPU architectures are supported	La
+List the architecture plugins loaded in radare2	La
+What arch plugins do I have installed?	La
+Display all supported CPU architectures	La
+Mount an ext2 filesystem located at offset 0 to `/mnt`.	m /mnt ext2 0
+mount ext2	m /mnt ext2 0
+mount filesystem	m /mnt ext2 0
+mount ext2 filesystem	m /mnt ext2 0
+mount ext2 to mnt	m /mnt ext2 0
+mount ext2 at offset 0	m /mnt ext2 0
+mount filesystem at offset zero	m /mnt ext2 0
+How do I mount an ext2 filesystem?	m /mnt ext2 0
+Can you mount ext2 to /mnt?	m /mnt ext2 0
+Mount ext2 filesystem at offset 0	m /mnt ext2 0
+How to mount ext2 at offset zero?	m /mnt ext2 0
+Mount ext2 filesystem to mount point	m /mnt ext2 0
+Mount filesystem at offset 0 to /mnt	m /mnt ext2 0
+How can I mount an ext2 filesystem to /mnt?	m /mnt ext2 0
+Mount ext2 fs	m /mnt ext2 0
+Mount filesystem to mnt directory	m /mnt ext2 0
+List all current mount points.	m
+mount points	m
+show mounts	m
+list mounts	m
+display mount points	m
+What are the current mount points?	m
+Can you show me all mount points?	m
+How do I see mounted filesystems?	m
+Show me the mount list	m
+mounted filesystems	m
+Display all current mount points	m
+What's currently mounted?	m
+List mounted files	m
+Show mount information	m
+How can I see mount points?	m
+Check mount points	m
+Push the current directory onto the stack and change to `/tmp`.	pushd /tmp
+directory stack	pushd /tmp
+save and change dir	pushd /tmp
+push directory	pushd /tmp
+pushd	pushd /tmp
+change to tmp and remember current	pushd /tmp
+How do I push current directory and go to tmp?	pushd /tmp
+save current directory and switch to temporary folder	pushd /tmp
+push current path and cd to temporary	pushd /tmp
+store current location and move to tmp	pushd /tmp
+remember directory and go to tmp	pushd /tmp
+How to push current directory to stack and change to temporary folder?	pushd /tmp
+push current working directory and move to tmp	pushd /tmp
+save path and switch to tmp	pushd /tmp
+How can I remember my current directory while going to tmp?	pushd /tmp
+pushd to temporary directory	pushd /tmp
+Pop the last directory from the stack and change back to it.	popd
+popd	popd
+go back to previous directory	popd
+return to last directory	popd
+pop directory	popd
+pop and change directory	popd
+change to previous directory in stack	popd
+remove and go to last directory	popd
+navigate back using stack	popd
+restore previous directory	popd
+pop directory from stack	popd
+return to previous location	popd
+move back one directory in stack	popd
+go back using directory stack	popd
+revert to last directory	popd
+switch to previous path	popd
+I want to visualize the basic blocks of the `foo` function.	afb @ sym.foo
+visualize basic blocks	afb @ sym.foo
+show basic blocks foo	afb @ sym.foo
+basic blocks foo function	afb @ sym.foo
+display basic blocks of foo	afb @ sym.foo
+analyze function blocks foo	afb @ sym.foo
+Can you show me the basic blocks in the foo function?	afb @ sym.foo
+How do I see basic blocks for foo?	afb @ sym.foo
+basic blocks visualization foo	afb @ sym.foo
+show me function blocks in foo	afb @ sym.foo
+What are the basic blocks in the foo function?	afb @ sym.foo
+blocks foo	afb @ sym.foo
+function blocks visualization foo	afb @ sym.foo
+Display all basic blocks for the foo function	afb @ sym.foo
+I need to see the basic blocks in foo	afb @ sym.foo
+Show me the block structure of foo	afb @ sym.foo
+Search for the hexadecimal pattern `0x90 0x90 0x90` in the binary.	/x 909090
+search hex	/x 909090
+hex pattern	/x 909090
+search nops	/x 909090
+Find NOP sled	/x 909090
+locate hex pattern	/x 909090
+search for hex sequence	/x 909090
+Search for the hex pattern 909090	/x 909090
+Can you find three consecutive NOPs?	/x 909090
+Find NOP NOP NOP sequence	/x 909090
+Look for three NOPs in a row	/x 909090
+search for 0x90 0x90 0x90	/x 909090
+Find consecutive NOP instructions	/x 909090
+locate NOP sled in binary	/x 909090
+Search for triple NOP pattern	/x 909090
+Where are the three NOPs?	/x 909090
+Find hex sequence 909090	/x 909090
+search nop sled	/x 909090
+Find three consecutive no-operation instructions	/x 909090
+locate three byte nop pattern	/x 909090
+search for nop instructions	/x 909090
+How do I decode a base64 string `SGVsbG8=` and write it to address `0x08049000`?	w6e SGVsbG8= @ 0x08049000
+decode base64	w6e SGVsbG8= @ 0x08049000
+write base64 decoded string	w6e SGVsbG8= @ 0x08049000
+decode base64 and write	w6e SGVsbG8= @ 0x08049000
+write decoded base64 to memory	w6e SGVsbG8= @ 0x08049000
+How do I decode and write base64 string SGVsbG8= to memory?	w6e SGVsbG8= @ 0x08049000
+decode base64 SGVsbG8= and write to 0x08048000	w6e SGVsbG8= @ 0x08048000
+write decoded base64 to address 0x08047000	w6e SGVsbG8= @ 0x08047000
+decode and write base64 string to 0x08046000	w6e SGVsbG8= @ 0x08046000
+How can I write decoded base64 to 0x08045000?	w6e SGVsbG8= @ 0x08045000
+write base64 decoded data to memory address 0x08044000	w6e SGVsbG8= @ 0x08044000
+decode SGVsbG8= and write to 0x08043000	w6e SGVsbG8= @ 0x08043000
+write decoded base64 SGVsbG8= to 0x08042000	w6e SGVsbG8= @ 0x08042000
+How do I decode this base64 and write to 0x08041000?	w6e SGVsbG8= @ 0x08041000
+write decoded base64 string to memory at 0x08040000	w6e SGVsbG8= @ 0x08040000
+decode and write base64 to address 0x0803f000	w6e SGVsbG8= @ 0x0803f000
+List all loaded union types.	tu
+unions	tu
+Show union types	tu
+Display unions	tu
+What unions are loaded?	tu
+union types	tu
+Print union types	tu
+Show me the unions	tu
+List unions	tu
+Display all union types in binary	tu
+What union definitions are present?	tu
+Show loaded union types	tu
+Print all unions	tu
+Can you show the union types?	tu
+Display union definitions	tu
+What are the loaded unions?	tu
+List available union types	tu
+Show union definitions	tu
+union list	tu
+union definitions	tu
+Display all unions	tu
+How can I display the stack frames or backtrace in the debugger?	dbt
+backtrace	dbt
+stack frames	dbt
+show backtrace	dbt
+display stack frames	dbt
+stack trace	dbt
+get backtrace	dbt
+print stack frames	dbt
+show stack frames in debugger	dbt
+display call stack	dbt
+how to see backtrace	dbt
+show me the stack trace	dbt
+display current backtrace	dbt
+print call stack frames	dbt
+how do I view the backtrace	dbt
+stack frames in debugger	dbt
+show stack trace in radare2	dbt
+display program backtrace	dbt
+how to view call stack	dbt
+print current stack trace	dbt
+view backtrace in debugger	dbt
+Rename the symbol `fcn.08048648` to `init`.	fr init fcn.08048648
+rename symbol fcn.08048648 to init	fr init fcn.08048648
+rename fcn.08048648 to init	fr init fcn.08048648
+rename function fcn.08048648 to init	fr init fcn.08048648
+rename	fr init fcn.08048648
+How do I rename fcn.08048648 to init?	fr init fcn.08048648
+rename symbol fcn.08048500 to main	fr main fcn.08048500
+rename fcn.08048500 to main	fr main fcn.08048500
+rename function fcn.08048500 to main	fr main fcn.08048500
+rename symbol fcn.0804a100 to cleanup	fr cleanup fcn.0804a100
+rename fcn.0804a100 to cleanup	fr cleanup fcn.0804a100
+rename function sym.0804a200 to exit_handler	fr exit_handler sym.0804a200
+rename sym.0804a200 to exit_handler	fr exit_handler sym.0804a200
+rename fcn.0804b300 to parse_input	fr parse_input fcn.0804b300
+rename symbol fcn.0804b300 to parse_input	fr parse_input fcn.0804b300
+How to rename function fcn.0804c400 to handle_request?	fr handle_request fcn.0804c400
+Show the sizes of all functions in the binary.	afl,size/cols/name
+sizes	afl,size/cols/name
+function sizes	afl,size/cols/name
+list function sizes	afl,size/cols/name
+show all function sizes	afl,size/cols/name
+display sizes of functions	afl,size/cols/name
+What are the sizes of all functions?	afl,size/cols/name
+How big are the functions in this binary?	afl,size/cols/name
+Can you show me the function sizes?	afl,size/cols/name
+Print all function sizes	afl,size/cols/name
+Display the size of each function	afl,size/cols/name
+I need to see how big each function is	afl,size/cols/name
+Show me a list of function sizes	afl,size/cols/name
+Get function sizes	afl,size/cols/name
+List all functions with their sizes	afl,size/cols/name
+What's the size of each function in the binary?	afl,size/cols/name
+How do I check the endianness of the binary?	e arch.endian
+endianness	e arch.endian
+check endian	e arch.endian
+binary endian	e arch.endian
+show endianness	e arch.endian
+display endian	e arch.endian
+what's the endianness	e arch.endian
+get endian info	e arch.endian
+How can I determine if the binary is little or big endian?	e arch.endian
+What command shows the endianness?	e arch.endian
+Tell me the endian of this file	e arch.endian
+How do I know if it's little or big endian?	e arch.endian
+What's the byte order of this binary?	e arch.endian
+Check if binary is little endian or big endian	e arch.endian
+Display the current endian setting	e arch.endian
+Show me the binary's endianness	e arch.endian
+Set the architecture to ARM.	e asm.arch=arm
+architecture arm	e asm.arch=arm
+set arch to arm	e asm.arch=arm
+switch to arm architecture	e asm.arch=arm
+change architecture to arm	e asm.arch=arm
+How do I set the architecture to ARM?	e asm.arch=arm
+Can you help me set the architecture to ARM?	e asm.arch=arm
+I need to analyze ARM code, how do I set the architecture?	e asm.arch=arm
+switch arch arm	e asm.arch=arm
+arm arch	e asm.arch=arm
+What's the command to set ARM architecture?	e asm.arch=arm
+set arm	e asm.arch=arm
+Please change the architecture to ARM for analysis	e asm.arch=arm
+How to configure radare2 for ARM architecture?	e asm.arch=arm
+Need to set ARM architecture, what's the command?	e asm.arch=arm
+arm	e asm.arch=arm
+How do I list all imported libraries?	il
+list imports	il
+imports	il
+show imports	il
+display imports	il
+What are the imported libraries?	il
+How can I see imported libraries?	il
+imported libs	il
+View all imported libraries	il
+Show me the imported libraries	il
+List libraries	il
+Can you show the imports?	il
+Display all imported libraries in the binary	il
+How to check imported libraries?	il
+Show imported libs	il
+What libraries are imported?	il
+List all libs	il
+Display imported lib list	il
+Show me all imported libraries in the binary	il
+How do I see what libraries are imported?	il
+List all dynamic libraries	il
+Find all references to the function `printf`.	axt sym.imp.printf
+references	axt sym.imp.printf
+xrefs	axt sym.imp.printf
+show references	axt sym.imp.printf
+find references	axt sym.imp.printf
+cross references	axt sym.imp.printf
+where is printf used	axt sym.imp.printf
+find all references to printf	axt sym.imp.printf
+show me where printf is called	axt sym.imp.printf
+list all references to printf	axt sym.imp.printf
+display cross references to printf	axt sym.imp.printf
+what calls printf	axt sym.imp.printf
+locate all references to printf function	axt sym.imp.printf
+show all xrefs to printf	axt sym.imp.printf
+find every usage of printf	axt sym.imp.printf
+where can I find all references to printf	axt sym.imp.printf
+Visualize the control flow graph of the `main` function using Graphviz.	agfd main > cfg.dot
+graph	agfd main > cfg.dot
+control flow graph	agfd main > cfg.dot
+visualize main	agfd main > cfg.dot
+show cfg	agfd main > cfg.dot
+create graphviz for main	agfd main > cfg.dot
+generate control flow graph for main function	agfd main > cfg.dot
+export main function graph to dot file	agfd main > cfg.dot
+create visual representation of main	agfd main > cfg.dot
+How do I visualize the main function's control flow?	agfd main > cfg.dot
+Can you show me the control flow of main?	agfd main > cfg.dot
+Generate a Graphviz dot file for the main function's flow	agfd main > cfg.dot
+Export main's control flow as Graphviz	agfd main > cfg.dot
+Create a visual graph of the main function's execution flow	agfd main > cfg.dot
+Save main's control flow graph as dot file	agfd main > cfg.dot
+How can I see the control flow graph of main?	agfd main > cfg.dot
+Convert a string into a list of bytes	?x hello
+bytes	?x hello
+hex bytes	?x hello
+convert text to bytes	?x hello
+show bytes of string	?x hello
+"convert ""hello"" to bytes"	?x hello
+string to bytes	?x hello
+convert string hello to bytes	?x hello
+how to get bytes from text	?x hello
+show me bytes of hello	?x hello
+"convert ""testing"" to bytes"	?x testing
+text to bytes conversion	?x world
+get bytes from string	?x radare2
+show bytes for text	?x binary
+"convert string ""data"" to bytes"	?x data
+bytes from text	?x example
+how to see bytes of string	?x command
+convert this to bytes: test	?x test
+string bytes	?x bytes
+convert message to bytes	?x message
+show me bytes representation	?x convert
+Show all reachable functions from the `main` function.	aflm.@main
+functions from main	aflm.@main
+show functions from main	aflm.@main
+list reachable functions from main	aflm.@main
+display functions called from main	aflm.@main
+what functions can be reached from main	aflm.@main
+show me all functions reachable from main	aflm.@main
+list all functions that can be reached from main function	aflm.@main
+display the complete list of functions reachable from main	aflm.@main
+which functions are accessible from main	aflm.@main
+show reachable functions starting at main	aflm.@main
+list every function that can be called from main	aflm.@main
+display all functions that main can reach	aflm.@main
+what are the functions reachable from main entry point	aflm.@main
+show function call tree starting from main	aflm.@main
+list all possible functions called from main function	aflm.@main
+How do I set the stack frame size for the current function to 0x30?	afS 0x30
+frame size	afS 0x30
+set frame size	afS 0x30
+stack frame	afS 0x30
+set stack frame	afS 0x30
+How to set frame size to 48 bytes?	afS 0x30
+Change stack frame size	afS 0x30
+Set function frame size	afS 0x30
+What's the command to set stack frame size?	afS 0x30
+I need to set the stack frame size to 48 bytes	afS 0x30
+Set current function's stack frame to 0x30	afS 0x30
+Change current function frame size to 48	afS 0x30
+Set stack frame size for function to 0x30	afS 0x30
+How to change frame size to 48?	afS 0x30
+Set stack frame size to 48 bytes	afS 0x30
+Change function frame size	afS 0x30
+Create a new flag named `myFlag` at address `0x08049000` with size 8.	f myFlag 8 = 0x08049000`
+flags	f myFlag 8 = 0x08049000
+Create flag myFlag	f myFlag 8 = 0x08049000
+Add flag myFlag	f myFlag 8 = 0x08049000
+Create new flag test1 at 0x08049100 size 8	f test1 8 = 0x08049100
+Set flag marker	f marker 8 = 0x08049200
+Create flag named data at 0x08049300	f data 8 = 0x08049300
+Add memory flag	f memflag 8 = 0x08049400
+New flag at address	f newflag 8 = 0x08049500
+Create flag pointer	f ptr 8 = 0x08049600
+Flag at memory location	f memloc 8 = 0x08049700
+Create flag named str	f str 8 = 0x08049800
+Add new flag buffer	f buffer 8 = 0x08049900
+Create flag heap	f heap 8 = 0x08049a00
+Set memory marker	f mark 8 = 0x08049b00
+Create flag var	f var 8 = 0x08049c00
+List all flags in the current flagspace.	f
+flags	f
+show flags	f
+display flags	f
+list flags	f
+current flags	f
+what are the flags	f
+list all flags in current flagspace	f
+show me all flags	f
+display current flags in flagspace	f
+can you show the flags	f
+list flags in memory	f
+what flags are set	f
+display all current flags	f
+show me the flag list	f
+I need to see all flags	f
+List all flag spaces	fs
+flags	fs
+list flag spaces	fs
+show flag spaces	fs
+display flag spaces	fs
+What are the available flag spaces?	fs
+Can you show me all flag spaces?	fs
+Show me the flag spaces	fs
+I need to see all flag spaces	fs
+Give me a list of flag spaces	fs
+What flag spaces are defined?	fs
+Display available flag spaces	fs
+Print flag spaces	fs
+Output flag spaces	fs
+Show flag space list	fs
+Could you list the flag spaces?	fs
+How do I create a new flag named `hint.foo` in the address 0x8123?	f hint.foo=0x8123
+flags	f hint.foo=0x8123
+create flag	f hint.foo=0x8123
+Create flag hint.bar at 0x1000	f hint.bar=0x1000
+How to set flag named hint.test at address 0x4000?	f hint.test=0x4000
+flag creation	f hint.foo=0x4000
+Create a new flag hint.important at 0x7fff	f hint.important=0x7fff
+How do I add flag hint.start at 0x1234?	f hint.start=0x1234
+Make flag hint.data at address 0x2000	f hint.data=0x2000
+new flag	f hint.mark=0x3000
+Create hint.entry flag at 0x5000	f hint.entry=0x5000
+How to create flag named hint.note at 0x6000?	f hint.note=0x6000
+Set flag hint.debug at address 0x9000	f hint.debug=0x9000
+flag at address	f hint.main=0xA000
+Create a flag called hint.end at 0xB000	f hint.end=0xB000
+How do I make a new flag hint.section at 0xC000?	f hint.section=0xC000
+Remove the flag named `oldFlag`.	f-oldFlag
+Remove flag	f-oldFlag
+Delete flag	f-oldFlag
+Remove flag oldFlag	f-oldFlag
+Delete the flag oldFlag	f-oldFlag
+Remove a flag called oldFlag	f-oldFlag
+How to remove flag oldFlag	f-oldFlag
+Delete flag named oldFlag	f-oldFlag
+Remove the flag oldFlag from current session	f-oldFlag
+Delete existing flag oldFlag	f-oldFlag
+How do I remove a flag called oldFlag	f-oldFlag
+Remove flag oldFlag from flagspace	f-oldFlag
+Delete flag with name oldFlag	f-oldFlag
+Remove the flag labeled oldFlag	f-oldFlag
+How to delete flag oldFlag	f-oldFlag
+I want to remove the flag oldFlag	f-oldFlag
+How can I export all current flags to a file?	fj > flags.json
+flags	fj > flags.json
+export flags	fj > flags.json
+export flags to json	fj > flags.json
+save flags	fj > flags.json
+dump flags	fj > flags.json
+How do I save all flags?	fj > flags.json
+How to export flags to a file?	fj > flags.json
+Export current flags to JSON file	fj > flags.json
+Save all flags to JSON format	fj > flags.json
+Write flags to file	fj > flags.json
+How can I dump all flags to JSON?	fj > flags.json
+Export flags to a JSON file	fj > flags.json
+Save current flags to disk	fj > flags.json
+How to backup all flags?	fj > flags.json
+What command exports flags to JSON?	fj > flags.json
+How can I export all current flags as radare2 comments?	f* > flags.r2
+Export flags	f* > flags.r2
+Export all flags	f* > flags.r2
+Export flags as comments	f* > flags.r2
+How do I export flags?	f* > flags.r2
+Export current flags	f* > flags.r2
+Save flags as comments	f* > flags.r2
+Export flags to file	f* > flags.r2
+Save all flags	f* > flags.r2
+How to export flags as radare2 comments?	f* > flags.r2
+Export flags to r2 file	f* > flags.r2
+How do I save all flags as comments?	f* > flags.r2
+Save current flags to file	f* > flags.r2
+Export flags as r2 comments	f* > flags.r2
+Save flags to comments file	f* > flags.r2
+How can I save all flags?	f* > flags.r2
+Import flags from a an r2 script	. flags.r2file named `import_flags.json`.
+Question	Answer
+Import flags from script	. import_flags.json
+Load flags from r2 script	. flags.r2file
+Import flags	. flags.r2file
+Execute flag script	. import_flags.json
+Run r2 script with flags	. flags.r2file
+flags from file	. import_flags.json
+Import flags from external script	. flags.r2file
+Load flags from json	. import_flags.json
+Execute flags script file	. flags.r2file
+Run flag definitions	. import_flags.json
+Import r2 flags	. flags.r2file
+Load flag definitions from script	. import_flags.json
+Execute r2 flag file	. flags.r2file
+Run flags from json file	. import_flags.json
+flags	. flags.r2file
+Import flags from json script	. import_flags.json
+Load external flag definitions	. flags.r2file
+Execute flag import script	. import_flags.json
+Import r2 flag definitions	. flags.r2file
+Run flag script file	. import_flags.json
+Show the value of the register `eax`.	dr eax
+registers	dr eax
+eax	dr eax
+What's in eax?	dr eax
+Display eax register	dr eax
+Show eax	dr eax
+What is the current value of eax?	dr eax
+Can you show me the eax register?	dr eax
+Print the value stored in eax	dr eax
+What's the content of the eax register?	dr eax
+Display the value held in eax	dr eax
+Show me what's in the eax register	dr eax
+Get eax value	dr eax
+Read eax register value	dr eax
+What number is in eax?	dr eax
+Could you display the eax register value?	dr eax
+Dump the memory from address `0x08048000` to `0x08049000` into a file named `dump.bin`.	wtf dump.bin 0x1000 @ 0x8048000
+dump memory to file	wtf dump.bin 0x1000 @ 0x8048000
+save memory region to dump.bin	wtf dump.bin 0x1000 @ 0x8048000
+dump	wtf dump.bin 0x1000 @ 0x8048000
+How do I dump memory from 0x08048000 to 0x08049000?	wtf dump.bin 0x1000 @ 0x8048000
+dump memory region to file	wtf dump.bin 0x1000 @ 0x8048000
+Can you help me dump memory from 0x08048000 with size 0x1000?	wtf dump.bin 0x1000 @ 0x8048000
+save memory	wtf dump.bin 0x1000 @ 0x8048000
+Dump the memory from address 0x08047000 to 0x08048000 into dump.bin	wtf dump.bin 0x1000 @ 0x8047000
+How to save memory region to a file?	wtf dump.bin 0x1000 @ 0x8048000
+Dump 4KB of memory starting at 0x08045000 to file	wtf dump.bin 0x1000 @ 0x8045000
+Write memory dump to dump.bin	wtf dump.bin 0x1000 @ 0x8048000
+Save 0x1000 bytes from 0x08044000 to file	wtf dump.bin 0x1000 @ 0x8044000
+memory dump	wtf dump.bin 0x1000 @ 0x8048000
+Extract memory region to dump.bin	wtf dump.bin 0x1000 @ 0x8048000
+How do I save memory contents to a file?	wtf dump.bin 0x1000 @ 0x8048000
+List all available calling conventions for the current architecture.	afcl
+calling conventions	afcl
+show calling conventions	afcl
+list calling conventions	afcl
+display available calling conventions	afcl
+what are the calling conventions	afcl
+show me all calling conventions	afcl
+print calling conventions	afcl
+available calling conventions	afcl
+which calling conventions are supported	afcl
+display supported calling conventions	afcl
+show calling conventions for current arch	afcl
+list all calling conventions for this architecture	afcl
+what calling conventions can I use	afcl
+print all supported calling conventions	afcl
+display the list of calling conventions	afcl
+How do I search for all conditional jumps in the binary?	/at jmp
+search conditional jumps	/at jmp
+find conditional jumps	/at jmp
+locate jmp instructions	/at jmp
+where are the conditional jumps	/at jmp
+search jmp	/at jmp
+jumps	/at jmp
+How can I find all jump instructions in the code?	/at jmp
+Show me all conditional jumps	/at jmp
+Can you locate all jump instructions?	/at jmp
+Where can I find all the jumps in this binary?	/at jmp
+I need to see all conditional jumps in the code	/at jmp
+List all jump instructions	/at jmp
+Display conditional jumps	/at jmp
+Find all jmp opcodes	/at jmp
+Show jump locations	/at jmp
+Reload the current binary in read-write	o+
+reload writable	o+
+reload binary writable	o+
+make binary writable	o+
+reopen file writable	o+
+open file read write	o+
+reload current file with write permissions	o+
+reopen binary in read-write mode	o+
+reload file with write access	o+
+make current file writable	o+
+reload binary for writing	o+
+reopen current binary with write permissions	o+
+reload file read write mode	o+
+open current binary writable	o+
+make loaded file writable	o+
+reload with write access	o+
+Show the current file's sections with their permissions.	iS
+sections	iS
+permissions	iS
+list sections	iS
+show sections	iS
+display sections	iS
+file sections	iS
+section permissions	iS
+show file sections	iS
+display file sections	iS
+What are the sections in this file?	iS
+Can you show me the sections?	iS
+Display all sections with permissions	iS
+Show me the section information	iS
+List all sections and their permissions	iS
+What sections are present in the current file?	iS
+Show the sections and their associated permissions	iS
+Display section information for the loaded file	iS
+What are the section permissions in this binary?	iS
+Can you list the file sections with their permissions?	iS
+Show me all sections and their permission flags	iS
+How do I list all register-based arguments of a function?	afvr @ sym.main
+registers	afvr @ sym.main
+show registers	afvr @ sym.main
+list registers	afvr @ sym.main
+function registers	afvr @ sym.main
+register args	afvr @ sym.main
+show function register arguments	afvr @ sym.main
+list register arguments	afvr @ sym.main
+How can I see register arguments?	afvr @ sym.main
+What command shows register arguments?	afvr @ sym.main
+Display all register arguments	afvr @ sym.main
+How to view register-based function parameters?	afvr @ sym.main
+Show me the registers used in function arguments	afvr @ sym.main
+List all registers used as parameters	afvr @ sym.main
+What registers are used as arguments?	afvr @ sym.main
+Display function's register arguments	afvr @ sym.main
+Execute a script named `fix_flags.r2`.	. fix_flags.r2
+Execute fix_flags.r2	. fix_flags.r2
+Run fix_flags.r2	. fix_flags.r2
+Run script fix_flags.r2	. fix_flags.r2
+Execute r2 script fix_flags.r2	. fix_flags.r2
+Load and execute fix_flags.r2	. fix_flags.r2
+Run the radare2 script fix_flags.r2	. fix_flags.r2
+Execute script named fix_flags.r2 in radare2	. fix_flags.r2
+Load fix_flags.r2	. fix_flags.r2
+Run the script fix_flags.r2 in the current session	. fix_flags.r2
+Execute the r2 script fix_flags.r2 in current context	. fix_flags.r2
+Can you execute fix_flags.r2?	. fix_flags.r2
+How do I run fix_flags.r2?	. fix_flags.r2
+Script fix_flags.r2	. fix_flags.r2
+Execute r2 script	. fix_flags.r2
+Run radare2 script	. fix_flags.r2
+Search for hexadecimal bytes `0xCAFEBABE` inside the binary.	/v4 0xCAFEBABE
+Search for hex 0xDEADBEEF	/v4 0xDEADBEEF
+Find bytes 0x1234ABCD	/v4 0x1234ABCD
+Search binary for hex pattern 0xFEEDFACE	/v4 0xFEEDFACE
+Look for 0x8BADF00D	/v4 0x8BADF00D
+Can you search for the hexadecimal value 0x1337C0DE in the file?	/v4 0x1337C0DE
+Find hex sequence 0xBAADF00D	/v4 0xBAADF00D
+Search 0xDEADC0DE	/v4 0xDEADC0DE
+How do I locate 0x0BADCAFE in the binary?	/v4 0x0BADCAFE
+Find hex pattern 0x1BADB002	/v4 0x1BADB002
+Where is 0xFEE1DEAD?	/v4 0xFEE1DEAD
+Locate hexadecimal sequence 0x0DEFACED	/v4 0x0DEFACED
+Search for hex bytes 0xCAFED00D	/v4 0xCAFED00D
+Find the byte pattern 0xDEADFA11	/v4 0xDEADFA11
+Look for hex sequence 0xFACEFEED	/v4 0xFACEFEED
+Where can I find 0xBEEFCACE in the binary?	/v4 0xBEEFCACE
+Visualize the call graph in an interactive ASCII art view.	agcv
+call graph	agcv
+show call graph	agcv
+display call graph	agcv
+ascii call graph	agcv
+interactive call graph	agcv
+call graph visualization	agcv
+visualize function calls	agcv
+show function call graph	agcv
+display interactive call graph	agcv
+How do I see the call graph?	agcv
+Can you show me the call graph?	agcv
+I need to see the function calls visually	agcv
+Display the program's call graph in ASCII	agcv
+Show me an ASCII representation of the call graph	agcv
+Generate an interactive visualization of the call graph	agcv
+Create an ASCII art view of function calls	agcv
+How can I visualize the program's call graph?	agcv
+Show the relationships between functions	agcv
+Display function call relationships in ASCII	agcv
+Change the endianness to big endian.	e cfg.bigendian=true
+endianness big	e cfg.bigendian=true
+switch to big endian	e cfg.bigendian=true
+big endian	e cfg.bigendian=true
+set big endian	e cfg.bigendian=true
+change to big endian mode	e cfg.bigendian=true
+switch endianness to big endian	e cfg.bigendian=true
+how to use big endian	e cfg.bigendian=true
+make radare2 use big endian	e cfg.bigendian=true
+configure big endian mode	e cfg.bigendian=true
+set analysis to big endian	e cfg.bigendian=true
+change binary analysis to big endian	e cfg.bigendian=true
+how do I switch to big endian mode in radare2	e cfg.bigendian=true
+enable big endian mode for analysis	e cfg.bigendian=true
+set endianness to big endian format	e cfg.bigendian=true
+change from little endian to big endian	e cfg.bigendian=true
+Compare the current binary with another binary `another.exe`.	!radiff2 $R2_FILE another.exe
+Compare binary with test.exe	!radiff2 $R2_FILE test.exe
+Binary comparison with sample.exe	!radiff2 $R2_FILE sample.exe
+Compare files	!radiff2 $R2_FILE malware.exe
+Diff with original.exe	!radiff2 $R2_FILE original.exe
+Compare current binary against backup.exe	!radiff2 $R2_FILE backup.exe
+How do I compare this binary with other.exe?	!radiff2 $R2_FILE other.exe
+Analyze differences with variant.exe	!radiff2 $R2_FILE variant.exe
+Compare binaries	!radiff2 $R2_FILE target.exe
+Binary diff against modified.exe	!radiff2 $R2_FILE modified.exe
+Find differences between current file and clean.exe	!radiff2 $R2_FILE clean.exe
+Compare with patched.exe	!radiff2 $R2_FILE patched.exe
+Diff against reference.exe	!radiff2 $R2_FILE reference.exe
+Binary comparison	!radiff2 $R2_FILE compare.exe
+Compare current with baseline.exe	!radiff2 $R2_FILE baseline.exe
+Show differences with new.exe	!radiff2 $R2_FILE new.exe
+How do I display the stack trace in the debugger?	dbt
+stack trace	dbt
+show stack trace	dbt
+display stack trace	dbt
+stack backtrace	dbt
+trace stack	dbt
+show backtrace	dbt
+display backtrace	dbt
+How can I see the stack trace?	dbt
+How do I view the stack trace in radare2?	dbt
+What command shows the stack trace?	dbt
+Can you show me the stack trace?	dbt
+What's the command for displaying stack trace?	dbt
+backtrace	dbt
+How to view program's stack trace in debugger?	dbt
+Display current stack trace in debug mode	dbt
+Rename a variable in the current function from `var1` to `counter`.	afvn counter
+rename variable	afvn
+rename var2 to index	afvn index
+rename var3 to sum	afvn sum
+How do I rename a variable to total?	afvn total
+rename current function variable from var4 to length	afvn length
+rename var5 to size	afvn size
+Can you help me rename a variable to count?	afvn count
+rename local variable to iterator	afvn iterator
+How to rename var8 to offset?	afvn offset
+rename function variable to pointer	afvn pointer
+rename var_4h to result	afvn result
+How do I rename a local variable to buffer?	afvn buffer
+rename current var to temp	afvn temp
+rename function variable from var2 to array_size	afvn array_size
+How to rename variable to max_length?	afvn max_length
+How do you calculate the checksum of a basic block?	ph crc32 $Fs
+checksum block	ph crc32 $Fs
+calculate block checksum	ph crc32 $Fs
+block crc32	ph crc32 $Fs
+basic block hash	ph crc32 $Fs
+compute checksum of current block	ph crc32 $Fs
+what's the crc32 of this block	ph crc32 $Fs
+get block hash	ph crc32 $Fs
+calculate crc32 of basic block	ph crc32 $Fs
+how to get block checksum	ph crc32 $Fs
+basic block crc32 calculation	ph crc32 $Fs
+what command shows block checksum	ph crc32 $Fs
+compute hash of current basic block	ph crc32 $Fs
+show me the block's crc32	ph crc32 $Fs
+get current block's checksum	ph crc32 $Fs
+calculate hash of basic block	ph crc32 $Fs
+How do you find the hexadecimal pattern a0cc33?	/x a0cc33
+search	/x a0cc33
+find hex	/x a0cc33
+locate hex pattern	/x a0cc33
+How to search for hex pattern a0cc33?	/x a0cc33
+Find the hex sequence a0cc33	/x a0cc33
+hex search	/x a0cc33
+pattern a0cc33	/x a0cc33
+How do I search for a0cc33 in hex?	/x a0cc33
+Search binary for hex pattern a0cc33	/x a0cc33
+locate a0cc33	/x a0cc33
+Find bytes a0cc33	/x a0cc33
+How can I find the hex sequence a0cc33 in the binary?	/x a0cc33
+search hex pattern	/x a0cc33
+Where is a0cc33?	/x a0cc33
+How to find hex bytes a0cc33?	/x a0cc33
+Disable colors in the commands output.	e scr.color=0
+colors off	e scr.color=0
+turn colors off	e scr.color=0
+disable colors	e scr.color=0
+how to disable colors	e scr.color=0
+how to turn off colors in radare2	e scr.color=0
+disable color output	e scr.color=0
+remove colors from output	e scr.color=0
+turn off color in terminal output	e scr.color=0
+how can I disable colored output	e scr.color=0
+disable colored command output	e scr.color=0
+no colors	e scr.color=0
+disable terminal colors	e scr.color=0
+how to get output without colors	e scr.color=0
+disable color formatting	e scr.color=0
+turn off command coloring	e scr.color=0
+How to display the local variables in the current function?	afv
+variables	afv
+show local vars	afv
+display variables	afv
+function variables	afv
+local variables	afv
+What are the local variables in this function?	afv
+Can you show me the local variables?	afv
+How do I see the local variables in the current function?	afv
+Display all local variables	afv
+Show me the function's local variables	afv
+List local vars	afv
+What variables are defined in this function?	afv
+Display function variables	afv
+How can I view the local variables?	afv
+Show vars	afv
+Change the program counter to 0x5000	dr PC=0x5000
+pc 0x4000	dr PC=0x4000
+change pc to 0x3000	dr PC=0x3000
+set program counter 0x7500	dr PC=0x7500
+modify pc value to 0x1000	dr PC=0x1000
+program counter 0x8000	dr PC=0x8000
+set pc 0x2500	dr PC=0x2500
+change program counter to address 0x6000	dr PC=0x6000
+move pc to 0x9000	dr PC=0x9000
+update program counter to 0x4500	dr PC=0x4500
+set the pc register to 0x3500	dr PC=0x3500
+can you change program counter to 0x7000	dr PC=0x7000
+modify the pc to point to 0x2000	dr PC=0x2000
+move program counter to address 0x8500	dr PC=0x8500
+set pc value to 0x5500	dr PC=0x5500
+change pc register to 0x6500	dr PC=0x6500
+Initialize the stack and register state for emulation	aeim
+init stack	aeim
+initialize stack	aeim
+setup stack state	aeim
+init registers	aeim
+initialize emulator	aeim
+setup emulation state	aeim
+prepare stack for emulation	aeim
+init emulator state	aeim
+setup registers and stack	aeim
+how to initialize emulation state	aeim
+how do I setup the stack for emulation	aeim
+initialize registers and stack for emulation	aeim
+how to prepare emulator state	aeim
+setup initial state for emulation	aeim
+init emulator memory	aeim
+prepare registers and stack for analysis	aeim
+How can I analyze all the symbols in a binary?	aa
+symbols	aa
+analyze symbols	aa
+analyze all symbols	aa
+check symbols	aa
+find symbols	aa
+analyze binary symbols	aa
+How do I analyze symbols?	aa
+What command analyzes symbols?	aa
+I need to analyze the binary symbols	aa
+Can you help me analyze symbols?	aa
+What's the command to analyze all symbols?	aa
+How to perform symbol analysis?	aa
+Show me how to analyze symbols	aa
+Analyze all symbols in my binary	aa
+Command for symbol analysis?	aa
+Need to analyze binary symbols, what's the command?	aa
+What's the quickest way to analyze symbols?	aa
+Give me the command to analyze symbols	aa
+How to do symbol analysis in radare2?	aa
+Tell me the command for analyzing symbols	aa
+Which option should I set to analyze consecutive functions to improve code coverage?	e anal.hasnext=true
+analyze consecutive functions	e anal.hasnext=true
+analyze consecutive	e anal.hasnext=true
+consecutive functions analysis	e anal.hasnext=true
+hasnext	e anal.hasnext=true
+enable consecutive function analysis	e anal.hasnext=true
+how to analyze consecutive functions	e anal.hasnext=true
+improve code coverage with consecutive analysis	e anal.hasnext=true
+set consecutive function analysis	e anal.hasnext=true
+enable hasnext analysis	e anal.hasnext=true
+what setting improves coverage with consecutive analysis	e anal.hasnext=true
+how to enable consecutive function analysis for better coverage	e anal.hasnext=true
+enable analysis of consecutive functions	e anal.hasnext=true
+set hasnext for better analysis	e anal.hasnext=true
+consecutive analysis setting	e anal.hasnext=true
+how do I analyze consecutive functions for better coverage	e anal.hasnext=true
+What target operating system (OS) is the current binary suposed to run?	e~^os[1]
+file info	e~^os[1]
+target OS	e~^os[1]
+operating system	e~^os[1]
+binary OS	e~^os[1]
+what OS	e~^os[1]
+which operating system	e~^os[1]
+target operating system	e~^os[1]
+OS type	e~^os[1]
+show OS	e~^os[1]
+display operating system	e~^os[1]
+what is the OS of this binary	e~^os[1]
+can you tell me the target OS	e~^os[1]
+show me the operating system	e~^os[1]
+which OS is this binary for	e~^os[1]
+get OS info	e~^os[1]
+display target OS	e~^os[1]
+what's the operating system	e~^os[1]
+OS info	e~^os[1]
+tell me the OS	e~^os[1]
+what operating system is this	e~^os[1]
+How do I see all imports in the binary?	ii
+imports	ii
+show imports	ii
+list imports	ii
+display imports	ii
+all imports	ii
+view imports	ii
+get imports	ii
+What are the imports?	ii
+How can I see the imports?	ii
+Show me all imports in the binary	ii
+List all imported functions	ii
+Display the import table	ii
+Can you show the imports?	ii
+I need to see the imports	ii
+Print all imports	ii
+How do I check imports?	ii
+What functions are imported?	ii
+Show imported symbols	ii
+List the binary's imports	ii
+Display all imported functions and symbols	ii
+What command lists all the strings in the binary?	iz
+strings	iz
+show strings	iz
+list strings	iz
+print strings	iz
+display all strings	iz
+How to see strings?	iz
+What's the command for listing strings?	iz
+Show me all strings in the binary	iz
+I need to see the strings	iz
+List all strings in the executable	iz
+Get strings from binary	iz
+Display string table	iz
+What command shows string data?	iz
+Extract strings from binary	iz
+How can I view all strings?	iz
+Command to dump strings?	iz
+Show string contents	iz
+List string table entries	iz
+What's the command to extract strings?	iz
+Print all string data	iz
+How do I change the current address 12 instructions or opcodes forward?	so 12
+seek	so 12
+forward 12 instructions	so 12
+skip 12 opcodes	so 12
+move 12 instructions ahead	so 12
+go forward 12	so 12
+jump 12 instructions	so 12
+seek forward 12 opcodes	so 12
+advance 12 instructions	so 12
+How do I move 12 instructions forward?	so 12
+Can you help me skip 12 instructions?	so 12
+What command moves 12 opcodes ahead?	so 12
+How to seek 12 instructions forward?	so 12
+I need to move forward by 12 opcodes	so 12
+skip ahead 12	so 12
+How can I advance 12 instructions from current position?	so 12
+What's the command to jump 12 opcodes forward?	so 12
+move ahead 12 instructions from here	so 12
+advance position by 12 opcodes	so 12
+How to skip the next 12 instructions?	so 12
+forward seek 12 instructions	so 12
+How do I display the control flow graph for the current function?	agf
+graph	agf
+control flow	agf
+show graph	agf
+display cfg	agf
+function graph	agf
+How do I see the control flow graph?	agf
+Can you show me the control flow graph?	agf
+Display the CFG for current function	agf
+Show me the function graph	agf
+Generate control flow graph	agf
+How to visualize function control flow?	agf
+Display function flow graph	agf
+Show control flow diagram	agf
+Generate CFG visualization	agf
+How can I see the function's control flow?	agf
+Show me the control flow analysis graph	agf
+Display visual representation of function flow	agf
+How to view function's control flow graph?	agf
+Generate graph of current function	agf
+Show function's flow diagram	agf
+What command disassembles the current function?	pdf
+disassemble	pdf
+disassemble function	pdf
+show disassembly	pdf
+current function disassembly	pdf
+display function	pdf
+How do I see the disassembly of this function?	pdf
+Can you show me the disassembly of the current function?	pdf
+What's the command to view function disassembly?	pdf
+disassemble current function	pdf
+print disassembly	pdf
+How to view function assembly?	pdf
+show me the function	pdf
+display current function assembly	pdf
+What's the command for function disassembly?	pdf
+How can I see the assembly code of this function?	pdf
+How can I print a hexdump of 64 bytes at the current address?	px 64
+hexdump	px 64
+Show hexdump	px 64
+Print hex	px 64
+Display hex dump	px 64
+Print hexdump of current position	px 64
+Show 32 bytes in hex	px 32
+Print 128 bytes as hexdump	px 128
+hexdump 256	px 256
+Display 16 bytes in hexadecimal	px 16
+Print hex values of 512 bytes	px 512
+Show me a hexdump of 1024 bytes	px 1024
+How do I see 48 bytes in hex?	px 48
+Print hexadecimal dump of 96 bytes	px 96
+Display first 24 bytes as hex	px 24
+Can you show 160 bytes in hexadecimal?	px 160
+hexdump current location 192 bytes	px 192
+Print 384 bytes in hex format	px 384
+Show hexadecimal values for 768 bytes	px 768
+Display hex representation of 320 bytes	px 320
+How to see 448 bytes in hexdump?	px 448
+How to scan and analyze the binary for references to the sym.imp.puts symbol?	/r sym.imp.puts
+scan for puts	/r sym.imp.puts
+find puts references	/r sym.imp.puts
+locate puts symbol	/r sym.imp.puts
+scan binary for puts	/r sym.imp.puts
+references to puts	/r sym.imp.puts
+How do I find all references to puts?	/r sym.imp.puts
+Where is puts used in the binary?	/r sym.imp.puts
+Show me all cross-references to puts	/r sym.imp.puts
+Find all locations where puts is called	/r sym.imp.puts
+Analyze binary for puts usage	/r sym.imp.puts
+Can you show me where puts is referenced?	/r sym.imp.puts
+List all cross-references to the puts function	/r sym.imp.puts
+Where can I find puts references in the code?	/r sym.imp.puts
+Display all locations referencing puts	/r sym.imp.puts
+Search for puts symbol references	/r sym.imp.puts
+How to start debugging the current binary?	ood
+debug	ood
+start debug	ood
+begin debugging	ood
+debug binary	ood
+start debugging	ood
+how to debug	ood
+debug current file	ood
+start debugging session	ood
+begin debug session	ood
+launch debugger	ood
+how do I start debugging	ood
+how to start debug mode	ood
+initiate debugging	ood
+start debug mode	ood
+can you help me start debugging	ood
+what command starts debugging	ood
+how to begin debugging process	ood
+command to start debugger	ood
+start debugging the loaded binary	ood
+how to debug the current program	ood
+What command executes a single instruction in debugging mode?	ds
+step	ds
+single step	ds
+execute one instruction	ds
+next instruction	ds
+step one	ds
+debug step	ds
+single instruction step	ds
+How do I execute just one instruction?	ds
+What's the command for single stepping?	ds
+Execute next instruction in debug mode	ds
+Can you help me step through one instruction?	ds
+How to execute one instruction in debugger?	ds
+What's the command to step once?	ds
+Move forward one instruction	ds
+Execute single instruction in debug mode	ds
+What command quits radare2?	q
+quit	q
+exit	q
+how to exit radare2	q
+what's the command to exit	q
+close radare2	q
+exit the program	q
+leave radare2	q
+command to quit	q
+how do I quit radare2?	q
+exit command	q
+how to close radare2 properly	q
+what's the proper way to exit	q
+terminate radare2	q
+how to end radare2 session	q
+command for quitting	q
+exit r2	q
+quit r2	q
+how do I exit r2?	q
+close r2	q
+what's the command to terminate radare2?	q
+How can I list all symbols in the binary?	is
+symbols	is
+list symbols	is
+show all symbols	is
+Display symbols	is
+binary symbols	is
+How do I see all symbols?	is
+What command shows symbols?	is
+Can you show me the symbols?	is
+List all symbols please	is
+How to view symbols in binary?	is
+Show me the symbol list	is
+What's the command to display symbols?	is
+I need to see all symbols	is
+Print all symbols	is
+Display the symbol table	is
+Give me the list of symbols	is
+Show symbol information	is
+Get all symbols from binary	is
+How to list symbols in radare2?	is
+What's the command for symbol listing?	is
+How can I display registers in debugging mode?	dr
+registers	dr
+show registers	dr
+display registers	dr
+what are the current register values	dr
+check registers	dr
+view registers	dr
+can you show me the registers	dr
+register values	dr
+how do I see registers in debug mode	dr
+what's in the registers right now	dr
+display current register state	dr
+show me register contents	dr
+how to view registers while debugging	dr
+print registers	dr
+get register values	dr
+current registers	dr
+debug registers	dr
+what are my register values	dr
+show register state	dr
+register contents	dr
+What command lists all classes and methods?	ic
+classes	ic
+show classes	ic
+list classes	ic
+display classes	ic
+show all classes	ic
+list all classes	ic
+display all classes and methods	ic
+show me the classes	ic
+what are the classes	ic
+list classes and methods	ic
+show classes and methods	ic
+can you show me all classes	ic
+display all available classes	ic
+list all classes and their methods	ic
+show me all the classes and methods	ic
+How do I show the current instruction pointer	dr?PC
+current instruction pointer	dr?PC
+show PC	dr?PC
+what's PC	dr?PC
+instruction pointer	dr?PC
+PC	dr?PC
+program counter	dr?PC
+current PC	dr?PC
+where is PC	dr?PC
+show current PC	dr?PC
+display instruction pointer	dr?PC
+what's the value of PC	dr?PC
+show me PC	dr?PC
+display PC value	dr?PC
+what's the current instruction pointer	dr?PC
+tell me PC	dr?PC
+What command shows detailed memory mappings when debugging?	dm
+memory mappings	dm
+show memory maps	dm
+detailed memory maps	dm
+memory mapping details	dm
+debug memory maps	dm
+display memory mappings	dm
+view memory maps	dm
+memory map info	dm
+memory regions	dm
+check memory mappings	dm
+What command shows the memory maps in debug mode?	dm
+How can I see memory mappings while debugging?	dm
+Show me the memory layout	dm
+Display all memory regions	dm
+What's the command for viewing memory maps?	dm
+How do I find out the current calling convention of the binary?	e anal.cc
+calling convention	e anal.cc
+show calling convention	e anal.cc
+what's the calling convention	e anal.cc
+display current calling convention	e anal.cc
+get calling convention	e anal.cc
+check binary calling convention	e anal.cc
+print calling convention	e anal.cc
+tell me the calling convention	e anal.cc
+which calling convention is used	e anal.cc
+view binary's calling convention	e anal.cc
+how can I see the calling convention	e anal.cc
+what calling convention does this use	e anal.cc
+show me the calling convention setting	e anal.cc
+current calling convention setting	e anal.cc
+display the calling convention used	e anal.cc
+How do I display flags in JSON format?	fj
+flags json	fj
+show flags as json	fj
+flags in json format	fj
+json flags	fj
+display flags json	fj
+how can I get flags in json	fj
+show me flags in json format	fj
+output flags as json	fj
+list flags json	fj
+get flags json format	fj
+convert flags to json	fj
+flags to json output	fj
+display all flags in json format	fj
+how to see flags in json	fj
+json format flags output	fj
+How can I print zero-terminated strings in memory?	ps
+strings	ps
+print strings	ps
+show strings	ps
+display strings	ps
+memory strings	ps
+get strings	ps
+print zero-terminated strings	ps
+show zero-terminated strings	ps
+display zero-terminated strings	ps
+get zero-terminated strings	ps
+How do I see strings in memory?	ps
+Can you show me the strings?	ps
+How to print strings from memory?	ps
+What command shows strings?	ps
+Display all zero-terminated strings	ps
+How can I view strings in the current section?	ps
+What's the command for printing strings?	ps
+Show me all strings in memory	ps
+How do I list all strings?	ps
+Print all zero-terminated strings in the current section	ps
+What command shows all exported symbols?	iE
+exports	iE
+show exports	iE
+list exports	iE
+display exports	iE
+get exports	iE
+Show me all exports	iE
+What are the exported symbols?	iE
+How can I see exports?	iE
+Display all exported symbols	iE
+List all exported symbols in the binary	iE
+Can you show me the exports?	iE
+What's the command for viewing exports?	iE
+I need to see the exports	iE
+Print all exported symbols	iE
+How do I view exported symbols?	iE
+How do I show the list of imports with JSON output?	iij
+imports	iij
+show imports	iij
+list imports	iij
+display imports json	iij
+imports as json	iij
+get imports json format	iij
+display list of imports in json	iij
+How can I see the imports in JSON?	iij
+What command shows imports in JSON format?	iij
+Can you show me the imports as JSON?	iij
+I need to see the imports in JSON format	iij
+How do I get a JSON list of imports?	iij
+Show me the imports in JSON output	iij
+What's the command for JSON-formatted imports?	iij
+List all imports in JSON	iij
+How can I remove all breakpoints in the debugger?	db-*
+breakpoints	db-*
+remove breakpoints	db-*
+delete breakpoints	db-*
+clear breakpoints	db-*
+remove all breakpoints	db-*
+delete all breakpoints	db-*
+clear all breakpoints	db-*
+How do I remove breakpoints?	db-*
+How to delete all breakpoints in radare2?	db-*
+Can you help me remove all breakpoints?	db-*
+I want to clear all breakpoints in the debugger	db-*
+How to remove every breakpoint?	db-*
+What's the command to delete all breakpoints?	db-*
+Remove all debug breakpoints	db-*
+Need to clear all breakpoints in r2	db-*
+How do I remove all flags?	f-*
+flags remove	f-*
+remove flags	f-*
+delete flags	f-*
+clear flags	f-*
+delete all flags	f-*
+remove all flags	f-*
+clear all flags	f-*
+how to remove flags	f-*
+how to delete flags	f-*
+how do I clear flags	f-*
+how can I remove all flags	f-*
+I want to remove all flags	f-*
+remove every flag	f-*
+delete every flag	f-*
+can you help me remove all flags	f-*
+What command prints the current stack pointer?	dr?SP
+stack pointer	dr?SP
+sp value	dr?SP
+current sp	dr?SP
+What's the current stack pointer value?	dr?SP
+stack pointer value	dr?SP
+Show me the SP register	dr?SP
+stack pointer register	dr?SP
+Get SP	dr?SP
+Display the value of SP	dr?SP
+What's in the SP register?	dr?SP
+Can you show me the stack pointer?	dr?SP
+Print SP register value	dr?SP
+current stack pointer register	dr?SP
+Where is SP pointing to?	dr?SP
+Show stack pointer location	dr?SP
+How do I change the burrent block size to 512 bytes?	b 512
+size	b 512
+block size	b 512
+change block size	b 512
+set block size	b 512
+How do I set block size to 512?	b 512
+block size 512	b 512
+How to change the block size?	b 512
+Change block size to 512 bytes	b 512
+Set current block to 512	b 512
+Make block size 512	b 512
+How do I change block size to 512 bytes in radare2?	b 512
+What command sets block size to 512?	b 512
+block	b 512
+Change the current block to 512 bytes	b 512
+I want to set block size to 512 bytes	b 512
+How can I modify block size to 512?	b 512
+Set block to 512 bytes	b 512
+What's the command to change block size to 512?	b 512
+How to extend the file size with 128 bytes more?	r+128
+size	r+128
+extend	r+128
+make bigger	r+128
+increase size	r+128
+extend file	r+128
+add bytes	r+128
+How to add 128 bytes to the file?	r+128
+How to extend the file?	r+128
+How can I increase the file size?	r+128
+What command adds more bytes to the file?	r+128
+How to make the file 128 bytes bigger?	r+128
+What's the command to extend file size?	r+128
+Extend binary size	r+128
+Add space to file	r+128
+Make file larger	r+128
+How do I extend the binary with additional bytes?	r+128
+What's the syntax to increase file size by 128 bytes?	r+128
+Command to add more space to binary	r+128
+How to expand file size?	r+128
+Increase binary size	r+128
+How do I chang the size of the file to 512KB?	r 512K
+size	r 512K
+resize	r 512K
+change size	r 512K
+file size	r 512K
+How to set size?	r 512K
+How do I set the size to 256KB?	r 256K
+resize to 128KB	r 128K
+change file size to 1MB	r 1M
+set size to 2MB	r 2M
+How can I change the file size to 64KB?	r 64K
+resize file to 32KB	r 32K
+make file 16KB	r 16K
+set to 4MB	r 4M
+How do I resize to 8MB?	r 8M
+change to 768KB	r 768K
+resize to 1.5MB	r 1536K
+How do I make the file 384KB?	r 384K
+set file size to 896KB	r 896K
+change size to 3MB	r 3M
+make it 192KB	r 192K
+What command prints a fortune message in radare2?	fo
+fortune	fo
+fortune message	fo
+Show fortune	fo
+Display fortune	fo
+Print fortune	fo
+Give me a fortune	fo
+Show me a fortune message	fo
+Can you display a fortune?	fo
+Print a random fortune message	fo
+What's my fortune?	fo
+Display a random fortune	fo
+Show fortune message in radare2	fo
+How to see fortune?	fo
+Print fortune quote	fo
+Display fortune quote	fo
+Get fortune message	fo
+How do I see a fortune message?	fo
+Show me today's fortune	fo
+Print random fortune quote	fo
+Display fortune message in console	fo
+How to perform a step into using the ESIL emulation?	aes
+step into	aes
+esil step	aes
+step into instruction with esil	aes
+perform esil step into	aes
+how to step into with esil	aes
+esil emulation step into	aes
+execute single step with esil	aes
+perform single step using esil	aes
+how to do a single step with esil emulation	aes
+step into next instruction using esil	aes
+how can i perform an esil step into	aes
+what command steps into with esil	aes
+execute next instruction with esil step	aes
+single step with esil emulator	aes
+esil debugger step into command	aes
+What command disassembles the hexadecimal bytes `90c3` for x86-32?	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+disassemble 90c3 x86 32	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+disassemble bytes 90c3	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+how to disassemble 90c3 for x86?	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+convert 90c3 to assembly	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+disassemble hex 90c3 32-bit x86	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+x86-32 disassembly for 90c3	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+show assembly for bytes 90c3	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+convert hexadecimal 90c3 to x86 assembly	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+disassemble	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+What's the assembly for 90c3?	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+Can you disassemble these bytes: 90c3	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+How do I see what 90c3 means in x86?	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+decode 90c3 assembly	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+translate 90c3 to x86 instructions	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+show me what 90c3 means in x86-32	pad 90c3 @e:asm.arch=x86@e:asm.bits=32
+How to nop one instruction in the current address?	wao nop @ $$
+nop instruction	wao nop @ $$
+nop current	wao nop @ $$
+nop here	wao nop @ $$
+nop at current address	wao nop @ $$
+nop this instruction	wao nop @ $$
+replace current instruction with nop	wao nop @ $$
+how to nop current instruction	wao nop @ $$
+nop instruction at current position	wao nop @ $$
+replace with nop	wao nop @ $$
+write nop at current instruction	wao nop @ $$
+how do I nop the current instruction	wao nop @ $$
+replace current address with nop instruction	wao nop @ $$
+nop current position	wao nop @ $$
+how to replace instruction with nop	wao nop @ $$
+write nop here	wao nop @ $$
+What command writes the 32bit value 0x123 in little endian to the given address?	wv4 0x123 @ address
+write 32bit value	wv4 0x123 @ address
+write value	wv4 0x123 @ address
+How to write 32bit value in little endian?	wv4 0x123 @ address
+write 32bit value 0x456 to memory	wv4 0x456 @ address
+write value 0xabc to address	wv4 0xabc @ address
+How do I write 0xdef as 32bit value?	wv4 0xdef @ address
+write 32bit	wv4 0x123 @ address
+store 32bit number	wv4 0x123 @ address
+write 32bit value 0x789 to given location	wv4 0x789 @ address
+How to store 32bit number 0xfff?	wv4 0xfff @ address
+What's the command to write 0x555 as 32bit value?	wv4 0x555 @ address
+write little endian	wv4 0x123 @ address
+write 32bit 0x999	wv4 0x999 @ address
+How do I write 0x777 as a 32bit value to memory?	wv4 0x777 @ address
+store value 0x444 as 32bit	wv4 0x444 @ address
+How to disable the virtual addressing to work with physical offsets?	e io.va=false
+disable virtual addressing	e io.va=false
+physical offsets	e io.va=false
+virtual addressing off	e io.va=false
+disable va	e io.va=false
+How do I work with physical offsets?	e io.va=false
+switch to physical addressing	e io.va=false
+turn off virtual addressing	e io.va=false
+What command disables virtual addressing mode?	e io.va=false
+How can I analyze the binary using physical offsets?	e io.va=false
+disable virtual address mode	e io.va=false
+va off	e io.va=false
+What's the command to work with raw file offsets?	e io.va=false
+How to switch from virtual to physical addressing?	e io.va=false
+disable VA mode	e io.va=false
+raw offsets	e io.va=false
+How to use virtual addressing defined by the IO maps?	e io.va=true
+addressing	e io.va=true
+virtual addressing	e io.va=true
+enable virtual addressing	e io.va=true
+virtual address mode	e io.va=true
+How to enable virtual addressing?	e io.va=true
+How do I turn on virtual addressing?	e io.va=true
+Enable VA mode in radare2	e io.va=true
+Switch to virtual addressing mode	e io.va=true
+Set virtual addressing on	e io.va=true
+Turn on VA mode	e io.va=true
+How can I enable virtual addressing in r2?	e io.va=true
+What command enables virtual addressing mode?	e io.va=true
+Enable IO map virtual addressing	e io.va=true
+Set VA mode for IO maps	e io.va=true
+How to use virtual addresses instead of physical?	e io.va=true
+Search for aligned 32bit values that represent valid mapped addresses in the current memory layout?	aav
+search aligned addresses	aav
+find mapped addresses	aav
+locate 32bit aligned addresses	aav
+search valid memory addresses	aav
+find aligned 32bit values in memory	aav
+how to search for aligned addresses in radare2	aav
+locate valid mapped memory addresses	aav
+search for memory-mapped 32bit values	aav
+find aligned addresses in current memory	aav
+how to find valid 32bit aligned addresses	aav
+search memory for aligned valid addresses	aav
+locate mapped 32bit values	aav
+find valid memory-mapped addresses	aav
+search aligned memory locations	aav
+how to scan for aligned addresses in memory layout	aav
+seek	$
+seek to end	$
+seek end	$
+go to end	$
+end	$
+jump to end	$
+move to end	$
+navigate to end	$
+How do I seek to the end?	$
+How can I move to the end of the file?	$
+How to jump to the end of the binary?	$
+What command seeks to the end?	$
+What's the command to go to end?	$
+Tell me how to seek to end	$
+Command to reach end of file	$
+How do I seek to the symbol named 'sym.boo' in radare2?	s sym.boo
+seek sym.boo	s sym.boo
+s sym.boo	s sym.boo
+How to seek to sym.boo?	s sym.boo
+Can you help me seek to the symbol boo?	s sym.boo
+I need to seek to sym.boo	s sym.boo
+How do I navigate to sym.boo?	s sym.boo
+Jump to sym.boo	s sym.boo
+Move to sym.boo symbol	s sym.boo
+What's the command to seek to sym.boo?	s sym.boo
+Navigate to symbol boo	s sym.boo
+How can I move to sym.boo in radare2?	s sym.boo
+Seeking to sym.boo symbol	s sym.boo
+Position cursor at sym.boo	s sym.boo
+Go to sym.boo	s sym.boo
+What's the seek command for sym.boo?	s sym.boo
+How can I dump the current block (defined with the `b` command) to `file.bin`?	wtf file.bin
+dump block	wtf file.bin
+dump current block	wtf file.bin
+save block to file	wtf file.bin
+write block to file	wtf file.bin
+How do I save the current block to disk?	wtf file.bin
+How to write block to a binary file?	wtf file.bin
+export block	wtf file.bin
+save block as binary	wtf file.bin
+How can I dump the current block to output.bin?	wtf output.bin
+Write current block to dump.bin	wtf dump.bin
+How to save block contents to exported.bin?	wtf exported.bin
+dump block to binary	wtf file.bin
+save current block to disk file	wtf file.bin
+How do I export the block to binary?	wtf file.bin
+Write block contents to backup.bin	wtf backup.bin
+What command displays the program entrypoint address?	ie
+entrypoint	ie
+entry	ie
+entry point	ie
+program entry	ie
+Where is the entrypoint?	ie
+Show entrypoint	ie
+Display program entrypoint	ie
+What's the entry point address?	ie
+Show me the entry point	ie
+Display entry address	ie
+Get entrypoint	ie
+Program entry point address	ie
+entrypoint location	ie
+entry point location	ie
+What address does the program start at?	ie
+Show program start address	ie
+Display executable entry point	ie
+Where does execution begin?	ie
+initial execution point	ie
+program start location	ie
+How do I list all available commands for help?	?*
+help	?*
+list commands	?*
+show all commands	?*
+what commands are available	?*
+commands list	?*
+display all commands	?*
+how can I see all commands	?*
+available commands	?*
+command reference	?*
+list everything	?*
+how do I see all possible commands	?*
+show command list	?*
+full command list	?*
+what commands can I use	?*
+display command reference	?*
+How can I perform all the experimental analysis?	aaaaa
+analyze	aaaaa
+experimental analysis	aaaaa
+run experimental analysis	aaaaa
+perform experimental analysis	aaaaa
+do experimental analysis	aaaaa
+run all experimental analysis	aaaaa
+perform all experimental analysis	aaaaa
+do all experimental analysis	aaaaa
+how to run experimental analysis	aaaaa
+how to perform experimental analysis	aaaaa
+how do I run experimental analysis	aaaaa
+what command runs experimental analysis	aaaaa
+what's the command for experimental analysis	aaaaa
+command for all experimental analysis	aaaaa
+show me how to do experimental analysis	aaaaa
+What command enumerates all the memory maps that associate virtual addressing ranges to physical offsets and its associated file?	om
+maps	om
+memory maps	om
+list maps	om
+show maps	om
+enumerate maps	om
+display memory maps	om
+show all memory maps	om
+list memory mappings	om
+How do I see memory maps?	om
+What command shows memory mappings?	om
+How can I view memory maps?	om
+Show me the memory map list	om
+Display virtual to physical memory mappings	om
+How do I enumerate memory ranges?	om
+List all virtual address mappings	om
+Show memory map information	om
+What's the command for viewing memory maps?	om
+Display virtual to physical offset mappings	om
+How can I see the memory layout?	om
+List all memory segments	om
+How do I write the value 0x32 in little endian 16bit?	wv2 0x32
+write 0x32 16bit	wv2 0x32
+write value 0x32 16bit	wv2 0x32
+write 0x42 16bit little endian	wv2 0x42
+write 0xff 16bit	wv2 0xff
+How to write 0x100 in 16bit	wv2 0x100
+write 16bit value 0x1234	wv2 0x1234
+How do I write 0xffff as 16bit?	wv2 0xffff
+write value	wv2 0x32
+write 0x4242 little endian 16bit	wv2 0x4242
+How to write the value 0x1111 in 16bit?	wv2 0x1111
+write 0x9999 16bit little endian format	wv2 0x9999
+How do I write 0xabcd as a 16bit value?	wv2 0xabcd
+write hex 0x7777 16bit	wv2 0x7777
+write value 0x8888 in 16bit format	wv2 0x8888
+How to write 0xbeef as 16bit little endian?	wv2 0xbeef
+How can I retrieve the number of functions?	aflc
+functions count	aflc
+count functions	aflc
+How many functions are there?	aflc
+number of functions	aflc
+function count	aflc
+Get function count	aflc
+Display total number of functions	aflc
+Count total functions in binary	aflc
+Show me function count	aflc
+function total	aflc
+What's the total number of functions?	aflc
+How many functions does this binary have?	aflc
+Count all functions	aflc
+Display number of functions	aflc
+Give me the function count	aflc
+total functions	aflc
+Return number of functions	aflc
+Show function count	aflc
+Get total function count	aflc
+Count of functions	aflc
+What is the name of the current working file?	o.
+filename	o.
+name of file	o.
+current file	o.
+which file	o.
+what file am i working on	o.
+display current filename	o.
+show filename	o.
+print current file	o.
+what's the name of the loaded file	o.
+tell me the filename	o.
+show me which file is loaded	o.
+what binary am i analyzing	o.
+display the name of the loaded binary	o.
+print name of current working file	o.
+show current working file	o.
+what's the name of the binary being analyzed	o.
+display loaded filename	o.
+current working file name	o.
+show me the current file	o.
+How do I list all the files opened?	o
+list files	o
+opened files	o
+show open files	o
+display files	o
+files opened	o
+What files are open?	o
+How can I see opened files?	o
+Show me the list of opened files	o
+Which files are currently open?	o
+open files list	o
+Display all opened files	o
+Can you show opened files?	o
+I need to see open files	o
+List of files	o
+Give me opened files	o
+How can I disassemble the function at address 0x401000?	pdf @ 0x401000
+disassemble function	pdf @ 0x401000
+show function disassembly	pdf @ 0x401000
+disassemble at 0x401000	pdf @ 0x401000
+disassemble function 0x401000	pdf @ 0x401000
+How do I see the disassembly of function at 0x401000?	pdf @ 0x401000
+Can you show me the disassembly at address 0x401000?	pdf @ 0x401000
+function disassembly 0x401000	pdf @ 0x401000
+disassemble	pdf @ 0x401000
+What's the disassembly of the function at 0x401000?	pdf @ 0x401000
+Show me the function at 0x401000	pdf @ 0x401000
+disassemble 0x401000	pdf @ 0x401000
+How can I see the assembly code at 0x401000?	pdf @ 0x401000
+print function disassembly	pdf @ 0x401000
+display function 0x401000	pdf @ 0x401000
+Could you show the assembly code at address 0x401000?	pdf @ 0x401000
+How can I analyze a function in the current seek address?	af
+analyze	af
+analyze function	af
+analyze current function	af
+analyze function here	af
+analyze function at seek	af
+analyze the function at current address	af
+analyze function at current position	af
+analyze the function where I am	af
+analyze current seek function	af
+Can you analyze the function at current address?	af
+How do I analyze the function at current seek?	af
+What command analyzes the current function?	af
+What's the command to analyze function at seek?	af
+Please analyze the function at current position	af
+I need to analyze this function	af
+Could you analyze the function at current seek?	af
+analyze function at seek address	af
+analyze function at current seek address	af
+How to analyze function at current position?	af
+Analyze function in the current address and the called ones recursively	afr
+analyze function recursively	afr
+analyze current function and calls	afr
+analyze function and its calls	afr
+recursive function analysis	afr
+analyze recursively	afr
+analyze current function and called functions	afr
+recursively analyze function	afr
+analyze function and all calls	afr
+analyze current and called functions	afr
+recursive analysis	afr
+analyze function and subroutines	afr
+analyze function and its subroutines recursively	afr
+recursively analyze current function	afr
+analyze function and called ones	afr
+analyze function and subroutines recursively	afr
+How do I step over the next instruction during debugging?	dso
+step over	dso
+next instruction	dso
+skip instruction	dso
+step over instruction	dso
+step over next	dso
+How do I step over?	dso
+What command steps over?	dso
+Step over current instruction?	dso
+How can I step over the next instruction in debugger?	dso
+What's the command to step over during debug?	dso
+How do I skip over the current instruction while debugging?	dso
+Step over without entering function?	dso
+What's the radare2 command to step over?	dso
+How to step over in r2 debugger?	dso
+Command for stepping over instruction?	dso
+How can I view the hexdump of 64 bytes at the current position?	px 64
+hexdump	px 64
+Show hex dump	px 64
+Display hex 64 bytes	px 64
+View hex at current position	px 64
+hexdump 64	px 64
+Show me 64 bytes in hex	px 64
+Display hexadecimal dump of 64 bytes	px 64
+Can you show the hex dump of 64 bytes?	px 64
+How do I see 64 bytes in hex at current position?	px 64
+hex dump current position 64 bytes	px 64
+Show me a hexdump of the next 64 bytes from here	px 64
+Display 64 bytes as hex starting at current location	px 64
+I need to see 64 bytes in hexadecimal	px 64
+Print hex values for next 64 bytes	px 64
+How to view 64 byte hex dump at cursor?	px 64
+Show hexadecimal representation of 64 bytes	px 64
+Display next 64 bytes as hex values	px 64
+hexdump next 64 bytes from current position	px 64
+Print 64 bytes in hexadecimal format	px 64
+How can I see a hex dump of 64 bytes here?	px 64
+"How do I search for the opcode ""mov eax, ebx""?"	'/a mov eax, ebx`
+search mov eax, ebx	/a mov eax, ebx
+find opcode mov eax, ebx	/a mov eax, ebx
+How can I locate mov eax, ebx?	/a mov eax, ebx
+search for mov eax, ebx instruction	/a mov eax, ebx
+locate mov eax, ebx in binary	/a mov eax, ebx
+find assembly instruction mov eax, ebx	/a mov eax, ebx
+mov eax, ebx	/a mov eax, ebx
+Where is mov eax, ebx?	/a mov eax, ebx
+Can you find mov eax, ebx?	/a mov eax, ebx
+How to search assembly mov eax, ebx	/a mov eax, ebx
+search instruction mov eax, ebx	/a mov eax, ebx
+Find all occurrences of mov eax, ebx	/a mov eax, ebx
+Look for mov eax, ebx	/a mov eax, ebx
+Locate instruction mov eax, ebx in program	/a mov eax, ebx
+Search binary for mov eax, ebx opcode	/a mov eax, ebx
+"How do I assemble and search for the bytes as instructions for ""mov x19, x1""?"	/a mov x19,x1
+search mov instruction	/a mov x19,x1
+assemble mov x19,x1	/a mov x19,x1
+How to search for mov x19,x1 instruction	/a mov x19,x1
+convert mov x19,x1 to bytes	/a mov x19,x1
+assemble instruction	/a mov x19,x1
+search assembly	/a mov x19,x1
+How can I find the bytes for mov x19,x1?	/a mov x19,x1
+What's the command to search for assembled mov x19,x1?	/a mov x19,x1
+Convert assembly to bytes mov x19,x1	/a mov x19,x1
+assemble and search mov x19,x1	/a mov x19,x1
+How do I search for mov x19,x1 in the binary?	/a mov x19,x1
+bytes for mov x19,x1	/a mov x19,x1
+Find mov x19,x1 instruction in memory	/a mov x19,x1
+assembly search	/a mov x19,x1
+What's the radare2 command to locate mov x19,x1?	/a mov x19,x1
+"How can I write the string ""Hello"" at the current position?"	'w Hello
+write string	'w Hello
+write text	'w Hello
+"write ""Hello"""	'w Hello
+write Hello at current position	'w Hello
+write Hello here	'w Hello
+write Hello at cursor	'w Hello
+"write ""Hello"" at current offset"	'w Hello
+write Hello at this location	'w Hello
+How to write Hello	'w Hello
+How do I write the text Hello	'w Hello
+write the string Hello at current cursor position	'w Hello
+How can I write Hello where I am	'w Hello
+write Hello at current address	'w Hello
+How to write Hello string at current location	'w Hello
+write text Hello at current offset	'w Hello
+"How do I open a file called ""test.bin"" in radare2?"	o test.bin
+open test.bin	o test.bin
+load test.bin	o test.bin
+How do I load test.bin in radare2?	o test.bin
+Can you help me open test.bin?	o test.bin
+open binary test.bin	o test.bin
+How to open test.bin file?	o test.bin
+load binary test.bin	o test.bin
+What's the command to open test.bin?	o test.bin
+open	o test.bin
+How can I open a binary named test.bin?	o test.bin
+What's the radare2 command for opening test.bin?	o test.bin
+I want to analyze test.bin, how do I open it?	o test.bin
+Command to open test.bin in r2?	o test.bin
+Open binary file test.bin	o test.bin
+Help me open test.bin with radare2	o test.bin
+How can I display information about the opened file?	i
+info	i
+file info	i
+show file info	i
+display file info	i
+file information	i
+information	i
+What is the file info?	i
+Can you show me information about the current file?	i
+Display the file information	i
+Tell me about this file	i
+Show me details about the opened file	i
+What information can you give me about this file?	i
+Get file info	i
+Print file information	i
+Display current file details	i
+How do I see file information?	i
+Show file metadata	i
+Get information about loaded file	i
+What's the info about this file?	i
+File details please	i
+Decompile the current function using r2ghidra	pdg
+decompile	pdg
+decompile function	pdg
+show decompiled code	pdg
+decompile current function	pdg
+can you decompile this function	pdg
+how to decompile the function	pdg
+display decompiled c code	pdg
+convert to c code	pdg
+show c code for function	pdg
+decompile and show c source	pdg
+generate c code from function	pdg
+convert assembly to c	pdg
+show decompiled c source code	pdg
+how do i see the c code	pdg
+decompile function using ghidra	pdg
+convert current function to c	pdg
+show readable c code	pdg
+display function in c	pdg
+how to see decompiled output	pdg
+get c source for this function	pdg
+How to decompile the function named sym.main with r2dec	pdd @ sym.main
+decompile sym.main	pdd @ sym.main
+How do I decompile main function	pdd @ sym.main
+decompile main	pdd @ sym.main
+Use r2dec on main	pdd @ sym.main
+r2dec main function	pdd @ sym.main
+Can you show me the decompiled code of main	pdd @ sym.main
+decompile sym.main function using r2dec	pdd @ sym.main
+r2dec decompile main	pdd @ sym.main
+How to use r2dec on main function	pdd @ sym.main
+Convert main function to C-like code	pdd @ sym.main
+Show me the decompiled version of main	pdd @ sym.main
+r2dec sym.main	pdd @ sym.main
+decompile the main function with r2dec please	pdd @ sym.main
+How can I see the decompiled code of main	pdd @ sym.main
+What's the command to decompile main with r2dec	pdd @ sym.main
+"How do I assemble the instruction ""nop"" at the current position?"	wa nop
+assemble nop	wa nop
+write nop instruction	wa nop
+assemble nop here	wa nop
+How to write nop at cursor?	wa nop
+assemble no-operation instruction	wa nop
+write nop at current address	wa nop
+nop	wa nop
+How do I insert a nop instruction?	wa nop
+assemble nop instruction at current position	wa nop
+Write no-operation at cursor position	wa nop
+How to add nop here?	wa nop
+insert nop	wa nop
+Can you assemble a nop instruction at current address?	wa nop
+write nop here	wa nop
+How do I add a no-operation instruction?	wa nop
+I need to set the block size to 128 bytes.	b 128
+blocksize	b 128
+set block size	b 128
+block size	b 128
+Change block size to 64	b 64
+Set block size to 256 bytes	b 256
+block size 512	b 512
+I want to set the block size to 1024	b 1024
+block 32	b 32
+Set the block size to 96 bytes	b 96
+Change current block size to 48	b 48
+Make block size 192	b 192
+I need block size of 384 bytes	b 384
+bs 768	b 768
+Set block to 832 bytes	b 832
+Change bs to 960	b 960
+block size needs to be 144	b 144
+Set the working block size to 320	b 320
+Make the block 416 bytes	b 416
+How do I display the entropy of the file?	p=e
+entropy	p=e
+show entropy	p=e
+file entropy	p=e
+calculate entropy	p=e
+what's the entropy	p=e
+display entropy	p=e
+get entropy	p=e
+entropy value	p=e
+How do I see the entropy?	p=e
+What's the entropy value of this file?	p=e
+Can you show me the entropy?	p=e
+I need to check the file's entropy	p=e
+Display the entropy calculation	p=e
+Show me the entropy value of the current file	p=e
+Calculate and show entropy	p=e
+I want to see the comments at the current address.	CC.
+show comments	CC.
+display comments	CC.
+comments	CC.
+what comments are here	CC.
+show me the comments	CC.
+current comments	CC.
+list comments	CC.
+show comments at current position	CC.
+display comments at current address	CC.
+what comments are at this location	CC.
+show me any comments here	CC.
+view comments	CC.
+can you show the comments	CC.
+display any comments at current position	CC.
+what comments exist here	CC.
+I want to list all cross-references to address 0x401000.	axt @ 0x401000
+list xrefs to 0x401000	axt @ 0x401000
+xrefs 0x401000	axt @ 0x401000
+show me references to 0x401000	axt @ 0x401000
+cross references 0x401000	axt @ 0x401000
+find all xrefs to address 0x401000	axt @ 0x401000
+what references the address 0x401000	axt @ 0x401000
+display cross references to 0x401000	axt @ 0x401000
+who calls 0x401000	axt @ 0x401000
+which instructions reference 0x401000	axt @ 0x401000
+show me everything that points to 0x401000	axt @ 0x401000
+list all locations that reference 0x401000	axt @ 0x401000
+where is 0x401000 referenced from	axt @ 0x401000
+find code that uses 0x401000	axt @ 0x401000
+show all cross-references pointing to 0x401000	axt @ 0x401000
+xref analysis for 0x401000	axt @ 0x401000
+How can I evaluate the expression 0x400 + 0x200?	?v 0x400 + 0x200
+Calculate 0x400 + 0x200	?v 0x400 + 0x200
+Add hexadecimal numbers	?v 0x400 + 0x200
+What's 0x400 plus 0x200?	?v 0x400 + 0x200
+Evaluate 0x800 + 0x300	?v 0x800 + 0x300
+Sum 0x1000 and 0x500	?v 0x1000 + 0x500
+Calculate hex 0x2000 + 0x100	?v 0x2000 + 0x100
+Add 0x100 and 0x300	?v 0x100 + 0x300
+Evaluate hex expression	?v 0x250 + 0x150
+Calculate sum of 0x600 and 0x400	?v 0x600 + 0x400
+What's 0x1500 + 0x2500?	?v 0x1500 + 0x2500
+Sum hexadecimals	?v 0x3000 + 0x1000
+Add hex numbers 0x4000 and 0x2000	?v 0x4000 + 0x2000
+Calculate 0x5000 plus 0x3000	?v 0x5000 + 0x3000
+Evaluate hexadecimal addition	?v 0x7500 + 0x1200
+How to add 0x8000 and 0x4000?	?v 0x8000 + 0x4000
+I need to see the help for the 'af' command.	af?
+help af	af?
+show af help	af?
+af help	af?
+what does af do	af?
+how to use af	af?
+af command help	af?
+display af help menu	af?
+explain af command	af?
+af documentation	af?
+show help for af	af?
+what are the af options	af?
+help menu for af	af?
+manual for af	af?
+af usage	af?
+can you show me af help	af?
+display af documentation	af?
+what is the syntax for af	af?
+need help with af	af?
+show me af manual	af?
+explain af usage	af?
+How can I print the value of the EAX register?	dr?eax
+value eax	dr?eax
+show eax	dr?eax
+print eax	dr?eax
+eax value	dr?eax
+eax register	dr?eax
+What is in EAX?	dr?eax
+What's the value of EAX?	dr?eax
+Can you show me what's in the EAX register?	dr?eax
+Display EAX register value	dr?eax
+Print the contents of EAX	dr?eax
+What is the current value stored in EAX?	dr?eax
+Show me the value of the EAX register please	dr?eax
+Display current EAX value	dr?eax
+EAX register contents	dr?eax
+Get EAX value	dr?eax
+I want to view 32 bytes in hexadecimal at address 0x500000.	px 32 @ 0x500000
+view hex at 0x400000	px 32 @ 0x400000
+hex dump 0x100000	px 32 @ 0x100000
+show 32 bytes at 0x800000	px 32 @ 0x800000
+display hex 0x300000	px 32 @ 0x300000
+hexdump	px 32 @ 0x200000
+Can you show me 32 bytes in hex starting at address 0x900000?	px 32 @ 0x900000
+I need to see 32 bytes of hex data at 0x700000	px 32 @ 0x700000
+hex view 0x600000	px 32 @ 0x600000
+Show me a hexdump of 32 bytes starting at 0xA00000	px 32 @ 0xA00000
+Display 32 bytes in hexadecimal format from address 0xB00000	px 32 @ 0xB00000
+hexdump starting at 0xC00000	px 32 @ 0xC00000
+view memory in hex at 0xD00000	px 32 @ 0xD00000
+show hex data 0xE00000	px 32 @ 0xE00000
+Can you display 32 bytes in hex format at 0xF00000?	px 32 @ 0xF00000
+hex view starting from 0x150000	px 32 @ 0x150000
+How do I list the sections with their computed entropy value?	iS entropy
+sections entropy	iS entropy
+list sections entropy	iS entropy
+entropy sections	iS entropy
+show sections with entropy	iS entropy
+calculate section entropy	iS entropy
+What's the entropy of sections?	iS entropy
+Display section entropy values	iS entropy
+How can I see entropy for each section?	iS entropy
+entropy values for sections	iS entropy
+Show me the entropy of all sections	iS entropy
+What is the entropy calculation for each section?	iS entropy
+Display sections with their entropy scores	iS entropy
+Can you show section entropy calculations?	iS entropy
+List all section entropy values	iS entropy
+How do I view entropy for program sections?	iS entropy
+entropy analysis of sections	iS entropy
+Show entropy calculations for all sections	iS entropy
+What's the entropy distribution across sections?	iS entropy
+Display entropy metrics for sections	iS entropy
+Calculate and show section entropy values	iS entropy
+I need to continue execution until the next syscall.	dcs
+syscall	dcs
+next syscall	dcs
+continue until syscall	dcs
+run until syscall	dcs
+execute until syscall	dcs
+go to next syscall	dcs
+continue execution until syscall	dcs
+run program until next syscall	dcs
+execute until next syscall	dcs
+step until syscall	dcs
+continue until next system call	dcs
+run until next system call	dcs
+execute program until syscall	dcs
+step until next system call	dcs
+move to next syscall	dcs
+How can I list all the processes in the system?	dp
+processes	dp
+show processes	dp
+list processes	dp
+system processes	dp
+display processes	dp
+How do I see all running processes?	dp
+Can you show me the process list?	dp
+What processes are currently running?	dp
+Show me all system processes	dp
+List running processes	dp
+How to view process list?	dp
+Display all active processes	dp
+I need to see running processes	dp
+Show process information	dp
+What's the command to list processes?	dp
+How can I check running processes?	dp
+View system processes	dp
+Get process list	dp
+Show me processes	dp
+List active processes in the system	dp
+How can I list all the threads of the current debugged process?	dpt
+threads	dpt
+list threads	dpt
+show threads	dpt
+display threads	dpt
+all threads	dpt
+process threads	dpt
+What threads are running?	dpt
+How do I see all threads?	dpt
+Show me the thread list	dpt
+Can you display the current threads?	dpt
+List running threads	dpt
+Display all process threads	dpt
+How to view threads?	dpt
+Show active threads	dpt
+What's the command to list threads?	dpt
+How can I view all running threads?	dpt
+List the current debug threads	dpt
+Show me thread information	dpt
+Display thread status	dpt
+How to check running threads?	dpt
+How do I disable the comments in the disassembly view?	e asm.comments = false
+comments	e asm.comments = false
+disable comments	e asm.comments = false
+remove comments	e asm.comments = false
+hide comments	e asm.comments = false
+turn off comments	e asm.comments = false
+disable comments in disassembly	e asm.comments = false
+how to hide comments in assembly view	e asm.comments = false
+remove comments from disassembly output	e asm.comments = false
+disable assembly comments display	e asm.comments = false
+how can I get rid of comments in the disassembly	e asm.comments = false
+what's the command to disable comments	e asm.comments = false
+I don't want to see comments in my disassembly	e asm.comments = false
+make disassembly show without comments	e asm.comments = false
+clean disassembly without comments	e asm.comments = false
+can you help me disable the comments	e asm.comments = false
+How can I rename a flag from 'flag.old' to 'flag.new'?	fr flag.new flag.old
+rename flag	fr flag.new flag.old
+How do I rename flags in radare2?	fr flag.new flag.old
+Rename flag.hello to flag.world	fr flag.world flag.hello
+Can you help me rename flag.test1 to flag.test2?	fr flag.test2 flag.test1
+rename flag.func1 to flag.main	fr flag.main flag.func1
+How to rename flag.start to flag.entry?	fr flag.entry flag.start
+rename flag.data to flag.string	fr flag.string flag.data
+flag rename command	fr flag.new flag.old
+rename flag.sym to flag.import	fr flag.import flag.sym
+How do I change flag name from flag.local to flag.global?	fr flag.global flag.local
+rename flag.var_1 to flag.counter	fr flag.counter flag.var_1
+How to rename flag.tmp to flag.permanent?	fr flag.permanent flag.tmp
+Change flag name from flag.x to flag.y	fr flag.y flag.x
+rename flag.array to flag.buffer	fr flag.buffer flag.array
+How can I rename flag.ptr to flag.pointer?	fr flag.pointer flag.ptr
+I need to change the endianness to big endian.	e cfg.bigendian = true
+endianness big	e cfg.bigendian = true
+big endian	e cfg.bigendian = true
+switch to big endian	e cfg.bigendian = true
+set big endian	e cfg.bigendian = true
+change endianness to big endian	e cfg.bigendian = true
+how to set big endian in radare2	e cfg.bigendian = true
+configure radare2 for big endian	e cfg.bigendian = true
+enable big endian mode	e cfg.bigendian = true
+switch endianness to big endian format	e cfg.bigendian = true
+make radare2 use big endian	e cfg.bigendian = true
+what's the command to change to big endian	e cfg.bigendian = true
+set binary analysis to big endian	e cfg.bigendian = true
+configure big endian for binary analysis	e cfg.bigendian = true
+how do I analyze big endian binaries	e cfg.bigendian = true
+change to big endian format	e cfg.bigendian = true
+How do I continue execution until the function 'main' is called?	dcu main
+continue until main	dcu main
+continue execution until main	dcu main
+dcu main	dcu main
+run until main function	dcu main
+continue until main function	dcu main
+run program until main	dcu main
+execute until main	dcu main
+continue execution until main function is called	dcu main
+run until we reach main	dcu main
+how to continue until main	dcu main
+continue program execution until it reaches main	dcu main
+run program until it hits main function	dcu main
+execute until program reaches main	dcu main
+keep running until main function	dcu main
+continue debugger until main	dcu main
+I want to see the usage of the 'px' command.	px?
+help px	px?
+px usage	px?
+how to use px	px?
+what are the options for px	px?
+show px help	px?
+explain px command	px?
+px help menu	px?
+display px command help	px?
+show me px documentation	px?
+what does px do	px?
+print px manual	px?
+px command syntax	px?
+guide for px	px?
+px command options	px?
+show available px parameters	px?
+"How can I search for a wide string (utf-16) ""hello""?"	/w hello
+search wide string	/w hello
+find utf16 string	/w hello
+search utf-16	/w hello
+wide string search hello	/w hello
+find hello as wide string	/w hello
+locate utf16 hello	/w hello
+search for wide-char hello	/w hello
+How do I search for a UTF-16 encoded string?	/w hello
+Can you help me find a wide string?	/w hello
+What's the command to search UTF-16 strings?	/w hello
+search unicode	/w hello
+find wide	/w hello
+How to locate UTF-16 encoded text in memory?	/w hello
+What's the syntax for wide string search?	/w hello
+unicode string search	/w hello
+How do I find UTF-16 encoded strings in the binary?	/w hello
+locate unicode text	/w hello
+find wide-char strings	/w hello
+How to search for UTF-16 encoded text?	/w hello
+What command finds wide character strings?	/w hello
+How to scan the memory for known magic file headers	/m@e:search.align=4
+scan memory for magic headers	/m@e:search.align=4
+search magic headers	/m@e:search.align=4
+find magic file headers	/m@e:search.align=4
+locate magic headers in memory	/m@e:search.align=4
+magic headers	/m@e:search.align=4
+magic scan	/m@e:search.align=4
+scan for file signatures	/m@e:search.align=4
+How can I find magic headers in memory?	/m@e:search.align=4
+What's the command to scan for file signatures?	/m@e:search.align=4
+How do I search for known file headers?	/m@e:search.align=4
+Can you help me find magic headers in memory?	/m@e:search.align=4
+What's the command to detect file signatures in memory?	/m@e:search.align=4
+memory magic headers scan	/m@e:search.align=4
+search for file magic	/m@e:search.align=4
+detect file signatures	/m@e:search.align=4
+How can I enable the IO write cache layer to avoid modifying the real file?	e io.cache = true
+cache	e io.cache = true
+enable cache	e io.cache = true
+io cache	e io.cache = true
+write cache	e io.cache = true
+enable write cache	e io.cache = true
+enable io cache	e io.cache = true
+How do I enable cache?	e io.cache = true
+How to enable write cache?	e io.cache = true
+How can I enable the write cache?	e io.cache = true
+How to enable IO cache in radare2?	e io.cache = true
+How do I enable the IO cache layer?	e io.cache = true
+How to avoid modifying the real file?	e io.cache = true
+Enable cache to prevent file modification	e io.cache = true
+How can I enable caching to avoid file changes?	e io.cache = true
+What command enables the IO write cache?	e io.cache = true
+I want to quickly quit radare2 right now.	q!
+quit	q!
+exit	q!
+how to quit radare2	q!
+exit radare2	q!
+quit radare2	q!
+close radare2	q!
+exit program	q!
+quit program	q!
+how do I exit radare2	q!
+what's the command to quit radare2	q!
+I need to exit radare2 immediately	q!
+quick exit from radare2	q!
+fast way to quit	q!
+emergency exit from radare2	q!
+terminate radare2	q!
+close the program immediately	q!
+how can I quit radare2 quickly	q!
+what's the fastest way to exit radare2	q!
+immediate program termination	q!
+force quit radare2	q!
+How do I undo the last seek operation?	s-
+undo seek	s-
+go back to previous seek	s-
+previous location	s-
+return to last position	s-
+undo last seek	s-
+revert seek	s-
+how to go back after seek	s-
+what command undoes a seek	s-
+how can I return to the previous position after seeking	s-
+jump back to previous location	s-
+how do I move back to where I was before seeking	s-
+return to previous seek position	s-
+what's the command to undo seek	s-
+move back one seek	s-
+how to revert last seek operation	s-
+I want to dump all the strings into a strings.txt file	iz > strings.txt
+strings to file	iz > strings.txt
+dump strings	iz > strings.txt
+export strings	iz > strings.txt
+save strings	iz > strings.txt
+How do I save all strings to a file?	iz > strings.txt
+Write strings to file	iz > strings.txt
+extract strings to txt	iz > strings.txt
+Can you help me dump the strings into a text file?	iz > strings.txt
+output strings	iz > strings.txt
+Save all string data to strings.txt	iz > strings.txt
+How can I export all strings to a file called strings.txt?	iz > strings.txt
+dump string data	iz > strings.txt
+write strings output to file	iz > strings.txt
+save string analysis results	iz > strings.txt
+Export all strings to text file	iz > strings.txt
+How can I set a hardware breakpoint to stop the execution when the process writes anything at address 0x400800?	dbw 0x400800
+breakpoint write 0x400800	dbw 0x400800
+hardware breakpoint write 0x400800	dbw 0x400800
+Set hardware breakpoint for writes at 0x400800	dbw 0x400800
+Stop when writing to 0x400800	dbw 0x400800
+Break on write 0x400800	dbw 0x400800
+How do I break when memory is written at 0x400800?	dbw 0x400800
+hardware break write 0x400800	dbw 0x400800
+Set breakpoint for memory writes at address 0x400800	dbw 0x400800
+How to catch writes to memory address 0x400800?	dbw 0x400800
+Break execution on memory writes at 0x400800	dbw 0x400800
+dbw	dbw 0x400800
+How can I monitor writes to memory address 0x400800?	dbw 0x400800
+What command sets a hardware breakpoint for writes at 0x400800?	dbw 0x400800
+Stop program when writing to memory address 0x400800	dbw 0x400800
+Trigger breakpoint on memory writes at 0x400800	dbw 0x400800
+I want to see the value of the address 0x400500 in decimal.	?vi [0x400500]
+address 0x400500 in decimal	?vi [0x400500]
+show decimal value at 0x400500	?vi [0x400500]
+convert 0x400500 to decimal	?vi [0x400500]
+what is the decimal value at 0x400500	?vi [0x400500]
+decimal	?vi [0x400500]
+value at 0x400500 in decimal format	?vi [0x400500]
+show me the decimal representation of address 0x400500	?vi [0x400500]
+convert memory address 0x400500 to decimal number	?vi [0x400500]
+what's the decimal equivalent of 0x400500	?vi [0x400500]
+get decimal value from 0x400500	?vi [0x400500]
+convert hex address 0x400500 to decimal	?vi [0x400500]
+decimal value of memory at 0x400500	?vi [0x400500]
+show decimal for 0x400500	?vi [0x400500]
+memory at 0x400500 in decimal	?vi [0x400500]
+translate 0x400500 to decimal number	?vi [0x400500]
+I need to list all the variables in the current function.	afv
+variables	afv
+list variables	afv
+show variables	afv
+display variables	afv
+function variables	afv
+current function variables	afv
+list all variables	afv
+show all variables	afv
+display all variables in function	afv
+list variables in current function	afv
+what are the variables in this function	afv
+show me the variables	afv
+display function variables	afv
+can you show the variables	afv
+list the function variables	afv
+"How can I search disassemble the whole section and filter the lines matching ""eax"""	output pd $SS @ $S ~eax
+search disassembly with eax	pd $SS @ $S ~eax
+show disassembly containing eax	pd $SS @ $S ~eax
+disassemble section and find eax	pd $SS @ $S ~eax
+filter disassembly for eax	pd $SS @ $S ~eax
+disassemble and grep eax	pd $SS @ $S ~eax
+show me all instructions using eax register	pd $SS @ $S ~eax
+eax instructions	pd $SS @ $S ~eax
+find eax in disassembly	pd $SS @ $S ~eax
+How do I see all eax instructions in the section?	pd $SS @ $S ~eax
+Can you show me the disassembly filtered for eax?	pd $SS @ $S ~eax
+disassemble section and search for eax register	pd $SS @ $S ~eax
+grep eax in disassembly	pd $SS @ $S ~eax
+search section for eax	pd $SS @ $S ~eax
+show all eax usage	pd $SS @ $S ~eax
+Where is eax used in this section?	pd $SS @ $S ~eax
+Where is the current section address?	?v $S
+section	?v $S
+current section	?v $S
+section address	?v $S
+What's the current section address?	?v $S
+current section address location	?v $S
+Where is my current section?	?v $S
+section location	?v $S
+Tell me the address of current section	?v $S
+What address is the current section at?	?v $S
+Show me the current section address	?v $S
+Display section address	?v $S
+Get current section address	?v $S
+Print the address of current section	?v $S
+What is the memory address of current section?	?v $S
+Display where the current section is located	?v $S
+How to find out the size of the current section?	?v $SS
+size	?v $SS
+section size	?v $SS
+current section size	?v $SS
+get section size	?v $SS
+show section size	?v $SS
+What's the size of this section?	?v $SS
+How big is the current section?	?v $SS
+Tell me the size of the section	?v $SS
+What is the current section size in bytes?	?v $SS
+Display the size of the section I'm in	?v $SS
+Can you show me the section size?	?v $SS
+Print the size of current section	?v $SS
+How many bytes is this section?	?v $SS
+Give me the section size	?v $SS
+What's the length of current section?	?v $SS
+How can I find functions that call 'main'?	axt sym.main
+axt main	axt sym.main
+find main callers	axt sym.main
+show functions calling main	axt sym.main
+who calls main	axt sym.main
+references to main	axt sym.main
+locate main references	axt sym.main
+cross references to main function	axt sym.main
+find all xrefs to main	axt sym.main
+where is main called from	axt sym.main
+display main function callers	axt sym.main
+list functions referencing main	axt sym.main
+callers	axt sym.main
+main callers	axt sym.main
+xrefs to main	axt sym.main
+show main references	axt sym.main
+I want to view the hexpair string representation of the next 64 bytes.	p8 64
+hexdump	p8 64
+show hex	p8 64
+next 64 bytes in hex	p8 64
+print hex dump	p8 64
+display next 32 bytes in hex	p8 32
+show me 128 bytes as hex	p8 128
+hex representation of 16 bytes	p8 16
+dump 256 bytes in hex	p8 256
+print next 48 bytes as hexpair	p8 48
+hexadecimal dump of 96 bytes	p8 96
+display hex values	p8 64
+show next 512 bytes in hexadecimal	p8 512
+hex dump the next 24 bytes	p8 24
+print 1024 bytes as hex pairs	p8 1024
+Can you show me the next 64 bytes in hexadecimal format?	p8 64
+I need to see 32 bytes in hex representation	p8 32
+Display the hexadecimal values of the next 128 bytes	p8 128
+Show me a hex dump of 256 bytes	p8 256
+What's the hex representation of the next 48 bytes?	p8 48
+How do I define a structure type in radare2?	'td struct myStruct { int a; char b; };
+define struct	td struct myStruct { int a; char b; };
+create structure	td struct Point { int x; int y; };
+define data structure	td struct Person { char* name; int age; };
+struct definition	td struct Color { int r; int g; int b; };
+how to create struct type	td struct Vector3 { float x; float y; float z; };
+define custom structure	td struct Header { int magic; char version[4]; };
+new structure	td struct Node { void* next; int data; };
+structure type	td struct Rectangle { int width; int height; };
+how do I create a struct	td struct Student { char* id; float gpa; };
+define type structure	td struct Pixel { char r; char g; char b; char a; };
+create struct type	td struct Time { int hour; int minute; int second; };
+how to define structure in r2	td struct Address { char* street; int number; };
+structure creation	td struct Message { int type; char* content; };
+define new structure	td struct File { char* name; int size; };
+create data structure type	td struct Account { int id; float balance; };
+How do I define an enum type in radare2?	'td enum myEnum { NONE, ONE, TWO, LAST };
+define enum	td enum myEnum { NONE, ONE, TWO, LAST };
+create enum	td enum myEnum { NONE, ONE, TWO, LAST };
+How to create an enumeration?	td enum myEnum { NONE, ONE, TWO, LAST };
+enum definition	td enum myEnum { NONE, ONE, TWO, LAST };
+How do I make an enum in r2?	td enum myEnum { NONE, ONE, TWO, LAST };
+What's the command to define an enumeration type?	td enum myEnum { NONE, ONE, TWO, LAST };
+create enum type	td enum myEnum { NONE, ONE, TWO, LAST };
+define enumeration	td enum myEnum { NONE, ONE, TWO, LAST };
+How can I create an enum type in radare2?	td enum myEnum { NONE, ONE, TWO, LAST };
+enum syntax	td enum myEnum { NONE, ONE, TWO, LAST };
+What's the proper way to define an enum?	td enum myEnum { NONE, ONE, TWO, LAST };
+How to declare an enumeration in r2?	td enum myEnum { NONE, ONE, TWO, LAST };
+enum declaration	td enum myEnum { NONE, ONE, TWO, LAST };
+What command creates an enum type?	td enum myEnum { NONE, ONE, TWO, LAST };
+define enum type in radare2	td enum myEnum { NONE, ONE, TWO, LAST };
+How do I search for the string 'hello' ignoring case?	/i hello
+search hello case insensitive	/i hello
+find hello ignoring case	/i hello
+search for hello case insensitive	/i hello
+look for hello ignore case	/i hello
+/i hello	/i hello
+case insensitive search hello	/i hello
+find string hello case insensitive	/i hello
+How to search hello without case sensitivity	/i hello
+How can I search for hello ignoring case sensitivity	/i hello
+search hello without caring about case	/i hello
+How do I find hello without case matching	/i hello
+case insensitive	/i hello
+search ignoring case hello	/i hello
+How to look for hello without case matching	/i hello
+find hello case insensitive in binary	/i hello
+search hello case insensitive in memory	/i hello
+How do I search hello without caring about case	/i hello
+How to find hello ignoring uppercase/lowercase	/i hello
+case insensitive search for hello string	/i hello
+search string hello without case matching	/i hello
+How can I create a new flag space named 'findings'?	fs findings
+flags	fs findings
+new flag space	fs findings
+create flagspace	fs findings
+How to create a flag space?	fs findings
+Make a new flag space	fs findings
+Create a flagspace named findings	fs findings
+I want to create a new flag space	fs findings
+Create flag space findings	fs findings
+Switch to a new flag space called findings	fs findings
+flagspace findings	fs findings
+Create a new flag space called findings	fs findings
+Make findings flag space	fs findings
+How to make a new flag space named findings?	fs findings
+Create findings flagspace	fs findings
+Can you create a flag space named findings?	fs findings
+How can I print the immediate value of the current instruction?	ao~^val[1]
+print immediate value	ao~^val[1]
+immediate value	ao~^val[1]
+What's the immediate value here?	ao~^val[1]
+Show me the immediate value	ao~^val[1]
+current instruction immediate value	ao~^val[1]
+Display immediate value of instruction	ao~^val[1]
+Get immediate value	ao~^val[1]
+How do I see the immediate value?	ao~^val[1]
+What command shows the immediate value?	ao~^val[1]
+Print immediate	ao~^val[1]
+Show immediate	ao~^val[1]
+Can you display the immediate value of this instruction?	ao~^val[1]
+What's the command to view immediate value?	ao~^val[1]
+How to extract immediate value from current instruction?	ao~^val[1]
+immediate	ao~^val[1]
+Whats the destination for the jump/branch/call at address 0x580034?	?v $j @ 0x580034
+jump destination	?v $j @ 0x580034
+Where does this jump go	?v $j @ 0x580034
+destination	?v $j @ 0x580034
+What address does the jump at 0x580034 go to	?v $j @ 0x580034
+Where does the branch at 0x580034 jump to	?v $j @ 0x580034
+Show me the destination of jump at 0x580034	?v $j @ 0x580034
+What's the target address for jump at 0x580034	?v $j @ 0x580034
+jump target	?v $j @ 0x580034
+Where does this branch at address 0x580034 lead to	?v $j @ 0x580034
+What's the destination address for call at 0x580034	?v $j @ 0x580034
+Calculate jump destination from 0x580034	?v $j @ 0x580034
+Show branch target at 0x580034	?v $j @ 0x580034
+Where will execution continue after jump at 0x580034	?v $j @ 0x580034
+What's the next instruction address after branch at 0x580034	?v $j @ 0x580034
+Print jump destination from current position	?v $j @ 0x580034
+How do I display the executable headers of the current binary?	iH
+headers	iH
+show headers	iH
+binary headers	iH
+display headers	iH
+executable headers	iH
+print headers	iH
+show executable headers	iH
+display binary headers	iH
+How to see headers?	iH
+How to display headers?	iH
+What command shows the headers?	iH
+Display the headers of the loaded binary	iH
+Show me the executable headers	iH
+Can you display the program headers?	iH
+Print the headers of the current binary	iH
+How do I see the binary headers?	iH
+What's the command for viewing headers?	iH
+Display header information	iH
+Show header data	iH
+How to view executable headers?	iH
+Emulate all the executable regions to find out computed references to strings	aae
+find computed string references	aae
+emulate executable regions	aae
+locate computed string refs	aae
+how to find computed references to strings	aae
+emulate code to find string references	aae
+discover computed string references	aae
+analyze executable regions for string refs	aae
+find dynamic string references	aae
+locate string references through emulation	aae
+emulate to find string refs	aae
+how can I find computed references to strings	aae
+analyze code for computed string references	aae
+string reference analysis	aae
+emulate for string references	aae
+what command finds computed string refs	aae
+What option must be set to create flags for every new string referenced from the analysis?	e anal.strings=true
+strings	e anal.strings=true
+How to enable string flags during analysis?	e anal.strings=true
+Create flags for strings during analysis	e anal.strings=true
+Enable string reference flags	e anal.strings=true
+How do I make flags for strings during analysis?	e anal.strings=true
+What setting enables string flags?	e anal.strings=true
+Flag creation for strings	e anal.strings=true
+Enable automatic string flagging	e anal.strings=true
+How to set up string reference flags?	e anal.strings=true
+Make flags for analyzed strings	e anal.strings=true
+What's the command to enable string flags during analysis?	e anal.strings=true
+Enable string reference detection	e anal.strings=true
+Set up automatic string flagging	e anal.strings=true
+How can I enable string flag creation?	e anal.strings=true
+String reference flags configuration	e anal.strings=true
+I need to calculate the SHA256 hash of the current block.	ph sha256
+hash sha256	ph sha256
+calculate sha256	ph sha256
+sha256	ph sha256
+sha256 hash	ph sha256
+What's the SHA256 hash of this block?	ph sha256
+How do I get the SHA256 hash?	ph sha256
+compute SHA256	ph sha256
+generate SHA256 hash	ph sha256
+Can you show me the SHA256 hash of the current block?	ph sha256
+I want to see the SHA256 hash	ph sha256
+SHA256 hash calculation	ph sha256
+get SHA256	ph sha256
+Show me the SHA256 hash of this section	ph sha256
+Calculate SHA256 hash of current block	ph sha256
+How to get SHA256 hash in radare2?	ph sha256
+SHA256 hash value	ph sha256
+current block SHA256	ph sha256
+block SHA256 hash	ph sha256
+What's the SHA256?	ph sha256
