@@ -255,3 +255,20 @@ See the default calling convention used in this binary	e anal.cc
 How do I compare two files `file1.bin` and `file2.bin`?	radiff2 -x file1.bin file2.bin
 Set the calling convention of the `add` function to `cdecl`.	afc cdecl @ sym.add
 List all the available calling conventions:	afcl
+Show basic block information in JSON	afbij
+Convert JSON output from command to Key=Value syntax, the same way GRON works:	ij~{=}
+Indent JSON using the ~ operator	ij~{}
+Show code locations, relationing source-line with address	CLL
+Describe the current instruction	aod
+Show me the ESIL expression that represents the current instruction	aoeq
+All the ESIL expressions for the current basic block	aoeq $Fi
+Evalute the ESIL expression `1,2,+,r0,:=`	'ae 1,2,+,r0,:=
+Translate and evaluate this expression `rax = rbx + 3` using ESIL emulation.	'ae 3,rbx,+,rax,:=
+Type of the instruction at address 0x808044	ao@0x808044~^type[1]
+Size in bytes of the current instruction	aos
+Size in bytes of the current instruction	ao~^size[1]
+Seek to the program counter	sr PC
+Seek 3 instructions forward	so 3
+Temporal seek to the program counter and show the 32 bytes in hexpairs	p8 32 @r:PC
+Set the value 0x8822 to the `rax` register	dr rax=0x8822
+List all the register names	drl
