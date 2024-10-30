@@ -8,7 +8,7 @@ import logging
 import numpy as np
 from pathlib import Path
 from dataclasses import dataclass, asdict
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Literal
 from datetime import datetime
 import argparse
 import shutil
@@ -22,56 +22,65 @@ from transformers import (
     TrainerCallback,
     TrainingArguments,
     DataCollatorForLanguageModeling,
-    # BitsAndBytesConfig,
     EarlyStoppingCallback
 )
 from peft import (
-    prepare_model_for_kbit_training,
     LoraConfig,
     get_peft_model,
     TaskType
 )
+import boto3
 
 from utils import setup_logging, set_seed, calculate_memory_usage
+
 wandb_enabled = False
+
 @dataclass
 class TrainingConfig:
     """Training configuration"""
     model_name: str
+    training_mode: Literal["qlora", "full"]  # qlora here means parameter-efficient training with LoRA
     epochs: int
     batch_size: int
     learning_rate: float
-    lora_r: int
-    lora_alpha: int
-    lora_dropout: float
     warmup_ratio: float
     weight_decay: float
     gradient_accumulation_steps: int
     max_grad_norm: float
     checkpoint_frequency: int
-    target_modules: List[str] = None
     max_length: int = 512
+    
+    # LoRA parameters
+    lora_r: Optional[int] = None
+    lora_alpha: Optional[int] = None
+    lora_dropout: Optional[float] = None
+    target_modules: Optional[List[str]] = None
     
     @classmethod
     def from_args(cls, args):
-        return cls(
+        config = cls(
             model_name=args.model_name,
+            training_mode=args.training_mode,
             epochs=args.epochs,
             batch_size=args.batch_size,
             learning_rate=args.learning_rate,
-            lora_r=args.lora_r,
-            lora_alpha=args.lora_alpha,
-            lora_dropout=args.lora_dropout,
             warmup_ratio=args.warmup_ratio,
             weight_decay=args.weight_decay,
             gradient_accumulation_steps=args.gradient_accumulation_steps,
             max_grad_norm=args.max_grad_norm,
             checkpoint_frequency=args.checkpoint_frequency,
-            target_modules=args.target_modules.split(',') if args.target_modules else [
+        )
+        
+        # Set LoRA parameters if in qlora mode
+        if args.training_mode == "qlora":
+            config.lora_r = args.lora_r
+            config.lora_alpha = args.lora_alpha
+            config.lora_dropout = args.lora_dropout
+            config.target_modules = args.target_modules.split(',') if args.target_modules else [
                 "q_proj", "k_proj", "v_proj", "o_proj"
             ]
-        )
-
+            
+        return config
 class SpotCheckpointCallback(TrainerCallback):
     """Callback class for spot instance checkpointing"""
     def __init__(self, checkpoint_manager, s3_bucket):
@@ -126,7 +135,7 @@ class SpotCheckpointCallback(TrainerCallback):
                 self.logger.error(f"Failed to save checkpoint: {str(e)}")
             
         return control
-class QLoRATrainer(Trainer):
+class CustomTrainer(Trainer):
     """Enhanced trainer with checkpoint management and spot instance handling"""
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -141,36 +150,31 @@ class QLoRATrainer(Trainer):
         )
     
 def setup_model(config: TrainingConfig):
-    """Initialize model with QLoRA configuration"""
-    # bnb_config = BitsAndBytesConfig(
-    #     load_in_4bit=True,
-    #     bnb_4bit_quant_type="nf4",
-    #     bnb_4bit_compute_dtype=torch.float16,
-    #     bnb_4bit_use_double_quant=True
-    # )
+    """Initialize model based on training mode"""
+    model_kwargs = {
+        "device_map": "auto",
+        "torch_dtype": torch.float16
+    }
     
-    # Load base model with correct rope_scaling format
+    # Load base model
     model = AutoModelForCausalLM.from_pretrained(
         config.model_name,
-        # quantization_config=bnb_config,
-        device_map="auto",
-        torch_dtype=torch.float16
+        **model_kwargs
     )
     
-    # Prepare for kbit training
-    model = prepare_model_for_kbit_training(model)
+    if config.training_mode == "qlora":
+        # Configure LoRA
+        lora_config = LoraConfig(
+            r=config.lora_r,
+            lora_alpha=config.lora_alpha,
+            target_modules=config.target_modules,
+            lora_dropout=config.lora_dropout,
+            bias="none",
+            task_type=TaskType.CAUSAL_LM,
+        )
+        
+        model = get_peft_model(model, lora_config)
     
-    # Configure LoRA
-    lora_config = LoraConfig(
-        r=config.lora_r,
-        lora_alpha=config.lora_alpha,
-        target_modules=config.target_modules,
-        lora_dropout=config.lora_dropout,
-        bias="none",
-        task_type=TaskType.CAUSAL_LM,
-    )
-    
-    model = get_peft_model(model, lora_config)
     return model
 
 def prepare_dataset(data_path: str, tokenizer, config: TrainingConfig):
@@ -281,7 +285,7 @@ def train(args):
         tokenizer,
         config
     )
-        
+    
     # Setup training arguments
     training_args = TrainingArguments(
         output_dir=args.output_dir,
@@ -309,10 +313,11 @@ def train(args):
     
     # Initialize model
     model = setup_model(config)
-    logger.info(f"Model setup complete. Device map: {model.hf_device_map}")
+    logger.info(f"Model setup complete. Training mode: {config.training_mode}")
+    logger.info(f"Device map: {model.hf_device_map}")
     
     # Initialize trainer
-    trainer = QLoRATrainer(
+    trainer = CustomTrainer(
         model=model,
         args=training_args,
         train_dataset=train_dataset,
@@ -327,8 +332,7 @@ def train(args):
                 early_stopping_threshold=0.05
             )
         ]
-    )
-    
+    )    
     # Initialize checkpoint manager
     checkpoint_manager = CheckpointManager(os.environ.get('CHECKPOINT_DIR', 'checkpoints'))
     
@@ -347,7 +351,13 @@ def train(args):
         )
         
         # Save final model
-        trainer.save_model(args.output_dir)
+        if config.training_mode == "qlora":
+            # For LoRA, save adapter weights
+            model.save_pretrained(args.output_dir)
+        else:
+            # For full fine-tuning, save entire model
+            trainer.save_model(args.output_dir)
+
         tokenizer.save_pretrained(args.output_dir)
         
         # Log final metrics
@@ -377,6 +387,7 @@ def parse_args():
     """Parse command line arguments"""
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_name', type=str, required=True)
+    parser.add_argument('--training_mode', type=str, choices=['qlora', 'full'], required=True, help="Choose between LoRA ('qlora') or full fine-tuning ('full')", default='qlora')    
     parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAINING'))
     parser.add_argument('--output_dir', type=str, default=os.environ.get('SM_MODEL_DIR'))
     parser.add_argument('--epochs', type=int, default=2)
@@ -395,6 +406,7 @@ def parse_args():
     parser.add_argument('--wandb_project', type=str, default=None)
     parser.add_argument('--resume_from_checkpoint', type=str, default=None)
     parser.add_argument('--huggingface_token', type=str, default=os.environ.get('HF_TOKEN'))
+    
     
     return parser.parse_args()
 

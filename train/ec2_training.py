@@ -134,7 +134,7 @@ mkdir -p /app
 cd /app
 apt update
 apt install -y stunnel4
-aws s3 cp --recursive s3://{bucket}/training_files/ ./
+aws s3 cp s3://{bucket}/amazon-efs-utils.deb ./
 dpkg -i amazon-efs-utils.deb
 mount -t efs {efs_id} /mnt/efs
 mkdir -p /mnt/efs/checkpoints
