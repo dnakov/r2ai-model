@@ -4,23 +4,9 @@
 23. **User Query:** Cast the data at address `0x08048648` to `MyStruct` and print it.
     **radare2 Command:** `tp MyStruct @ 0x08048648`
 
-52. **User Query:** How do I list all basic block references?
-    **radare2 Command:** `afjj`
-71. **User Query:** How do I list all function arguments for `main`?
-    **radare2 Command:** `afv @ sym.main`
-72. **User Query:** Show the type of the variable `local_10h` in `main`.
-    **radare2 Command:** `afvt local_10h`
-76. **User Query:** How do I visualize the string reference graph?
-    **radare2 Command:** `agd.g`
-78. **User Query:** Set the calling convention of the `add` function to `cdecl`.
-    **radare2 Command:** `afc cdecl @ sym.add`
 80. **User Query:** Show the internal analysis hints at address `0x08048648`.
     **radare2 Command:** `ah 0x08048648`
-100. **User Query:** How do I visualize the data reference graph of the binary?
-     **radare2 Command:** `agd.d`
 q,a
-How do I look for functions that might be doing crypto stuff? Like searching for AES or SHA,"afl~crypto,aes,sha,md5"
-I want to see all the network-related functions this program might use. How do I search for those?,"afl~socket,connect,bind"
 I want to see what environment variables this program might use. How do I find those references?,axt @sym.getenv
 How do I look at the stack setup in the beginning of a function?,"pd 10 @sym.main~push,sub"
 I want to find places where the program reads files. How do I look for file operations?,axt @sym.fopen
@@ -87,3 +73,4 @@ I want to see what kind of timer functions this program uses.,axt @sym.setitimer
 How can I find places where the program might be doing checksum calculations?,"afl~checksum,crc,hash"
 I want to see all the places where the program uses synchronization primitives.,axt @sym.pthread_mutex_lock
 How do I find functions that might be implementing caches?,"afl~cache,buffer,temp"
+How do I find all the places where the program is using memory pools?	afl~pool,allocator,arena

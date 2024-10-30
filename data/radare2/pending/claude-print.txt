@@ -10,32 +10,21 @@ Create QR code from these 32 bytes	pq 32
 Calculate MD5 hash of this section	ph md5
 Display words as 32-bit hex values	pxw
 Need to see N instructions disassembled	pd
-List all strings in current block	psb
 Can you show me bits in bitmap format?	pxB
-What prints the current time?	pt.
 Command for 64-bit hex quadwords?	pxq
 Give me entropy bars for this data	p-e
 Show me 16-bit values in hex please	pxh
 Print strings until null byte found	psz
 Need octal representation of data	pxo
-Decode this base64 data	p6d
 Command for raw bytes with offsets?	prl
-Get annotated hex visualization	pxa
 Show UTF-16 unicode strings	psu
 What's used for 32-bit wide strings?	psW
 Decompress and show gunzipped content	prg
 Space-separated hex pairs command?	p8
-Fun way to view hex with emojis	pxe
-Display data bits in hex format	pxb
-Output pascal string format	psp
-Hex dump until hitting zero	px0
 Convert 4 bytes to signed decimal	pxd4
 View 8-byte hex values	pv8
-Basic block in hex format	pxb
 Need strings wrapped to screen width	pss
 Decompress LZ4 data block	prgl
-Parse and show ASN1/DER data	pFa
-Decode protobuf content	pFb
 Print strings with escape sequences	psx
 One hex value per line output	pxH
 Show hex word references	pxr
@@ -72,14 +61,8 @@ Word pattern generator	pp2
 Dword pattern output	pp4
 Generate qword pattern	pp8
 Print ASCII alphabet pattern	ppa
-Generate PIN patterns	ppn
 Fill buffer with 0xFF	ppf
 Zero-filled buffer output	pp0
-Parse X509 certificate	pFx
-Decode PKCS7 format	pFp
-Show ASN1 object identifiers	pFo
-Parse iOS PLIST binary	pFB
-Decode Android XML binary	pFA
 Decompress XZ block	pFX
 Raw bytes with line numbers	prl
 Show printable chars with offsets	prx

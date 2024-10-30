@@ -162,4 +162,3 @@ Network Analysis	How do I calculate packet alignment?	?v 4-($SS%4)
 Kernel Analysis	How do I find offset to kernel base?	?v $D-$DB
 Kernel Analysis	How do I calculate size of kernel section?	?v $s{.text}
 Kernel Analysis	How do I get distance between drivers?	?v $MM
-Kernel Analysis	How do I find size of

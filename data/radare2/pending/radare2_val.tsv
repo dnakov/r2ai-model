@@ -1,6 +1,0 @@
-q	a
-How do I find all the places where the program is using memory pools?	afl~pool,allocator,arena
-I want to see all functions that might be handling CORS. How do I find those?	afl~cors,origin,preflight
-How can I find all the places where the program is doing HPACK compression?	afl~hpack,http2,header
-I want to see all functions that might be handling CSP headers. How do I find those?	afl~csp,security,policy
-How do I find all the places where the program is using barrier synchronization?	axt@@=sym.pthread_barrier_wait sym.barrier_sync

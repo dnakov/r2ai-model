@@ -80,6 +80,7 @@ Rename the symbol `fcn.08048648` to `init`.	fr init fcn.08048648
 Show the sizes of all functions in the binary.	afl,size/cols/name
 How do I check the endianness of the binary?	e arch.endian
 Set the architecture to ARM.	e asm.arch=arm
+Set the architecture to ARM THUMB.	e asm.arch=arm;e asm.bits=16;ahb 16
 How do I list all imported libraries?	il
 Find all references to the function `printf`.	axt sym.imp.printf
 Visualize the control flow graph of the `main` function using Graphviz.	agfd main > cfg.dot
@@ -125,6 +126,7 @@ What command disassembles the current function?	pdf
 How can I print a hexdump of 64 bytes at the current address?	px 64
 How to scan and analyze the binary for references to the sym.imp.puts symbol?	/r sym.imp.puts
 How to start debugging the current binary?	ood
+How can I run the program and attach the debugger?	doo
 What command executes a single instruction in debugging mode?	ds
 What command quits radare2?	q
 How can I list all symbols in the binary?	is
@@ -136,6 +138,7 @@ How do I find out the current calling convention of the binary?	e anal.cc
 How do I display flags in JSON format?	fj
 How can I print zero-terminated strings in memory?	ps
 What command shows all exported symbols?	iE
+How do I list all exported symbols?	iE
 How do I show the list of imports with JSON output?	iij
 How can I remove all breakpoints in the debugger?	db-*
 How do I remove all flags?	f-*
@@ -157,6 +160,7 @@ How can I dump the current block (defined with the `b` command) to `file.bin`?	w
 What command displays the program entrypoint address?	ie
 How do I list all available commands for help?	?*
 How can I perform all the experimental analysis?	aaaaa
+How can I analyze the program with complete non-experimental techniques?	aaaa
 What command enumerates all the memory maps that associate virtual addressing ranges to physical offsets and its associated file?	om
 How do I write the value 0x32 in little endian 16bit?	wv2 0x32
 How can I retrieve the number of functions?	aflc
@@ -190,7 +194,7 @@ How can I list all the threads of the current debugged process?	dpt
 How do I disable the comments in the disassembly view?	e asm.comments = false
 How can I rename a flag from 'flag.old' to 'flag.new'?	fr flag.new flag.old
 I need to change the endianness to big endian.	e cfg.bigendian = true
-How do I continue execution until the function 'main' is called?	dcu main
+How do I continue execution until the function 'main' is executed?	dcu main
 I want to see the usage of the 'px' command.	px?
 How can I search for a wide string (utf-16) "hello"?	/w hello
 How to scan the memory for known magic file headers	/m@e:search.align=4
@@ -287,3 +291,67 @@ Find all functions calling `system`	axt
 Which functions are calling exit?	axtf sym.imp.exit
 List all syscalls matching by name 	/asl~write
 List config vars in JSON format	ej
+Change the local variable named `counter` to use the type `int32_t`	afvt counter int32_t
+Show the type for the local variable named `counter`	afvt argv
+How do I list all function arguments for `main`?	afv~^arg
+How do I list all basic block references?	abl
+Set the calling convention of the `add` function to `cdecl`.	afc cdecl @ sym.add
+How do I look for functions that might be doing crypto stuff? Like searching for AES or SHA	afl~crypto,aes,sha,md5;iiccx crypto
+How do I get the size of the instruction pointer by the program counter that is going to be executed 	aos@r:PC
+Seek to the next data block (consider changing the block size with the `b` command)	b++
+Seek to the previous data block (consider changing the block size with the `b` command)	b--
+How to find the distance between `sym.main` and `sym.hello`	?vi sym.main-sym.hello
+Considering the current instruction is a branch, jump or call, follow the jump destination	s $j
+Considering the instruction in the current address is a conditional jump or call, follow the fallback destination when the condition does not match	s $f
+Get the size of the flag named `section.0.__TEXT.__text`	?vi $s{section.0.__TEXT.__text}
+Count the amount of basic blocks the function in the current address have	afi~^num-bbs[1]
+Count how many instructions this function have	afi~^num-ins[1]
+Lowest address for the current function	afi~^minbound[1]
+Maximum address for the current function	afi~^maxbound[1]
+Is this function calling itself? It is recurisve?	afi~^recursive
+What prints the current time?	pt.
+List all strings in current block	psb
+Fun way to view hex with emojis	pxe
+Print pascal string in the current offset	psp
+Show hexdump until hitting a null byte	px0
+Show current basic block bytes in hexpair string format	p8b
+Parse X509 certificate	pFx
+Decode PKCS7 format	pFp
+Show ASN1 object identifiers	pFo
+Parse iOS PLIST binary	pFB
+Decode protobuf content	pFb
+Parse and show ASN1/DER data	pFa
+Decode Android XML binary	pFA
+Display hexdump with annotated comments, bookmarks and flags	pxa
+Decode data from address 0x450032 as base64	p6d @ 0x450032
+Generate 32 space separated 4 digit PIN patterns	ppn 32
+Display code analysis coverage. How much executable region is code 	a~^per[1]
+Find new functions by scanning for function preludes	aap
+Find the path between sym.main and sym.usage listing the addresses of the basic blocks involved	abp sym.usage @ sym.main
+Colorize in red the basic block at address 0x102030	abc red @ 0x102030
+How do I find uses of `alloca` which might lead to stack exhaustion bugs?	/r sym.imp.alloca
+How can I print the decompiled output of a function using the internal pseudo-disasm representation?	pdc
+How do I identify calls to potentially dangerous functions like popen?	/r sym.imp.popen
+What command searches for UTF-16 `foo` string?	/w foo
+How do I view all the memory maps of a process?	dm
+How can I show the function's cyclomatic complexity?	afC
+How do I change the current block size?	b 256
+How do I scan the binary for ROP gadgets?	/R
+How do I identify the compiler used in this binary?	i~^compiler
+How can I search for all conditional jumps?	/at cjmp
+What to demangle the symbol string '_T3foo4bara' using the c++ demangler?	'iD cxx _T3foo4bara
+List all the noreturn symbol names and function addresses	tn
+How do I search for all indirect jumps?	/at jmp
+How do I search for all call instructions?	/at call
+How do I search for all call to register?	/at rcall
+How can I see the disassembly of the 16 bytes at address 0x203040	pD 16 @ 0x203040
+Recursively disassemble all the basic blocks of the function `sym.main`	pdr @ sym.main
+Show signature for all the functions in the program	afs @@F
+How do I find all cross-references to `function_name`?	axt @ function_name
+Continue execution until `ret`	dcr
+Considering the program counter is in library code, continue the execution until falling into program code	dcp
+Resolve the syscall number for the `fork`	asl fork
+What's the syscall number to perform `write`	asl write
+Copy 10 bytes from 0x1020 to 0x8090	wf 0x1020 10 @ 0x8090
+How do I view all the ELF sections?	iS
+How do I view all the ELF segments?	iSS

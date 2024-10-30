@@ -2,16 +2,13 @@ q	a
 How do I view all functions in the binary?	afl
 How can I rename a function at the current offset?	afn new_function_name
 What command disassembles the next 20 instructions?	pd 20
-How can I analyze the binary and list all strings?	iz
 How do I search for the string 'password' in the binary?	/c password
-How do I find all cross-references to a specific function?	axt @function_name
 How can I show the imports of the binary?	ii
 What command allows me to view the call graph?	agC
 How do I list all symbols in the binary?	is
 How can I list all sections in the binary?	iS
 What command shows all the relocation entries?	ir
 How do I change the architecture to ARM?	e asm.arch=arm
-How can I run the program and attach the debugger?	doo
 What command shows the ELF headers?	iH
 How do I view the entrypoint of the binary?	ie
 How can I convert a virtual address to a file offset?	?p vaddr
@@ -19,7 +16,6 @@ How do I search for a specific opcode sequence in the binary?	/a opcode_sequence
 How can I identify and list all the exported functions?	iE
 What command shows the dynamic linking information?	il
 How do I find the basic blocks of the current function?	afb
-How can I print the decompiled output of a function?	pdc
 What command lists all the classes in a binary?	ic
 How do I patch a byte at the current offset?	wx 90
 How can I view the debug symbols?	id
@@ -36,11 +32,9 @@ What command lists all the threads of a process?	dpt
 How do I inspect the stack frame of the current function?	afF
 How can I emulate a specific instruction?	ae instruction
 What command shows the syscall table?	as
-How do I view all the memory maps of a process?	dm
 How can I continue the execution until a specific address?	dcu address
 What command allows me to list all the syscalls used?	aS
 How do I perform a base64 decode of the current block?	p6d
-How can I show the function's cyclomatic complexity?	afC
 What command lists all the libraries used by the binary?	il
 How do I set a watchpoint on a variable?	dbw variable
 How can I find the main function in a binary?	af main
@@ -48,7 +42,6 @@ What command shows the entry points of all functions?	afl
 How do I print the current instruction as a hexadecimal string?	px 4
 How can I list all the function arguments?	afv
 What command lists the global variables?	avg
-How do I change the current block size?	b 256
 How can I decode the operation at the current offset?	pa
 What command lists all the memory segments?	iSS
 How do I search for all occurrences of a function call?	/c call
@@ -60,7 +53,6 @@ What command shows the CPU architecture of the binary?	i~arch
 How do I list all the type definitions in the binary?	ts
 How can I create a graph of function calls?	agC
 What command lists all the hidden sections?	iH
-How do I analyze for ROP gadgets?	/R
 How can I print the hex dump of the current block?	px
 What command lists all the data types used in the binary?	td
 How do I search for a sequence of assembly instructions?	/a sequence
@@ -75,30 +67,22 @@ What command displays the contents of the clipboard?	yp
 How do I view the function signatures in the binary?	afsj
 How can I search for a specific hexadecimal pattern?	/x pattern
 What command shows all the annotations in the binary?	C*
-How do I identify the compiler used for the binary?	i~compiler
 How can I search for all conditional jumps?	/a jnz
 What command shows the file format of the binary?	i~format
 How do I list all the constants defined in the binary?	td
-How can I see the function prelude bytes?	pD 16
-What command lists all the vtables in C++ binaries?	av
 How do I find all occurrences of a specific instruction?	/a instruction
 How can I show the structure of the current function?	pdf
 What command lists the dependencies of the binary?	il
 How do I list all the section headers?	iS
 How can I find all instances of a specific opcode?	/a opcode
 What command shows the endianness of the binary?	i~endian
-How do I view all the ELF sections?	iS
 How can I print the raw bytes of the current block?	pr
 What command allows me to decode base64 encoded data?	p6d
-How do I list all exported symbols?	iE
 How can I analyze the control flow graph of a function?	agf
 What command shows the dynamic symbols?	is
-How do I search for all indirect jumps?	/a jmp
 How can I identify the operating system of the binary?	i~os
-What command lists all the demangled symbols?	iD
 How do I dump the current memory map to a file?	dmd > map.dmp
 How can I convert a hexadecimal address to decimal?	?d hex_address
 What command lists all the code references?	axt
 How do I set a breakpoint on a specific function call?	db function_name
 How can I search for all function prologues?	/c function_prologue
-What command lists all the namespaces in the binary?	tn
