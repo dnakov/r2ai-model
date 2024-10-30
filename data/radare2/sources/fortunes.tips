@@ -17,8 +17,6 @@ Change the block size with 'b <block-size>'. In visual mode you can also enter r
 If you want to open the file in read-write mode, invoke r2 with '-w'
 Print the contents of the current block with the 'p' command
 Command layout is: <repeat><command><bytes>@<offset>.  For example: 3x20@0x33 will show 3 hexdumps of 20 bytes at 0x33
-Press 'c' in visual mode to toggle the cursor mode
-Press 'C' in visual mode to toggle colors
 You can 'copy/paste' bytes using the cursor in visual mode 'c' and using the 'y' and 'Y' keys
 Move around the bytes with h,j,k,l! Arrow keys are neither portable nor efficient
 Seek at relative offsets with 's +<offset>' or 's -<offset>'

@@ -1,0 +1,36 @@
+eor w11, w8, 1	0x1,w8,^,w11,=	w11 = w8 ^ 1	Logical exclusive OR (XOR) of w8 and 1 and store the result in w11
+add x0, x0, 0x68	0x68,x0,+,x0,=	x0 = x0 + 0x68	Add the hexadecimal value 0x68 to the value in the x0 register.
+add x0, x8, 0x68	0x68,x8,+,x0,=	x0 = x8 + 0x68	Add 0x68 to the value in x8 and store the result in x0.
+add x1, x0, 0x68	0x68,x0,+,x1,=	x1 = x0 + 0x68	Add the hexadecimal value 0x68 to the value in the x0 register and store the result in x1.
+add x1, x1, 0x68	0x68,x1,+,x1,=	x1 = x1 + 0x68	Add the hexadecimal value 0x68 to the value in the x1 register and store the result in x1.
+add x1, x9, 0x68	0x68,x9,+,x1,=	x1 = x9 + 0x68	Add 0x68 to the value in x9 and store the result in x1.
+add x8, x1, 0x68	0x68,x1,+,x8,=	x8 = x1 + 0x68	Add the hexadecimal value 0x68 to the value in the x1 register and store the result in x8.
+add x8, x8, 0x2c	0x2c,x8,+,x8,=	x8 = x8 + 0x2c	Add the value 0x2c to the value in x8.
+adrp x8, 0x10000c000	4295016448,x8,=	x8 = 0x10000c000	Set the value of x8 to 0x10000c000.
+b 0x100003814	4294981652,pc,:=	goto 0x100003814	Branch the program counter to 0x100003814.
+b 0x1000077a8	4294997928,pc,:=	goto 0x1000077a8	Branch the program counter to 0x1000077a8.
+b.ge 0x100003854	nf,vf,^,!,?{,4294981716,pc,:=,}	if (a >= b) goto 0x100003854	If (a >= b), branch to 0x100003854.
+b.ge 0x1000038c8	nf,vf,^,!,?{,4294981832,pc,:=,}	if (a >= b) goto 0x1000038c8	If (a >= b), branch to 0x1000038c8.
+b.gt 0x100003840	zf,!,nf,vf,^,!,&,?{,4294981696,pc,:=,}	if (a > b) goto 0x100003840	If (a > b), branch to 0x100003840.
+b.gt 0x1000038b4	zf,!,nf,vf,^,!,&,?{,4294981812,pc,:=,}	if (a > b) goto 0x1000038b4	If (a > b), branch to 0x1000038b4.
+b.le 0x100003848	zf,nf,vf,^,|,?{,4294981704,pc,:=,}	if (a <= b) goto 0x100003848	If (a <= b), branch to 0x100003848.
+b.le 0x1000038bc	zf,nf,vf,^,|,?{,4294981820,pc,:=,}	if (a <= b) goto 0x1000038bc	If (a <= b), branch to 0x1000038bc.
+b.lt 0x10000384c	nf,vf,^,?{,4294981708,pc,:=,}	if (a < b) goto 0x10000384c	If (a < b), branch to 0x10000384c.
+b.lt 0x1000038c0	nf,vf,^,?{,4294981824,pc,:=,}	if (a < b) goto 0x1000038c0	If (a < b), branch to 0x1000038c0.
+cmp w8, 0	0x0,w8,==,$z,zf,:=,31,$s,nf,:=,32,$b,!,cf,:=,31,$o,vf,:=	(a, b) = compare (w8, 0)	Compare the value in w8 with 0 and update the cpu flags
+cmp x10, x11	x11,x10,==,$z,zf,:=,63,$s,nf,:=,64,$b,!,cf,:=,63,$o,vf,:=	(a, b) = compare (x10, x11)	Compare the values in registers x10 and x11 and update the cpu flags
+cmp x8, x9	x9,x8,==,$z,zf,:=,63,$s,nf,:=,64,$b,!,cf,:=,63,$o,vf,:=	(a, b) = compare (x8, x9)	Compare the values in registers x8 and x9 and update the cpu flags
+csel x8, x0, x1, eq	zf,?{,x0,}{,x1,},x8,=	x8 = (eq)? x0 : x1	Set the value of x8 to the value of x0 if the zero flag is set, otherwise set it to the value of x1.
+csel x9, x1, x0, eq	zf,?{,x1,}{,x0,},x9,=	x9 = (eq)? x1 : x0	Set the value of x9 to the value of x1 if the zero flag is set, otherwise set it to the value of x0.
+ldr w8, [x8]	0,x8,+,DUP,tmp,=,[4],w8,=	w8 = [x8]	Read 4 bytes from the address pointed by the register x8 as a 32bit little endian number into the w8 register
+ldr x10, [x8, 0x20]	32,x8,+,DUP,tmp,=,[8],x10,=	x10 = [x8 + 0x20]	Load a 64 bit little endian number into the x10 register from the address computed from x8 + 0x20
+ldr x10, [x8, 0x30]	48,x8,+,DUP,tmp,=,[8],x10,=	x10 = [x8 + 0x30]	Load a 64 bit little endian number into the x10 register from the address computed from x8 + 0x30
+ldr x11, [x9, 0x20]	32,x9,+,DUP,tmp,=,[8],x11,=	x11 = [x9 + 0x20]	Load a 64 bit little endian number into the x11 register from the address computed from x8 + 0x20
+mov w0, -1	0xffffffffffffffff,w0,=	w0 = -1	Move the value -1 to register w0.
+mov w0, 1	0x1,w0,=	w0 = 1	Move the value 1 to register w0.
+mov x0, x1	x1,x0,=	x0 = x1	Move the value in x1 to x0.
+mov x0, x8	x8,x0,=	x0 = x8	Copy the value from x8 to x0.
+mov x1, x8	x8,x1,=	x1 = x8	Move the value in x8 to x1.
+mov x8, x0	x0,x8,=	x8 = x0	Move the value in x0 to x8.
+ret	lr,pc,:=		Return from the current subroutine.
+

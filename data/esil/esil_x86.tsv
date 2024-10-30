@@ -1,0 +1,2 @@
+Increment eax by 1	inc eax	1,eax,+=	eax += 1
+Increment eax by 1	add eax, 1	1,eax,+,eax,:=	eax = eax + 1

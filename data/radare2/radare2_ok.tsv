@@ -272,3 +272,18 @@ Seek 3 instructions forward	so 3
 Temporal seek to the program counter and show the 32 bytes in hexpairs	p8 32 @r:PC
 Set the value 0x8822 to the `rax` register	dr rax=0x8822
 List all the register names	drl
+Which strings are used in the current function?	pdsf~"
+How can I read the contents of the file /etc/motd	cat /etc/motd
+What's the operating system running in the host machine?	uname
+Retrieve host machine details in JSON format	uname -j
+Host architecture	uname -a
+Increase the current buffer block by 1 byte	b+1
+Change the buffer block size to 128	b 128
+Determine the current block size	b
+Size of the current basic block	?vi $b
+Current working directory	pwd
+Analyze all functions referenced from a CALL instruction	aac
+Find all functions calling `system`	axt
+Which functions are calling exit?	axtf sym.imp.exit
+List all syscalls matching by name 	/asl~write
+List config vars in JSON format	ej
