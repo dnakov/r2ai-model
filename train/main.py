@@ -9,12 +9,13 @@ from datetime import datetime
 def setup_sagemaker_training(args):
     """Configure and launch SageMaker training job"""
     sagemaker_session = sagemaker.Session()
-    role = sagemaker.get_execution_role()
+    # role = sagemaker.get_execution_role()
+    role = 'arn:aws:iam::945472245533:role/service-role/SageMaker-MLOps'
     # Upload training data to S3
     train_data_s3 = sagemaker_session.upload_data(
         args.data_path,
         bucket=sagemaker_session.default_bucket(),
-        key_prefix='radare2-training-data'
+        key_prefix='llama-training-data'
     )
     
     checkpoint_s3_uri = f's3://{sagemaker_session.default_bucket()}/checkpoints'
@@ -23,6 +24,8 @@ def setup_sagemaker_training(args):
     metric_definitions = [
         {'Name': 'train:loss', 'Regex': "'loss': ([0-9\\.]+)"},
         {'Name': 'eval:loss', 'Regex': "'eval_loss': ([0-9\\.]+)"},
+        {'Name': 'gpu:memory', 'Regex': "'gpu_memory_allocated': ([0-9\\.]+)"},
+        {'Name': 'learning:rate', 'Regex': "'learning_rate': ([0-9\\.]+)"},        
         {'Name': 'checkpoint_step', 'Regex': "'checkpoint_saved_at_step': ([0-9]+)"},
     ]
     
@@ -71,7 +74,7 @@ def setup_sagemaker_training(args):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_path', help='Path to JSONL data file', default='../data/radare2/radare2_train.jsonl')
-    parser.add_argument('--model_name', default='meta-llama/Llama-3.2-1B-Instruct-QLORA_INT4_EO8')
+    parser.add_argument('--model_name', default='meta-llama/Llama-3.2-1B-Instruct')
     parser.add_argument('--epochs', type=int, default=3)
     parser.add_argument('--wandb_project', default='radare2-llama3.2-1b')
     

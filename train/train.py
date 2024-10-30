@@ -11,6 +11,7 @@ from dataclasses import dataclass, asdict
 from typing import Optional, Dict, List
 from datetime import datetime
 import argparse
+import shutil
 
 import pandas as pd
 from datasets import Dataset
@@ -18,9 +19,10 @@ from transformers import (
     AutoTokenizer,
     AutoModelForCausalLM,
     Trainer,
+    TrainerCallback,
     TrainingArguments,
     DataCollatorForLanguageModeling,
-    BitsAndBytesConfig,
+    # BitsAndBytesConfig,
     EarlyStoppingCallback
 )
 from peft import (
@@ -30,7 +32,6 @@ from peft import (
     TaskType
 )
 
-from checkpoint_manager import CheckpointManager
 from utils import setup_logging, set_seed, calculate_memory_usage
 
 @dataclass
@@ -71,90 +72,87 @@ class TrainingConfig:
             ]
         )
 
+class SpotCheckpointCallback(TrainerCallback):
+    """Callback class for spot instance checkpointing"""
+    def __init__(self, checkpoint_manager, s3_bucket):
+        self.checkpoint_manager = checkpoint_manager
+        self.s3_bucket = s3_bucket
+        self.logger = logging.getLogger('SpotCheckpointCallback')
+        self.s3_client = boto3.client('s3')
+
+    def on_save(self, args, state, control, model=None, **kwargs):
+        if state.global_step % args.save_steps == 0:
+            # Get validation loss if available
+            val_loss = None
+            if state.log_history:
+                val_losses = [log.get('eval_loss') for log in state.log_history]
+                val_loss = next((l for l in val_losses if l is not None), None)
+            
+            # Monitor memory usage
+            memory_usage = calculate_memory_usage()
+            if memory_usage:
+                kwargs['trainer'].log({
+                    'gpu_memory_allocated': memory_usage['allocated'],
+                    'gpu_memory_reserved': memory_usage['reserved']
+                })
+            
+            # Determine if this should be a partial save
+            is_partial = state.global_step % (args.save_steps * 5) != 0
+            
+            try:
+                checkpoint_path = self.checkpoint_manager.save_checkpoint(
+                    kwargs['trainer'],
+                    state.global_step,
+                    args,
+                    state.log_history[-1]['loss'] if state.log_history else None,
+                    validation_loss=val_loss,
+                    partial=is_partial
+                )
+                
+                # Upload checkpoint to S3
+                s3_key = f"checkpoints/checkpoint-{state.global_step}"
+                self.s3_client.upload_file(str(checkpoint_path), self.s3_bucket, s3_key)
+                
+                kwargs['trainer'].log({
+                    'checkpoint_step': state.global_step,
+                    'checkpoint_path': f"s3://{self.s3_bucket}/{s3_key}",
+                    'checkpoint_type': 'partial' if is_partial else 'full',
+                    'validation_loss': val_loss
+                })
+                
+                self.logger.info(f"Checkpoint saved to S3: s3://{self.s3_bucket}/{s3_key}")
+                
+            except Exception as e:
+                self.logger.error(f"Failed to save checkpoint: {str(e)}")
+            
+        return control
 class QLoRATrainer(Trainer):
     """Enhanced trainer with checkpoint management and spot instance handling"""
-    def __init__(self, checkpoint_manager: CheckpointManager, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.checkpoint_manager = checkpoint_manager
         self.logger = logging.getLogger('QLoRATrainer')
         
     def train(self, resume_from_checkpoint=None, *args, **kwargs):
-        # Try to resume from best checkpoint if not specified
-        if resume_from_checkpoint is None:
-            best_checkpoint = self.checkpoint_manager.get_best_checkpoint()
-            if best_checkpoint:
-                self.logger.info(f"Resuming from best checkpoint: {best_checkpoint}")
-                resume_from_checkpoint = best_checkpoint
-        
-        starting_step = 0
-        if resume_from_checkpoint:
-            starting_step = self.checkpoint_manager.load_checkpoint(
-                self, resume_from_checkpoint
-            ) or 0
-            
-        def spot_checkpoint_handler(args, state, control, model=None, **kwargs):
-            """Handle checkpointing with validation and monitoring"""
-            if state.global_step % self.args.save_steps == 0:
-                # Get validation loss if available
-                val_loss = None
-                if state.log_history:
-                    val_losses = [log.get('eval_loss') for log in state.log_history]
-                    val_loss = next((l for l in val_losses if l is not None), None)
-                
-                # Monitor memory usage
-                memory_usage = calculate_memory_usage()
-                if memory_usage:
-                    self.log({
-                        'gpu_memory_allocated': memory_usage['allocated'],
-                        'gpu_memory_reserved': memory_usage['reserved']
-                    })
-                
-                # Determine if this should be a partial save
-                is_partial = state.global_step % (self.args.save_steps * 5) != 0
-                
-                try:
-                    checkpoint_path = self.checkpoint_manager.save_checkpoint(
-                        self,
-                        state.global_step,
-                        self.args,
-                        state.log_history[-1]['loss'] if state.log_history else None,
-                        validation_loss=val_loss,
-                        partial=is_partial
-                    )
-                    
-                    self.log({
-                        'checkpoint_step': state.global_step,
-                        'checkpoint_path': str(checkpoint_path),
-                        'checkpoint_type': 'partial' if is_partial else 'full',
-                        'validation_loss': val_loss
-                    })
-                    
-                except Exception as e:
-                    self.logger.error(f"Failed to save checkpoint: {str(e)}")
-                
-            return control
-            
-        self.add_callback(spot_checkpoint_handler)
-        
+
         return super().train(
             resume_from_checkpoint=resume_from_checkpoint,
             *args,
             **kwargs
         )
-
+    
 def setup_model(config: TrainingConfig):
     """Initialize model with QLoRA configuration"""
-    bnb_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.float16,
-        bnb_4bit_use_double_quant=True
-    )
+    # bnb_config = BitsAndBytesConfig(
+    #     load_in_4bit=True,
+    #     bnb_4bit_quant_type="nf4",
+    #     bnb_4bit_compute_dtype=torch.float16,
+    #     bnb_4bit_use_double_quant=True
+    # )
     
-    # Load base model
+    # Load base model with correct rope_scaling format
     model = AutoModelForCausalLM.from_pretrained(
         config.model_name,
-        quantization_config=bnb_config,
+        # quantization_config=bnb_config,
         device_map="auto",
         torch_dtype=torch.float16
     )
@@ -177,16 +175,23 @@ def setup_model(config: TrainingConfig):
 
 def prepare_dataset(data_path: str, tokenizer, config: TrainingConfig):
     """Prepare dataset from JSONL file"""
-    df = pd.read_json(data_path, lines=True)
+    # Process all jsonl files in directory
+    dfs = []
+    for file_path in Path(data_path).glob('*.jsonl'):
+        df = pd.read_json(file_path, lines=True)
+        
+        def format_prompt(row):
+            text = "<|begin_of_text|>"
+            for message in row['messages']:
+                text += f"<|start_header_id|>{message['role']}<|end_header_id|>{message['content']}<|eot_id|>"
+            return text
+        
+        df['text'] = df.apply(format_prompt, axis=1)
+        dfs.append(df[['text']])
     
-    def format_prompt(row):
-      text = "<|begin_of_text|>"
-      for message in row['messages']:
-        text += f"<|start_header_id|>{message['role']}<|end_header_id|>{message['content']}<|eot_id|>"
-      return text
-    
-    df['text'] = df.apply(format_prompt, axis=1)
-    dataset = Dataset.from_pandas(df[['text']])
+    # Combine all dataframes
+    combined_df = pd.concat(dfs, ignore_index=True)
+    dataset = Dataset.from_pandas(combined_df)
     
     def tokenize_function(examples):
         return tokenizer(
@@ -205,6 +210,40 @@ def prepare_dataset(data_path: str, tokenizer, config: TrainingConfig):
     # Split for validation
     split = tokenized_dataset.train_test_split(test_size=0.1)
     return split['train'], split['test']
+
+class CheckpointManager:
+    def __init__(self, checkpoint_dir: str):
+        self.checkpoint_dir = Path(checkpoint_dir)
+        self.checkpoint_dir.mkdir(parents=True, exist_ok=True)
+        self.latest_checkpoint = self.checkpoint_dir / "latest"
+        
+    def save_checkpoint(self, trainer, step: int, metrics: Dict = None):
+        """Save checkpoint and update latest symlink"""
+        checkpoint_path = self.checkpoint_dir / f"checkpoint-{step}"
+        
+        # Save trainer state
+        trainer.save_state()
+        
+        # Save model
+        trainer.save_model(checkpoint_path)
+        
+        # Save metrics
+        if metrics:
+            with open(checkpoint_path / "metrics.json", "w") as f:
+                json.dump(metrics, f)
+                
+        # Update latest symlink
+        if self.latest_checkpoint.exists():
+            self.latest_checkpoint.unlink()
+        self.latest_checkpoint.symlink_to(checkpoint_path)
+        
+        return checkpoint_path
+
+    def load_latest_checkpoint(self):
+        """Load the latest checkpoint if it exists"""
+        if self.latest_checkpoint.exists() and self.latest_checkpoint.is_symlink():
+            return str(self.latest_checkpoint.resolve())
+        return None
 
 def train(args):
     """Main training function"""
@@ -238,17 +277,7 @@ def train(args):
         tokenizer,
         config
     )
-    
-    # Initialize checkpoint manager
-    checkpoint_manager = CheckpointManager(
-        checkpoint_dir=os.environ['CHECKPOINT_DIR'],
-        metrics_dir=os.environ['METRICS_DIR'],
-        max_checkpoints=5,
-        validation_frequency=5,
-        merge_threshold=3,
-        min_improvement=0.01
-    )
-    
+        
     # Setup training arguments
     training_args = TrainingArguments(
         output_dir=args.output_dir,
@@ -262,7 +291,7 @@ def train(args):
         max_grad_norm=config.max_grad_norm,
         logging_steps=10,
         save_steps=config.checkpoint_frequency,
-        eval_steps=100,
+        eval_steps=50,
         evaluation_strategy="steps",
         load_best_model_at_end=True,
         metric_for_best_model="eval_loss",
@@ -271,7 +300,7 @@ def train(args):
         report_to="wandb" if args.wandb_project else None,
         save_total_limit=3,
         remove_unused_columns=False,
-        optim="paged_adamw_32bit"
+        optim="adamw_torch_fused"
     )
     
     # Initialize model
@@ -280,7 +309,6 @@ def train(args):
     
     # Initialize trainer
     trainer = QLoRATrainer(
-        checkpoint_manager=checkpoint_manager,
         model=model,
         args=training_args,
         train_dataset=train_dataset,
@@ -292,14 +320,27 @@ def train(args):
         callbacks=[
             EarlyStoppingCallback(
                 early_stopping_patience=3,
-                early_stopping_threshold=0.01
+                early_stopping_threshold=0.05
             )
         ]
     )
     
+    # Initialize checkpoint manager
+    checkpoint_manager = CheckpointManager(os.environ.get('CHECKPOINT_DIR', 'checkpoints'))
+    
     try:
+        # Check for existing checkpoint
+        resume_checkpoint = args.resume_from_checkpoint or checkpoint_manager.load_latest_checkpoint()
+        
         # Start training
-        trainer.train(resume_from_checkpoint=args.resume_from_checkpoint)
+        trainer.train(resume_from_checkpoint=resume_checkpoint)
+        
+        # Save final checkpoint
+        checkpoint_manager.save_checkpoint(
+            trainer, 
+            trainer.state.global_step,
+            {'final_loss': trainer.state.log_history[-1].get('loss')}
+        )
         
         # Save final model
         trainer.save_model(args.output_dir)
@@ -311,6 +352,15 @@ def train(args):
             
     except Exception as e:
         logger.error(f"Training failed: {str(e)}")
+        # Even on failure, try to save checkpoint
+        try:
+            checkpoint_manager.save_checkpoint(
+                trainer,
+                trainer.state.global_step,
+                {'interrupted_loss': trainer.state.log_history[-1].get('loss')}
+            )
+        except:
+            pass
         raise
     finally:
         # Cleanup
@@ -322,7 +372,7 @@ def parse_args():
     parser.add_argument('--model_name', type=str, required=True)
     parser.add_argument('--train', type=str, default=os.environ.get('SM_CHANNEL_TRAINING'))
     parser.add_argument('--output_dir', type=str, default=os.environ.get('SM_MODEL_DIR'))
-    parser.add_argument('--epochs', type=int, default=3)
+    parser.add_argument('--epochs', type=int, default=2)
     parser.add_argument('--batch_size', type=int, default=32)
     parser.add_argument('--learning_rate', type=float, default=3e-4)
     parser.add_argument('--lora_r', type=int, default=32)
