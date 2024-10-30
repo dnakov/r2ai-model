@@ -33,7 +33,7 @@ from peft import (
 )
 
 from utils import setup_logging, set_seed, calculate_memory_usage
-
+wandb_enabled = False
 @dataclass
 class TrainingConfig:
     """Training configuration"""
@@ -256,8 +256,12 @@ def train(args):
     set_seed(42)
     
     # Initialize wandb
-    if args.wandb_project:
-        wandb.init(project=args.wandb_project)
+    try: 
+        if args.wandb_project:
+            wandb.init(project=args.wandb_project)
+            wandb_enabled = True
+    except Exception as e:
+        logger.error(f"Failed to initialize wandb: {str(e)}")
     
     # Load config
     config = TrainingConfig.from_args(args)
@@ -297,7 +301,7 @@ def train(args):
         metric_for_best_model="eval_loss",
         greater_is_better=False,
         fp16=True,
-        report_to="wandb" if args.wandb_project else None,
+        report_to="wandb" if wandb_enabled else None,
         save_total_limit=3,
         remove_unused_columns=False,
         optim="adamw_torch_fused"
@@ -347,8 +351,11 @@ def train(args):
         tokenizer.save_pretrained(args.output_dir)
         
         # Log final metrics
-        if args.wandb_project:
-            wandb.finish()
+        if wandb_enabled:
+            try:
+                wandb.finish()
+            except Exception as e:
+                logger.error(f"Failed to finish wandb: {str(e)}")
             
     except Exception as e:
         logger.error(f"Training failed: {str(e)}")
