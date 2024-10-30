@@ -12,7 +12,7 @@ from typing import Optional, Dict, List, Literal
 from datetime import datetime
 import argparse
 import shutil
-
+import torch.distributed as dist
 import pandas as pd
 from datasets import Dataset
 from transformers import (
@@ -30,10 +30,9 @@ from peft import (
     TaskType
 )
 import boto3
+from torch.nn.parallel import DistributedDataParallel as DDP
 
 from utils import setup_logging, set_seed, calculate_memory_usage
-
-wandb_enabled = False
 
 @dataclass
 class TrainingConfig:
@@ -48,7 +47,6 @@ class TrainingConfig:
     gradient_accumulation_steps: int
     max_grad_norm: float
     checkpoint_frequency: int
-    max_length: int = 512
     
     # LoRA parameters
     lora_r: Optional[int] = None
@@ -152,16 +150,21 @@ class CustomTrainer(Trainer):
 def setup_model(config: TrainingConfig):
     """Initialize model based on training mode"""
     model_kwargs = {
-        "device_map": "auto",
         "torch_dtype": torch.float16
     }
+    local_rank = int(os.environ.get("LOCAL_RANK", 0))
+
     
     # Load base model
     model = AutoModelForCausalLM.from_pretrained(
         config.model_name,
-        **model_kwargs
-    )
+        **model_kwargs,
+        use_flash_attention_2=True
+    ).cuda(local_rank)
     
+    if dist.is_initialized():
+        model = DDP(model, device_ids=[local_rank])
+
     if config.training_mode == "qlora":
         # Configure LoRA
         lora_config = LoraConfig(
@@ -178,8 +181,6 @@ def setup_model(config: TrainingConfig):
     return model
 
 def prepare_dataset(data_path: str, tokenizer, config: TrainingConfig):
-    """Prepare dataset from JSONL file"""
-    # Process all jsonl files in directory
     dfs = []
     for file_path in Path(data_path).glob('*.jsonl'):
         df = pd.read_json(file_path, lines=True)
@@ -193,25 +194,19 @@ def prepare_dataset(data_path: str, tokenizer, config: TrainingConfig):
         df['text'] = df.apply(format_prompt, axis=1)
         dfs.append(df[['text']])
     
-    # Combine all dataframes
     combined_df = pd.concat(dfs, ignore_index=True)
     dataset = Dataset.from_pandas(combined_df)
     
     def tokenize_function(examples):
-        return tokenizer(
-            examples['text'],
-            padding='max_length',
-            truncation=True,
-            max_length=config.max_length
-        )
+        return tokenizer(examples['text'])  # Removed truncation
     
     tokenized_dataset = dataset.map(
         tokenize_function,
         batched=True,
-        remove_columns=dataset.column_names
+        remove_columns=dataset.column_names,
+        num_proc=4
     )
     
-    # Split for validation
     split = tokenized_dataset.train_test_split(test_size=0.1)
     return split['train'], split['test']
 
@@ -251,21 +246,25 @@ class CheckpointManager:
 
 def train(args):
     """Main training function"""
+    local_rank = int(os.environ.get("LOCAL_RANK", -1))
+    world_size = torch.cuda.device_count()
+    if world_size > 1:
+        torch.cuda.set_device(local_rank)
+        dist.init_process_group(backend="nccl")
+
     logger = setup_logging(
         Path(args.output_dir) / 'logs',
         'training'
     )
     
     # Set random seed
-    set_seed(42)
-    
-    # Initialize wandb
-    try: 
-        if args.wandb_project:
-            wandb.init(project=args.wandb_project)
-            wandb_enabled = True
-    except Exception as e:
-        logger.error(f"Failed to initialize wandb: {str(e)}")
+    set_seed(42 + local_rank)
+    if local_rank <= 0:  # Only on main process      
+      try: 
+          if local_rank <= 0:
+              wandb.init(project=args.wandb_project)
+      except Exception as e:
+          logger.error(f"Failed to initialize wandb: {str(e)}")
     
     # Load config
     config = TrainingConfig.from_args(args)
@@ -275,10 +274,10 @@ def train(args):
     tokenizer = AutoTokenizer.from_pretrained(
         config.model_name,
         padding_side="right",
-        add_eos_token=True
     )
-    tokenizer.pad_token = tokenizer.eos_token
-    
+    tokenizer.add_special_tokens({
+        "pad_token": "<|finetune_right_pad_id|>"
+    })
     # Prepare datasets
     train_dataset, eval_dataset = prepare_dataset(
         args.train,
@@ -291,7 +290,7 @@ def train(args):
         output_dir=args.output_dir,
         num_train_epochs=config.epochs,
         per_device_train_batch_size=config.batch_size,
-        per_device_eval_batch_size=config.batch_size * 2,
+        per_device_eval_batch_size=config.batch_size,
         gradient_accumulation_steps=config.gradient_accumulation_steps,
         learning_rate=config.learning_rate,
         weight_decay=config.weight_decay,
@@ -304,17 +303,21 @@ def train(args):
         load_best_model_at_end=True,
         metric_for_best_model="eval_loss",
         greater_is_better=False,
-        fp16=True,
-        report_to="wandb" if wandb_enabled else None,
+        fp16=True if args.training_mode == "qlora" else False,
+        bf16=True if args.training_mode == "full" else False,
+        report_to="wandb" if local_rank <= 0 else None,
         save_total_limit=3,
         remove_unused_columns=False,
-        optim="adamw_torch_fused"
+        optim="adamw_torch_fused",
+        local_rank=local_rank,
+        ddp_find_unused_parameters=False,
+        ddp_backend="nccl",
+        lr_scheduler_type="cosine",
     )
     
     # Initialize model
     model = setup_model(config)
     logger.info(f"Model setup complete. Training mode: {config.training_mode}")
-    logger.info(f"Device map: {model.hf_device_map}")
     
     # Initialize trainer
     trainer = CustomTrainer(
@@ -324,7 +327,7 @@ def train(args):
         eval_dataset=eval_dataset,
         data_collator=DataCollatorForLanguageModeling(
             tokenizer=tokenizer,
-            mlm=False
+            mlm=False,
         ),
         callbacks=[
             EarlyStoppingCallback(
@@ -339,49 +342,50 @@ def train(args):
     try:
         # Check for existing checkpoint
         resume_checkpoint = args.resume_from_checkpoint or checkpoint_manager.load_latest_checkpoint()
-        
+        print(f"Resuming from checkpoint: {resume_checkpoint}")
         # Start training
         trainer.train(resume_from_checkpoint=resume_checkpoint)
         
-        # Save final checkpoint
-        checkpoint_manager.save_checkpoint(
-            trainer, 
-            trainer.state.global_step,
-            {'final_loss': trainer.state.log_history[-1].get('loss')}
-        )
-        
-        # Save final model
-        if config.training_mode == "qlora":
-            # For LoRA, save adapter weights
-            model.save_pretrained(args.output_dir)
-        else:
-            # For full fine-tuning, save entire model
-            trainer.save_model(args.output_dir)
+        if local_rank <= 0:
+          checkpoint_manager.save_checkpoint(
+              trainer, 
+              trainer.state.global_step,
+              {'final_loss': trainer.state.log_history[-1].get('loss')}
+          )
+          
+          # Save final model
+          if config.training_mode == "qlora":
+              # For LoRA, save adapter weights
+              model.save_pretrained(args.output_dir)
+          else:
+              # For full fine-tuning, save entire model
+              trainer.save_model(args.output_dir)
 
-        tokenizer.save_pretrained(args.output_dir)
-        
-        # Log final metrics
-        if wandb_enabled:
-            try:
-                wandb.finish()
-            except Exception as e:
-                logger.error(f"Failed to finish wandb: {str(e)}")
+          tokenizer.save_pretrained(args.output_dir)
+          
+          # Log final metrics
+          try:
+              wandb.finish()
+          except Exception as e:
+              logger.error(f"Failed to finish wandb: {str(e)}")
             
     except Exception as e:
         logger.error(f"Training failed: {str(e)}")
         # Even on failure, try to save checkpoint
         try:
-            checkpoint_manager.save_checkpoint(
-                trainer,
-                trainer.state.global_step,
-                {'interrupted_loss': trainer.state.log_history[-1].get('loss')}
-            )
+            if local_rank <= 0:
+                checkpoint_manager.save_checkpoint(
+                    trainer,
+                    trainer.state.global_step,
+                    {'interrupted_loss': trainer.state.log_history[-1].get('loss')}
+                )
         except:
             pass
         raise
     finally:
-        # Cleanup
         torch.cuda.empty_cache()
+        if world_size > 1:
+            dist.destroy_process_group()
 
 def parse_args():
     """Parse command line arguments"""

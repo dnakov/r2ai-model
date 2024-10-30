@@ -1,3 +1,5 @@
+# ec2_training.py
+
 import os
 import argparse
 import boto3
@@ -136,6 +138,7 @@ apt update
 apt install -y stunnel4
 aws s3 cp s3://{bucket}/amazon-efs-utils.deb ./
 dpkg -i amazon-efs-utils.deb
+mkdir -p /mnt/efs
 mount -t efs {efs_id} /mnt/efs
 mkdir -p /mnt/efs/checkpoints
 mkdir -p /mnt/efs/output/metrics
@@ -145,26 +148,40 @@ export WANDB_API_KEY="{wandb_api_key}"
 export HF_TOKEN="{hf_token}"
 export CHECKPOINT_DIR=/mnt/efs/checkpoints
 export METRICS_DIR=/mnt/efs/output/metrics
+export TRANSFORMERS_CACHE="/mnt/efs/model_cache" 
 
 aws s3 cp --recursive s3://{bucket}/training_files/ ./
 source activate pytorch
 pip3 install argparse transformers peft pandas datasets wandb accelerate --root-user-action=ignore
-python3 train.py \
-    --model_name {model_name} \
-    --epochs {epochs} \
-    --train $(pwd)/{data_path} \
-    --output_dir /mnt/efs/model-{ts} \
-    --batch_size 1 \
-    --gradient_accumulation_steps 32 \
-    --checkpoint_frequency 100 \
-    --learning_rate 3e-4 \
-    --wandb_project {wandb_project} \
-    --resume_from_checkpoint /mnt/efs/checkpoints/latest
+
+python3 -c '
+from transformers import AutoModelForCausalLM, AutoTokenizer
+model_name = "{model_name}"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name)
+'
+torchrun \\
+    --nproc_per_node=4 \\
+    --master_port=29500 \\
+    train.py \\
+    --model_name {model_name} \\
+    --epochs {epochs} \\
+    --train . \\
+    --output_dir /mnt/efs/model-{ts} \\
+    --batch_size 64 \\
+    --gradient_accumulation_steps 4 \\ 
+    --checkpoint_frequency 100 \\
+    --weight_decay 0.1 \\
+    --warmup_ratio 0.05 \\
+    --max_grad_norm 1.0 \\
+    --learning_rate 5e-4 \\
+    --wandb_project {wandb_project} \\
+    --resume_from_checkpoint /mnt/efs/checkpoints/latest \\
+    --training_mode full
 
 # Upload final model and output to S3
 aws s3 cp --recursive /mnt/efs/model-{ts}/ {output_s3_path}/model-{ts}/
 
-# exit
 # shutdown -h now
 
 """.format(
@@ -439,8 +456,8 @@ class EC2SpotManager:
 
         # Update launch specification
         launch_specification = {
-            'ImageId': 'ami-041f0689aeffc592f',
-            'InstanceType': 'g5g.xlarge',
+            'ImageId': 'ami-0aada1758622f91bb',
+            'InstanceType': 'g5.12xlarge',
             'KeyName': 'kali',
             'SecurityGroupIds': [security_group_id],
             'IamInstanceProfile': {
@@ -462,7 +479,7 @@ class EC2SpotManager:
             response = self.ec2.request_spot_instances(
                 InstanceCount=1,
                 LaunchSpecification=launch_specification,
-                SpotPrice='2.00',
+                # SpotPrice='2.00',
                 ValidUntil=datetime.now() + timedelta(hours=24),
                 Type='one-time'
             )
