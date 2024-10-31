@@ -11,6 +11,15 @@ import sys
 import json
 import pathlib
 from botocore.exceptions import ClientError
+import requests
+
+AMI_ID = 'ami-0aada1758622f91bb'
+INSTANCE_TYPE = 'g5.12xlarge' # 4xA10G 24GB mem per GPU ~2/hr spot
+# INSTANCE_TYPE = 'g5.48xlarge' # 8xA10G 24GB mem per GPU ~$3/hr spot
+# INSTANCE_TYPE = 'p4d.24xlarge' # 8xA100 40GB mem per GPU ~$10/hr spot
+# INSTANCE_TYPE = 'p5.48xlarge' # 8xH100 80GB mem per GPU ~$50/hr spot
+KEY_PAIR_NAME = 'kali'
+BUCKET_NAME = 'tc-radare2-training-data'
 
 def upload_to_s3(files, bucket_name=None):
     """Upload training files to S3 and return the bucket and paths"""
@@ -42,10 +51,10 @@ def upload_to_s3(files, bucket_name=None):
     # Upload files
     s3_paths = {}
     for file_path in files:
-        key = f"training_files/{os.path.basename(file_path)}"
+        key = os.path.basename(file_path)
         try:
             s3.upload_file(file_path, bucket_name, key)
-            s3_paths[os.path.basename(file_path)] = f"s3://{bucket_name}/{key}"
+            s3_paths[key] = f"s3://{bucket_name}/{key}"
         except Exception as e:
             print(f"Error uploading {file_path}: {str(e)}")
             raise
@@ -130,71 +139,38 @@ def update_security_group_for_efs(ec2_client, security_group_id):
 
 def get_user_data_script(s3_paths, args, efs_id):
     """Generate user data script for EC2 instance initialization"""
+    jupyter_sh = open('jupyter.sh', 'r').read()
     return """#!/bin/bash
 
 mkdir -p /app
 cd /app
 apt update
 apt install -y stunnel4
-aws s3 cp s3://{bucket}/amazon-efs-utils.deb ./
-dpkg -i amazon-efs-utils.deb
+aws s3 cp s3://{bucket}/amazon-efs-utils-x64.deb ./
+dpkg -i amazon-efs-utils-x64.deb
 mkdir -p /mnt/efs
 mount -t efs {efs_id} /mnt/efs
 mkdir -p /mnt/efs/checkpoints
 mkdir -p /mnt/efs/output/metrics
 mkdir -p /mnt/efs/model-{ts}
+mkdir -p /mnt/efs/model_cache
+chown -R ubuntu:ubuntu /mnt/efs
 
-export WANDB_API_KEY="{wandb_api_key}"
-export HF_TOKEN="{hf_token}"
 export CHECKPOINT_DIR=/mnt/efs/checkpoints
 export METRICS_DIR=/mnt/efs/output/metrics
-export TRANSFORMERS_CACHE="/mnt/efs/model_cache" 
+export HF_HUB_CACHE="/mnt/efs/model_cache" 
 
-aws s3 cp --recursive s3://{bucket}/training_files/ ./
 source activate pytorch
-pip3 install argparse transformers peft pandas datasets wandb accelerate --root-user-action=ignore
+pip install llama-recipes
 
-python3 -c '
-from transformers import AutoModelForCausalLM, AutoTokenizer
-model_name = "{model_name}"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name)
-'
-torchrun \\
-    --nproc_per_node=4 \\
-    --master_port=29500 \\
-    train.py \\
-    --model_name {model_name} \\
-    --epochs {epochs} \\
-    --train . \\
-    --output_dir /mnt/efs/model-{ts} \\
-    --batch_size 64 \\
-    --gradient_accumulation_steps 4 \\ 
-    --checkpoint_frequency 100 \\
-    --weight_decay 0.1 \\
-    --warmup_ratio 0.05 \\
-    --max_grad_norm 1.0 \\
-    --learning_rate 5e-4 \\
-    --wandb_project {wandb_project} \\
-    --resume_from_checkpoint /mnt/efs/checkpoints/latest \\
-    --training_mode full
-
-# Upload final model and output to S3
-aws s3 cp --recursive /mnt/efs/model-{ts}/ {output_s3_path}/model-{ts}/
-
-# shutdown -h now
-
+{jupyter_sh}
 """.format(
     ts=datetime.now().strftime("%Y%m%d-%H%M%S"),
     efs_id=efs_id,
     bucket=args.bucket,
     wandb_api_key=os.getenv('WANDB_API_KEY'),
     hf_token=os.getenv('HF_TOKEN'),
-    model_name=args.model_name,
-    epochs=args.epochs,
-    wandb_project=args.wandb_project,
-    data_path=os.path.basename(args.data_path),
-    output_s3_path=f"s3://{args.bucket}/output"
+    jupyter_sh=jupyter_sh
 )
 
 def verify_training_files(files):
@@ -214,7 +190,7 @@ class EC2SpotManager:
         self.ec2 = boto3.client('ec2')
         self.instance_id = None
         self.spot_request_id = None
-        self.state_file = pathlib.Path('ec2_training_state.json')
+        self.state_file = pathlib.Path('ec2_training_state2.json')
         
         # Try to load existing state
         self.load_state()
@@ -408,6 +384,7 @@ class EC2SpotManager:
         training_files = [
             'train.py',
             'utils.py',
+            'ec2/amazon-efs-utils-x64.deb',
             args.data_path
         ]
 
@@ -420,14 +397,9 @@ class EC2SpotManager:
         efs_client = boto3.client('efs')
         vpc_id = self.ec2.describe_vpcs()['Vpcs'][0]['VpcId']
         security_group_id = None
-        try:
-            response = self.ec2.create_security_group(
-                GroupName='LLMTrainingSecurityGroup',
-                Description='Security group for LLM training on EC2'
-            )
-            security_group_id = response['GroupId']
-            
-            # Add inbound rule for SSH access
+
+        def create_ingress_rules(security_group, ip):
+            security_group_id = security_group['GroupId']
             self.ec2.authorize_security_group_ingress(
                 GroupId=security_group_id,
                 IpPermissions=[
@@ -435,18 +407,55 @@ class EC2SpotManager:
                         'IpProtocol': 'tcp',
                         'FromPort': 22,
                         'ToPort': 22,
-                        'IpRanges': [{'CidrIp': '0.0.0.0/0'}]
+                        'IpRanges': [{'CidrIp': f'{my_ip}/32'}]
                     }
                 ]
             )
+            # Add inbound rule for Jupyter access
+            self.ec2.authorize_security_group_ingress(
+                GroupId=security_group_id,
+                IpPermissions=[
+                    {
+                        'IpProtocol': 'tcp',
+                        'FromPort': 8888,
+                        'ToPort': 8888,
+                        'IpRanges': [{'CidrIp': f'{my_ip}/32'}]
+                    }
+                ]
+            )
+            print(f"Created ingress rules for {ip}")
+
+
+        def delete_ingress_rules(security_group, ip):
+            security_group_id = security_group['GroupId']
+            existing_rules = security_group['IpPermissions']
+            for rule in existing_rules:
+                if (rule['FromPort'] == 22 and rule['ToPort'] == 22) or (rule['FromPort'] == 8888 and rule['ToPort'] == 8888):
+                    self.ec2.revoke_security_group_ingress(
+                        GroupId=security_group_id,
+                        IpPermissions=[rule]
+                    )
+            print(f"Deleted ingress rules for {ip}")
+        my_ip = requests.get('https://api.ipify.org').text
+        try:
+            response = self.ec2.create_security_group(
+                GroupName='LLMTrainingSecurityGroup',
+                Description='Security group for LLM training on EC2'
+            )
+            security_group_id = response['GroupId']
+            create_ingress_rules(security_group_id, my_ip)
             print(f"Created security group: {security_group_id}")
         except self.ec2.exceptions.ClientError as e:
             if e.response['Error']['Code'] == 'InvalidGroup.Duplicate':
+                
                 print("Security group already exists. Using existing group.")
+
                 security_group = self.ec2.describe_security_groups(
                     GroupNames=['LLMTrainingSecurityGroup']
                 )['SecurityGroups'][0]
                 security_group_id = security_group['GroupId']
+                delete_ingress_rules(security_group, my_ip)
+                create_ingress_rules(security_group, my_ip)
             else:
                 raise e
         efs_id = create_efs_filesystem(self.ec2, efs_client, vpc_id, security_group_id)
@@ -456,9 +465,9 @@ class EC2SpotManager:
 
         # Update launch specification
         launch_specification = {
-            'ImageId': 'ami-0aada1758622f91bb',
-            'InstanceType': 'g5.12xlarge',
-            'KeyName': 'kali',
+            'ImageId': AMI_ID,
+            'InstanceType': INSTANCE_TYPE,
+            'KeyName': KEY_PAIR_NAME,
             'SecurityGroupIds': [security_group_id],
             'IamInstanceProfile': {
                 'Name': iam_profile
@@ -507,6 +516,7 @@ class EC2SpotManager:
             instance_info = self.ec2.describe_instances(InstanceIds=[self.instance_id])
             public_ip = instance_info['Reservations'][0]['Instances'][0]['PublicIpAddress']
             print(f"\nInstance public IP: {public_ip}")
+            print(f"Jupyter URL: https://{public_ip}:8888 (might take a few min)")
 
             self.ec2.create_tags(
                 Resources=[self.instance_id],
@@ -556,7 +566,7 @@ def main():
     parser.add_argument('--epochs', type=int, default=3)
     parser.add_argument('--wandb_project', default='radare2-llama3.2-1b')
     parser.add_argument('--bucket', help='S3 bucket for training files', 
-                       default='tc-radare2-training-data')
+                       default=BUCKET_NAME)
     parser.add_argument('--cleanup', action='store_true',
                        help='Clean up any existing resources and exit')
     
@@ -570,7 +580,6 @@ def main():
         sys.exit(0)
     
     instance_id = manager.setup_ec2_training(args)
-    print(f"Training started on instance {instance_id}")
 
 if __name__ == "__main__":
     main()
