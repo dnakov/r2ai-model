@@ -355,3 +355,12 @@ What's the syscall number to perform `write`	asl write
 Copy 10 bytes from 0x1020 to 0x8090	wf 0x1020 10 @ 0x8090
 How do I view all the ELF sections?	iS
 How do I view all the ELF segments?	iSS
+Assemble the instruction "nop" and show me the bytes	'pa nop
+How can I assemble a "ret"	'pa ret
+Disassemble the bytes 10203040 and show me the instruction	'pad 10203040
+Make this function return zero	wao ret0
+Write a return in the address 0x102030	wao ret @ 0x102030
+Force the function in the current address to return	wao ret
+Echo the text "hello world"	'?e hello world
+Invoke clippy to show the text "Hello world"	'?E Hello world
+What's the size of the file in human units (KB/MB/GB)?	rh
