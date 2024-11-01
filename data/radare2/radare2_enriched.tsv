@@ -605,7 +605,37 @@ This leads to using pdr (print disassemble recursive) which will show all possib
     }
 ]
 "
-I want to see if this program creates any child processes. How do I find fork calls?	axt @sym.fork		
+I want to see if this program creates any child processes. How do I find fork calls?	axt @sym.fork	"
+To find fork calls in a program, we need to find cross-references (xrefs) to the fork system call. The fork() function is typically a symbol in the binary, so we want to find all code locations that reference this symbol.
+
+The most direct way to do this is to find all cross-references to the fork symbol. We need a command that:
+1. Analyzes cross-references (ax)
+2. Specifically looks at cross-references TO (t) a specific symbol
+3. Points to the fork symbol (@sym.fork)
+"	"
+[
+    {
+        ""part"": ""ax"", 
+        ""category"": ""analysis"",
+        ""desc"": ""cross-references command to find code/data references""
+    },
+    {
+        ""part"": ""t"",
+        ""category"": ""direction"",
+        ""desc"": ""specifies we want references TO the target (not from)""
+    },
+    {
+        ""part"": ""@"",
+        ""category"": ""addressing"",
+        ""desc"": ""specifies we want to look at a specific address/symbol""
+    },
+    {
+        ""part"": ""<sym.fork>"",
+        ""category"": ""symbol"",
+        ""desc"": ""the symbol name we're looking for references to""
+    }
+]
+"
 I want to see all the places where data is being copied in memory. How do I find memcpy calls?	axt @sym.memcpy	"
 To find all places where memcpy is being called, we need to look for cross-references (xrefs) to the memcpy symbol. This is a common analysis task when tracking data movement in a binary.
 
@@ -655,7 +685,26 @@ The command needs to show us the full function disassembly starting at the progr
     {""part"": ""@entry0"", ""category"": ""address"", ""desc"": ""At the program's entry point, where execution begins""}
 ]
 "
-How do I find all the functions that use floating-point math?	afn.@@=`/af fpu~[0]`		
+How do I find all the functions that use floating-point math?	afn.@@=`/af fpu~[0]`	"
+To find functions using floating-point math, we need to:
+1. First search for FPU (Floating Point Unit) instructions
+2. Get their addresses
+3. Then find which functions contain those addresses
+4. Finally rename or list those functions
+
+The command builds this pipeline: It searches for FPU instructions (/af fpu), gets the addresses (~[0]), and then uses those addresses as input for a function command (afn) using the foreach iterator (@@=).
+"	"
+[
+  {""part"": ""afn"", ""category"": ""analysis_function"", ""desc"": ""function rename/list command""},
+  {""part"": ""."", ""category"": ""current"", ""desc"": ""operate on current function""},
+  {""part"": ""@@="", ""category"": ""iterator"", ""desc"": ""foreach iterator that takes a list of offsets""},
+  {""part"": ""`"", ""category"": ""command_substitution"", ""desc"": ""backtick to execute inner command first""},
+  {""part"": ""/af"", ""category"": ""search"", ""desc"": ""search for AMS instructions""},
+  {""part"": ""<fpu>"", ""category"": ""argument"", ""desc"": ""specify floating point instructions""},
+  {""part"": ""~"", ""category"": ""grep"", ""desc"": ""filter output""},
+  {""part"": ""[0]"", ""category"": ""column_selector"", ""desc"": ""select first column (addresses)""}
+]
+"
 I want to analyze all functions in the binary	aaa	"
 When you want to analyze a binary, you need to understand its functions, references, variables and more. The most thorough way to do this in r2 is through automated analysis. Looking at the options, 'aaa' stands out as it's specifically designed to ""analyze all"" - it's the most common and comprehensive analysis command that performs deeper analysis of the whole program. This is typically the first command you run after loading a binary to get a good understanding of its structure.
 
@@ -4890,7 +4939,43 @@ When working with reverse engineering, you often need to organize different type
   }
 ]
 "
-How can I print the immediate value of the current instruction?	ao~^val[1]		
+How can I print the immediate value of the current instruction?	ao~^val[1]	"
+When analyzing instructions, we often need to extract specific values. In this case, we want to get the immediate value from the current instruction. The process would be:
+1. First, we need to analyze the opcode at current position
+2. From the analysis, we want to extract just the immediate value
+3. We'll need to use grep to filter out everything else and get just the value we want
+4. The immediate value is stored in the 'val' field of the opcode analysis
+
+This leads us to using the analyze opcode command and filtering its output to get just the immediate value field.
+"	"
+[
+  {
+    ""part"": ""a"",
+    ""category"": ""analysis"",
+    ""desc"": ""We need to analyze something""
+  },
+  {
+    ""part"": ""o"",
+    ""category"": ""opcode"",
+    ""desc"": ""Analyze current opcode - this gives detailed info about the instruction""
+  },
+  {
+    ""part"": ""~"",
+    ""category"": ""filter"",
+    ""desc"": ""Use grep to filter the output""
+  },
+  {
+    ""part"": ""^val"",
+    ""category"": ""regex"",
+    ""desc"": ""Match lines starting with 'val'""
+  },
+  {
+    ""part"": ""[1]"",
+    ""category"": ""column select"",
+    ""desc"": ""Select the second column which contains the actual value""
+  }
+]
+"
 Whats the destination for the jump/branch/call at address 0x580034?	?v $j @ 0x580034	"
 We need to find out where a control flow instruction (jump/branch/call) at address 0x580034 is going to. This requires:
 1. Getting the value of the jump destination
@@ -5237,7 +5322,51 @@ The command breaks down into calculating entropy (@) at the current section addr
   }
 ]
 "
-Compute entropy value of the current function	ph entropy $FS @ $FB		
+Compute entropy value of the current function	ph entropy $FS @ $FB	"
+To compute entropy of the current function, we need several pieces of information:
+1. We need a way to calculate entropy
+2. We need to know the size of the function
+3. We need to know where the function starts
+
+Looking at the command structure, I can see this is using the hash command (ph) to calculate entropy over a specific range. The range is defined by:
+- $FB (function begin)
+- $FS (function size)
+
+This is clever because it uses the hash command with entropy algorithm, but applies it specifically to the exact bytes of the current function by using the function begin address and function size variables.
+"	"
+[
+  {
+    ""part"": ""p"", 
+    ""category"": ""print"",
+    ""desc"": ""Print command is used as the base for hash printing""
+  },
+  {
+    ""part"": ""h"",
+    ""category"": ""hash"",
+    ""desc"": ""Hash subcommand to calculate various hashing algorithms""
+  },
+  {
+    ""part"": ""<entropy>"",
+    ""category"": ""algorithm"",
+    ""desc"": ""Specifies entropy as the hash algorithm to use""
+  },
+  {
+    ""part"": ""<$FS>"",
+    ""category"": ""variable"",
+    ""desc"": ""Function Size variable to specify how many bytes to analyze""
+  },
+  {
+    ""part"": ""@"",
+    ""category"": ""address"",
+    ""desc"": ""At operator to specify where to start the analysis""
+  },
+  {
+    ""part"": ""<$FB>"", 
+    ""category"": ""variable"",
+    ""desc"": ""Function Begin variable to specify the starting address""
+  }
+]
+"
 Compute entropy value of the current basic block	ph entropy $Fs @ $Fb	"
 To compute entropy of a basic block, we need to:
 1. Get the basic block's address ($Fb)
@@ -8472,7 +8601,34 @@ To assemble a single instruction, we need a command that converts assembly to by
   }
 ]
 "
-Disassemble the bytes 10203040 and show me the instruction	'pad 10203040		
+Disassemble the bytes 10203040 and show me the instruction	'pad 10203040	"
+You want to disassemble some raw bytes given in hex format (10203040) and see what instruction they represent. This is a common reverse engineering task when looking at raw binary data and wanting to understand the machine code.
+
+First, we need a command that can handle assembly/disassembly operations - that's where 'pa' comes in. The 'pad' variant specifically takes hex bytes as input and shows you the corresponding assembly instruction, which is exactly what we need here.
+"	"
+[
+  {
+    ""part"": ""p"",
+    ""category"": ""print"",
+    ""desc"": ""print command family, used for displaying data""
+  },
+  {
+    ""part"": ""a"",
+    ""category"": ""assembly"",
+    ""desc"": ""assembly/disassembly operations""
+  },
+  {
+    ""part"": ""d"",
+    ""category"": ""disassembly"",
+    ""desc"": ""specifies we want to disassemble hex bytes""
+  },
+  {
+    ""part"": ""<10203040>"",
+    ""category"": ""arguments"",
+    ""desc"": ""the actual hex bytes we want to disassemble""
+  }
+]
+"
 Make this function return zero	wao ret0	"
 When I want to modify an existing instruction to make it return a specific value, I need to use write assembly operations. Looking at the question, they want to make a function return zero, which means modifying the return instruction or adding one that returns 0. The wao command is specifically designed for these assembly operation modifications, and ret0 is the exact operation to make a function return 0.
 "	"
