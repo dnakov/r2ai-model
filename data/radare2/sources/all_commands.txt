@@ -1,10 +1,3 @@
-Usage: %[name[=value]]  Set each NAME to VALUE in the environment
-| %             list all environment variables
-| %*            show env vars as r2 commands
-| %j            show env vars in JSON format
-| %SHELL        prints SHELL value
-| %TMPDIR=/tmp  sets TMPDIR value to "/tmp"
-
 Environment:
 | R2_FILE           file name
 | R2_OFFSET         10base offset 64bit value
@@ -21,6 +14,14 @@ Environment:
 | RABIN2_LANG       assume this lang to demangle
 | RABIN2_DEMANGLE   demangle or not
 | RABIN2_PDBSERVER  e pdb.server
+
+Usage: %[name[=value]]  Set each NAME to VALUE in the environment
+| %             list all environment variables
+| %*            show env vars as r2 commands
+| %j            show env vars in JSON format
+| %SHELL        prints SHELL value
+| %TMPDIR=/tmp  sets TMPDIR value to "/tmp"
+
 Usage: (foo args;cmd1;cmd2;..)  Command macros
 | (foo args;..;..)     define a macro
 | (foo args;..;..)()   define and call a macro
@@ -32,6 +33,7 @@ Usage: (foo args;cmd1;cmd2;..)  Command macros
 | Argument support:    
 | (foo x y; $0 @ $1)   define fun with args (x - $0; y - $1)
 | .(foo 128 0x804800)  call it with args
+
 Usage: [.:"][#]<cmd>[*] [`cmd`] [@ addr] [~grep] [|syscmd] [>[>]file]
 | 0                   alias for 's 0'
 | 0xaddr              alias for 's 0x..'
@@ -87,6 +89,7 @@ Usage: [.:"][#]<cmd>[*] [`cmd`] [@ addr] [~grep] [|syscmd] [>[>]file]
 | H>>file             append to file with the output of command in HTML
 | `pdi~push:0[0]`     replace output of command inside the line
 | |cmd                pipe output to command (pd|less) (.dr*)
+
 Usage: -  open editor and run the r2 commands in the saved document
 | '-' '.-' '. -'   those three commands do the same
 | -8              same as s-8, but shorter to type (see +? command)
@@ -108,6 +111,7 @@ Usage: -  open editor and run the r2 commands in the saved document
 | -v              same as -V
 | -V              show r2 version, same as ?V
 | --              seek one block backward. Same as s-- (see `b` command)
+
 Usage: aaa[a[a]]   # automatically analyze the whole program
 | aaa    perform deeper analysis, most common use
 | aaaa   same as aaa but adds a bunch of experimental iterations
@@ -154,6 +158,7 @@ Usage: aaa[a[a]]   # automatically analyze the whole program
 | '?e hello @ world  print everything after `?e` (r2.call)
 | '0x123'?v $$       run the '?v $$' command in the 0x123 offset (same as r2.callAt)
 | '@entry0'?v $$     same as '0x but supports non numeric offsets
+
 Usage: !<cmd>    Run given command as in system(3)
 | !                        list all commands in the shell history
 | !ls                      execute 'ls' in shell
@@ -170,24 +175,7 @@ Usage: !<cmd>    Run given command as in system(3)
 | !=!                      enable remotecmd mode
 | =!=                      disable remotecmd mode
 
-Environment:
-| R2_FILE           file name
-| R2_OFFSET         10base offset 64bit value
-| R2_BYTES          TODO: variable with bytes in curblock
-| R2_XOFFSET        same as above, but in 16 base
-| R2_BSIZE          block size
-| R2_ENDIAN         'big' or 'little'
-| R2_IOVA           is io.va true? virtual addressing (1,0)
-| R2_DEBUG          debug mode enabled? (1,0)
-| R2_BLOCK          TODO: dump current block to tmp file
-| R2_SIZE           file size
-| R2_ARCH           value of asm.arch
-| R2_BITS           arch reg size (8, 16, 32, 64)
-| RABIN2_LANG       assume this lang to demangle
-| RABIN2_DEMANGLE   demangle or not
-| RABIN2_PDBSERVER  e pdb.server
 Usage:  =[:!+-=ghH] [...]   # connect with other instances of r2
-
 remote commands:
 | =                             list all open connections
 | =<[fd] cmd                    send output of local command to remote fd
@@ -198,7 +186,6 @@ remote commands:
 | ==[fd]                        open remote session with host 'fd', 'q' to quit
 | =!=                           disable remote cmd mode
 | !=!                           enable remote cmd mode
-
 servers:
 | =l[?]                         list, create or destroy background session server
 | =tport                        start the tcp server (echo x|nc ::1 9090 or curl ::1:9090/cmd/x)
@@ -206,24 +193,25 @@ servers:
 | =g[?]                         start the gdbserver
 | =h port                       start the http webserver on 'port'
 | =H port                       start the http webserver on 'port' (launch browser)
-
 other:
 | =&:port                       start rap server in background (same as '&_=h')
 | =:host:port cmd               run 'cmd' command on remote server
-
 examples:
 | =+tcp://localhost:9090/       connect to: r2 -c.:9090 ./bin
 | =+rap://localhost:9090/       connect to: r2 rap://:9090
 | =+http://localhost:9090/cmd/  connect to: r2 -c'=h 9090' bin
 | o rap://:9090/                start the rap server on tcp port 9090
+
 Usage: =l   [..] list, create and destroy r2 sessions
 | =l         list all available sessions
 | =l [name]  give a name to the current session
 | =l-        stop listening in background
 | =ll        start a new session: listening for commands in background
+
 Usage:  =[g] [...]   # gdb server
 gdbserver:
 | =g port file [args]  listen on 'port' debugging 'file' using gdbserver
+
 Usage: ?[?[?]] expression
 | ?! [cmd]                         run cmd if $? == 0
 | ? eip-0x804800                   show all representation result for this math expr
@@ -268,6 +256,7 @@ Usage: ?[?[?]] expression
 | ?x-hexst                         convert hexpair into raw string with newline
 | ?_ hudfile                       load hud menu with given file
 | [cmd]?*                          recursive help for the given cmd
+
 Usage: ?e[=bdgnpst] arg print/echo things
 | ?i ([prompt])    inquery the user and save that text into the yank clipboard (y)
 | ?ie [msg]        same as ?i, but prints the output, useful for oneliners
@@ -278,6 +267,7 @@ Usage: ?e[=bdgnpst] arg print/echo things
 | ?ik              press any key
 | ?ip ([path])     interactive hud mode to find files in given path
 | ?iu (ui-expr)    input using user interface expression
+
 Usage: [command]~[modifier][word,word][endmodifier][[column]][:line]
 modifier:[0m
 |  &            all words must match to grep the line[0m
@@ -325,6 +315,7 @@ Examples:[0m
 |  pd~mov       disasm and grep for mov[0m
 |  pi~[0]       show only opcode[0m
 |  i~0x400$     show lines ending with 0x400[0m
+
 Usage: $alias[=cmd] [args...]  Alias commands and data (See ?$? for help on $variables)
 | $                        list all defined aliases
 | $*                       list all defined aliases and their values, with unprintable characters escaped
@@ -397,8 +388,8 @@ Usage: ?v [$.]
 | $w            get word size, 4 if asm.bits=32, 8 if 64, ...
 | $Xn           get nth xref of function
 | RNum          $variables usable in math expressions
+
 Usage: [.][times][cmd][~grep][@[@iter]addr!size][|>pipe] ; ...
-Append '?' to any char command to get detailed help
 Prefix with number to repeat command N times (f.ex: 3x)
 | %var=value              alias for 'env' command
 | "[?]["..|.."]           quote to not evaluate special chars
@@ -449,6 +440,7 @@ Prefix with number to repeat command N times (f.ex: 3x)
 | ?@?                     misc help for '@' (seek), '~' (grep) (see ~?""?)
 | ?>?                     output redirection
 | ?|?                     help for '|' (pipe)
+
 Usage: "["..|.."]  quote the command to avoid evaluating special characters
 | "?                    show this help, NOTE that a single quote is simpler and works the same
 | "?e hello \"world\""  print (hello "world")
@@ -457,11 +449,13 @@ y;x)
 | ""[cmd]               directly call a command ignoring all special chars (fast)
 | ""@addr""[cmd]        call a command with a temporal seek (EXPERIMENTAL)
 | ""?e x;y";"?e y;x     run two commands ignoring special chars (prints x;y";"?e y;x) 
+
 Usage: *<addr>[=[0x]value]  Pointer read/write data/values
 | *entry0=cc           write trap in entrypoint
 | *entry0+10=0x804800  write value in delta address
 | *entry0              read byte at given address
 | */                   end multiline comment. (use '/*' to start mulitiline comment
+
 Usage: .[r2cmd] | [file] | [!command] | [(macro)]  # define macro or interpret r2, r_lang,
     cparse, d, es6, exe, go, js, lsp, pl, py, rb, sh, vala or zig file
 | .                  repeat last command backward
@@ -477,6 +471,7 @@ Usage: .[r2cmd] | [file] | [!command] | [(macro)]  # define macro or interpret r
 | .!rabin -ri $FILE  interpret output of command
 | .(foo 1 2 3)       run macro 'foo' with args 1, 2, 3
 | ./ ELF             interpret output of command /m ELF as r. commands
+
 Usage: ,[,.-/*jhr] [file]  # load table data
 | ,                   display table
 | , [table-query]     filter and print table. See ,? for more details
@@ -539,13 +534,14 @@ Usage: -  open editor and run the r2 commands in the saved document
 | -v              same as -V
 | -V              show r2 version, same as ?V
 | --              seek one block backward. Same as s-- (see `b` command)
+
 Usage: aaa[a[a]]   # automatically analyze the whole program
 | aaa    perform deeper analysis, most common use
 | aaaa   same as aaa but adds a bunch of experimental iterations
 | aaaaa  refine the analysis to find more functions after aaaa
 | _  print last output
-Usage:  =[:!+-=ghH] [...]   # connect with other instances of r2
 
+Usage:  =[:!+-=ghH] [...]   # connect with other instances of r2
 remote commands:
 | =                             list all open connections
 | =<[fd] cmd                    send output of local command to remote fd
@@ -556,7 +552,6 @@ remote commands:
 | ==[fd]                        open remote session with host 'fd', 'q' to quit
 | =!=                           disable remote cmd mode
 | !=!                           enable remote cmd mode
-
 servers:
 | =l[?]                         list, create or destroy background session server
 | =tport                        start the tcp server (echo x|nc ::1 9090 or curl ::1:9090/cmd/x)
@@ -564,24 +559,25 @@ servers:
 | =g[?]                         start the gdbserver
 | =h port                       start the http webserver on 'port'
 | =H port                       start the http webserver on 'port' (launch browser)
-
 other:
 | =&:port                       start rap server in background (same as '&_=h')
 | =:host:port cmd               run 'cmd' command on remote server
-
 examples:
 | =+tcp://localhost:9090/       connect to: r2 -c.:9090 ./bin
 | =+rap://localhost:9090/       connect to: r2 rap://:9090
 | =+http://localhost:9090/cmd/  connect to: r2 -c'=h 9090' bin
 | o rap://:9090/                start the rap server on tcp port 9090
+
 Usage: =l   [..] list, create and destroy r2 sessions
 | =l         list all available sessions
 | =l [name]  give a name to the current session
 | =l-        stop listening in background
 | =ll        start a new session: listening for commands in background
+
 Usage:  =[g] [...]   # gdb server
 gdbserver:
 | =g port file [args]  listen on 'port' debugging 'file' using gdbserver
+
 Usage: /[!bf] [arg]  Search stuff (see 'e??search' for options)
 Use io.va for searching in non virtual addressing spaces
 | / foo\x00                         search for string 'foo\0'
@@ -617,6 +613,7 @@ Use io.va for searching in non virtual addressing spaces
 | /x[?] [bytes]                     search for hex string with mask, ignoring some nibbles
 | /z min max                        search for strings of given size
 | /* [comment string]               add multiline comment, end it with '*/'
+
 Usage: /a[?] [arg]  Search for assembly instructions matching given properties
 | /a push rbp            assemble given instruction and search the bytes
 | /a1 [number]           find valid assembly generated by changing only the nth byte
@@ -635,6 +632,7 @@ Usage: /a[?] [arg]  Search for assembly instructions matching given properties
 | /as[qjl] ([type])      search for syscalls (See /at swi and /af priv)
 | /at[?][qjl] ([type])   search for instructions of given type
 | /az[q] ([minstr])      search assembly constructed strings (q)uiet reduces FP (uses bin.minsz)
+
 Usage: /ad[/<*jq>] [value]  Backward search subcommands
 | /ad rax         search in plaintext disasm for matching instructions
 | /ad rax$        search in plaintext disasm for instruction matchin given glob expression
@@ -642,15 +640,18 @@ Usage: /ad[/<*jq>] [value]  Backward search subcommands
 | /adq rax        quiet mode ideal for scripting
 | /ad/ ins1;ins2  search for regex instruction 'ins1' followed by regex 'ins2'
 | /ad/a instr     search for every byte instruction that matches regexp 'instr'
+
 Usage: /at[flmj] [arg]  Search for instructions matching type/family/mnemonic
 | /at [optype,optype2]   list instructions matching any of the comma separated optypes
 | /atj [optype,optype2]  same as above but using json as output
 | /atf [family]          search for given-family type of instructions
 | /atl                   list all the instruction types (RAnalOp.Type)
 | /atm                   search matching only the instruction mnemonic
+
 Usage: /b[p]<command> [value]  Backward search subcommands
 | /b[x] [str|414243]  search in hexadecimal 'ABC' backwards starting in current address
 | /bp                 search previous prelude and set hit.prelude flag
+
 Usage: /c  Search for crypto materials
 | /ca[?] [algo]           search for keys expanded in memory (algo can be 'aes' or 'sm4')
 | /cc[?] [algo] [digest]  find collisions (bruteforce block length values until given checksum is found)
@@ -660,6 +661,7 @@ Usage: /c  Search for crypto materials
 | /cp[?] [algo] [pubkey]  search for a private key matching a given public key
 | /cr                     search for ASN1/DER private keys (RSA and ECC)
 | /ca[?] [algo]  search for keys expanded in memory (algo can be 'aes' or 'sm4')
+
 Usage: /cc[aAldpb] [algo] [digest]  find collisions
 | /cca [algo] [digest]  lowercase alphabet chars only
 | /ccA [algo] [digest]  uppercase alphabet chars only
@@ -674,9 +676,11 @@ Usage: /cc[aAldpb] [algo] [digest]  find collisions
 | /me        like ?e similar to IRC's /me
 | /mm        search for known filesystems and mount them automatically
 | /mb        search recognized RBin headers
+
 Usage: /p[p]  [pattern]  Search for patterns or preludes
 | /p [hexpattern]  search in hexpairs pattern in search.in
 | /pp              search for function preludes
+
 Usage: /r[acerwx] [address]   search references to this specific address
 | /r [addr]     search references to this specific address
 | /ra           search all references
@@ -686,6 +690,7 @@ Usage: /r[acerwx] [address]   search references to this specific address
 | /ru[*qj]      search for UDS CAN database tables (binbloom)
 | /rw           find write references
 | /rx           find exec references
+
 Usage: /R  search for ROP gadgets (see "? for escaping chars in the shell)
 | /R [string]     show gadgets
 | /R/ [regexp]    show gadgets [regular expression]
@@ -694,12 +699,14 @@ Usage: /R  search for ROP gadgets (see "? for escaping chars in the shell)
 | /Rj [string]    json output
 | /Rk [ropklass]  query stored ROP gadgets klass
 | /Rq [string]    show gadgets in a quiet manner
+
 Usage: /x[v] [hexpairs]:[binmask]  search in memory
 | /x 9090cd80                  search for those bytes
 | /x ff..33                    search for hex string ignoring some nibbles
 | /x 9090cd80:ffff7ff0         search with binary mask
 | /xn[1|2|4|8] value amount    search for an array of Value repeated Amount of times
 | /xv[1|2|4|8] v0 v1 v2 v3 ..  search for an array of values with given size and endian
+
 Usage: !<cmd>    Run given command as in system(3)
 | !                        list all commands in the shell history
 | !ls                      execute 'ls' in shell
@@ -716,22 +723,6 @@ Usage: !<cmd>    Run given command as in system(3)
 | !=!                      enable remotecmd mode
 | =!=                      disable remotecmd mode
 
-Environment:
-| R2_FILE           file name
-| R2_OFFSET         10base offset 64bit value
-| R2_BYTES          TODO: variable with bytes in curblock
-| R2_XOFFSET        same as above, but in 16 base
-| R2_BSIZE          block size
-| R2_ENDIAN         'big' or 'little'
-| R2_IOVA           is io.va true? virtual addressing (1,0)
-| R2_DEBUG          debug mode enabled? (1,0)
-| R2_BLOCK          TODO: dump current block to tmp file
-| R2_SIZE           file size
-| R2_ARCH           value of asm.arch
-| R2_BITS           arch reg size (8, 16, 32, 64)
-| RABIN2_LANG       assume this lang to demangle
-| RABIN2_DEMANGLE   demangle or not
-| RABIN2_PDBSERVER  e pdb.server
 Usage: #!<interpreter>  [<args>] [<file] [<<eof]
 | #                                   comment - do nothing
 | #!                                  list all available interpreters
@@ -744,7 +735,9 @@ Usage: #!<interpreter>  [<args>] [<file] [<<eof]
 | #!<lang> -e [expr|base64:..]        run the given expression with lang plugin
 | #!<lang>                            enter interactive prompt for given language plugin
 | #!pipe node -e 'console.log(123)''  run program with arguments inside an r2pipe environment
+
 Usage: {"cmd":"...","json":false,"trim":true} # `cmd` is required
+
 Usage: a  [abdefFghoprxstc] [...]
 | a                alias for aai - analysis information
 | a:[cmd]          run a command implemented by an analysis plugin (like : for io)
@@ -773,6 +766,7 @@ Usage: a  [abdefFghoprxstc] [...]
 | av[?] [.]        show vtables
 | avg[?] [.]       manage global variables
 | ax[?]            manage refs/xrefs (see also afx?)
+
 Usage: aa[0*?]   # see also 'af' and 'afna'
 | aa                     alias for 'af@@ sym.*;af@entry0;afva'
 | aaa[?]                 autoname functions after aa (see afna)
@@ -800,10 +794,12 @@ Usage: aa[0*?]   # see also 'af' and 'afna'
 | aav[?] [sat]           find values referencing a specific section or map
 | aaw                    analyze all meta words (Cd) and add r. named flags for referenced pointers
 | aax[?]                 analyze all xrefs as functions
+
 Usage: aaa[a[a]]   # automatically analyze the whole program
 | aaa    perform deeper analysis, most common use
 | aaaa   same as aaa but adds a bunch of experimental iterations
 | aaaaa  refine the analysis to find more functions after aaaa
+
 Usage: aae  [pf] ([addr]) # analyze all kind of stuff using esil
 | aae [size] ([addr])  same as aepa@@@i - define anal pins by import flag names
 | aae                  honor anal.{in,from,to} and emulate all executable regions
@@ -811,6 +807,7 @@ Usage: aae  [pf] ([addr]) # analyze all kind of stuff using esil
 | aaep                 same as aepa@@@i - define anal pins by import flag names
 | aaepa                run 'aep ret0@@@i' and then 'aaep' - all unknown imports are faked to return 0
 | aaex                 emulate all code linearly and register only the computed xrefs
+
 Usage: aaf[efrt?]   # analyse all functionsee also 'af' and 'afna'
 | aaf         same as afr@@c:isq
 | aafe        same as aef@@F
@@ -818,21 +815,25 @@ Usage: aaf[efrt?]   # analyse all functionsee also 'af' and 'afna'
 | aafr [len]  consecutive function analysis (e anal.hasnext=1;afr@@c:isq)
 | aaft        recursive type matching across all functions
 | aafs        single basic block function analysis
+
 Usage: aan  [rg]   # automatically name functions.
 | aan   autoname all functions
 | aang  autoname all golang functions
 | aanr  auto-noreturn propagation
+
 Usage: aar  [j*] [sz] # search and analyze xrefs
 | aar        analyze xrefs in current section 
 | aar [sz]   analyze xrefs starting in current offset until sz bytes are consumed
 | aarr       analyze all function reference graph to find more functions (EXPERIMENTAL)
 | aar* [sz]  list found xrefs in radare commands format
 | aarj [sz]  list found xrefs in JSON format
+
 Usage: aav  [sat] # find values referencing a specific section or map
 | aav      find absolute reference values (see aav0)
 | aav0     find absolute reference values (accept maps at address zero)
 | aavr[0]  find relative reference values (address + 4 byte signed int)
 | aax[?]  analyze all xrefs as functions
+
 Usage: ab  # analyze basic block
 | ab [addr]            show basic block information at given address (same as abi/afbi)
 | ab-[addr]            delete basic block at given address
@@ -852,6 +853,7 @@ Usage: ab  # analyze basic block
 | abi[?]  alias for afbi
 | abl[?] [.-cqj]  list all basic blocks
 | abp[?] [addr] [num]  follow basic blocks paths from current offset to addr
+
 Usage: ac  anal classes commands
 | acl[j*]                                                    list all classes
 | acll[j] (class_name)                                       list all or single class detailed
@@ -869,9 +871,11 @@ Usage: ac  anal classes commands
 | acmn [class name] [method name] [new name]                 rename method
 | acg                                                        print inheritance ascii graph
 | ac?                                                        show this help
+
 Usage: aC[fej] [addr-of-call]   # analyze call args
 | aCe  use ESIL emulation to find out arguments of a call (uses 'abpe')
 | aCf  same as .aCe* $$ @@=`pdr~call`
+
 Usage: ad  [kt] [...]
 | ad [N] [D]   analyze N data words at D depth
 | ad4 [N] [D]  analyze N data words at D depth (asm.bits=32)
@@ -880,6 +884,7 @@ Usage: ad  [kt] [...]
 | adfg         analyze data in function gaps
 | adt          analyze data trampolines (wip)
 | adk          analyze data kind (code, text, data, invalid, ...)
+
 Usage: ae[idesr?] [arg]  ESIL code emulation
 | ae [expr]                evaluate ESIL expression
 | ae! [file]               compile esil file into an esil expression
@@ -910,22 +915,23 @@ Usage: ae[idesr?] [arg]  ESIL code emulation
 | aecc         continue until call
 | aecu[addr]   continue until address
 | aecue[addr]  continue until esil expression
+
 Usage: aei  [smp] [...]
 | aei                        initialize ESIL VM state (aei- to deinitialize)
 | aeis argc [argv] [envp]    initialize entrypoint stack environment
 | aeim [addr] [size] [name]  initialize ESIL VM stack (aeim- remove)
 | aeip                       initialize ESIL program counter to curseek
+
 Usage: aeim   [addr] [size] [name] - initialize the ESIL VM stack
 | aeim                     initialize esil memory with default values from esil.stack.* evals
 | aeim 0x10000             same as aeim@e:esil.stack.addr=0x10000
 | aeim 0x10000 2M mystack  give a name to that new 2MB stack
+
 Usage: aek    [...]
 | aek            dump the esil.stats database contents
 | aek sdb.query  evaluate sdb query on esil.stats db
 | aek-           clear the esil.stats sdb instance
-dummy
-forth
-null
+
 Usage: aep[-*c]    [...] manage esil pins, run r2 commands instead of esil
 | aepc [addr]                          change program counter for esil
 | aep*                                 list pins in r2 commands
@@ -939,6 +945,7 @@ Usage: aep[-*c]    [...] manage esil pins, run r2 commands instead of esil
 | aep                                  list pins
 | aep.                                 show pin name in current address if any
 | aepk [query]                         kuery the sdb of pins
+
 Usage: ar  # Analysis Registers
 | ar                    show 'gpr' registers
 | ar.>$snapshot         show r2 commands to set register values to the current state
@@ -969,11 +976,13 @@ Usage: ar  # Analysis Registers
 | arS                   show the size of the register profile
 | art                   list all register types
 | arw <hexnum>          set contents of the register arena
+
 Usage: ara[+-s]  register Arena Push/Pop/Swap
 | ara   show all register arenas allocated
 | ara+  push a new register arena for each type
 | ara-  pop last register arena
 | aras  swap last two register arenas
+
 Usage: arp   # Register profile commands
 | arp                          show the current register profile
 | arp [regprofile-file]        set the current register profile
@@ -986,6 +995,7 @@ Usage: arp   # Register profile commands
 | arps [new fake size]         get or set the register profile size
 | arpg                         show register profile comments
 | NOTE:                        this help will show arp if you run drp? when cfg.debug=0
+
 Usage: aes[pbosu]  esil stepping utilities
 | aesp [X] [N]                   evaluate N instr from offset X
 | aesb                           step back
@@ -997,6 +1007,7 @@ Usage: aes[pbosu]  esil stepping utilities
 | aesuo [optype]                 step until given opcode type
 | aesB [addr] [N] @ [from-addr]  step over every N instructions
 | aet[?][s]  esil trace listing and session management (requires aeim)
+
 Usage: af
 | af ([name]) ([addr])                     analyze functions (start at addr or $$)
 | af+ addr name [type] [diff]              hand craft a function (requires afb+)
@@ -1025,6 +1036,7 @@ Usage: af
 | afu addr                                 resize and analyze function from current address until addr
 | afv[?]                                   manipulate args, registers and variables in function
 | afx[m]                                   list function references
+
 Usage: afb   list basic blocks of given function
 | afb [addr]                                    list basic blocks of function
 | afb. [addr]                                   show info of current basic block
@@ -1040,11 +1052,13 @@ Usage: afb   list basic blocks of given function
 | afbr[?]                                       show addresses of instructions which leave the function
 | afbo                                          list addresses of each instruction for every basic block in function (see abo)
 | afB [bits]                                    define asm.bits for the given function
+
 Usage: afbr   return addresses for current function
 | afbr     show addresses of instructions which leave the function
 | afbrb    show addresses of leaving basic blocks with no out edges
 | .afbr*   set breakpoint on every return address of the function
 | .afbr-*  remove breakpoint on every return address of the function
+
 Usage: afc[agl?]  # see also tcc command to manage all calling conventions
 | afc ccname      manually set calling convention for current function
 | afc             show calling convention for the Current function (same as tcc)
@@ -1057,10 +1071,12 @@ Usage: afc[agl?]  # see also tcc command to manage all calling conventions
 | afcll           show all call conventions and its definition
 | afco path       open Calling Convention sdb profile from given path
 | afcR            register telescoping using the calling conventions order
+
 Usage: afC   [addr]
 | afC   function cycles cost
 | afCc  cyclomatic complexity
 | afCl  loop count (backward jumps)
+
 Usage: afl   List all functions
 | afl            list functions
 | afl.           display function in current offset (see afi.)
@@ -1079,20 +1095,24 @@ Usage: afl   List all functions
 | aflqj          list functions in json quiet mode
 | afls[?asn]     sort function list by address, size or name
 | aflx[?*jv]     list function xrefs (who references or calls the current function)
+
 Usage: aflm  [q.j] List functions in verbose mode
 | aflm   list functions and what they call in makefile-like format
 | aflm.  only print the summary for the current function (see pds)
 | aflmj  same as above but in json format
+
 Usage: aflm  [q.j] List functions in verbose mode
 | aflm   list functions and what they call in makefile-like format
 | aflm.  only print the summary for the current function (see pds)
 | aflmj  same as above but in json format
+
 Usage: afn[sa]   Analyze function names
 | afn [name]  rename the function (name can start with base64:)
 | afn.        same as afn without arguments. show the function name in current offset
 | afn*        show r2 commands to set function signature, flag and function name
 | afna[j]     construct a function name for the current offset
 | afns[j]     list all strings associated with the current function
+
 Usage: afs[r]   Analyze function signatures
 | afs ([fcnsign])                  get/set function signature at current address (afs! uses cfg.editor)
 | afsq                             same as afs without the error message (See afsQ for non-current offset)
@@ -1101,8 +1121,10 @@ Usage: afs[r]   Analyze function signatures
 | afsj ([signame])                 get function signature in JSON
 | afsr [function_name] [new_type]  change type for given function
 | afsv[j]                          print function signature filling the values from current reg and stack state
+
 Usage: aft
 | aft  type matching analysis for current function
+
 Usage: afv[rbs]   Function variables manipulation
 | afv*                          output r2 command to add args/locals to flagspace
 | afv-([name])                  remove all or given var
@@ -1121,6 +1143,7 @@ Usage: afv[rbs]   Function variables manipulation
 | afvb[?]  manipulate bp based arguments/locals
 | afvr[?]  manipulate register based arguments
 | afvs[?]  manipulate sp based arguments/locals
+
 Usage: ag<graphtype><format> [addr]
 Graph commands:
 | aga[format]             data references graph
@@ -1139,7 +1162,6 @@ Graph commands:
 | ag-                     clear the custom graph
 | agn[?] title body       add a node to the custom graph
 | age[?] title1 title2    add an edge to the custom graph
-
 Output formats:
 | <blank>                 ascii art
 | *                       r2 commands
@@ -1152,6 +1174,7 @@ Output formats:
 | t                       tiny ascii art
 | v                       interactive ascii art
 | w [path]                write to path or display graph image (see graph.gv.format)
+
 Usage: agn [title] [body]
 Examples:
 | agn title1 body1                          add a node with title "title1" and body "body1"
@@ -1159,6 +1182,7 @@ Examples:
 | agn title1 base64:Ym9keTE=                add a node with the body specified as base64
 | agn- title1                               remove a node with title "title1"
 | agn?                                      show this help
+
 Usage: age [title1] [title2]
 Examples:
 | age title1 title2                add an edge from the node with "title1" as title to the one with title "title2"
@@ -1168,6 +1192,7 @@ Examples:
 | ageh nodeA nodeB                 highlight edge between nodeA and nodeB
 | ageh- nodeA nodeB                highlight edge between nodeA and nodeB
 | age?                             show this help
+
 Usage: ah[lba-]  analysis Hints
 | ah?                          show this help
 | ah? offset                   show hint of given offset
@@ -1194,6 +1219,7 @@ Usage: ah[lba-]  analysis Hints
 | ahS jz                       set asm.syntax=jz for this opcode
 | aht[?][s] <type>             mark immediate as a type offset (deprecated, moved to "aho")
 | ahv val                      change opcode's val field (useful to set jmptbl sizes in jmp rax)
+
 Usage: ahi [2|8|10|10u|16|bodhipSs] [@ offset]   Define numeric base
 | ahi <base>  set numeric base (2, 8, 10, 16)
 | ahi 10|d    set base to signed decimal (10), sign bit should depend on receiver size
@@ -1207,15 +1233,18 @@ Usage: ahi [2|8|10|10u|16|bodhipSs] [@ offset]   Define numeric base
 | ahi S       set base to syscall (80)
 | ahi s       set base to string (1)
 | ahi1 10     set base of argument 1 to base 10 (same as ahi1 d)
+
 Usage: aht[s] [addr|type]  mark immediate as type offset (moved to aho)
 | ahts <offset>        list all matching structure offsets
 | aht <struct.member>  change immediate to structure offset
 | aht?                 show this help
+
 Usage: an  [aj*] # analyze name for the current address (see fd and aan commands)
 | an[j*]  show flag/function/symbol name (in json or r2 commands)
 | anf     propose name for current function (see anal.slow and 'aan')
 | anfl    list all names used in the autonaming guess algorithm
 | ano[?]  show or edit annotations for the current function
+
 Usage: ano  [*] # function anotations
 | ano                show or edit annotations for the current function
 | ano-*              remove all annotations for current file
@@ -1225,6 +1254,7 @@ Usage: ano  [*] # function anotations
 | anoe               edit annotation using cfg.editor
 | anos               show current function annotation
 | anol               display first line of function annotation if any
+
 Usage: ao[e?] [len]  analyze Opcodes
 | ao 5               display opcode analysis of 5 opcodes
 | ao*                display opcode in r commands
@@ -1241,15 +1271,18 @@ Usage: ao[e?] [len]  analyze Opcodes
 | aor [N]            run N esil instructions + esil.dumpstack
 | aos N              display size of N opcodes
 | aot[?]             list all opcode types
+
 Usage: aom[ljd] [arg]  list opcode mnemonics
 | aom   show instruction mnemonic
 | aom.  show instruction mnemonic in current address
 | aoml  list all mnemonics
 | aomj  list in json format (TODO: add instruction description too?)
 | aomd  verbose mnemonic listing with instruction description
+
 Usage: aot[l]  list opcode types
 | aot   show type of the current instruction
 | aotl  list all possible opcode types (See /atl)
+
 Usage: ar  # Analysis Registers
 | ar                    show 'gpr' registers
 | ar.>$snapshot         show r2 commands to set register values to the current state
@@ -1280,11 +1313,13 @@ Usage: ar  # Analysis Registers
 | arS                   show the size of the register profile
 | art                   list all register types
 | arw <hexnum>          set contents of the register arena
+
 Usage: ara[+-s]  register Arena Push/Pop/Swap
 | ara   show all register arenas allocated
 | ara+  push a new register arena for each type
 | ara-  pop last register arena
 | aras  swap last two register arenas
+
 Usage: arp   # Register profile commands
 | arp                          show the current register profile
 | arp [regprofile-file]        set the current register profile
@@ -1297,6 +1332,7 @@ Usage: arp   # Register profile commands
 | arps [new fake size]         get or set the register profile size
 | arpg                         show register profile comments
 | NOTE:                        this help will show arp if you run drp? when cfg.debug=0
+
 Usage: as[ljk?]  syscall name <-> number utility
 | as           show current syscall and arguments
 | as 4         show syscall 4 based on asm.os and current regs/mem
@@ -1306,6 +1342,7 @@ Usage: as[ljk?]  syscall name <-> number utility
 | asl close    returns the syscall number for close
 | asl 4        returns the name of the syscall number 4
 | ask [query]  perform syscall/ queries
+
 Usage: av[?jr*]   C++ vtables and RTTI
 | av                search for vtables in data sections and show results
 | avj               like av, but as json
@@ -1314,10 +1351,12 @@ Usage: av[?jr*]   C++ vtables and RTTI
 | avra[j]           search for vtables and try to parse RTTI at each of them
 | avrr              recover class info from all findable RTTI (see ac)
 | avrD [classname]  demangle a class name from RTTI
+
 Usage: avg   # analyze variable global
 | avg                list global variables
 | avg [type] [name]  add global variable with given type and name
 | avg-               delete global
+
 Usage: ax[?d-l*]   # see also 'afx?'
 | ax addr [at]    add code ref pointing to addr (from curseek)
 | ax              list refs
@@ -1342,21 +1381,25 @@ Usage: ax[?d-l*]   # see also 'afx?'
 | axt[?] [addr]   find data/code references to this address
 | axv[?] [addr]   list local variables read-write-exec references
 | axw addr [at]   add data-write ref
+
 Usage: axf[?gq*]  find data/code references from this address
 | axfj [addr]  find data/code references to this address and print in json format
 | axfg [addr]  display commands to generate graphs according to the xrefs
 | axfq [addr]  find and list the data/code references in quiet mode
 | axfm [addr]  show refs to in 'make' syntax (see aflm and axtm)
 | axf* [addr]  same as axf, but prints as r2 commands
+
 Usage: axt[?gq*]  find data/code references to this address
 | axtj ([addr])  find data/code references to this address and print in json format
 | axtg ([addr])  display commands to generate graphs according to the xrefs
 | axtq ([addr])  find and list the data/code references in quiet mode
 | axtm ([addr])  show xrefs to in 'make' syntax (see aflm and axfm)
 | axt* ([addr])  same as axt, but prints as r2 commands
+
 Usage: axv[?j]  show xrefs to local variables in current function
 | axv ([addr])   optionally you can specify address instead of current seek
 | axvj ([addr])  show in json
+
 Usage: b[f] [arg]  change working block size
 | b 32     set block size to 33
 | b=32     same as 'b 32'
@@ -1369,6 +1412,7 @@ Usage: b[f] [arg]  change working block size
 | bf foo   set block size to flag size
 | bj       display block size information in JSON
 | bm 1M    set max block size
+
 Usage: c[?dfx] [argument]   # Compare
 | c [string]               compare a plain with escaped chars string
 | c* [string]              same as c, but printing r2 commands instead
@@ -1396,16 +1440,19 @@ Usage: c[?dfx] [argument]   # Compare
 | cx [hexpair]             compare hexpair string (use '.' as nibble wildcard)
 | cx* [hexpair]            compare hexpair string (output r2 commands)
 | cX [addr]                Like 'cc' but using hexdiff output
+
 Usage: cg  Graph compare
 | cg [file]  diff ratio among functions (columns: off-A, match-ratio, off-B)
 | cgf [fcn]  compare functions (curseek vs fcn)
 | cgfa       list all functions similar to the current one
 | cgo        opcode-bytes code graph diff
+
 Usage: ci [sil] ([obid])  Compare two bin objects
 | cis 0  compare symbols with current `ob 1` with given obid (0)
 | cii 0  compare imports
 | ciE 0  compare exports
 | cil 0  compare libraries
+
 Usage: cu  [offset]  # Prints unified comparison to make hexpatches
 | cu $$+1 > p                  compare hexpairs from current seek and +1
 | cu1 $$+1 > p                 compare bytes from current seek and +1
@@ -1415,6 +1462,7 @@ Usage: cu  [offset]  # Prints unified comparison to make hexpatches
 | cud $$+1 > p                 compare disasm current seek and +1
 | wu p                         apply unified hex patch (see output of cu)
 | curl ([-D data]) [http-url]  
+
 Usage: cw [args]  Manage compare watchers; See if and how memory changes
 | cw??            Show more info about watchers
 | cw addr sz cmd  Add a compare watcher
@@ -1422,6 +1470,7 @@ Usage: cw [args]  Manage compare watchers; See if and how memory changes
 | cwd [addr]      Delete watcher
 | cwr [addr]      Revert watcher
 | cwu [addr]      Update watcher
+
 Usage: C[-LCvsdfm*?][*?] [...]   # Metadata management
 | C                                              list meta info in human friendly form
 | C*                                             list meta info in r2 commands
@@ -1450,6 +1499,7 @@ Usage: C[-LCvsdfm*?][*?] [...]   # Metadata management
 | Ct.[@addr]                                     show comment at current or specified address
 | Cv[?][bsr]                                     add comments to args
 | Cz[@addr]                                      add string (see Cs?)
+
 Usage: CC[-+!*au] [base64:..|str] @ addr
 | CC!                     edit comment using cfg.editor (vim, ..)
 | CC [text]               append comment at current address
@@ -1467,14 +1517,11 @@ Usage: CC[-+!*au] [base64:..|str] @ addr
 | Cf[?][-] [sz] [0|cnt][fmt] [a0 a1...] [@addr]  format memory (see pf?)
 'sz' indicates the byte size taken up by struct.
 'fmt' is a 'pf?' style format string. It controls only the display format.
-
 You may wish to have 'sz' != sizeof (fmt) when you have a large struct
 but have only identified specific fields in it. In that case, use 'fmt'
 to show the fields you know about (perhaps using 'skip' fields), and 'sz'
 to match the total struct size in mem.
 
-See C?
-See C?
 Usage: Cs[ga-*.] ([size]) [@addr]
 | Cs [size] @addr          add string (guess latin1/utf16le)
 | Cs                       list all strings in human friendly form
@@ -1490,12 +1537,13 @@ Usage: Cs[ga-*.] ([size]) [@addr]
 | Csz [size] ([@addr])     define zero terminated strings (with size as maxlen)
 | Css ([range]) ([@addr])  define all strings found in given range or section
 | Cz [size] [@addr]        Alias for Csz
+
 Usage: Ct [.|-] [@ addr]   # Manage comments for variable types
 | Ct                        list all variable type comments
 | Ct comment-text [@ addr]  place comment at current or specified address
 | Ct. [@ addr]              show comment at current or specified address
 | Ct- [@ addr]              remove comment at current or specified address
-See Cvb?, Cvs? and Cvr?
+
 Usage: d   # Debug commands
 | d:[?] [cmd]              run custom debug plugin command
 | db[?]                    breakpoints commands
@@ -1521,6 +1569,7 @@ Usage: d   # Debug commands
 | dw <pid>                 block prompt until pid dies
 | dx[?][aers]              execute code in the child process
 | date [-b]                use -b for beat time
+
 Usage: db   # Breakpoints commands
 | db                        list breakpoints
 | db*                       list breakpoints in r commands
@@ -1558,6 +1607,7 @@ Usage: db   # Breakpoints commands
 | dbw <addr> <r/w/rw>       add watchpoint
 | drx number addr len perm  modify hardware breakpoint
 | drx-number                clear hardware breakpoint
+
 Usage: dbt   # Backtrace commands
 | dbt          display backtrace based on dbg.btdepth and dbg.btalgo
 | dbt*         display backtrace in flags
@@ -1568,6 +1618,7 @@ Usage: dbt   # Backtrace commands
 | dbte <addr>  enable Breakpoint Trace
 | dbtd <addr>  disable Breakpoint Trace
 | dbts <addr>  swap Breakpoint Trace
+
 Usage: dbt   # Backtrace commands
 | dbt          display backtrace based on dbg.btdepth and dbg.btalgo
 | dbt*         display backtrace in flags
@@ -1578,6 +1629,7 @@ Usage: dbt   # Backtrace commands
 | dbte <addr>  enable Breakpoint Trace
 | dbtd <addr>  disable Breakpoint Trace
 | dbts <addr>  swap Breakpoint Trace
+
 Usage: dc  Execution continuation commands
 | dc                           continue execution of all children
 | dc <pid>                     continue execution of pid
@@ -1594,15 +1646,18 @@ Usage: dc  Execution continuation commands
 | dcs[?] <num>                 continue until syscall
 | dct <len>                    traptrace from curseek to len, no argument to list
 | dcu[?] [..end|addr] ([end])  continue until address (or range)
+
 Usage: dcs   Continue until syscall
 | dcs        continue until next syscall
 | dcs [str]  continue until next call to the 'str' syscall
 | dcs*       trace all syscalls, a la strace
+
 Usage: dcu   Continue until address
 | dcu.             alias for dcu $$ (continue until current address)
 | dcu address      continue until address
 | dcu [..tail]     continue until the range
 | dcu [from] [to]  continue until the range
+
 Usage: dd  Manage file descriptors for child process (* to show r2 commands)
 | dd[*]                      list file descriptors
 | dd[*] <file|addr>          open file as read-only (r--); addr = use as char* for path
@@ -1614,6 +1669,7 @@ Usage: dd  Manage file descriptors for child process (* to show r2 commands)
 | ddf[*] <addr>              create pipe and write fds to (int[2])addr
 | ddr[*] <fd> <addr> <size>  read bytes from fd into (char*)addr
 | ddw[*] <fd> <addr> <size>  write bytes from (const char*)addr to fd
+
 Usage: di  Debugger target information
 | di             show debugger target information
 | di*            same as above, but in r2 commands
@@ -1621,6 +1677,7 @@ Usage: di  Debugger target information
 | diq            same as above, but in one line
 | dij            same as above, but in JSON format
 | dif [$a] [$b]  compare two files (or $alias files)
+
 Usage: dk  Signal commands
 | dk                         list all signal handlers of child process
 | dk <signal>                send KILL signal to child
@@ -1629,6 +1686,7 @@ Usage: dk  Signal commands
 | dko[?] <signal>            reset skip or cont options for given signal
 | dko <signal> [|skip|cont]  on signal SKIP handler or CONT into
 | dkj                        list all signal handlers in JSON
+
 Usage: dko   # Signal handling commands
 | dko                       list existing signal handling
 | dko [signal]              clear handling for a signal
@@ -1641,6 +1699,7 @@ Usage: dL   List or set debugger handler
 | dLq           list debugger handlers in quiet mode
 | dLj           list debugger handlers in json mode
 | dL <handler>  set debugger handler
+
 Usage: dm   # Memory maps commands
 | dm                                list memory maps of target process
 | dm address size                   allocate <size> bytes at <address> (anywhere if address is -1) in child process
@@ -1663,18 +1722,22 @@ Usage: dm   # Memory maps commands
 | dms- <id> <mapaddr>               restore memory snapshot
 | dmS[*] [addr|libname] [sectname]  list sections of target lib
 | dmL address size                  allocate <size> bytes at <address> and promote to huge page
+
 Usage:  dmh[?]   # debug memory heap
 | dmh  List process memory zones
+
 Usage: dmm   # Module memory maps commands
 | dmm   list modules of target process
 | dmm*  list modules of target process (r2 commands)
 | dmm.  list memory map of current module
 | dmmj  list modules of target process (JSON)
+
 Usage: dmp   Change page permissions
 | dmp [addr] [size] [perms]  change permissions
 | dmp [perms]                change dbg.map permissions
 | dms[?] <id> <mapaddr>  take/store memory snapshot
 | dms- <id> <mapaddr>  restore memory snapshot
+
 Usage: dms   # Memory map snapshots
 | dms              list memory snapshots
 | dms addr         take snapshot with given id of map at address
@@ -1688,6 +1751,7 @@ Usage: dms   # Memory map snapshots
 | dmsd id          hexdiff given snapshot. See `ccc`.
 | dmsw             snapshot of the writable maps
 | dmsa             full snapshot of all `dm` maps
+
 Usage: do   # Debug (re)open commands
 | do            open process (reload, alias for 'oo')
 | dor [rarun2]  comma separated list of k=v rarun2 profile options (e dbg.profile)
@@ -1696,6 +1760,7 @@ Usage: do   # Debug (re)open commands
 | doo [args]    Reopen in debug mode with args (alias for 'ood')
 | doof [args]   Reopen in debug mode from file (alias for 'oodf')
 | doc           close debug session
+
 Usage: dp   # Process commands
 | dp                    list current pid and children
 | dpq                   same as dp. just show the current process id
@@ -1726,6 +1791,7 @@ Usage: dp   # Process commands
 | dptn          create new thread (clone)
 | dptj <pid>    list threads of process in JSON format
 | dpt=<thread>  attach to thread
+
 Usage: dr  Registers commands
 | dr                   show 'gpr' registers
 | dr <register>=<val>  set register value
@@ -1756,11 +1822,13 @@ Usage: dr  Registers commands
 | drx[?]               show debug registers
 | .dr*                 include common register values in flags
 | .dr-                 unflag all registers
+
 Usage: ara[+-s]  register Arena Push/Pop/Swap
 | ara   show all register arenas allocated
 | ara+  push a new register arena for each type
 | ara-  pop last register arena
 | aras  swap last two register arenas
+
 Usage: arp   # Register profile commands
 | arp                          show the current register profile
 | arp [regprofile-file]        set the current register profile
@@ -1773,11 +1841,13 @@ Usage: arp   # Register profile commands
 | arps [new fake size]         get or set the register profile size
 | arpg                         show register profile comments
 | NOTE:                        this help will show arp if you run drp? when cfg.debug=0
+
 Usage: drs   # Register states commands
 | drs   list register stack
 | drs+  push register state
 | drs-  pop register state
 | drt[?]  show all register types
+
 Usage: ds  Step commands
 | ds                step one instruction
 | ds <num>          step <num> instructions
@@ -1790,6 +1860,7 @@ Usage: ds  Step commands
 | dsp               step into program (skip libs)
 | dss <num>         skip <num> step instructions
 | dsu[?] <address>  step until <address>. See 'dsu?' for other step until cmds.
+
 Usage: dsu  Step until commands
 | dsu <address>                 step until <address>
 | dsui <instr>                  step until an instruction disasm matches
@@ -1797,6 +1868,7 @@ Usage: dsu  Step until commands
 | dsuo <optype> [<optype> ...]  step until an instr matches one of the <optype>s.
 | dsue <esil>                   step until <esil> expression matches
 | dsuf <flag>                   step until pc == <flag> matching name
+
 Usage: dt  Trace commands
 | dt                                 list all traces 
 | dt [addr]                          show trace info at address
@@ -1816,6 +1888,7 @@ Usage: dt  Trace commands
 | dtt [tag]                          select trace tag (no arg unsets)
 | dtt.                               show current tag
 | dtc[?][addr]|([from] [to] [addr])  trace call/ret
+
 Usage: dte  Show esil trace logs
 | dte               esil trace log for a single instruction
 | dte [idx]         show commands for that index log
@@ -1823,12 +1896,14 @@ Usage: dte  Show esil trace logs
 | dtei              emulate instruction and record a trace their effects
 | dted              disassemble all traced instructions
 | dtek [sdb query]  esil trace log single instruction from sdb
+
 Usage: dts[*]  Trace sessions
 | dts+         start trace session
 | dts-         stop trace session
 | dtst [dir]   save trace sessions to disk
 | dtsf [dir]   read trace sessions from disk
 | dtsm         list current memory map and hash
+
 Usage: dx [aers]   Debug execution commands
 | dx <hexpairs>               execute opcodes
 | dxa <asm>                   assemble code and execute
@@ -1836,13 +1911,14 @@ Usage: dx [aers]   Debug execution commands
 | dxr <hexpairs>              execute opcodes and restore state
 | dxrs <hexpairs>             execute opcodes and restore state, excluding the stack
 | dxs <name> [args]           syscall injection (see gs)
-
 Examples:
 | dx 9090                     execute two x86 nops
 | "dxa mov eax,6;mov ebx,0;"  assemble and execute
 | dxs write 1, 0x8048, 12     write 12 bytes from 0x8048 into stdout
+
 Usage: dxe   egg-program # see ragg2 and the 'g' command for more details
 | dxe sym.imp.puts("foo")  call puts with a string argument
+
 Usage: e [var[=value]]  Evaluable vars
 | e?asm.bytes        show description
 | e??                list config vars with description
@@ -1868,7 +1944,8 @@ Usage: e [var[=value]]  Evaluable vars
 | et [key]           show type of given config variable
 | ev [key]           list config vars in verbose format
 | evj [key]          list config vars in verbose format in JSON
-Usage ec[s?] [key][[=| ]fg] [bg]
+
+Usage: ec[s?] [key][[=| ]fg] [bg]
 | ec [key]               list all/key color keys
 | ec*                    same as above, but using r2 commands
 | ecd                    set default palette
@@ -1886,13 +1963,15 @@ Vars:
 | colors:                rgb:000, red, green, blue, #ff0000, ...
 | e scr.color=0          use more colors (0: no color 1: ansi 16, 2: 256, 3: 16M)
 | $DATADIR/radare2/cons  ~/.local/share/radare2/cons
-Usage ecH[iw-?]
+
+Usage: ecH[iw-?]
 | ecHi[color]         highlight current instruction with 'color' background
 | ecHw[word] [color]  highlight 'word ' in current instruction with 'color' background
 | ecH                 list all the highlight rules
 | ecH.                show highlight rule in current offset
 | ecH-*               remove all the highlight hints
 | ecH-                remove all highlights on current instruction
+
 Usage: f [?] [flagname]   # Manage offset-name flags
 | f                         list flags (will only list flags from selected flagspaces)
 | f name 12 @ 33            set flag 'name' with length 12 at offset 33
@@ -1941,6 +2020,7 @@ Usage: f [?] [flagname]   # Manage offset-name flags
 | fV[*-] [nkey] [offset]    dump/restore visual marks (mK/'K)
 | fx[d]                     show hexdump (or disasm) of flag:flagsize
 | fz[?][name]               add named flag zone -name to delete. see fz?[name]
+
 Usage: fc <flagname> [color]   # List colors with 'ecs'
 | fc             same as fc.
 | fc color       set color to all flags in current offset
@@ -1951,19 +2031,23 @@ Usage: fc <flagname> [color]   # List colors with 'ecs'
 | fc-*           reset all color flags
 | fc*            list all flags colors in r2 commands
 | fc.*           set color to all flags in current offset
+
 Usage: fd[d]  [offset|flag|expression]   # Describe flags
 | fd $$         describe flag + delta for given offset
 | fd. $$        check flags in current address (no delta)
 | fdj $$        describe current flag in json
 | fdd $$        describe flag without space restrictions
 | fdw [string]  filter closest flag by string for current offset
+
 Usage: fD[*.j]  [rawname]   # filter/mangle raw symbol name to be valid flag name
 | fD rawname   print the mangled flag name using the raw name, see the ' command prefix
 | fD. rawname  set a flag using the orig raw name in the current offset
 | fDj rawname  same as fD but output is in json
 | fD* rawname  filter raw name to be a valid flag and output in r2 commands
+
 Usage: fR  [from] [to] ([mask])   # Relocate flags matching a mask asuming old and new base addresses
 | fR entry0 `dm~:1[1]`  rebase entrypoint
+
 Usage: fs [*] [+-][flagspace|addr]   # Manage flagspaces
 | fs            display flagspaces
 | fs*           display flagspaces as r2 commands
@@ -1981,6 +2065,7 @@ Usage: fs [*] [+-][flagspace|addr]   # Manage flagspaces
 | fss*          display flagspaces stack in r2 commands
 | fssj          display flagspaces stack in JSON
 | fsr newname   rename selected flagspace
+
 Usage: ft [?ln] ([k] [v ...])  # Grep flag names using glob expression
 | ft tag strcpy strlen ...  set words for the 'string' tag
 | ft tag                    get offsets of all matching flags
@@ -1989,6 +2074,7 @@ Usage: ft [?ln] ([k] [v ...])  # Grep flag names using glob expression
 | ftw                       flag tags within this file
 | ftj                       list all flagtags in JSON format
 | ft*                       list all flagtags in r2 commands
+
 Usage: f [?|-name| name] [@addr]   # Manage flagzones
 | fz math  add new flagzone named 'math'
 | fz-math  remove the math flagzone
@@ -1996,6 +2082,7 @@ Usage: f [?|-name| name] [@addr]   # Manage flagzones
 | fz.      show around flagzone context
 | fz:      show what's in scr.flagzone for visual
 | fz*      dump into r2 commands, for projects
+
 Usage: g[wcilper] [arg]  Go compile shellcodes using asm.arch/bits/os
 | g                   compile the shellcode
 | g foo.r             compile r_egg source file
@@ -2012,6 +2099,7 @@ Usage: g[wcilper] [arg]  Go compile shellcodes using asm.arch/bits/os
 | gw                  compile and write
 shc    exec : execute cmd=/bin/sh suid=false
 enc     xor : xor encoder for shellcode
+
 Usage: i  Get info from opened file (see rabin2's manpage)
 | i[*jq]                 show info of current file (in JSON)
 | ia                     list archs found in current binary (same as rabin2 -A)
@@ -2044,6 +2132,7 @@ Usage: i  Get info from opened file (see rabin2's manpage)
 | iV                     display file version info
 | iw                     show try/catch blocks
 | iz[?]                  strings in data sections (in JSON/Base64)
+
 Usage: ic [.-+clgjsq][jq]  Display class information
 | ic                 List classes, methods and fields (icj for json)
 | ic.                show class and method name in current seek
@@ -2055,6 +2144,7 @@ Usage: ic [.-+clgjsq][jq]  Display class information
 | icqq               List classes, in quieter mode (only show non-system classnames)
 | icl[c]             Show addresses of class and it methods, without names (iclc = class count)
 | ics                Show class symbols in an easy to parse format
+
 Usage: idp  Debug information
 | id               show DWARF source lines information
 | idp [file.pdb]   load pdb file information
@@ -2063,11 +2153,13 @@ Usage: idp  Debug information
 | idpd             download pdb file on remote server
 | idx              display source files used via dwarf (previously known as iX)
 | ie[?]e  ie=entrypoint, iee=constructors+destructors
+
 Usage: iE [][jq*]  List exported symbols
 | iE                exports (global symbols)
 | iE,[table-query]  exported symbols using the table query
 | iE.               show export in current address
 | ig[?][h]  guess size of binary program (igh use human units instead of number of bytes)
+
 Usage: ih [*jq]  Display header information
 | ih   normal output to display binary headers
 | ih*  same as above, but in r2 commands
@@ -2075,6 +2167,7 @@ Usage: ih [*jq]  Display header information
 | iH[?]  show binary headers fields
 | ii[?][c,j*,]           list the symbols imported from other libraries
 | iic[?][jqk*] ([type])  classify imports
+
 Usage: iic [jkq*]  info import classes
 | iic [symname]  show all imports matching a class
 | iic            list imports grouped by class
@@ -2083,6 +2176,7 @@ Usage: iic [jkq*]  info import classes
 | iiccx [type]   show functions calling the imports of this class
 | iicj           list grouped imports in json
 | iick           group imports by class, listed in key/value format
+
 Usage: iic [jkq*]  info import classes
 | iic [symname]  show all imports matching a class
 | iic            list imports grouped by class
@@ -2092,17 +2186,20 @@ Usage: iic [jkq*]  info import classes
 | iicj           list grouped imports in json
 | iick           group imports by class, listed in key/value format
 | iO[?]  perform binary operation (dump, resize, change sections, ...)
+
 Usage: is [*hjq]  List symbols from current selected binary
 | is,[table-query]  list symbols in table using given expression
 | is.               current symbol
 | is*               same as above, but in r2 commands
 | isj               in json format
+
 Usage: iS [][jq*]  List sections and segments
 | iS [sha1,crc32(,..)]  sections (see Lh to list the hash algorithms supported)
 | iS.                   current section
 | iS,[table-query]      list sections in table using given expression
 | iS=                   show ascii-art color bars with the section ranges
 | iSS                   list memory segments (maps with om)
+
 Usage: iz [][jq*]  List strings
 | iz          strings in data sections (in JSON/Base64)
 | iz- [addr]  purge string via bin.str.purge
@@ -2110,6 +2207,7 @@ Usage: iz [][jq*]  List strings
 | izz         search for Strings in the whole binary
 | izz*        same as iz* but exposing the strings of the whole binary
 | izzz        dump Strings from whole binary to r2 shell (for huge files)
+
 Usage: k[s] [key[=value]]  Sdb Query
 | k anal/**                 list namespaces under anal
 | k anal/meta/*             list kv from anal > meta namespaces
@@ -2121,6 +2219,7 @@ Usage: k[s] [key[=value]]  Sdb Query
 | kj                        List all namespaces and sdb databases in JSON format
 | ko [file.sdb] [ns]        open file into namespace
 | ks [ns]                   enter the sdb query shell
+
 Usage: l[erls] [arg]  Internal less (~..) and file listing (!ls)
 | lu [path]                same as #!lua
 | ll [path]                same as ls -l
@@ -2132,6 +2231,7 @@ Usage: l[erls] [arg]  Internal less (~..) and file listing (!ls)
 | ls -j [path]             list files in json format
 | ls -q [path]             quiet output (one file per line)
 | le[ss] [path]            same as cat file~.. (or less)
+
 Usage: L[acio]  [-name][ file]
 | L             show this help
 | L blah.dylib  load plugin file
@@ -2153,6 +2253,7 @@ Usage: L[acio]  [-name][ file]
 | Lp[j]         list parser plugins (e asm.parser=?)
 | Ls[qj]        list assembler plugins
 | Lt[j]         list color themes (eco)
+
 Usage: m[-?*dgy] [...]   Mountpoints management
 | m /mnt ext2 0                mount ext2 fs at /mnt with delta 0 on IO
 | m /mnt                       mount fs at /mnt with autodetect fs and current offset
@@ -2177,9 +2278,11 @@ Usage: m[-?*dgy] [...]   Mountpoints management
 | my                           yank contents of file into clipboard
 | mal                          list available r2 docs
 | man [page]                   man=manpage reading (see mal)
+
 Usage: mf[no] [...]  search files matching name or offset
 | mfn /foo *.c     search files by name in /foo path
 | mfo /foo 0x5e91  search files by offset in /foo path
+
 Usage: o [file] ([offset])  Open and close files, maps, and banks
 | o                         list opened files
 | o [file] 0x4000 rwx       map file at 0x4000
@@ -2207,6 +2310,7 @@ Usage: o [file] ([offset])  Open and close files, maps, and banks
 | oq[q]                     list all open files or show current fd 'oqq'
 | ox fd fdx                 exchange the descs of fd and fdx and keep the mapping
 | open [file]               use system xdg-open/open on a file
+
 Usage: o-[#!*$.-]  close opened files
 | o-*  close all opened files
 | o-!  close all files except the current one
@@ -2214,6 +2318,7 @@ Usage: o-[#!*$.-]  close opened files
 | o-$  close last fd
 | o-.  close current fd
 | o--  close all files, analysis, binfiles, flags, same as !r2 --
+
 Usage: ob  List open binary files backed by fd
 | ob [name|bfid]         switch to open given objid (or name)
 | ob                     list opened binary files and objid
@@ -2237,6 +2342,7 @@ Usage: ob  List open binary files backed by fd
 | obo [fd]               switch to open binfile by fd number
 | obr [baddr]            rebase current bin object
 | of[?] [file]  open file without creating any map
+
 Usage: om [arg]  Map opened files
 | om [fd]                                  list all defined IO maps for a specific fd
 | om fd vaddr [size] [paddr] [rwx] [name]  create new io map
@@ -2269,6 +2375,7 @@ Usage: om [arg]  Map opened files
 | omt mapid                                toggle map backwards tying (same as omtb)
 | omtb mapid                               toggle map backwards tying
 | omtf mapid                               toggle map forwards tying
+
 Usage: omb[+-adgq] [fd]  Operate on memory banks
 | omb           list all memory banks
 | omb [id]      switch to use a different bank
@@ -2280,16 +2387,19 @@ Usage: omb[+-adgq] [fd]  Operate on memory banks
 | omb- [mapid]  delete the bank with given id
 | ombg          associate all maps to the current bank
 | ombq          show current bankid
+
 Usage: omn[.i] ([addr]) [name]  Define a name for the given map
 | omn mapaddr [name]  set/delete name for map which spans mapaddr
 | omn.([-|name])      show/set/delete name for current map
 | omni mapid [name]   set/delete name for map with mapid
+
 Usage: on[n+*] [file] ([addr] [rwx])  Open file without parsing headers
 | on /bin/ls 0x4000    map raw file at 0x4000 (no r_bin involved)
 | onn [file] ([rwx])   open file without creating any map or parsing headers with rbin)
 | onnu [file] ([rwx])  same as onn, but unique, will return previos fd if already opened
 | on+ [file] ([rwx])   open file in rw mode without parsing headers
 | on*                  list open files as r2 commands
+
 Usage: oo [arg]  Map opened files
 | oo           reopen current file
 | oo+          reopen in read-write
@@ -2302,10 +2412,12 @@ Usage: oo [arg]  Map opened files
 | oon+         reopen in read-write mode without loading rbin info
 | oonn         reopen without loading rbin info, but with header flags
 | oonn+        reopen in read-write mode without loading rbin info, but with
+
 Usage: ood  Debug (re)open commands
 | ood [args]     reopen in debug mode (with args)
 | oodf [file]    reopen in debug mode using the given file
 | oodr [rarun2]  same as dor ..;ood
+
 Usage: p[=68abcdDfiImrstuxz] [arg|len] [@addr]
 | p[b|B|xb] [len] ([S])   bindump N bits skipping S bytes
 | p[iI][df] [len]         print N ops/bytes (f=func) (see pi? and pdi)
@@ -2349,11 +2461,13 @@ Usage: p[=68abcdDfiImrstuxz] [arg|len] [@addr]
 | pkill [process-name]    kill all processes with the given name
 | pushd [dir]             cd to dir and push current directory to stack
 | popd[-a][-h]            pop dir off top of stack and cd to it
+
 Usage: p-[hej] [nblocks]   bar|json|histogram blocks
 | p- [nblocks]   show ascii-art bar of metadata in file boundaries
 | p-e [nblocks]  show ascii-art bar of entropy per block
 | p-h [nblocks]  show histogram analysis of metadata per block
 | p-j [nblocks]  show json format
+
 Usage: p8[*fjx]  [len]  8bit hexpair list of bytes (see pcj)
 | p8 ([len])  print hexpairs string
 | p8*         display r2 commands to write this block
@@ -2361,6 +2475,7 @@ Usage: p8[*fjx]  [len]  8bit hexpair list of bytes (see pcj)
 | p8f         print hexpairs of function (linear)
 | p8j         print hexpairs in JSON array
 | p8x         print hexpairs honoring hex.cols
+
 Usage: p=[=bep?][qj] [N] ([len]) ([offset])   show entropy/printable chars/chars bars
 | e zoom.in  specify range for zoom
 | p=         print bytes of current block in bars
@@ -2380,6 +2495,7 @@ Usage: p=[=bep?][qj] [N] ([len]) ([offset])   show entropy/printable chars/chars
 | p=p        number of printable bytes for each filesize/blocksize
 | p=s        number of syscall and privileged instructions
 | p=z        number of chars in strings in block
+
 Usage: pa[edD] [asm|hex]  Print (dis)assembly
 | pa [assembly]    print hexpairs of the given assembly expression
 | paD [hexpairs]   print assembly expression from hexpairs and show hexpairs
@@ -2388,6 +2504,7 @@ Usage: pa[edD] [asm|hex]  Print (dis)assembly
 | pae [assembly]   print ESIL expression of the given assembly expression
 | pb[?] [n]  bitstream of N bits
 | pB[?] [n]  bitstream of N bytes
+
 Usage: pc   # Print in code
 | pc   C
 | pc*  print 'wx' r2 commands
@@ -2414,6 +2531,7 @@ Usage: pc   # Print in code
 | pcy  yara
 | pcY  quiet yara
 | pcz  Swift
+
 Usage: p[dD][ajbrfils] [[-]len]   # Print N bytes/instructions bw/forward
 | NOTE: len        parameter can be negative
 | NOTE:            Pressing ENTER on empty command will repeat last print command in next page
@@ -2445,11 +2563,13 @@ Usage: p[dD][ajbrfils] [[-]len]   # Print N bytes/instructions bw/forward
 | pdu[aceios?]     disassemble instructions until condition
 | pd, [n] [query]  disassemble N instructions in a table (see dtd for debug traces)
 | pdx [hex]        alias for pad or pix
+
 Usage: pdc[oj]  experimental, unreliable and hacky pseudo-decompiler
 | pdc   pseudo decompile function in current offset
 | pdcc  pseudo-decompile with C helpers around
 | pdco  show associated offset next to pseudecompiled output
 | pdcj  in json format for codemeta annotations (used by frontends like iaito)
+
 Usage: pdf[sj]   # disassemble function (needs to be analized with 'af' or so)
 | pdf   disassemble function in a linear way (see pdfr)
 | pdfj  disassemble function in json (see pdfJ)
@@ -2460,8 +2580,8 @@ Usage: pdf[sj]   # disassemble function (needs to be analized with 'af' or so)
 | pdsb [N]   basic block summary
 | pdsf[sjq]  show function summary of strings, calls, variables, references..
 | pdss [N]   string summary in current function
+
 Usage: pf[.k[.f[=v]]|[v]]|[n]|[0|cnt][fmt] [a0 a1 ...]
-Commands:
 | pf fmt                     show data using the given format-string. See 'pf??' and 'pf???'.
 | pf?                        help on commands
 | pf??                       help on format characters
@@ -2483,6 +2603,7 @@ Commands:
 | pfq fmt ...                quiet print format (do now show address)
 | pfs[.fmt_name|fmt]         print the size of (named) format in bytes
 | pfv.fmt_name[.field]       print value(s) only for named format. Useful for one-liners
+
 Usage: pfb  print formatted bitfields
 | pfb [fmt] [fnames]   print formatted bitfield in ascii art
 | pfbc [fmt] [fnames]  same as pfb, but using C syntax
@@ -2494,6 +2615,7 @@ Examples:
 |  pfb 3b+4b foo bar   same as above, the + sign is ignored
 |  pfb 3b..4b foo bar  same as above, but separated by 2 unused bits
 |  pfb 3b2.4b foo bar  same as above, you can use digits and dot
+
 Usage: pF[apdbA][*vqj] [len]  parse ASN1, PKCS, X509, DER, protobuf, axml
 | pFa[jqt] [len]  decode ASN1/DER from current block (PEM is B64(DER))
 | pFA[j] [len]    decode Android Binary XML from current block
@@ -2503,17 +2625,20 @@ Usage: pF[apdbA][*vqj] [len]  parse ASN1, PKCS, X509, DER, protobuf, axml
 | pFp[j] [len]    decode PKCS7
 | pFx[j] [len]    Same with X509
 | pFX [len]       print decompressed xz block
+
 Usage: pg[-] [asm|hex]  print (dis)assembled
 | pg [x y w h cmd]  add a new gadget
 | pg                print them all
 | pg*               print the gadgets as r2 commands
 | pg-*              remove all the gadgets
+
 Usage: ph   [algorithm] ([size])
 | ph md5               compute md5 hash of current block
 | ph:md5               same as 'ph md5' (colon acts as a space)
 | ph sha1 32 @ 0x1000  calculate sha1 of 32 bytes starting at 0x1000
 | ph                   list available hash plugins (same as Lh and phl/phL)
 | phj                  list available hash plugins in json
+
 Usage: pi[bdefrj] [num]
 | pia              print all possible opcodes (byte per byte)
 | pib              print instructions of basic block
@@ -2525,20 +2650,24 @@ Usage: pi[bdefrj] [num]
 | pir              like 'pdr' but with 'pI' output
 | piu[q] [optype]  disassemble until instruction of given optype is found (See /atl)
 | pix  [hexpairs]  alias for pdx and pad
+
 Usage: pie[bqf]   # print esil of N instructions
 | pie    print esil of N instructions
 | pieb   alias for `pie $Fi`
 | pieq   same as above but hiding the offset
 | pief   print esil of all the function basic blocks
 | piefq  same as above but hiding the offset
+
 Usage: piE[q]   # print esil of N bytes
 | piE   print esil of the instructions found in N bytes
 | piEq  same as above but without displaying the instruction address
+
 Usage: pif[cj]   # print instructions from function
 | pif    print function instructions
 | pifj   same as above but in JSON format
 | pifc   print all calls from this function
 | pifcj  print all calls from this function in JSON format
+
 Usage: pi[bdefrj] [num]
 | pia              print all possible opcodes (byte per byte)
 | pib              print instructions of basic block
@@ -2550,27 +2679,33 @@ Usage: pi[bdefrj] [num]
 | pir              like 'pdr' but with 'pI' output
 | piu[q] [optype]  disassemble until instruction of given optype is found (See /atl)
 | pix  [hexpairs]  alias for pdx and pad
+
 Usage: pie[bqf]   # print esil of N instructions
 | pie    print esil of N instructions
 | pieb   alias for `pie $Fi`
 | pieq   same as above but hiding the offset
 | pief   print esil of all the function basic blocks
 | piefq  same as above but hiding the offset
+
 Usage: piE[q]   # print esil of N bytes
 | piE   print esil of the instructions found in N bytes
 | piEq  same as above but without displaying the instruction address
+
 Usage: pif[cj]   # print instructions from function
 | pif    print function instructions
 | pifj   same as above but in JSON format
 | pifc   print all calls from this function
 | pifcj  print all calls from this function in JSON format
+
 Usage: pj[..] [size]
 | pj    print current block as indented JSON
 | pj.   print as indented JSON from 0 to the current offset
 | pj..  print JSON path from 0 to the current offset
+
 Usage: pm [file|directory]  Set libmagic reference file or directory (see /m?)
 | pm [file|directory]  set libmagic reference (see /m?)
 | e dir.magic          defaults to /usr/local/share/radare2/5.9.7/magic
+
 Usage: po[24aAdlmorsxS]   [hexpairs] @ addr[!bsize] (see also `poke`)
 | po[24aAdlmorsx]        without hexpair values, clipboard is used
 | po2 [val]              2=  2 byte endian swap
@@ -2587,6 +2722,7 @@ Usage: po[24aAdlmorsxS]   [hexpairs] @ addr[!bsize] (see also `poke`)
 | pos [val]              -=  substraction
 | pox [val]              ^=  xor  (f.ex: pox 0x90)
 | poS [algo] [key]       Compute and print block signature
+
 Usage: pp[d]  print patterns
 | pp0      print buffer filled with zeros
 | pp1      print incremental byte pattern (honor lower bits of cur address and bsize)
@@ -2597,9 +2733,11 @@ Usage: pp[d]  print patterns
 | ppd      print debruijn pattern (see ragg2 -P, -q and wopD)
 | ppf      print buffer filled with 0xff
 | ppn      numeric pin patterns
+
 Usage: pq[?z] [len]  generate QR code in ascii art
 | pq 32  print QR code with the current 32 bytes
 | pqz    print QR code with current string in current offset
+
 Usage: pr[glx] [size]  print N raw bytes
 | prc[=fep..]   print bytes as colors in palette
 | prg[?]        print raw GUNZIPped block
@@ -2608,11 +2746,13 @@ Usage: pr[glx] [size]  print N raw bytes
 | prl           print raw with lines offsets
 | prx           printable chars with real offset (hyew)
 | prz           print raw zero terminated string
+
 Usage: prg[?ilo]  [len]  print raw inflated/decompressed block
 | prg   print gunzipped data of current block
 | prgl  decompress current block using LZ4 (adjust blocksize)
 | prgi  show consumed bytes when inflating
 | prgo  show output bytes after inflating
+
 Usage: ps[abijqpsuwWxz+] [len]  Print String (optionally specify the length)
 | ps[j]         print string until a first non-printable character
 | ps+[j]        print libc++ std::string (same-endian, ascii, zero-terminated)
@@ -2629,6 +2769,7 @@ Usage: ps[abijqpsuwWxz+] [len]  Print String (optionally specify the length)
 | psW[j]        print 32bit wide string
 | psx           show string with escaped chars
 | psz[?] [lj]   print zero-terminated string
+
 Usage: psp[124j]  Print pascal string
 | psp    print zero-terminated string, taking length defined by the first byte (psp1)
 | psp1   same as psp
@@ -2645,11 +2786,13 @@ Usage: psp[124j]  Print pascal string
 | pspW2  same as pspW, but taking 2 byte for length
 | pspW4  same as pspW, but using 4 byte dword (honoring cfg.bigendian) for length
 | pspWj  print pascal 32bit wide string in JSON
+
 Usage: psz[jl]  Print zero-terminated string
 | psz   print zero-terminated string
 | psz*  r2 command to write the null-terminated string in here
 | pszj  print zero-terminated string as json
 | pszl  print strlen of zero-terminated string in current address
+
 Usage: pt [dn]  print timestamps
 | pt.  print current time
 | pt   print UNIX time (32 bit `cfg.bigendian`) Since January 1, 1970
@@ -2657,6 +2800,7 @@ Usage: pt [dn]  print timestamps
 | ptd  print DOS time (32 bit `cfg.bigendian`) Since January 1, 1980
 | pth  print HFS time (32 bit `cfg.bigendian`) Since January 1, 1904
 | ptn  print NTFS time (64 bit `cfg.bigendian`) Since January 1, 1601
+
 Usage: pv[1248z][udj]  Print value(s) given size and endian (u for unsigned, d for signed decimal, j for json)
 | pv                    print bytes based on asm.bits
 | pv1[udj]              print 1 byte in memory
@@ -2666,6 +2810,7 @@ Usage: pv[1248z][udj]  Print value(s) given size and endian (u for unsigned, d f
 | pvp[udj]              print 4 or 8 bytes depending on asm.bits
 | pve [1234] ([bsize])  print value with any endian (reorder bytes with the 1234 order)
 | pvz                   print value as string (alias for ps)
+
 Usage: px[0afoswqWqQ][f]   # Print heXadecimal
 | px                show hexdump
 | px--[n]           context hexdump (the hexdump version of pd--3)
@@ -2695,6 +2840,7 @@ Usage: px[0afoswqWqQ][f]   # Print heXadecimal
 | pxW[q]            same as above, but one per line (q=quiet)
 | pxx               show N bytes of hex-less hexdump
 | pxX               show N words of hex-less hexdump
+
 Usage: pxA [len]  show op analysis color map
 | $$    int/swi/trap/new
 | +-*/  math ops
@@ -2711,6 +2857,7 @@ Usage: pxA [len]  show op analysis color map
 | io    in/out ops
 | mv    move,lea,li
 | |&^   bin ops
+
 Usage: pz [len]  print zoomed blocks (filesize/N)
 | e zoom.maxsz  max size of block
 | e zoom.from   start address
@@ -2723,6 +2870,7 @@ Usage: pz [len]  print zoomed blocks (filesize/N)
 | pzh           head (first byte value); This is the default mode
 | pzp           number of printable chars
 | pzs           strings in range
+
 Usage: P[?.+-*cdilnsS] [file]  Project management
 | P [file]          open project (formerly Po)
 | P.                show current loaded project (see prj.name)
@@ -2743,6 +2891,7 @@ Usage: P[?.+-*cdilnsS] [file]  Project management
 | NOTE:             the 'e prj.name' evar can save/open/rename/list projects.
 | NOTE:             see the other 'e??prj.' evars for more options.
 | NOTE:             project are stored in dir.projects
+
 Usage: q[!][!] [retval]
 | q            quit program
 | q!           force quit (no questions)
@@ -2752,6 +2901,7 @@ Usage: q[!][!] [retval]
 | q a-b        quit with return value a-b
 | q[y/n][y/n]  quit, chose to kill process, chose to save project 
 | Q            same as q!!
+
 Usage: r[+-][ size]  Resize file
 | r                     display file size
 | rj                    display the file size in JSON format
@@ -2773,6 +2923,7 @@ Usage: r[+-][ size]  Resize file
 | rh                    show size in human format
 | r2 [file]             launch r2 (same for rax2, rasm2, ...)
 | reset                 reset console settings (clear --hard)
+
 Usage: s   # Help for the seek commands. See ?$? to see all variables
 | s               print current address
 | s addr          seek to address
@@ -2807,20 +2958,25 @@ Usage: s   # Help for the seek commands. See ?$? to see all variables
 | sr PC           seek to register (or register alias) value
 | ss[?]           seek silently (without adding an entry to the seek history)
 | sort [file]     sort the contents of the file
+
 Usage: s.  Seek here or there (near seeks)
 | s.       seek here, same as 's $$'
 | s..32a8  seek to the same address but replacing the lower nibbles
+
 Usage: sC  Comment grep
 | sC*     list all comments
 | sC str  seek to the first comment matching 'str'
+
 Usage: sl+ or sl- or slc
 | sl [line]        seek to absolute line
 | sl[+-][line]     seek to relative line
 | slc              clear line cache
 | sll              show total number of lines
 | sleep [seconds]  sleep for an specific amount of time (support decimal values)
+
 Usage: ss   # Seek silently (not recorded in the seek history)
 | s?  works with all s subcommands, for example ssr = silent 'sr'
+
 Usage: t  Parse, manage, and print C types
 | t                             list all loaded types
 | tj                            list all loaded types as json
@@ -2843,11 +2999,13 @@ Usage: t  Parse, manage, and print C types
 | tt[?]                         list all loaded typedefs
 | tu[?]                         print loaded union types
 | tx[?]                         type xrefs
+
 Usage: tc[...]  [type]  Print loaded types
 | tc              list all loaded types in C output format with newlines
 | tc [type.name]  list given loaded type in C output format with newlines
 | tcd             list all loaded types in C output format without newlines
 | tcc[?]          manage calling convention types
+
 Usage: tcc [-name]  Type function calling conventions (see also afc? and arcc)
 | tcc                         list all calling conventions
 | tcc*                        list calling conventions as r2 commands
@@ -2858,6 +3016,7 @@ Usage: tcc [-name]  Type function calling conventions (see also afc? and arcc)
 | tcc r0 pascal(r0,r1,r2)     define signature for pascal cc (see also arcc)
 | tcc-<name>                  unregister calling convention by name
 | tcc-*                       unregister all calling conventions
+
 Usage: te[...]  Type enum commands
 | te                    list all loaded enums
 | te <enum>             print all values of enum for given name
@@ -2870,6 +3029,7 @@ Usage: te[...]  Type enum commands
 | tej                   list all loaded enums in json
 | tej <enum>            show enum in json
 | test [-x,f,d] [path]  test if executable, file or directory exists
+
 Usage: tf[...]
 | tf           list all function definitions loaded
 | tf <name>    show function signature
@@ -2877,6 +3037,7 @@ Usage: tf[...]
 | tfcj <name>  same as above but in JSON
 | tfj          list all function definitions in JSON
 | tfj <name>   show function signature in JSON
+
 Usage: tl[...] [typename] [[=] address]  Type link commands
 | tl                         list all links.
 | tll                        list all links in readable format.
@@ -2888,6 +3049,7 @@ Usage: tl[...] [typename] [[=] address]  Type link commands
 | tl- [address]              delete link at given address.
 | tl*                        list all links in radare2 command format.
 | tlj                        list all links in JSON format.
+
 Usage: tn [-][0xaddr|symname]   manage no-return marks
 | tn[a] 0x3000                 stop function analysis if call/jmp to this address
 | tn[n] sym.imp.exit           same as above but for flag/fcn names
@@ -2895,6 +3057,7 @@ Usage: tn [-][0xaddr|symname]   manage no-return marks
 | tn- 0x3000 sym.imp.exit ...  remove some no-return references
 | tn-*                         remove all no-return references
 | tn                           list them all
+
 Usage: to[...]
 | to -             open cfg.editor to load types
 | to <path>        load types from C header file
@@ -2902,10 +3065,12 @@ Usage: to[...]
 | toe [type.name]  open cfg.editor to edit types
 | tos <path>       load types from parsed Sdb database
 | touch <file>     create or update timestamp in file
+
 Usage: tp[vx]  <type> [...]  Print type
 | tp  <type> [addr|varname]  cast data at <address> to <type> and print it (XXX: type can contain spaces)
 | tpv <type> [@addr]         show offset formatted for given type
 | tpx <type> <hexpairs>      show value for type with specified byte sequence (XXX: type can contain spaces)
+
 Usage: ts[...]  [type]
 | ts          list all loaded structs
 | ts [type]   show pf format string for given struct
@@ -2917,11 +3082,13 @@ Usage: ts[...]  [type]
 | tsc<name>   list all/given loaded structs in C output format with newlines
 | tsd         list all loaded structs in C output format without newlines
 | tss [type]  display size of struct
+
 Usage: tt[...]  Type typedef commands
 | tt             list all loaded typedefs
 | tt <typename>  show name for given type alias
 | ttj            show typename and type alias in json
 | ttc<name>      show typename and type alias in C output format
+
 Usage: tu[...]
 | tu          list all loaded unions
 | tu [type]   show pf format string for given union
@@ -2931,6 +3098,7 @@ Usage: tu[...]
 | tu* [type]  show pf.<name> format string for given union
 | tuc<name>   list all/given loaded unions in C output format with newlines
 | tud         list all loaded unions in C output format without newlines
+
 Usage: tx[.tflg] [...]  Function types
 | tx            list functions and the types they use
 | tx.           same as txf
@@ -2939,6 +3107,7 @@ Usage: tx[.tflg] [...]  Function types
 | txf ([addr])  list all types used in the current or given function (same as tx.)
 | txl           list all types used by any function
 | txg           render the type xrefs graph (usage .txg;aggv)
+
 Usage: T  [-][ num|msg] # text-log utility with timestamps
 | T          list all Text log messages
 | T message  add new log message
@@ -2953,6 +3122,7 @@ Usage: T  [-][ num|msg] # text-log utility with timestamps
 | TT         enter into the text log chat console
 | T=[.]      pull logs from remote r2 instance specified by http.sync
 | T=&        start background thread syncing with the remote server
+
 Usage: u  uname or undo write/seek
 | u         show system uname (alias for uname)
 | uw        alias for wc (requires: e io.cache=true)
@@ -2961,6 +3131,7 @@ Usage: u  uname or undo write/seek
 | uid       display numeric user id
 | uniq      filter rows to avoid duplicates
 | uname[?]  uname - show system information
+
 Usage: uc [cmd],[revert-cmd]  undo core commands (see `e cmd.undo`)
 | uc w hello,w world  add a new undo command manually
 | uc                  list all core undos commands
@@ -2969,6 +3140,7 @@ Usage: uc [cmd],[revert-cmd]  undo core commands (see `e cmd.undo`)
 | ucd                 down : redo action
 | uc-                 undo last action
 | uc.                 list all reverts in current
+
 Usage: uname  show information about the current system
 | uname     show host operating system
 | uname -a  show more system details
@@ -2976,6 +3148,7 @@ Usage: uname  show information about the current system
 | uname -b  show machine cpu register bits size
 | uname -m  show machine cpu architecture name
 | uname -r  show operating system version
+
 Usage: w[x] [str] [<file] [<<EOF] [@addr]
 | w[1248][+-][n]                increment/decrement byte,word..
 | w foobar                      write string 'foobar'
@@ -3006,6 +3179,7 @@ Usage: w[x] [str] [<file] [<<EOF] [@addr]
 | wv[?] eip+34                  write 32-64 bit value honoring cfg.bigendian
 | wu [unified-diff-patch]       see 'cu'
 | wz string                     write zero terminated string (like w + \x00)
+
 Usage: wa[of*] [arg]
 | wa nop           write nopcode using asm.arch and asm.bits
 | wai jmp 0x8080   write inside this op (fill with nops or error if doesnt fit)
@@ -3030,6 +3204,7 @@ Usage: wa[of*] [arg]
 | wao trap  make the current opcode a trap
 | wao recj  reverse (swap) conditional branch instruction
 | WIP:      not all archs are supported and not all commands work on all archs
+
 Usage: wc[jir+-*?]    # See `e io.cache = true`
 | wc               list all write changes in the current cache layer
 | wc*              print write commands to replicate the patches in the current cache layer
@@ -3057,6 +3232,7 @@ Usage: wc[jir+-*?]    # See `e io.cache = true`
 | wes <addr>  <dist> <block_size>  shift a blocksize left or write in the editor
 | wex <hex_bytes>                  insert bytes at current offset by extending the file
 | weX <addr> <hex_bytes>           insert bytes at address by extending the file
+
 Usage: wo[asmdxoArl24]   [hexpairs] @ addr[!bsize] write operation in current block
 | wo2                               2= 2 byte endian swap (word)
 | wo4                               4= 4 byte endian swap (dword)
@@ -3078,6 +3254,7 @@ Usage: wo[asmdxoArl24]   [hexpairs] @ addr[!bsize] write operation in current bl
 | woS [algo] [key]                  sign the current block with given algo and key
 | wow [val]                         == write looped value (alias for 'wb')
 | wox [val]                         ^= xor (f.ex: wox 0x90)
+
 Usage: wp  [-|r2patch-file]
 | ^#  comments
 | .   execute command
@@ -3087,11 +3264,13 @@ Usage: wp  [-|r2patch-file]
 |     OFFSET 01020304
 |     OFFSET : assembly
 |     + {code}|"str"|0210|: asm
+
 Usage: ws[124?] [string]  Pascal strings are not null terminated and store the length in binary at the beginning
 | ws str   write pascal string using first byte as length
 | ws1 str  same as above
 | ws2 str  same as above but using ut16 as length (honors cfg.bigendian)
 | ws4 str  same, but using ut32 (honors cfg.bigendian)
+
 Usage: wt[afs] [filename] [size]   Write current block or [size] bytes from offset to file
 | wta [filename]         append to 'filename'
 | wtf [filename] [size]  write to file (see also 'wxf' and 'wf?')
@@ -3099,11 +3278,13 @@ Usage: wt[afs] [filename] [size]   Write current block or [size] bytes from offs
 | wtff [prefix] [size]   write block from current seek to "<prefix>-<offset>"
 | wts host:port [size]   send data to remote socket at tcp://host:port
 | NOTE:                  filename defaults to "<cfg.prefixdump>.<offset>"
+
 Usage: wx[f] [arg]
 | wx 3.       write the left nibble of the current byte
 | wx .5       write the right nibble of the current byte
 | wx+ 9090    write hexpairs and seek forward
 | wxf -|file  write contents of hexpairs file here
+
 Usage: wv[size] [value]   Write value of given size
 | wv 0x834002                     write dword with this value
 | wv1 234                         write one byte with this value
@@ -3115,6 +3296,7 @@ Usage: wv[size] [value]   Write value of given size
 | wvF 3.14                        write double value (8 bytes)
 | wvG 3.14                        write long double value (10/16 bytes)
 | Supported sizes are:1, 2, 4, 8  
+
 Usage: px[0afoswqWqQ][f]   # Print heXadecimal
 | px                show hexdump
 | px--[n]           context hexdump (the hexdump version of pd--3)
@@ -3144,6 +3326,7 @@ Usage: px[0afoswqWqQ][f]   # Print heXadecimal
 | pxW[q]            same as above, but one per line (q=quiet)
 | pxx               show N bytes of hex-less hexdump
 | pxX               show N words of hex-less hexdump
+
 Usage: pxA [len]  show op analysis color map
 | $$    int/swi/trap/new
 | +-*/  math ops
@@ -3160,6 +3343,7 @@ Usage: pxA [len]  show op analysis color map
 | io    in/out ops
 | mv    move,lea,li
 | |&^   bin ops
+
 Usage: y[fptxy] [len] [[@]addr]   # See wd? for memcpy, same as 'yf'.
 | y!                 open cfg.editor to edit the clipboard
 | y 16 0x200         copy 16 bytes into clipboard from 0x200
@@ -3184,6 +3368,7 @@ Usage: y[fptxy] [len] [[@]addr]   # See wd? for memcpy, same as 'yf'.
 | yy @ 0x3344        paste contents of clipboard to 0x3344
 | yy                 paste contents of clipboard at current seek
 | yz [len]           copy nul-terminated string (up to blocksize) into clipboard
+
 Usage: z[*j-aof/cs] [args]   # Manage zignatures
 | z ([addr])   show/list zignatures
 | z.           find matching zignatures in current offset
@@ -3204,9 +3389,11 @@ Usage: z[*j-aof/cs] [args]   # Manage zignatures
 | zc[?]        compare current zignspace zignatures with another one
 | zs[?]        manage zignspaces
 | zi [text]    show zignatures matching information
+
 Usage: zb[r?] [args]  # search for closest matching signatures
 | zb [n]           find n closest matching zignatures to function at current offset
 | zbr zigname [n]  search for n most similar functions to zigname
+
 Usage: za[fFM?] [args]   # Add zignature
 | za zigname type params   add zignature
 | zac                      Compute collisions between signatures
@@ -3214,23 +3401,28 @@ Usage: za[fFM?] [args]   # Add zignature
 | zaF                      generate zignatures for all functions
 | zaM                      Same as zaF but merge signatures of same name
 | za??                     show extended help
+
 Usage: zo[zs] filename   # Manage zignature files (see dir.zigns)
 | zo filename   load zinatures from sdb file
 | zoz filename  load zinatures from gzipped sdb file
 | zos filename  save zignatures to sdb file (merge if file exists)
+
 Usage: zf[dsz] filename   # Manage FLIRT signatures
 | zfd filename      open FLIRT file and dump
 | zfs filename      open FLIRT file and scan
 | zfs /path/**.sig  recursively search for FLIRT files and scan them (see dir.depth)
 | zfz filename      open FLIRT file and get sig commands (zfz flirt_file > zignatures.sig)
+
 Usage: z/[f*]   # Search signatures (see 'e?search' for options)
 | z/    search zignatures on range and flag matches
 | z/f   zignature search on known functions
 | z/*   search zignatures on range and output radare commands
+
 Usage: zc[n!] other_space   # Compare zignspaces, match >= threshold (e zign.diff.*)
 | zc other_space    compare all current space with other_space
 | zcn other_space   compare current space with zigns with same name on other_space
 | zcn! other_space  same as above but show the ones not matching
+
 Usage: zs[+-*] [namespace]   # Manage zignspaces
 | zs            display zignspaces
 | zs zignspace  select zignspace
