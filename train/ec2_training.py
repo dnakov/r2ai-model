@@ -158,7 +158,8 @@ chown -R ubuntu:ubuntu /mnt/efs
 
 export CHECKPOINT_DIR=/mnt/efs/checkpoints
 export METRICS_DIR=/mnt/efs/output/metrics
-export HF_HUB_CACHE="/mnt/efs/model_cache" 
+export HF_HUB_CACHE="/mnt/efs/model_cache"
+
 
 source activate pytorch
 pip install llama-recipes
@@ -382,8 +383,6 @@ class EC2SpotManager:
 
         # List of files needed for training
         training_files = [
-            'train.py',
-            'utils.py',
             'ec2/amazon-efs-utils-x64.deb',
             args.data_path
         ]
@@ -516,7 +515,7 @@ class EC2SpotManager:
             instance_info = self.ec2.describe_instances(InstanceIds=[self.instance_id])
             public_ip = instance_info['Reservations'][0]['Instances'][0]['PublicIpAddress']
             print(f"\nInstance public IP: {public_ip}")
-            print(f"Jupyter URL: https://{public_ip}:8888 (might take a few min)")
+            print(f"Jupyter URL: http://{public_ip}:8888 (might take a few min)")
 
             self.ec2.create_tags(
                 Resources=[self.instance_id],

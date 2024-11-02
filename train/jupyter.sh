@@ -8,7 +8,7 @@ USER_NAME="ubuntu"
 JUPYTER_HOME="/home/$USER_NAME"
 
 source activate pytorch
-sudo -H pip3 install jupyter
+sudo -H pip3 install jupyter setuptools==70.3.0
 
 # Set Jupyter password and hash
 JUPYTER_HASH=$(python3 -c "
