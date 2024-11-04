@@ -175,10 +175,7 @@ export HF_HUB_CACHE="/mnt/efs/model_cache"
 source activate pytorch
 {jupyter_sh}
 pip install setuptools==70.3.0
-git clone https://github.com/meta-llama/llama-recipes.git
-cd llama-recipes
-pip install -e .
-pip install -U accelerate torch trl transformers tensorboard
+pip install -U accelerate torch trl transformers tensorboard pandas datasets
 chown -R ubuntu:ubuntu /home/ubuntu
 
 """.format(
@@ -590,7 +587,7 @@ class EC2SpotManager:
                 
                 if state == 'terminated' or state == 'stopped' or state == 'shutting-down':
                     print(f"Instance {self.instance_id} has {state}. Cleaning up...")
-                    # self.cleanup_resources()
+                    self.cleanup_resources()
                     break
                 elif state == 'running':
                     # You could add additional monitoring here
