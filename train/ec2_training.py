@@ -13,13 +13,25 @@ import pathlib
 from botocore.exceptions import ClientError
 import requests
 
-AMI_ID = 'ami-0aada1758622f91bb'
 INSTANCE_TYPE = 'g5.12xlarge' # 4xA10G 24GB mem per GPU ~2/hr spot
 # INSTANCE_TYPE = 'g5.48xlarge' # 8xA10G 24GB mem per GPU ~$3/hr spot
 # INSTANCE_TYPE = 'p4d.24xlarge' # 8xA100 40GB mem per GPU ~$10/hr spot
 # INSTANCE_TYPE = 'p5.48xlarge' # 8xH100 80GB mem per GPU ~$50/hr spot
 KEY_PAIR_NAME = 'kali'
-BUCKET_NAME = 'tc-radare2-training-data'
+# BUCKET_NAME = 'tc-radare2-training-data'
+# AMI_BASE = 'ami-06b21ccaeff8cd686'
+AMIS = {
+    'us-east-1': 'ami-0aada1758622f91bb',
+    'us-east-2': 'ami-0b9d4285990d49627',
+    'us-west-2': 'ami-08e5fad56cda20dac',
+}
+
+ON_DEMAND_PRICES = {
+    'g5.12xlarge': 4.00,  # Approximate on-demand prices
+    'g5.48xlarge': 16.00,
+    'p4d.24xlarge': 32.00,
+    'p5.48xlarge': 98.00
+}
 
 def upload_to_s3(files, bucket_name=None):
     """Upload training files to S3 and return the bucket and paths"""
@@ -160,11 +172,15 @@ export CHECKPOINT_DIR=/mnt/efs/checkpoints
 export METRICS_DIR=/mnt/efs/output/metrics
 export HF_HUB_CACHE="/mnt/efs/model_cache"
 
-
 source activate pytorch
-pip install llama-recipes
-
 {jupyter_sh}
+pip install setuptools==70.3.0
+git clone https://github.com/meta-llama/llama-recipes.git
+cd llama-recipes
+pip install -e .
+pip install -U accelerate torch trl transformers tensorboard
+chown -R ubuntu:ubuntu /home/ubuntu
+
 """.format(
     ts=datetime.now().strftime("%Y%m%d-%H%M%S"),
     efs_id=efs_id,
@@ -374,7 +390,7 @@ class EC2SpotManager:
         return profile_name
 
     def setup_ec2_training(self, args):
-        """Configure and launch EC2 spot instance for training"""
+        """Configure and launch EC2 instance for training"""
         # Check if we have existing resources
         if self.load_state() and self.verify_active_resources():
             print("Resuming monitoring of existing resources...")
@@ -464,7 +480,8 @@ class EC2SpotManager:
 
         # Update launch specification
         launch_specification = {
-            'ImageId': AMI_ID,
+            'ImageId': AMIS[os.environ['AWS_DEFAULT_REGION']],
+            # 'ImageId': AMI_BASE,
             'InstanceType': INSTANCE_TYPE,
             'KeyName': KEY_PAIR_NAME,
             'SecurityGroupIds': [security_group_id],
@@ -483,39 +500,68 @@ class EC2SpotManager:
         }
         
         try:
-            # Request spot instance
-            response = self.ec2.request_spot_instances(
-                InstanceCount=1,
-                LaunchSpecification=launch_specification,
-                # SpotPrice='2.00',
-                ValidUntil=datetime.now() + timedelta(hours=24),
-                Type='one-time'
-            )
-            
-            self.spot_request_id = response['SpotInstanceRequests'][0]['SpotInstanceRequestId']
-            self.save_state()
-            print(f"Spot instance request created: {self.spot_request_id}")
-            
-            # Wait for spot instance to be fulfilled
-            waiter = self.ec2.get_waiter('spot_instance_request_fulfilled')
-            waiter.wait(
-                SpotInstanceRequestIds=[self.spot_request_id],
-                WaiterConfig={'Delay': 20, 'MaxAttempts': 30}
-            )
-            
-            # Get instance ID
-            spot_request = self.ec2.describe_spot_instance_requests(
-                SpotInstanceRequestIds=[self.spot_request_id]
-            )['SpotInstanceRequests'][0]
-            
-            self.instance_id = spot_request['InstanceId']
-            self.save_state()
-            print(f"Spot instance launched: {self.instance_id}")
+            if args.on_demand:
+                # Launch on-demand instance
+                response = self.ec2.run_instances(
+                    ImageId=launch_specification['ImageId'],
+                    InstanceType=launch_specification['InstanceType'],
+                    KeyName=launch_specification['KeyName'],
+                    SecurityGroupIds=launch_specification['SecurityGroupIds'],
+                    IamInstanceProfile=launch_specification['IamInstanceProfile'],
+                    BlockDeviceMappings=launch_specification['BlockDeviceMappings'],
+                    UserData=user_data,
+                    MinCount=1,
+                    MaxCount=1
+                )
+                
+                self.instance_id = response['Instances'][0]['InstanceId']
+                self.save_state()
+                print(f"On-demand instance launched: {self.instance_id}")
+                
+                # Wait for instance to be running
+                waiter = self.ec2.get_waiter('instance_running')
+                waiter.wait(InstanceIds=[self.instance_id])
+
+            else:
+                # Existing spot instance code
+                response = self.ec2.request_spot_instances(
+                    InstanceCount=1,
+                    LaunchSpecification=launch_specification,
+                    ValidUntil=datetime.now() + timedelta(hours=24),
+                    Type='one-time'
+                )
+                
+                self.spot_request_id = response['SpotInstanceRequests'][0]['SpotInstanceRequestId']
+                self.save_state()
+                print(f"Spot instance request created: {self.spot_request_id}")
+                
+                # Wait for spot instance to be fulfilled
+                waiter = self.ec2.get_waiter('spot_instance_request_fulfilled')
+                waiter.wait(
+                    SpotInstanceRequestIds=[self.spot_request_id],
+                    WaiterConfig={'Delay': 20, 'MaxAttempts': 30}
+                )
+                
+                spot_request = self.ec2.describe_spot_instance_requests(
+                    SpotInstanceRequestIds=[self.spot_request_id]
+                )['SpotInstanceRequests'][0]
+                
+                self.instance_id = spot_request['InstanceId']
+                self.save_state()
+                print(f"Spot instance launched: {self.instance_id}")
+
             # Get instance public IP address
             instance_info = self.ec2.describe_instances(InstanceIds=[self.instance_id])
             public_ip = instance_info['Reservations'][0]['Instances'][0]['PublicIpAddress']
             print(f"\nInstance public IP: {public_ip}")
             print(f"Jupyter URL: http://{public_ip}:8888 (might take a few min)")
+
+            # Show pricing information
+            instance_type = launch_specification['InstanceType']
+            if args.on_demand:
+                print(f"On-demand price: ~${ON_DEMAND_PRICES[instance_type]}/hour")
+            else:
+                print(f"Spot price: ~${ON_DEMAND_PRICES[instance_type]/2}/hour (estimated)")
 
             self.ec2.create_tags(
                 Resources=[self.instance_id],
@@ -531,7 +577,7 @@ class EC2SpotManager:
             return self.instance_id
             
         except Exception as e:
-            print(f"Error launching spot instance: {str(e)}")
+            print(f"Error launching instance: {str(e)}")
             self.cleanup_resources()
             raise
 
@@ -544,7 +590,7 @@ class EC2SpotManager:
                 
                 if state == 'terminated' or state == 'stopped' or state == 'shutting-down':
                     print(f"Instance {self.instance_id} has {state}. Cleaning up...")
-                    self.cleanup_resources()
+                    # self.cleanup_resources()
                     break
                 elif state == 'running':
                     # You could add additional monitoring here
@@ -565,9 +611,11 @@ def main():
     parser.add_argument('--epochs', type=int, default=3)
     parser.add_argument('--wandb_project', default='radare2-llama3.2-1b')
     parser.add_argument('--bucket', help='S3 bucket for training files', 
-                       default=BUCKET_NAME)
+                       default='tc-radare2-training-data')
     parser.add_argument('--cleanup', action='store_true',
                        help='Clean up any existing resources and exit')
+    parser.add_argument('--on_demand', action='store_true',
+                       help='Use on-demand instance instead of spot')
     
     args = parser.parse_args()
     

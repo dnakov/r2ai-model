@@ -8,7 +8,7 @@ USER_NAME="ubuntu"
 JUPYTER_HOME="/home/$USER_NAME"
 
 source activate pytorch
-sudo -H pip3 install jupyter setuptools==70.3.0
+pip install jupyter
 
 # Set Jupyter password and hash
 JUPYTER_HASH=$(python3 -c "
@@ -31,7 +31,7 @@ ESCAPED_HASH=$(echo "$JUPYTER_HASH" | sed 's/\$/\\$/g')
 # "
 
 # Set permissions for SSL files
-sudo chown -R $USER_NAME:$USER_NAME $JUPYTER_HOME/.jupyter
+chown -R $USER_NAME:$USER_NAME $JUPYTER_HOME/.jupyter
 # sudo chmod 600 $SSL_DIR/jupyter.key
 # sudo chmod 644 $SSL_DIR/jupyter.crt
 
@@ -51,17 +51,17 @@ EOF
 "
 
 # Fix permissions
-sudo chown -R $USER_NAME:$USER_NAME $JUPYTER_HOME/.jupyter
+chown -R $USER_NAME:$USER_NAME $JUPYTER_HOME/.jupyter
 # Ensure log files exist and set permissions
-sudo touch /var/log/jupyter.log /var/log/jupyter_err.log
-sudo chown $USER_NAME:$USER_NAME /var/log/jupyter.log /var/log/jupyter_err.log
-sudo chmod 644 /var/log/jupyter.log /var/log/jupyter_err.log
+touch /var/log/jupyter.log /var/log/jupyter_err.log
+chown $USER_NAME:$USER_NAME /var/log/jupyter.log /var/log/jupyter_err.log
+chmod 644 /var/log/jupyter.log /var/log/jupyter_err.log
 
 # Find Jupyter executable path
 JUPYTER_PATH=$(which jupyter)
 
 # Create systemd service file for Jupyter
-sudo bash -c "cat > /etc/systemd/system/jupyter.service << EOF
+bash -c "cat > /etc/systemd/system/jupyter.service << EOF
 [Unit]
 Description=Jupyter Notebook Server
 After=network.target
@@ -86,6 +86,6 @@ EOF
 "
 
 # Reload systemd daemon, enable and start Jupyter service
-sudo systemctl daemon-reload
-sudo systemctl enable jupyter
-sudo systemctl start jupyter
+systemctl daemon-reload
+systemctl enable jupyter
+systemctl start jupyter
