@@ -35,6 +35,9 @@ Replace every symbol with a RET instruction.	wao ret0 @@ sym.*
 NOP the current instruction	wao nop
 Grep for instructions that use the `eax` register within the first 2000 instructions.	pd 2000~eax
 Step through the debugger 10 times.	10ds
+Perform 30 steps	ds 30
+Step into four instructions	ds 4
+Step over calls	dso
 Show me 20 hexadecimal bytes at the stack pointer.	px 20 @r:SP
 How do I rename the function at address `0x080485a5` to `new_func`?	afn new_func @ 0x080485a5
 I want to set a breakpoint at the `main` function.	db sym.main
