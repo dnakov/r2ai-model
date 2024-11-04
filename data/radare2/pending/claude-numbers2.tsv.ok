@@ -1,0 +1,8 @@
+PE Analysis	How do I calculate file alignment?	?v 512-($o%512)
+PE Analysis	How do I calculate aligned file size considering 512 byte pages?	?v $o+(512-($o%512))
+Debug Info	How do I calculate size of debug section?	?v $SS{.debug}
+Symbol Analysis	How do I find size of string table section?	?v $SS{.strtab}
+Symbol Analysis	How do I calculate size of symbol section?	?v $SS{.symtab}
+Exception Analysis	How do I calculate stack frame size on x86-64?	?v $r:rbp-$r:rsp
+Import Analysis	How do I calculate import thunk alignment?	?v `ii~:4[1]` - `ii~:3[1]`
+Import Analysis	How do I find size of import name table?	?vi $SS:section..plt/`iiq~?`
