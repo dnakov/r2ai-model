@@ -16,14 +16,13 @@ rm_lastline() {
 	mv "$F".tmp "$F"
 }
 
-
 while : ; do
 	echo "============================================"
 	echo
 	cat_lastline | sed -e 's/\t/\n\n/g'
 	echo
 	echo "============================================"
-	echo "> (i)gnore (o)k (e)dit (q)uit"
+	echo "> (i)gnore (o)k (e)dit (r)emove (q)uit"
 	read O
 	case "$O" in
 	i)
@@ -34,11 +33,16 @@ while : ; do
 		cat_lastline >> "$F".ok
 		rm_lastline
 		;;
+	r)
+		rm_lastline
+		;;
 	e)
 		cat_lastline > "$F".edit
 		$EDITOR "$F".edit
-		rm_lastline
-		head -n1 "$F".edit >> "$F"
+		if [ -s "$F".edit ]; then
+			rm_lastline
+			head -n1 "$F".edit >> "$F"
+		fi
 		rm -f "$F".edit
 		;;
 	q)

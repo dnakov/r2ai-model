@@ -6,3 +6,14 @@ Symbol Analysis	How do I calculate size of symbol section?	?v $SS{.symtab}
 Exception Analysis	How do I calculate stack frame size on x86-64?	?v $r:rbp-$r:rsp
 Import Analysis	How do I calculate import thunk alignment?	?v `ii~:4[1]` - `ii~:3[1]`
 Import Analysis	How do I find size of import name table?	?vi $SS:section..plt/`iiq~?`
+Import Analysis	How do I get distance between imported functions?	?v `ii~:4[1]` - `ii~:3[1]`
+Control Flow	How do I find offset to false branch?	$Bf
+Control Flow	How do I find offset to false branch?	bj~{[0].fail}
+Stack Analysis	How do I calculate stack variable space?	?v $r:BP-16-$r:SP
+Stack Analysis	How do I find offset to stack canary?	?v $r:rbp-8
+Shell Code	How do I get distance to return address?	?v $r:rsp-$r:rbp
+Code Coverage	How do I calculate function coverage percentage?	aai~cov[1]
+Memory Analysis	How do I find size of memory page?	?v $DS
+Function Analysis	How do I calculate function complexity metric?	afi~complexity[1]
+Function Analysis	How do I calculate number of basic blocks?	afi~num-bbs[1]
+IO	How do I get size of allocated memory block?	?v $MS
