@@ -1,0 +1,2143 @@
+command	description
+%	List all environment variables
+%*	Show environment variables as r2 commands
+%j	Display environment variables in JSON format
+%SHELL	Print value of SHELL environment variable
+%TMPDIR=/tmp	Set TMPDIR environment variable to "/tmp"
+(foo args;..;..)	Define a command macro with arguments
+(foo args;..;..)()	Define and immediately execute a command macro
+(-foo)	Delete a command macro
+.(foo)	Execute a previously defined macro
+()	Break/exit from within a macro
+(*)	List all defined command macros
+(j)	List command macros in JSON format
+(foo x y; $0 @ $1)	Define macro with args ($0=x, $1=y)
+.(foo 128 0x804800)	Execute macro with arguments 128 and 0x804800
+0	Seek to offset 0
+0xaddr	Seek to hex address
+#!pipe node -e 'console.log(123)'	Run program with arguments inside an r2pipe environment
+/* [comment string]	Add multiline comment, end it with '*/'
+*/	End multiline comment
+.cmd	Execute output of command as r2 script
+.:8080	Wait for commands on port 8080
+.!rabin2 -re $FILE	Run command output as r2 script
+:cmd	Run an io command (same as =!)
+-[?]	Open editor and run the r2 commands in the saved document
++	Case insensitive grep (grep -i)
+*	Execute r2 commands
+j	Output in JSON format ('J' for formatted disassembly)
+~?	Count number of lines (like wc -l)
+~??	Show internal grep help
+~..	Use internal less pager
+~{}	Indent JSON output
+~<>	Indent XML output
+~<100	ASCII-art zoom of console buffer
+~{}..	Indent JSON output and use internal less pager
+~word[2]	Grep 3rd column of lines matching word
+~!word	Grep for lines NOT matching word
+~word:3[0]	Grep 1st column from the 4th line matching word
+>file	Pipe output of command to file
+>>file	Append output of command to file
+H>file	Pipe output of command to file in HTML format
+H>>file	Append output of command to file in HTML format
+`pdi~push:0[0]`	Replace output of command inside the line
+|cmd	Pipe output to command (pd|less) (.dr*)
+'-' '.-' '. -'	These three commands do the same (seek backwards)
+-8	Seek 8 bytes backward (same as s-8)
+-a x86	Set asm.arch=x86 (same as e asm.arch=x86)
+-A[?]	Run 'aaa' command to analyze all referenced code
+-b 32	Set asm.bits=32 (same as e asm.bits=32)
+-c cpu	Set asm.cpu (same as e asm.cpu=)
+-e k=v	Set configuration variable
+-h	Show help message
+-H key	Set value for given environment variable
+-k kernel	Set asm.os (same as e asm.os=)
+-f	Set block size to file size
+-j	Enter the js: REPL
+-i [file]	Run script file
+-s [addr]	Seek to address
+-L	List IO plugins (same as L)
+-p project	Load project (same as Po)
+-P patchfile	Apply given patch file
+-v	Show version information
+-V	Show version information and exit
+--	Seek one block backward (same as s--)
+aaa	Perform deeper analysis (most common use)
+aaaa	Perform even deeper analysis
+aaaaa	Perform deepest analysis to find more functions
+x[?] [len]	Hexdump of len bytes (alias for 'px')
+'[...]	Run a command without evaluating any special chars
+'?e hello @ world	Print everything after `?e` (r2.call)
+'0x123'?v $$	Run the '?v $$' command at the 0x123 offset (same as r2.callAt)
+!	Execute command in shell
+!ls	Execute 'ls' in shell
+!*r2p x	Run r2 command via r2pipe in current session
+!.	Save command history to hist file
+!!	List commands used in current session
+!!ls~txt	Execute 'ls' in shell and grep for 'txt'
+!!!cmd [args|$type]	Add autocomplete value for command
+!!!-cmd [args]	Remove autocomplete value for command
+.!rabin2 -rpsei ${FILE}	Run each output line as an r2 command
+!echo $R2_SIZE	Display file size
+!-	Clear command history in current session
+!-*	Clear and save empty command history log
+!=!	Enable remotecmd mode
+=!=	Disable remotecmd mode
+=[fd] cmd	Execute cmd at remote 'fd' (last open is default one)
+=<[fd] cmd	Send output of local command to remote fd
+=! cmd	Run command via r_io_system
+=+ [proto://]host:port	Connect to remote host:port
+=-[fd]	Remove all hosts or host 'fd'
+==	Compare/test values
+=l [name]	Give a name to the current session
+=tport	Start the TCP server
+=rport	Start the RAP server
+=g[?]	Start the GDB server
+=h port	Start the HTTP webserver on 'port'
+=H port	Start the HTTP webserver on 'port' and launch browser
+=&:port	Start RAP server in background
+=:host:port cmd	Run 'cmd' command on remote server
+=+tcp://localhost:9090/	Connect to: r2 -c.:9090 ./bin
+=+rap://localhost:9090/	Connect to: r2 rap://:9090
+=+http://localhost:9090/cmd/	Connect to: r2 -c'=h 9090' bin
+o rap://:9090/	Start the RAP server on TCP port 9090
+=l-	Stop listening in background
+=ll	Start a new session: listening for commands in background
+=g port file [args]	Listen on 'port' debugging 'file' using gdbserver
+?! [cmd]	Run cmd if $? == 0
+? eip-0x804800	Show all representations of this math expression
+?'	Show help for the single quote (do not evaluate special characters in command)
+?$	Show values of all variables ($)
+?+ [cmd]	Run cmd if $? > 0
+?- [cmd]	Run cmd if $? < 0
+?= eip-0x804800	Update $? variable with result of operation
+?== x86 `e asm.arch`	Compare two strings
+??	Show help message
+?a	Show ASCII table
+?B [elem]	Show range boundaries like 'e?search.in
+?b [num]	Show binary value of number
+?b64[-] [str]	Encode/decode in base64
+?btw num|expr num|expr num|expr	Check if a <= b <= c
+?d [num]	Disassemble given number as a little and big endian dword
+?e[=bdgnpst] arg	Print messages, bars, pie charts and more
+?f [num] [str]	Map each bit of the number as flag string index
+?F	Flush console output
+?h [str]	Calculate hash for given string
+?i[?] arg	Prompt for number or Yes/No/Msg/Key/Path and store in $$?
+?j arg	Show result of math operation in JSON format
+?l[q] str	Show length of string ('q' for quiet, just set $?)
+?o num	Show octal value
+?P paddr	Get virtual address for given physical one
+?p vaddr	Get physical address for given virtual address
+?q num|expr	Compute expression like ? or ?v but in quiet mode
+?r [from] [to]	Generate random number between from-to
+?s from to step	Generate sequence of numbers from to by steps
+?t cmd	Show execution time of command
+?T	Show loading times
+?u num	Show value in human units (KB, MB, GB, TB)
+?v num|expr	Show hex value of math expr (no expr prints $?)
+?vi[1248] num|expr	Show decimal value of math expr
+?vx num|expr	Show 8 digit padding in hex
+?V	Show library version of r_core
+?w addr	Show what's in this address (like pxr/pxq does)
+?X num|expr	Show hexadecimal value of math expr
+?x str	Show hexpair of number or string
+?x+num	Show hexpair of math expr result
+?x-hexst	Convert hexpair into raw string with newline
+?_ hudfile	Load HUD menu with given file
+?i ([prompt])	Prompt user and save input to yank buffer
+?ie [msg]	Prompt user and print output
+?iy [question]	Prompt yes/no with default Yes
+?if [math-expr]	Evaluate math expression, return true if result is zero
+?in [question]	Prompt yes/no with default No
+?im [msg]	Prompt user with message and await key press
+?ik	Await any key press
+?ip ([path])	Prompt for file path
+?iu (ui-expr)	Prompt user using UI expression
+&	Require all words to match to grep the line
+$	List all defined aliases
+$$	Show current address
+$!	Invert alphabetical sort
+$!!	Reverse the lines (like 'tac' command)
+, [table-query]	Query and print table. See ,? for more details
+^#	Add comments
+?@?	Show help for '@' (seek), '~' (grep)
+?.	Count number of chars
+?ea	Convert text into seven segment style ASCII art
+:s..e	Show lines s-e
+..	No operation
+...	Repeat last command forward
+....	Show internal HUD menu
+:)	Parse C-like output from decompiler
+:))	Apply syntax highlighting to code
+<50	Perform zoom to the given text width on the buffer
+<>	Apply XML indentation
+{:	Apply human-friendly indentation
+{:..	Apply human-friendly indentation and use internal less pager
+{:...	Apply human-friendly indentation and show in HUD
+{}	Apply JSON indentation
+{}..	Apply JSON indentation and use internal less pager
+{}...	Apply JSON indentation and show in HUD
+{=}	Show output in gron-like format (key=value)
+{path}	Apply JSON path grep
+i~:0	Show first line of 'i' output
+i~:-2	Show second to last line of 'i' output
+i~:0..3	Show first three lines of 'i' output
+pd~mov	Disassemble and grep for 'mov'
+pi~[0]	Show only opcode
+i~0x400$	Show lines ending with 0x400
+$*	List all defined aliases and their values, with unprintable characters escaped
+$**	List all defined aliases and their values, base64 encoding those with unprintable chars
+$foo:=123	Create flag 'foo' with value 123
+$foo-=4	Subtract 4 from flag 'foo'
+$foo+=4	Add 4 to flag 'foo'
+$foo	Alias for 's foo' (seek to flag 'foo')
+$dis=base64:AAA=	Alias $dis to the raw bytes from decoding this base64 string
+$dis=$hello world	Alias $dis to the string after '$'
+$dis=$hello\\nworld\\0a	Alias $dis to string with escaped characters
+$dis=-	Edit $dis alias in cfg.editor
+$dis=af	Alias $dis to the 'af' command
+"""$dis=af;pdf"""	Alias $dis to run 'af', then 'pdf'. Quotes required.
+$test=. /tmp/test.js	Create command alias to run r2pipe script
+$dis=	Undefine alias
+$dis	Execute defined command alias, or print data alias with escaping
+$dis?	Show commands aliased by $dis
+flag	Show offset of flag
+${ev}	Get value of eval config variable
+$$$	Show current non-temporary virtual seek
+$?	Show last comparison value
+$alias=value	Define command alias
+$B	Show base address (aligned lowest map address)
+$b	Show block size
+$c	Show terminal width in character columns
+$Cn	Show nth call of function
+$D	Show current debug map base address
+$DB	Show program base address (dbg.baddr)
+$DD	Show current debug map size
+$Dn	Show nth data reference in function
+$e	Show 1 if end of block, else 0
+$e{flag}	Show end of flag (flag->offset + flag->size)
+$f	Show jump fail address
+$F	Show address of current function
+$Fb	Show address of beginning of basic block
+$FB	Show address of beginning of function
+$Fe	Show address of end of basic block
+$FE	Show address of end of function
+$Ff	Show address of function false destination
+$Fi	Show number of basic block instructions
+$FI	Show number of function instructions
+$Fj	Show address of function jump destination
+$fl	Show flag length (size) at current address
+$FS	Show function size (linear)
+$Fs	Show size of current basic block
+$FSS	Show function size (sum of basic block sizes)
+$i{n}	Show address of nth instruction forward
+$I{n}	Show address of nth instruction backward
+$j	Show jump address
+$Ja	Show address of nth jump of function
+$k{kv}	Show value of sdb query
+$l	Show length of current opcode
+$M	Show map address (lowest map address)
+$m	Show opcode memory reference
+$MM	Show map size
+$O	Show current offset pointed by cursor
+$o	Show current disk I/O offset
+$p	Show process ID
+$P	Show child process ID (only in debug)
+$r	Show console height in rows
+$r{reg}	Show value of named register
+$s	Show file size
+$S	Show section offset
+$SS	Show section size
+$s{flag}	Show size of flag
+$v	Show immediate value of current opcode
+$w	Show word size based on asm.bits
+$Xn	Show address of nth xref of function
+RNum	Show variables usable in math expressions
+%var=value	Set environment variable
+"""[?][""..|..""]"	Quote to prevent evaluation of special chars
+(macro arg0 arg1)	Define and manage scripting macros
+.	Execute command
+_	Print last output
+<[str]	Feed stdin with given escaped string
+/[?]	Search for bytes, regexps, patterns, etc.
+{[?] ...}	Run command using JSON syntax for r2pipe
+a	Analyze all (aaa)
+b	Show current block size
+c [string]	Compare a plain with escaped chars string
+C[Cthsdmf]*	List comments/types/hidden/strings/data/magic/formatted in r2 commands
+d	Generate graphviz dot
+e[?] [a[=b]]	List/get/set config evaluable vars
+f	List flags
+g	Generate shellcode
+i[*jq]	Show info of current file
+k	List keys
+l[?] [filepattern]	List files and directories
+L	Show help message
+m	List all mountpoints
+o [file]	Open file in read-only mode
+p[kK] [len]	Print key in randomart (K for mosaic)
+P [file]	Open project
+q[y/n][y/n]	Quit r2, optionally saving project
+r	Show file size
+s[j*=!]	Seek to address
+t	List all loaded types
+T	List all Text log messages
+u	Show system uname
+v	Enter visual mode
+V	Enter visual mode (V:linear, VV:graph)
+w[1248][+-][n]	Write bytes
+y	Show yank buffer information
+z[?]	Manage zignatures
+?$?	Show available '$' variables and aliases
+?>?	Show help for output redirection
+?|?	Show help for '|' (pipe)
+"""?"	Show help message
+"""?e hello \""world\"""""	Print (hello "world")
+"""?e x;y"";""?e y;x"""	Run two commands (prints x;y
+"""""@addr""""[cmd]"	Run command at specified address
+"""""?e x;y"";""?e y;x"	Run commands ignoring special chars
+*entry0=cc	Write trap instruction at entrypoint
+*entry0+10=0x804800	Write value at delta address
+*entry0	Read byte at given address
+.C*	Run 'C*' command and interpret output
+..123	Seek 123 bytes forward
+.--	Terminate TCP server for remote commands
+. foo.r2	Run r2 script
+. foo.py	Run r2pipe or r2lang script
+.-	Open cfg.editor and run commands from temp file
+.* file ...	Run script after opening it in cfg.editor
+.!rabin -ri $FILE	Run command and interpret output
+.(foo 1 2 3)	Run macro 'foo' with args 1, 2, 3
+./ ELF	Run /m ELF command and interpret output
+,. file.csv	Load table from CSV file
+,,	Print table in CSV format
+,-	Reset table
+,/?	Query/filter current table
+,*>$foo	Print table as r2 commands
+,j	Print table in JSON format
+,h xxd foo bar cow	Define header column names and types
+,r 1 2 foo	Add a row using the given format string
+/ foo\x00	Search for null-terminated string 'foo'
+/j foo\x00	Search for null-terminated string 'foo' (JSON output)
+/! ff	Search for first occurrence not matching
+/!x 00	Search for first byte != 0x00
+/+ /bin/sh	Construct string with chunks
+//	Repeat last search
+/a[?][1aoditfmsltf] jmp eax	Find instructions by text or bytes
+/b[x] [str|414243]	Search backwards for string or hex values
+/c[?][adr]	Search for crypto materials
+/d 101112	Search for deltified sequence of bytes
+/e /E.F/i	Search with regexp
+/E esil-expr	Search for matching ESIL expressions
+/f	Search forward (command modifier)
+/F file [off] [sz]	Search contents of file
+/g[g] [from]	Find all graph paths from A to B
+/h[?][algorithm] [digest] [size]	Find block matching given hash
+/i foo	Search for string 'foo' ignoring case
+/k foo	Search for string 'foo' using Rabin Karp algorithm
+/m [file]	Search using magic file
+/o [n]	Show offset of n instructions backward
+/O [n]	Show offset of n instructions backward (different fallback)
+/p [hexpattern]	Search for hex pattern
+/P patternsize	Search for similar blocks
+/s[*] [threshold]	Search for sections with similar entropy
+/r [addr]	Search for references to address
+/R [string]	Search for ROP gadgets
+/v[1248] value	Search for 32-bit value in little endian
+/V[1248] min max	Search for 32-bit value in range
+/w foo	Search for wide string 'f\0o\0o\0'
+/wi foo	Search for wide string ignoring case
+/x[?] [bytes]	Search for hex string
+/z min max	Search for strings of given size
+/a push rbp	Search for 'push rbp' instruction
+/a1 [number]	Find valid assembly by changing nth byte
+/aI	Search for infinite loop instructions
+/aa mov eax	Search for approximate assembly
+/ab[f] [delta]	Search for backward jumps
+/ac mov eax	Search for case-sensitive assembly
+/ad[?][/*jq] push;mov	Search for multiple instructions
+/ae esil	Search for matching ESIL expressions
+/af[l] family	Search for instructions of specific family
+/aF[d] opstr	Search for instruction string in analyzed code
+/ai[j] 0x300 [0x500]	Search for instructions using immediate in range
+/al	List all opcodes
+/am opcode	Search for specific mnemonic
+/ao instr	Search for instruction
+/as[qjl] ([type])	Search for syscalls
+/at [optype,optype2]	Search for instructions matching optype(s)
+/az[q] ([minstr])	Search for strings in code
+/ad rax	Search disassembly for 'rax'
+/ad rax$	Search disassembly for instruction matching glob
+/adj rax	Search disassembly for 'rax' (JSON output)
+/adq rax	Search disassembly for 'rax' (quiet mode)
+/ad/ ins1;ins2	Search for regex 'ins1' followed by 'ins2'
+/ad/a instr	Search every byte for regex 'instr'
+/atj [optype,optype2]	Search for optypes (JSON output)
+/atf [family]	Search for instructions of given family
+/atl	List all instruction types
+/atm	Search matching only instruction mnemonic
+/bp	Search for previous prelude
+/ca[?] [algo]	Search for keys expanded in memory
+/cc[?] [algo] [digest]	Search for hash collisions
+/cd	Search for ASN1/DER certificates
+/cg	Search for GPG/PGP keys and signatures
+/ck	Search for known constant tables
+/cp[?] [algo] [pubkey]	Search for private key matching public key
+/cr	Search for ASN1/DER private keys
+/cca [algo] [digest]	Search using lowercase alphabet chars
+/ccA [algo] [digest]	Search using uppercase alphabet chars
+/ccl [algo] [digest]	Search using alphabet chars (lower + upper)
+/ccd [algo] [digest]	Search using digits
+/ccp [algo] [digest]	Search using printable chars
+/ccb [algo] [digest]	Search using any byte value
+/me	Print string similar to IRC /me
+/mm	Search for known filesystems and mount automatically
+/mb	Search for known headers
+/pp	Search for function preludes
+/ra	Search for all references
+/rc ([addr])	Search for call references
+/re [addr]	Search references using ESIL
+/rr	Search for read references
+/ru[*qj]	Search for UDS CAN database tables
+/rw	Search for write references
+/rx	Search for exec references
+/R/ [regexp]	Search for matching ROP gadgets
+/R/j [regexp]	Search for matching ROP gadgets (JSON output)
+/R/q [regexp]	Search for matching ROP gadgets (quiet mode)
+/Rj [string]	Search for ROP gadgets (JSON output)
+/Rk [ropklass]	Search stored ROP gadgets by class
+/Rq [string]	Search for ROP gadgets (quiet mode)
+/x 9090cd80	Search for hex bytes
+/x ff..33	Search for hex ignoring some nibbles
+/x 9090cd80:ffff7ff0	Search with binary mask
+/xn[1|2|4|8] value amount	Search for byte array
+/xv[1|2|4|8] v0 v1 v2 v3 ..	Search for value array
+a:[cmd]	Run command implemented by analysis plugin
+a*	Run 'afl*', 'ah*', 'ax*'
+aa	Analyze all (same as 'aaa')
+a8 [hexpairs]	Analyze bytes
+ab [addr]	Analyze basic block
+ac [class name]	Add class
+aC[?]	Analyze function calls
+ad [N] [D]	Analyze N data words at D depth
+ae [expr]	Evaluate ESIL expression
+af[?]	Analyze functions
+aF	Analyze functions (same as above, but using anal.depth=1)
+ag[?] [options]	Draw graphs in various formats
+ah	List hints
+ai [addr]	Show address information
+aj	Show analysis info in JSON format
+aL[jq]	List all asm/anal plugins
+an[j*]	Show flag/function/symbol name
+ao[?] [len]	Analyze Opcodes
+aO[?] [len]	Analyze N instructions in M bytes
+ap	Find function preludes
+ar	Show 'gpr' registers
+as	Show current syscall and arguments
+av	Search for vtables in data sections
+avg [type] [name]	Add global variable
+ax	List cross-references
+aab	Analyze all basic blocks
+aac [len]	Analyze function calls
+aac* [len]	Flag function calls without full analysis
+aaci	Flag import xrefs only
+aad [len]	Analyze data references to code
+aae	Emulate code to find computed references
+aaef	Emulate functions
+aaf	Analyze all functions
+aaF [sym*]	Set anal.in=block for all spaces between matching flags
+aaFa [sym*]	Analyze all functions and their arguments
+aai[j]	Show analysis info
+aaj	Analyze all jumps
+aan	Auto name functions
+aao	Analyze all objc references
+aap	Analyze function preludes
+aar [sz]	Analyze xrefs in current offset range
+aas [len]	Analyze symbols
+aaS	Analyze all flags starting with sym.*
+aat [fcn]	Analyze all/given function to convert immediate to linked structure offsets
+aaT [len]	Analyze code after trap-sleds
+aau [len]	List memory areas not covered by functions
+aav	Find absolute reference values
+aaw	Analyze all meta words and add flags for referenced pointers
+aax[?]	Analyze all xrefs
+aaep	Define anal pins by import flag names
+aaepa	Define anal pins for all unknown imports
+aaex	Emulate code linearly and register only computed xrefs
+aafe	Emulate functions to find computed references
+aaff	Add flags for each function
+aafr [len]	Analyze functions recursively
+aaft	Recursive type matching across all functions
+aafs	Analyze all basic blocks in current function
+aang	Auto name all golang functions
+aanr	Auto-noreturn propagation
+aarr	Analyze all function reference graphs
+aar* [sz]	List found xrefs in radare commands format
+aarj [sz]	List found xrefs in JSON format
+aav0	Find absolute reference values (accept maps at address zero)
+aavr[0]	Find relative reference values
+ab-[addr]	Delete basic block at given address
+ab.	Analyze basic block at current offset
+abi[?]	Analyze basic block information
+aba [addr]	Analyze ESIL accesses in basic block
+abb [length]	Analyze N bytes and extract basic blocks
+abc[-] [color]	Set color of basic block
+abe [esil-expr]	Evaluate ESIL expression in basic block
+abf [addr]	Show addresses of incoming basic blocks
+abj [addr]	Show basic block information in JSON
+abl[?] [.-cqj]	List all basic blocks
+abo	List opcode offsets of current basic block
+abp[?] [addr] [num]	Follow basic block paths
+abt[tag] ([color])	Show/set trace tag for current basic block
+abx [hexpair-bytes]	Analyze N bytes
+acl[j*]	List all classes
+acll[j] (class_name)	List class details
+ac- [class name]	Delete class
+acn [class name] [new class name]	Rename class
+acv [class name] [addr] ([offset]) ([size])	Add vtable address to class
+acvf [offset] ([class name])	Look up function address on vtable offset
+acv- [class name] [vtable id]	Delete vtable by id
+acb [class name] [base class name] ([offset])	Add base class
+acb- [class name] [base class id]	Delete base class by id
+acm [class name] [method name] [offset] ([vtable offset])	Add/edit method
+acm- [class name] [method name]	Delete method
+acmn [class name] [method name] [new name]	Rename method
+acg	Print class inheritance graph
+ac?	Show help for class commands
+aCe	Use ESIL emulation to find function arguments
+aCf	Find function arguments for all functions
+ad4 [N] [D]	Analyze N data words at D depth (32-bit)
+ad8 [N] [D]	Analyze N data words at D depth (64-bit)
+adf	Analyze data in function
+adfg	Analyze data in function gaps
+adt	Analyze data trampolines
+adk	Analyze data kind (code, text, data, invalid, etc)
+ae! [file]	Compile ESIL file into ESIL expression
+ae?	Show ESIL help
+ae??	Show extended ESIL help
+aea[f] [count]	Analyze ESIL instruction accesses (regs, mem..)
+aeA[f] [count]	Analyze N bytes for ESIL accesses (regs, mem..)
+aeb ([addr])	Analyze ESIL basic block
+aeC[arg0 arg1..] @ addr	ESIL function call
+aec	Continue until exception
+aef [addr]	Analyze ESIL function
+aefa [addr]	Analyze function to find arguments
+aeg [expr]	ESIL data flow graph
+aegf [expr] [register]	ESIL data flow graph filter
+aei	Initialize ESIL VM state
+aek	Show ESIL evaluator stats
+aeL[?][-] [name]	List/manage ESIL plugins
+aep	List ESIL ports
+aepc [addr]	Change ESIL PC to given address
+aer[?] [..]	Handle ESIL registers
+aes[?]	Perform emulated debugger step
+aet[?][s]	ESIL trace session management
+aev [esil]	Evaluate ESIL expression
+aex [hex]	Evaluate opcode expression
+	continue until ^c
+aecs	Continue execution until the next syscall is encountered
+aecc	Continue execution until the next function call is reached
+aecu[addr]	Continue execution until the specified address is reached
+aecue[addr]	Continue execution until the given ESIL expression evaluates to true
+aeis argc [argv] [envp]	Initialize the ESIL stack environment with argc, argv, and envp for program entry point
+aeim	Initialize ESIL memory with default values from esil.stack.* configuration
+aeip	Set the ESIL program counter (PC) to the current seek address
+aeim 0x10000	Initialize ESIL memory at address 0x10000 (same as aeim@e:esil.stack.addr=0x10000)
+aeim 0x10000 2M mystack	Create a named 2MB stack at address 0x10000
+aek sdb.query	Execute an sdb query on the esil.stats database
+aek-	Clear all data in the esil.stats sdb instance
+aep*	List all ESIL pins as r2 commands
+aep-*	Remove all ESIL pins
+aep-[name]	Remove a specific ESIL pin by name
+aepa ([addr])	Automatically set an ESIL pin at the current or given address based on flag name
+aep memcpy=wf `dr?A1` `dr?A2` @r:A0	Override esil.cmd.pin for the 'memcpy' pin name with a custom command
+aep soft.show.r9=dr?r9	Set a 'soft' ESIL pin that only executes during disassembly
+aep.	Display the pin name at the current address, if any exists
+aepk [query]	Query the sdb database of ESIL pins
+ar.>$snapshot	Generate r2 commands to set register values to their current state
+ar,	Display registers in a tabular format (equivalent to dr,)
+.ar*	Create flags for all register values
+.ar-	Remove all register-based flags
+ar0	Reset all register arenas to zero
+ara	Display all allocated register arenas
+arj	Show general-purpose registers (GPR) in JSON format
+arA[?]	Display values of function argument calls (A0, A1, A2, etc.)
+ar 16	Display 16-bit registers
+ar 32	Display 32-bit registers
+ar all	Display registers of all bit sizes
+ar <type>	Display all registers of a specific type
+arC	Show comments associated with the register profile
+arr	Display register references (telescoping view)
+arrj	Show register references (telescoping view) in JSON format
+ar=([size])(:[regs])	Display register values in columns, optionally filtering by size and specific registers
+ar? <reg>	Show the value of a specific register
+arb <type>	Display a hexdump of the given register arena
+arc[cq=] <name>	Manage conditional flag registers
+arcc	Derive calling convention from the current register profile
+ard <name>	Display only registers that have changed
+arn <regalias>	Get the actual register name for a given alias (e.g., pc, sp, bp, a0-3, zf, cf, of, sg)
+aro	Display previous (old) register values
+arp [gdb] [regprofile-file]	Parse a GDB register profile and output an r2 profile string
+ars	Display the current register state on the stack
+arS	Show the size of the current register profile
+art	List all available register types
+arw <hexnum>	Set the contents of the register arena to a specific hexadecimal value
+ara+	Push a new register arena for each register type
+ara-	Pop the last register arena
+aras	Swap the last two register arenas
+arp*	Generate r2 commands to create flags for each register at their respective arena offsets
+arpc	Display comments associated with the register profile
+arpi	Show the internal representation of the register profile
+arp.	Display the current fake size of the register profile
+arpj	Show the current register profile in JSON format
+arps [new fake size]	Get or set the register profile size
+arpg	Display comments associated with the register profile
+NOTE:	"filename defaults to ""<cfg.prefixdump>.<offset>"""
+aesp [X] [N]	Evaluate N instructions starting from offset X in ESIL
+aesb	Step backwards in ESIL evaluation
+aeso	Step over in ESIL evaluation (skip function calls)
+aesou [addr]	Step over in ESIL until reaching the specified address
+aess	Step skip in ESIL (skip function calls instead of stepping into them)
+aesu [addr]	Step in ESIL until reaching the specified address
+aesue [esil]	Step in ESIL until the given ESIL expression matches
+aesuo [optype]	Step in ESIL until encountering an opcode of the specified type
+aesB [addr] [N] @ [from-addr]	Step over N instructions in ESIL, starting from the given address
+af ([name]) ([addr])	Analyze functions, optionally specifying a name and starting address
+af+ addr name [type] [diff]	Manually create a function with the given name and type at the specified address
+af- [addr]	Remove all function analysis data, or for a specific function at the given address
+afa	Analyze function arguments in the current function call
+afB 16	Set the current function as Thumb (16-bit instructions) in ARM architecture
+afb [addr]	List basic blocks of the current function or at the specified address
+afb+ fcnA bbA sz [j] [f] ([t]( [d]))	Add a basic block to a function, specifying function address, basic block address, size, and optional parameters
+afbF([0|1])	Toggle the 'folded' attribute of the current basic block
+afc	Show the calling convention for the current function
+afC	Calculate and display the cyclomatic complexity cost of the current function
+afd[addr]	Show the difference between the current function and the one at the specified address
+afF[1|0|]	Fold, unfold, or toggle the visibility of the current function
+afi [addr|fcn.name]	Display detailed information about the specified function or current function
+afj [tableaddr] [elem_sz] [count] [seg]	Analyze function jump table, specifying table address, element size, count, and optional segment
+afl	List all functions in the current binary
+afm name	Merge the current function with another function specified by name
+afM name	Print a map of all functions in the binary
+afn [name]	Rename the current function or the function at the specified address
+afna[j]	Automatically generate a function name for the current offset
+afo[?j] [fcn.name]	Show the address of the specified function name or current offset
+afr ([name]) ([addr])	Analyze functions recursively, optionally specifying a name and starting address
+afs[?] ([fcnsign])	Get or set the function signature at the current address
+afS[stack_size]	Set the stack frame size for the function at the current address
+aft	Perform type matching analysis for the current function
+afu addr	Resize and analyze the current function up to the specified address
+afv[?]	Manipulate arguments, registers, and variables in the current function
+afx[m]	List cross-references (xrefs) to the current function
+afb. [addr]	Show information about the current basic block or at the specified address
+afb,	Display basic blocks of the current function in a table format
+afb=	Display ASCII-art bars representing basic block regions
+afb+ fcn_at bbat bbsz [jump] [fail] ([diff])	Manually add a basic block to a function, specifying various parameters
+afba[!]	List basic blocks of the current offset in analysis order (EXPERIMENTAL)
+afbc[-] [color] ([addr])	Colorize a basic block or remove color
+afbd	List function basic block dependencies and set analysis-by-call (abc) values
+afbe bbfrom bbto	Add a basic block edge for switch-cases
+afbi[j]	Print detailed information about the current basic block
+afbj [addr]	Show basic block information in JSON format
+afbr	Show addresses of instructions that leave the current function
+afbo	List addresses of each instruction for every basic block in the function
+afB [bits]	Define the number of bits for instructions in the given function
+afbrb	Show addresses of basic blocks with no outgoing edges (leaf blocks)
+.afbr*	Set a breakpoint on every return address of the current function
+.afbr-*	Remove breakpoints from all return addresses of the current function
+afc ccname	Manually set the calling convention for the current function
+afcr[j]	Show register usage for the current function
+afcf[j] [name]	Print the return type and arguments of the specified function
+afci	Display information about the current calling convention
+afcj	Show current calling convention information in JSON format
+afck	List SDB details of loaded calling conventions
+afcl	List all available calling conventions
+afcll	Show all calling conventions and their definitions
+afco path	Open a Calling Convention SDB profile from the specified path
+afcR	Perform register telescoping using the calling convention order
+afCc	Calculate and display the cyclomatic complexity of the current function
+afCl	Count the number of loops (backward jumps) in the current function
+afl.	Display information about the function at the current offset
+afl, [query]	List functions in a table format, optionally filtering with a query
+afl+	Display the sum of all function sizes
+afl*	Output commands to reconstruct all functions in r2 format
+afl=	Display ASCII-art bars representing function ranges
+afla	List functions in reverse call order (useful for analyzing non-returning functions)
+aflc	Count the total number of functions
+aflj	List functions in JSON format
+afll [column]	List functions in verbose mode, optionally sorting by column name
+afllj	List functions in verbose mode using JSON format
+aflm	List functions and their calls in a Makefile-like format
+afln[?]	List all function names
+aflq	List functions in quiet mode (names only)
+aflqj	List functions in quiet mode using JSON format
+afls[?asn]	Sort the function list by address, size, or name
+aflx[?*jv]	List cross-references (xrefs) to the current function
+aflm.	Print only the summary for the current function
+aflmj	Print the current function summary in JSON format
+afn.	Show the name of the function at the current offset
+afn*	Output r2 commands to set function signature, flag, and name
+afns[j]	List all strings associated with the current function
+afs ([fcnsign])	Get or set the function signature at the current address
+afsq	Get the function signature without displaying error messages
+afs!	Edit the current function signature using the configured editor
+afs* ([signame])	Get the function signature in flag format
+afsj ([signame])	Get the function signature in JSON format
+afsr [function_name] [new_type]	Change the return type for the specified function
+afsv[j]	Print the function signature, filling values from current register and stack state
+afv*	Output r2 commands to add arguments and local variables to the flag space
+afv-([name])	Remove all variables or a specific variable by name
+afv=	List function variables and arguments with disassembly references
+afva	Analyze function arguments and local variables
+afvb[?]	Manipulate base pointer (BP) based arguments and local variables
+afvd name	Output r2 command for displaying the value of arguments or local variables in the debugger
+afvf	Show base pointer (BP) relative stack frame variables
+afvn [new_name] ([old_name])	Rename an argument or local variable
+afvr[?]	Manipulate register-based arguments
+afvR [varname]	List addresses where variables are read from
+afvs[?]	Manipulate stack pointer (SP) based arguments and local variables
+afvt [name] [new_type]	Change the type of a given argument or local variable
+afvW [varname]	List addresses where variables are written to
+afvx	Show cross-references of function variables (combines afvR and afvW)
+aotl	List all possible opcode types (equivalent to /atl command)
+as 4	Display information about syscall number 4 based on current architecture and register/memory state
+asc[a] 4	Dump syscall information in assembly (.asm) or C header (.h) format
+asj	List all syscalls in JSON format
+asl	List all syscalls for the current architecture and operating system
+asl close	Return the syscall number for the 'close' system call
+asl 4	Return the name of the syscall with number 4
+ask [query]	Perform syscall-related queries and display results
+avj	Display analysis information about vtables in JSON format
+av*	Display analysis information about vtables as radare2 commands
+avr[j@addr]	Attempt to parse RTTI (Run-Time Type Information) at the specified vtable address (see anal.cxxabi)
+avra[j]	Search for vtables and attempt to parse RTTI at each discovered location
+avrr	Recover class information from all findable RTTI structures (see ac command)
+avrD [classname]	Demangle a class name from RTTI information
+avg-	Delete a global variable
+ax addr [at]	Add a code reference pointing to the specified address (from current seek)
+ax*	Output all cross-references as radare2 commands
+ax- [at]	Remove all references from or to the specified address
+ax-*	Remove all cross-references
+ax. [addr]	Find data and code references from and to the specified address
+axc addr [at]	Add a generic code reference
+axC addr [at]	Add a code call reference
+axd addr [at]	Add a data reference
+axF [flg-glob]	Find data and code references of flags matching the specified glob pattern
+axf[?] [addr]	Find data and code references from the specified address
+axff[j] [addr]	Find data and code references from the function containing the specified address
+axg[j*] [addr]	Display a graph of cross-references to reach the current function
+axi addr [at]	Add an indirect code reference (see ax? for more information)
+axj	Add a jump reference
+axl[jcq]	List cross-references (axlc = count, axlq = quiet, axlj = JSON format)
+axm addr [at]	Copy data/code references pointing to addr to also point to current seek (or specified address)
+axq	List cross-references in a quiet, human-readable format
+axr addr [at]	Add a data-read reference
+axs addr [at]	Add a string reference
+axt[?] [addr]	Find data and code references to the specified address
+axv[?] [addr]	List local variables with read-write-execute references
+axw addr [at]	Add a data-write reference
+axfj [addr]	Find data/code references to the specified address and output in JSON format
+axfg [addr]	Display commands to generate graphs based on cross-references
+axfq [addr]	Find and list data/code references in quiet mode
+axfm [addr]	Show references in 'make' syntax (see aflm and axtm commands)
+axf* [addr]	Same as axf, but output as radare2 commands
+axtj ([addr])	Find data/code references to the specified address and output in JSON format
+axtg ([addr])	Display commands to generate graphs based on cross-references to the address
+axtq ([addr])	Find and list data/code references to the address in quiet mode
+axtm ([addr])	Show cross-references to the address in 'make' syntax (see aflm and axfm commands)
+axt* ([addr])	Same as axt, but output as radare2 commands
+axv ([addr])	List local variables with references (optionally at specified address)
+axvj ([addr])	Show local variable references in JSON format
+b 32	Set block size to 32 bytes
+b=32	Set block size to 32 bytes (alternative syntax)
+b eip+4	Set block size using a numeric expression (e.g., current EIP value plus 4)
+b+3	Increase block size by 3 bytes
+b-16	Decrease block size by 16 bytes
+b*	Display current block size as a radare2 command
+b64:AA=	Execute a base64-encoded string without evaluating special characters
+bf foo	Set block size to the size of the 'foo' flag
+bj	Display block size information in JSON format
+bm 1M	Set maximum block size to 1 megabyte
+c* [string]	Compare block with given string and output as radare2 commands
+cj [string]	Compare block with given string and output in JSON format
+c1 [addr]	Compare single byte at specified address with current offset
+c2[*] [value]	Compare 2-byte word at current offset with given value
+c4[*] [value]	Compare 4-byte doubleword at current offset with given value
+c8[*] [value]	Compare 8-byte quadword at current offset with given value
+cat [file]	Display contents of the specified file (similar to pwd, ls commands)
+cc [at]	Compare current block with data at specified address in two hexdump columns
+ccc [at]	Compare as above, but only show lines that differ
+ccd [at]	Compare current block with data at specified address in two disassembly columns
+ccdd [at]	Compare decompiler output of current function with function at specified address
+cd [dir]	Change current working directory
+cf [file]	Compare contents of file with data at current seek
+cg [file]	Show diff ratio between functions in current file and specified file
+ci[?] [obid] ([obid2])	Compare two binary objects (symbols, imports, etc.)
+cl|cls|clear	Clear the console screen (clear0 to move cursor to top-left, 0 only)
+cmp [file] [file]	Compare two files and show differences
+cu[?] [addr] @at	Compare memory hexdumps of current address and destination in unified diff format
+cud [addr] @at	Show unified diff of disassembly from current address and given address
+cv[1248] [hexpairs] @at	Compare 1, 2, 4, or 8 bytes silently (result stored in $?)
+cV[1248] [addr] @at	Compare 1, 2, 4, or 8 bytes at address contents silently (result stored in $?)
+cw[*qj] [addr]	Show or manipulate compare watchers (*=r2 commands, q=quiet, j=JSON output)
+cx [hexpair]	Compare hexpair string (use '.' as nibble wildcard)
+cx* [hexpair]	Compare hexpair string and output radare2 commands
+cX [addr]	Compare using hexdiff output (similar to 'cc' but with hexdiff display)
+cgf [fcn]	Compare current function with another specified function
+cgfa	List all functions similar to the current one
+cgo	Perform opcode-bytes code graph diff
+cis 0	Compare symbols between current binary and the one specified by object id
+cii 0	Compare imports between current binary and the one specified by object id
+ciE 0	Compare exports between current binary and the one specified by object id
+cil 0	Compare libraries between current binary and the one specified by object id
+cu $$+1 > p	Compare hexpairs from current seek and the next byte
+cu1 $$+1 > p	Compare single bytes from current seek and the next byte
+cu2 $$+1 > p	Compare 2-byte words from current seek and the next byte
+cu4 $$+1 > p	Compare 4-byte dwords from current seek and the next byte
+cu8 $$+1 > p	Compare 8-byte qwords from current seek and the next byte
+cud $$+1 > p	Compare disassembly of current seek and the next instruction
+wu p	Apply a unified hex patch to the current file (patch format generated by 'cu' command)
+curl ([-D data]) [http-url]	Perform an HTTP request, optionally with POST data
+cw??	Display detailed help information about compare watchers
+cw addr sz cmd	Add a compare watcher at specified address with given size, executing cmd on changes
+cwd [addr]	Delete a compare watcher at the specified address or current address if not provided
+cwr [addr]	Revert a compare watcher to its original state at the specified or current address
+cwu [addr]	Update the data of a compare watcher at the specified or current address
+C*	List all metadata (comments, format, etc.) as radare2 commands
+C*.	List metadata of current offset as radare2 commands
+C- [len] [[@]addr]	Delete metadata within the specified length at the given address range
+C.	Display metadata of current offset in a human-readable format
+CC!	Edit the comment at current offset using the configured editor (e.g., vim)
+CC	List all comments in the binary in a human-readable format
+CC.	Display the comment at the current offset
+CCa[+-] [addr] [text]	Add (+) or remove (-) a comment at the specified address
+CCu [comment-text] [@addr]	Add a unique comment at the specified address, avoiding duplicates
+CF[sz] [fcn-sign..] [@addr]	Set or display function signature at the specified address
+CL[-][*] [file:line] [addr]	Show, add, or remove 'code line' information for source-level debugging
+CS[-][space]	Manage metadata spaces to organize and filter comments and other metadata
+Cd[-] [size] [repeat] [@addr]	Define data array of specified size and repetition at given address
+Cd. [@addr]	Show the size of data defined at the current or specified address
+Cf[?][-] [sz] [0|cnt][fmt] [a0 a1...] [@addr]	Format memory with specified size, count, and format (similar to 'pf' command)
+Cb[?][-] [addr] [@addr]	Bind two addresses for reference line purposes in disassembly view
+Cr[?][-] [sz] [r2cmd] [@addr]	Replace SZ bytes in disassembly with output of given r2 command
+Ch[-] [size] [@addr]	Hide data of specified size at given address from being analyzed or displayed
+Cm[-] [sz] [fmt..] [@addr]	Parse memory using magic signatures (similar to 'pm' command)
+Cs	List all strings in the binary in a human-readable format
+Ct	List all variable type comments in the current function or entire binary
+Ct. [@ addr]	Display the type comment at the current or specified address
+Cv[?][bsr]	Add comments to function arguments (b=base, s=stack, r=registers)
+Cz [size] [@addr]	Define a string of specified size at given address (alias for Csz)
+CC*	List all comments in the binary as radare2 commands
+CC+ [text]	Append a comment at the current address
+CC, [table-query]	List comments in a table format, optionally filtered by a query
+CCF [file]	Show or set a file containing comments to be loaded
+CC- @ cmt_addr	Remove the comment at the specified address
+CCf	List all comments within the current function
+CCf-	Delete all comments in the current function
+CCu base64:AA== @ addr	Add a base64-encoded comment at the specified address
+CCu good boy @ addr	Add a plain text comment "good boy" at the specified address
+Cs*	List all strings in the binary as radare2 commands
+Cs- [@addr]	Remove the string defined at the specified address
+Cs.	Display the string at the current address
+Cs..	Show the string and additional information about it at the current address
+Cs.j	Display the string at the current address in JSON format
+Cs8 [size] ([@addr])	Add a UTF-8 encoded string of specified size at given address
+Csa [size] ([@addr])	Add an ASCII/Latin1 encoded string of specified size at given address
+Csg [size] ([@addr])	Add a string globally (address not required) of specified size
+Csw [size] ([@addr])	Add a wide string (UTF-16) of specified size at given address
+Csz [size] ([@addr])	Define a zero-terminated string with maximum length at given address
+Css ([range]) ([@addr])	Automatically detect and define all strings within the specified range or section
+Ct comment-text [@ addr]	Add a type comment at the current or specified address
+Ct- [@ addr]	Remove the type comment at the current or specified address
+d:[?] [cmd]	Execute a custom debug plugin command, use '?' for help on available commands
+db	List all currently set breakpoints in the debugged program
+dbt	Display a backtrace of the call stack, depth and algorithm controlled by dbg.btdepth and dbg.btalgo
+dc[-pid]	Continue execution of the debugged process; optionally stop execution of a specific pid
+dd[*] <file|addr>	Open a file in read-only mode for debugging; if addr is given, use it as a string pointer for the path
+de[-sc] [perm] [rm] [e]	Debug using ESIL (Evaluable Strings Intermediate Language), see 'de?' for more options
+dg <file>	Generate a core dump file of the current process state (Work In Progress)
+dh [plugin-name]	Select a new debug handler plugin, use 'dbh' to list available plugins
+dH [handler]	Transfer the debugged process to a new debug handler
+di	Display detailed information about the debugged target, including memory maps and loaded libraries
+dk	List all signal handlers registered by the debugged child process
+dL	List all available debugger handlers and their capabilities
+dm	Display a list of memory maps of the target process, showing address ranges and permissions
+do	Reopen the current file in debug mode (equivalent to 'oo' command)
+doo [args]	Reopen the current file in debug mode with specified arguments (alias for 'ood')
+doof [args]	Reopen a file in debug mode with specified arguments (alias for 'oodf')
+doc	Close the current debug session and detach from the debugged process
+dp	List the current process ID (pid) and all its child processes
+dr	Display the values of general-purpose registers (GPRs)
+ds	Execute a single instruction in the debugged process (step into)
+dt [addr]	Show trace information at the specified address or current address if not provided
+dw <pid>	Block the radare2 prompt until the specified process ID (pid) terminates
+dx[?][aers]	Execute code in the context of the debugged child process, use 'dx?' for more options
+date [-b]	Display the current date and time; use -b option to show time in beats format
+db*	List all breakpoints in radare2 command format for easy scripting and replication
+db sym.main	Add a breakpoint at the entry point of the main function
+db <addr>	Add a software breakpoint at the specified memory address
+dbH <addr>	Add a hardware breakpoint at the specified memory address (requires hardware support)
+db- <addr>	Remove the breakpoint at the specified memory address
+db-*	Remove all breakpoints from the current debugging session
+db.	Display detailed information about the breakpoint at the current program counter
+dbj	List all breakpoints in JSON format for easy parsing and integration
+dbc <addr> <cmd>	Set a command to be executed when the breakpoint at <addr> is hit
+dbC <addr> <cmd>	Set a conditional breakpoint: continue execution until <cmd> returns zero
+dbd <addr>	Disable the breakpoint at the specified address without removing it
+dbe <addr>	Enable a previously disabled breakpoint at the specified address
+dbs <addr>	Toggle the state of the breakpoint at the specified address (enable/disable)
+dbf	Automatically place breakpoints on all functions that don't return (e.g., exit functions)
+dbm <module> <offset>	Add a breakpoint at a specific offset from a loaded module's base address
+dbn [<name>]	Set or display a custom name for the current or specified breakpoint
+dbi	List all breakpoints with their index numbers for easy reference
+dbi <addr>	Display the index of the breakpoint at the specified address
+dbi.	Show the index of the breakpoint at the current program counter
+dbi- <idx>	Remove the breakpoint with the specified index number
+dbix <idx> [expr]	Set a conditional expression for the breakpoint at the given index
+dbic <idx> <cmd>	Assign a command to be executed when the breakpoint at the given index is hit
+dbie <idx>	Enable the breakpoint with the specified index number
+dbid <idx>	Disable the breakpoint with the specified index number
+dbis <idx>	Swap the enabled state of the Nth breakpoint in the list
+dbite <idx>	Enable tracing for the breakpoint at the specified index
+dbitd <idx>	Disable tracing for the breakpoint at the specified index
+dbits <idx>	Toggle the tracing state for the Nth breakpoint in the list
+dbh x86	Set or list breakpoint handlers specific to the x86 architecture
+dbh- <name>	Remove a previously set breakpoint handler by its name
+dbx [expr]	Set a conditional expression for a breakpoint at the current address
+dbw <addr> <r/w/rw>	Add a watchpoint to monitor read, write, or both operations at the specified address
+drx number addr len perm	Modify a hardware breakpoint by specifying its number, address, length, and permissions
+drx-number	Clear (remove) a hardware breakpoint identified by its number
+dbt*	Display backtrace information as radare2 flags for easy scripting
+dbt=	Show a compact backtrace on a single line (use dbt=s for stack pointer or dbt=b for base pointer)
+dbtv	Display a detailed backtrace including local variables, if available
+dbtj	Output the backtrace information in JSON format for easy parsing
+dbta	Generate and display an ASCII-art representation of the stack backtrace
+dbte <addr>	Enable breakpoint tracing at the specified address
+dbtd <addr>	Disable breakpoint tracing at the specified address
+dbts <addr>	Toggle (swap) the state of breakpoint tracing at the specified address
+dc <pid>	Continue execution of the debugged process with the given process ID (pid)
+dcb	Continue execution backwards until a breakpoint is hit (requires reverse debugging support)
+dcc	Continue execution until the next function call, using step-into behavior
+dcco	Continue execution until the next function call, using step-over behavior
+dccu	Continue execution until an unknown call (e.g., call to a register) is encountered
+dce	Continue execution and pass any raised exceptions to the debugged program
+dcf	Continue execution until a fork system call is encountered (TODO: not fully implemented)
+dck <signal> <pid>	Continue execution while sending a specific signal to the debugged process
+dcp	Continue execution until reaching program code (mapped I/O section)
+dcr	Continue execution until a return instruction is reached, using step-over behavior
+dcs [str]	Continue execution until the next call to the specified syscall (if str is provided)
+dct <len>	Perform a trap trace from the current seek position for the specified length
+dcu [from] [to]	Continue execution until reaching an address within the specified range
+dcs*	Trace all system calls, similar to the strace utility
+dcu.	Alias for 'dcu $$', continue until the current address is reached
+dcu address	Continue execution until the specified address is reached
+dd+[*] <file|addr>	Open or create a file with read-write permissions; if addr is provided, use it as a char* for the path
+dd-[*] <fd>	Close the specified file descriptor
+ddt[*]	Close the terminal file descriptor (alias for 'dd- 0')
+dds[*] <fd> [offset]	Seek the specified file descriptor to the given offset (or to the beginning if no offset is provided)
+ddd[*] <oldfd> <newfd>	Duplicate oldfd to newfd using the dup2 system call
+ddf[*] <addr>	Create a pipe and write the file descriptors to the specified address (as int[2])
+ddr[*] <fd> <addr> <size>	Read a specified number of bytes from the given file descriptor into the memory at addr
+ddw[*] <fd> <addr> <size>	Write a specified number of bytes from the memory at addr to the given file descriptor
+di*	Display detailed information about the debugged process in radare2 command format
+dir	Alias for the 'ls' command, listing files in the current directory
+diq	Display detailed information about the debugged process in a concise, single-line format
+dij	Output detailed information about the debugged process in JSON format
+dif [$a] [$b]	Compare two files or $alias files, displaying differences between them
+dk <signal>	Send a specific signal to the debugged child process
+dk <signal>=1	Set a custom signal handler for the specified signal in the debugged child process
+dk?<signal>	Resolve and display information about a signal name or number
+dko [signal] [skip|cont]	Configure how a specific signal should be handled: skip it or continue execution
+dko <signal> [|skip|cont]	Set signal handling: skip the handler or continue into it for the specified signal
+dkj	List all configured signal handlers in JSON format
+dLq	Display a list of all registered debugger handlers in a quiet, compact mode
+dLj	Output a list of all registered debugger handlers in JSON format
+dL <handler>	Set or change the current debugger handler to the specified one
+dm address size	Allocate a specified amount of memory at the given address in the debugged process (use -1 for automatic address selection)
+dm=	Display a visual representation of memory maps for the target process using ASCII-art bars
+dm.	Show the name of the memory map containing the current address
+dm*	List all memory maps of the debugged process in a format suitable for radare2 commands
+dm- address	Deallocate (free) the memory map at the specified address
+dmd[aw] [file]	Dump the current debug map region (all or writable) to a file named from-to.dmp (see Sd command)
+dmh	Display a comprehensive list of process memory zones, including their properties
+dmi [addr|libname] [symname]	List symbols of a target library, optionally filtered by symbol name
+dmi* [addr|libname] [symname]	List symbols of a target library in radare2 command format, optionally filtered by symbol name
+dmi.	Display the closest symbol to the current address in the debugged process
+dmis [libname]	Import all symbols from the specified library as flags (similar to .dmi*)
+dmiv	Show the memory address of a given symbol for a specified library
+dmj	Output a list of all memory maps in JSON format
+dml <file>	Load the contents of a file into the current memory map region
+dmm	List all loaded modules (libraries) of the target process
+dmp [perms]	Modify the permissions of the current debug map (e.g., read, write, execute)
+dms	Display a list of all saved memory snapshots
+dms- <id> <mapaddr>	Restore a previously saved memory snapshot by its ID and map address
+dmS[*] [addr|libname] [sectname]	List sections of a target library, optionally filtered by section name
+dmL address size	Allocate memory of the specified size at the given address and promote it to a huge page for performance
+dmm*	List modules of the target process in radare2 command format
+dmm.	Display memory map information for the currently selected module
+dmmj	List modules of the target process in JSON format
+dms addr	Create a new memory snapshot of the map at the specified address
+dms-id	Delete a memory snapshot by its ID
+dms.	Take a snapshot of the current memory map
+dms-	Revert to the previous memory snapshot
+dms+	Re-apply the last memory snapshot
+dms*	List all memory snapshots in radare2 command format
+dmsj	Output a list of all memory snapshots in JSON format
+dmsC id comment	Add a comment to a specific memory snapshot identified by its ID
+dmsd id	Show a hexadecimal diff of the given snapshot compared to current memory (see `ccc` command)
+dmsw	Create a snapshot of all writable memory maps
+dmsa	Take a full snapshot of all memory maps in the debugged process
+dor [rarun2]	Set debugger options using a comma-separated list of key=value pairs from a rarun2 profile (see dbg.profile)
+doe	Display the current rarun2 startup profile for debugging
+doe!	Open the rarun2 startup profile in the default text editor ($EDITOR) for modification
+dpq	Display the current process ID (PID) in a concise format (equivalent to dp.)
+dp <pid>	List all child processes of the specified process ID
+dpj <pid>	List all child processes of the specified process ID in JSON format
+dpl	Display a list of all processes that can be attached to for debugging
+dplj	Display a list of all attachable processes in JSON format
+dp- <pid>	Detach from the specified process ID
+dp=<pid>	Select and switch to the specified process ID for debugging
+dpa <pid>	Attach to and select the specified process ID for debugging
+dpc	Select the forked child process (as configured by dbg.forks)
+dpc*	Display information about the forked child process (as configured by dbg.forks)
+dpe	Show the full path to the executable of the current debugged process
+dpf	Attach to a process using a file descriptor (advanced usage)
+dpk <pid> [<signal>]	Send a signal to the specified process (default signal is 0 if not provided)
+dpn	Create a new process by forking the current debugged process
+dpt[?][j]	List all threads of the current process
+dpt <pid>	List all threads of the specified process ID
+dpt.	Display the ID of the current thread being debugged
+dptj	List all threads of the current process in JSON format
+dptn	Create a new thread in the current process (using clone)
+dptj <pid>	List all threads of the specified process ID in JSON format
+dpt=<thread>	Attach to and select the specified thread for debugging
+dr <register>=<val>	Set the value of a specific register
+dr. >$snapshot	Save the current register values to an r2 alias file for later use
+dr, [table-query]	Display register information in a tabular format, optionally filtered by a query
+dr0	Reset all registers to their default (zero) values
+dr8[1|2|4|8] [type]	Display a hexadecimal dump of the general-purpose register (GPR) arena (Work in Progress)
+dr=	Show all registers and their values in a columnar format
+dr?<register>	Display the current value of a specific register
+dr??	List all register role aliases and their corresponding values
+dra[?]	Manage register arenas (see 'ara?' for more information)
+drb[1|2|4|8] [type]	Display a hexadecimal dump of the general-purpose register (GPR) arena (Work in Progress)
+drc [name]	Manage conditional flag registers
+drC [register]	Display comments associated with a specific register
+drd	Show only registers whose values have changed since the last update
+dre	Display ESIL expressions that would set registers to their current values
+drf	Show floating-point (FPU) registers (80-bit long double format)
+dri	Display registers sorted by their current values (inverse dump)
+drl[j]	List all register names, optionally in JSON format
+drv[?]	Display vector registers (also known as SVE, packed, or multimedia registers)
+dro	Show the previous (old) values of registers before the last change
+drp[?]	Display or manage the current register profile
+drr	Show register references, displaying a telescoping view of memory pointed to by registers
+drrj	Show register references in JSON format, providing a telescoping view of memory
+drs	Display the contents of the register stack
+drt[?]	Show all register types supported by the current architecture
+drw <hexnum>	Set the entire register arena to the specified hexadecimal value
+drx[?]	Display debug registers (hardware breakpoints and watchpoints)
+.dr*	Import common register values as flags for easier reference and analysis
+.dr-	Remove all register-related flags, clearing the flag space
+drs+	Push the current register state onto a stack, saving it for later retrieval
+drs-	Pop and restore a previously saved register state from the stack
+ds <num>	Step forward by executing <num> instructions, allowing precise control over program flow
+dsb	Step backwards by one instruction, useful for reversing program execution
+dsf	Step until the end of the current function frame is reached
+dsi <cond>	Continue execution until the specified condition is met, allowing for conditional debugging
+dsl	Step one source line, moving through the program at the source code level
+dsl <num>	Step forward by <num> source lines, useful for quickly navigating through source code
+dso <num>	Step over <num> instructions, executing function calls as a single step
+dsp	Step into the program while skipping over library calls, focusing on application code
+dss <num>	Skip the next <num> instructions without executing them
+dsu[?] <address>	Step until the program reaches the specified <address>. Use 'dsu?' for additional step-until commands
+dsu <address>	Step until the program counter reaches the specified <address>
+dsui <instr>	Step until an instruction matching the given disassembly is encountered
+dsuir <regex>	Step until an instruction matching the given regular expression is encountered
+dsuo <optype> [<optype> ...]	Step until an instruction matching any of the specified operation types is encountered
+dsue <esil>	Step until the given ESIL (Evaluable Strings Intermediate Language) expression is matched
+dsuf <flag>	Step until the program counter reaches an address matching the specified flag name
+dt*	List all traced opcode offsets, providing a comprehensive view of execution trace
+dtj	Display instruction trace logs in JSON format for easy parsing and analysis
+dt+ [addr] [times]	Add a trace for the specified address, optionally repeating it multiple times
+dt-	Reset all instruction and call traces, clearing the trace history
+dt=	Display a visual representation of debug trace ranges using ASCII-art color bars
+dta 0x804020 ...	Selectively trace only the specified addresses, allowing focused tracing
+dtc[?][addr]|([from] [to] [addr])	Trace function calls and returns, optionally within a specified address range
+dtd[qi] [nth-start]	List traced disassembled instructions, with options for quiet output or showing only instructions
+dte [idx]	Show commands executed at the specified trace index, useful for reviewing specific points in execution
+dtg	Generate a graph of the call/return trace, visualizing program flow
+dtg*	Output the call/return trace graph as r2 commands, use with .dtg*;aggi for visual representation
+dtgi	Enter an interactive debug trace mode for dynamic analysis
+dts[?]	Manage trace sessions, enabling step-back functionality (EXPERIMENTAL)
+dtt [tag]	Select or set a trace tag for organizing different trace sessions
+dtt.	Display the currently active trace tag
+dte-*	Delete all recorded ESIL (Evaluable Strings Intermediate Language) traces
+dtei	Emulate a single instruction and record a trace of its effects
+dted	Disassemble all traced instructions, providing a comprehensive view of executed code
+dtek [sdb query]	Retrieve ESIL trace log for a single instruction using an sdb query
+dts+	Start a new trace session, beginning the recording of execution
+dts-	Stop the current trace session, ending the recording of execution
+dtst [dir]	Save all trace sessions to disk in the specified directory
+dtsf [dir]	Load trace sessions from disk, reading from the specified directory
+dtsm	List the current memory map and its hash, useful for identifying memory state
+dx <hexpairs>	Execute raw opcodes specified as hexadecimal pairs (e.g., dx 9090 executes two NOP instructions)
+dxa <asm>	Assemble and execute the specified assembly code (e.g., dxa mov eax,6;mov ebx,0; executes two MOV instructions)
+dxe[?] <egg-expr>	Compile and execute an egg expression, a compact code representation (e.g., dxe sym.imp.puts("foo") calls the puts function with the string "foo")
+dxr <hexpairs>	Execute raw opcodes and restore the original CPU state afterwards
+dxrs <hexpairs>	Execute raw opcodes and restore the original CPU state, excluding stack changes
+dxs <name> [args]	Perform syscall injection, executing a system call with the given name and arguments (e.g., "dxs write 1, 0x8048, 12" writes 12 bytes from 0x8048 into stdout)
+e?asm.bytes	Display detailed help and description for the asm.bytes configuration variable
+e??	Display comprehensive list of all configuration variables with their descriptions
+e a	Get the current value of configuration variable 'a'
+e a=b	Set configuration variable 'a' to value 'b'
+e.a=b	Alternative syntax to set variable 'a' to 'b' without spaces (equivalent to 'e a=b')
+e,[table-query]	Display configuration variables in a formatted table view, filtered by optional query
+e/asm	Filter and show only configuration variables containing 'asm' in their names
+e:k=v:k=v:k=v	Set multiple configuration variables at once using colon or comma separated key=value pairs
+e-	Reset all configuration variables to their default values
+e*	Export all configuration variables as radare2 commands for scripting
+e!a	Toggle/invert the boolean value of configuration variable 'a'
+ec [key]	List all color keys or display information for a specific color key, allowing customization of the radare2 color scheme
+ee [var]	Open the configuration editor (specified by cfg.editor) to modify the value of a specific configuration variable
+ed	Open an editor to modify the ~/.radare2rc configuration file, allowing customization of radare2's default settings
+ed-[!]	Delete the ~/.radare2rc configuration file (use ed-! to delete without prompting), resetting radare2 to default settings
+ej	List all configuration variables in JSON format, facilitating easy parsing and integration with other tools
+eJ	List all configuration variables in a more detailed JSON format, providing additional information for each variable
+en	List all environment variables accessible to radare2, showing the current execution environment
+env [k[=v]]	Get the value of an environment variable or set a new value, allowing runtime environment modifications
+er [key]	Set a configuration key as read-only, preventing further modifications to ensure stability or security
+es [space]	List all evaluation spaces or keys within a specific space, organizing configuration variables into categories
+et [key]	Show the data type of a given configuration variable, helping understand its expected value format
+ev [key]	List configuration variables in a verbose format, providing detailed information about each variable
+evj [key]	List configuration variables in a verbose JSON format, combining detailed information with easy parsing
+ec*	Output color configuration as radare2 commands, allowing for easy replication or scripting of color schemes
+ecd	Reset the color palette to its default values, restoring the original radare2 color scheme
+ecr	Set a random color palette, useful for quickly changing the visual appearance (see also scr.randpal for persistent randomization)
+ecs	Display a colorful representation of the current palette, visually showcasing all available colors
+ecj	Show the current color palette in JSON format, facilitating programmatic color scheme analysis or modification
+ecc [prefix]	Display the current color palette in CSS format, optionally filtered by a prefix, useful for web-based interfaces
+eco [theme]	Load a specific color theme if provided, or list all available themes if no argument is given
+ecp	Load the previous color theme in the theme history, allowing quick theme switching
+ecn	Load the next color theme in the theme history, cycling through available themes
+ecH	List all active syntax highlighting rules, showing how different elements are currently highlighted
+ecHi[color]	highlight current instruction with 'color' background
+ecHw[word] [color]	highlight 'word ' in current instruction with 'color' background
+ecH.	show highlight rule in current offset
+ecH-*	remove all the highlight hints
+ecH-	remove all highlights on current instruction
+f name 12 @ 33	Create a flag named 'name' with a length of 12 bytes at offset 33
+f name = 33	Set a flag named 'name' at offset 33 (equivalent to 'f name @ 33' or 'f name 1 33')
+f name 12 33 [cmt]	Create a flag named 'name' with length 12 at offset 33, optionally adding a comment
+f?flagname	Check if a flag named 'flagname' exists, returning true or false (see ?? and ?! for more details)
+f. [*[*]]	List local per-function flags, optionally as r2 commands (use * or ** for different output formats)
+f.blah=$$+12	Create a local function label named 'blah' at the current address plus 12 bytes (f.blah@$$+12)
+f.-blah	Delete the local function label named 'blah'
+f. fname	List all local labels for the function named 'fname'
+f,	Display flags in a tabular format for easy reading
+f*	List all flags in the format of r2 commands, useful for scripting
+f-.blah@fcn.foo	Remove the local label 'blah' from the function 'foo' at the current seek position (equivalent to f.-)
+f-name	Remove the flag named 'name' from the flag list
+f-@addr	Remove the flag at the specified address expression (equivalent to f-$$ or f-0x..)
+f--	Delete all flags and flag spaces, effectively reinitializing the flag system
+f+name 12 @ 33	Create a new flag named 'name' with length 12 at offset 33, or update it if it already exists
+f= [glob]	Display a visual representation of flag ranges with offsets and sizes, optionally filtered by a glob pattern
+fa [name] [alias]	Create an alias for a flag, allowing it to evaluate an expression
+fb [addr] [flag*]	Move all flags matching the pattern 'flag*' to a new address relative to 'addr'
+fc	Display flag colors (same functionality as fc.)
+fC [name] [cmt]	Set or update a comment for the specified flag
+fd[?] addr	Calculate and return the delta between the given address and the nearest flag
+fD[?] rawname	Demangle a flag name or create a new flag using a raw (mangled) name
+fe [name]	Create an enumerated flag with the given name, appending sequential numbers (e.g., fe foo @@= 1 2 3 4 creates foo.1, foo.2, foo.3, foo.4)
+fe-	Reset the enumerator counter used for creating sequential flag names
+ff ([glob])	Calculate and display the distance in bytes to the next flag, optionally filtered by a glob pattern (see also: sn/sp commands)
+fi [size] | [from] [to]	Display flags within the current block or specified range, providing information about flags in a specific area of memory
+fg[*] ([prefix])	Generate and display a graph representation of flag names, optionally filtered by a prefix, useful for visualizing flag relationships
+fj	Output a comprehensive list of all flags in JSON format, facilitating programmatic analysis and integration
+fq	Display a concise list of flags in quiet mode, showing only essential information for each flag
+fl (@[flag]) [size]	Show or modify the length (size) of a flag, either at the current address or for a specified flag
+fla [glob]	Automatically calculate and set the size of all flags matching the given glob pattern, useful for batch flag size adjustments
+fm addr	Relocate the flag at the current offset to a new address, maintaining its properties
+fn	List all flags, displaying their real (demangled) names instead of raw or encoded names
+fnj	Output a list of flags with their real (demangled) names in JSON format, combining readability with machine-parseable structure
+fN [[name]] [realname]	Assign or update the real name of a flag, using the current seek position if no flag name is provided
+fo	Display a random fortune message, adding a touch of whimsy to the radare2 experience
+fO [glob]	Automatically flag functions, symbols, and methods as ordinals, optionally filtered by a glob pattern
+fr [[old]] [new]	Rename a flag, using the current seek position's flag if no old name is specified
+fR[?] [from] [to] [mask]	Relocate all flags matching a specified pattern, applying an optional bitmask during the process
+fs	List and manage flag spaces, which are used to organize flags into categories
+ft	Display a comprehensive list of all tags associated with flags
+fV[*-] [nkey] [offset]	Manage visual marks, allowing for dumping, restoring, or manipulating bookmarked locations in the binary
+fx[d]	Show a hexadump or disassembly of the data at a flag's location, using the flag's size as the display length
+fz[?][name]	Create, manage, or delete named flag zones, which are used to group flags in specific regions of the binary
+fc color	Apply a specified color to all flags at the current offset, enhancing visual distinction
+fc flag=color	Assign a specific color to a given flag, equivalent to using 'fc color@flag'
+fc.	Retrieve and display the color(s) assigned to all flags at the current offset
+fc-	Remove any color assignments from flags at the current offset
+fc-flagname	Remove the color assignment from a specific flag identified by its name
+fc-*	Clear all color assignments from all flags, resetting the color scheme
+fc*	List all flag color assignments in the format of radare2 commands, useful for scripting or replication
+fc.*	Apply colors to all flags at the current offset based on their existing color assignments
+fd $$	Calculate and display the distance between the current address and the nearest flag, showing both flag name and delta
+fd. $$	List all flags at the current address without showing distance information
+fdj $$	Output information about the flag at the current address in JSON format
+fdd $$	Describe the flag at the current address, ignoring any space restrictions
+fdw [string]	Find and display the closest flag to the current offset that matches the given string
+fD rawname	Display the demangled (human-readable) version of a flag name from its raw (mangled) form
+fD. rawname	Create a new flag at the current offset using the provided raw name, then demangle it
+fDj rawname	Output the demangled flag name information in JSON format
+fD* rawname	Generate r2 commands to create a valid flag from a raw name, applying necessary transformations
+fR entry0 `dm~:1[1]`	Relocate the entry point of the binary to a new address obtained from memory mapping
+fs*	List all flag spaces and their contents as r2 commands for scripting or replication
+fsj	Display comprehensive information about all flag spaces in JSON format
+fs *	Activate all flag spaces, making all flags visible and accessible
+fs flagspace	Select an existing flag space or create a new one if it doesn't exist
+fs-flagspace	Delete the specified flag space and all flags within it
+fs-*	Remove all flag spaces, effectively resetting the flag organization system
+fs+foo	Save the current flag space to the stack and switch to the 'foo' flag space
+fs-	Return to the previously active flag space from the flag space stack
+fs-.	Remove the currently active flag space
+fsq	Display a list of all flag spaces in a compact, quiet format
+fsm [addr]	Move all flags from a given address to the currently selected flag space
+fss	Show the current state of the flag space stack
+fss*	Output the flag space stack state as a series of r2 commands
+fssj	Present the flag space stack information in JSON format
+fsr newname	Change the name of the currently selected flag space
+ft tag strcpy strlen ...	Associate multiple function names with the 'string' tag for categorization
+ft tag	List all flags that have been tagged with the specified tag
+ftn tag	Display the names of all flags associated with the given tag
+ftw	Show all tags used within the current file or project
+ftj	Output a comprehensive list of all flag tags and their associated flags in JSON format
+ft*	Generate r2 commands to recreate all current flag tags and their associations
+fz math	Create a new flag zone named 'math' to group related flags
+fz-math	Delete the flag zone named 'math' and ungroup its flags
+fz-*	Remove all defined flag zones, reverting to a flat flag structure
+fz.	Display the context around the current flag zone, showing nearby flags and boundaries
+fz:	Show the contents of the current visual flag zone as defined by scr.flagzone
+fz*	Export all flag zone definitions as r2 commands for use in scripts or project files
+g foo.r	Compile and assemble a r_egg source file named 'foo.r' into shellcode
+gc cmd=/bin/ls	Set a configuration option for shellcodes and encoders, e.g., specifying a command to execute
+gc	Display a comprehensive list of all available configuration options for egg
+ge [encoder] [key]	Specify an encoder and an optional key for shellcode encoding
+git [...]	Execute git commands within r2, allowing version control operations
+gi [type]	Define the type of shellcode to be generated (e.g., exec, bind, connect)
+gL[?]	List all available plugins for shellcode generation and encoding, with optional help
+gp padding	Define padding for the generated shellcode command
+gr	Reset the egg environment, clearing all previous configurations
+gs name args	Compile a syscall with the given name and arguments into shellcode
+gS	Display the current egg configuration, including all set options
+gw	Compile the egg code and write the resulting shellcode to the current file
+ia	List all architectures found in the current binary (equivalent to rabin2 -A)
+ib	Reload the current buffer to update binary information (should be used only once)
+ic	List all classes, methods, and fields in the binary (use icj for JSON output)
+iC[j]	Show detailed signature information, including entitlements (optional JSON output)
+id	Display DWARF source line information for debugging
+iD lang sym	Demangle the given symbol name for the specified programming language
+ie[?]e	Show entrypoint (ie) or both constructors and destructors (iee)
+iE	List all exported symbols (global symbols) from the binary
+ig[?][h]	Estimate the size of the binary program (use 'h' for human-readable units)
+ih	Display a normal output of the binary headers
+iH[?]	Show detailed information about binary headers fields
+ii[?][c,j*,]	List all symbols imported from external libraries (various output formats available)
+iic	List imported symbols grouped by their respective classes
+iI	Display comprehensive binary information, including file format and architecture
+ik [query]	Query the key-value database from RBinObject for specific information
+il	List all libraries that the binary depends on
+iL [plugin]	List all loaded RBin plugins or show details of a specific plugin
+im	Show information about predefined memory allocations in the binary
+iM	Display the main address (entry point) of the binary
+io	Display information about input/output operations
+iO[?]	Perform binary operations such as dumping, resizing, or modifying sections
+ir	List all relocations in the binary
+iR	Display a comprehensive list of resources embedded in the binary
+is[?]	List all symbols (functions and variables) defined in the binary
+iS [sha1,crc32(,..)]	Show detailed information about sections, optionally with cryptographic hashes
+it	Calculate and display various file hashes (e.g., MD5, SHA1, SHA256)
+iT	Show the file signature, which can help identify the file type or compiler used
+iV	Display version information embedded in the binary file
+iw	List all try/catch blocks found in the binary (useful for exception handling analysis)
+iz	Extract and display strings from data sections (with JSON/Base64 output options)
+ic.	Show the class and method name at the current seek position
+ic-[klass.method]	Remove a specific class or method symbol from the binary
+ic+[klass.method]	Add a new symbol for a given class and method at the current seek position
+icc [lang]	List classes, methods, and fields in a structured header format for various languages
+icg [str]	Generate and display a class hierarchy graph, optionally filtering by a given string
+icq	List classes in quiet mode, showing only class names
+icqq	List non-system classes in an even quieter mode
+icl[c]	Show addresses of classes and their methods without names (iclc for class count)
+ics	Display class symbols in an easily parsable format for scripting
+idp [file.pdb]	Load debugging information from a specified PDB (Program Database) file
+idpi [file.pdb]	Show detailed information about a PDB file without loading it
+idpi*	Display symbols from a PDB file as flags (prefix with dot to import)
+idpd	Download a PDB file from a remote symbol server
+idx	Display source files referenced via DWARF debugging information
+iE,[table-query]	List exported symbols using a custom table query for filtering
+iE.	Show export information for the symbol at the current address
+ih*	Display header information as r2 commands for scripting
+ihj	Output header information in JSON format for easy parsing
+iic.	Show classes associated with the import at the current address
+iicc [type]	Display the kind (type) of a given symbol name
+iiccx [type]	List functions that call imports of a specific class
+iicj	Output grouped imports in JSON format
+iick	Group and display imports by class in a key/value format
+is,[table-query]	List symbols using a custom table query for advanced filtering
+is.	Display information about the symbol at the current address
+is*	Output symbol information as r2 commands for scripting
+isj	List symbols in JSON format for programmatic processing
+iS.	Show details about the section containing the current address
+iS,[table-query]	List sections using a custom table query for advanced filtering
+iS=	Display an ASCII-art visualization of section ranges with color bars
+iSS	List memory segments (equivalent to the 'om' command for memory maps)
+iz- [addr]	Remove (purge) a string at a specific address using bin.str.purge
+iz*	Generate r2 commands to recreate all strings with their flags and comments
+izz	Perform a comprehensive string search across the entire binary
+izz*	Output commands to recreate all strings found in the entire binary
+izzz	Extract and display all strings from the binary directly in the r2 shell (useful for large files)
+k anal/**	List all namespaces under the 'anal' category, showing the hierarchical structure of analysis-related data
+k anal/meta/*	List all key-value pairs from the 'meta' namespace within the 'anal' category, displaying metadata information
+k anal/meta/meta.0x80404	Retrieve the specific value associated with the key 'meta.0x80404' in the anal/meta namespace
+k foo	Display the value associated with the key 'foo' in the current namespace
+k foo=bar	Set the value 'bar' for the key 'foo' in the current namespace
+kd [file.sdb] [ns]	Dump the contents of a specified namespace to a file in SDB format, useful for backup or sharing
+kj	Generate a comprehensive JSON-formatted list of all namespaces and SDB databases, ideal for scripting and data exchange
+ko [file.sdb] [ns]	Open and load an SDB file into a specified namespace, allowing import of external data
+ks [ns]	Enter an interactive SDB query shell for a given namespace, enabling direct manipulation and querying of data
+lu [path]	Execute a Lua script at the specified path, equivalent to using the #!lua directive
+ll [path]	List files and directories in long format, showing detailed information including permissions and timestamps
+lr [path]	List files and directories recursively, displaying the entire directory tree structure
+li	Display the source code of the current function, similar to GDB's 'list' command for source-level debugging
+ls [-e,-l,-j,-q] [path]	List files and directories with various options: emoji, long format, JSON output, or quiet mode
+ls -e [path]	List files and directories using emoji icons for visual representation of file types
+ls -l [path]	List files and directories in long format, showing detailed information (alias for 'll' command)
+ls -j [path]	List files and directories in JSON format, useful for parsing and processing file information programmatically
+ls -q [path]	List files and directories in quiet mode, outputting one file per line without additional details
+le[ss] [path]	View file contents with paging, similar to 'less' command or 'cat' with grep for pattern matching
+L blah.dylib	Load a specified plugin file (in this case, 'blah.dylib') into radare2, extending its functionality
+L-duk	Unload the 'duk' core plugin, removing its features from the current radare2 session
+La[qj]	List architecture plugins (CPU/ISA support). Use q for quiet mode, j for JSON output
+LA[qj]	List analysis plugins (code analysis features). Use q for quiet mode, j for JSON output
+Lb[qj]	List binary format plugins (ELF, PE, etc). Use q for quiet mode, j for JSON output
+Lc[j]	List core plugins (essential r2 functionality). Use j for JSON output
+Ld[j]	List debugger plugins (gdb, native, etc). Alias for 'dL'. Use j for JSON output
+LD[j]	List available decompiler backends. Configure with 'e cmd.pdc=?'. Use j for JSON output
+Le[j]	List ESIL plugins (emulation features). Use j for JSON output
+Lg[j]	List egg plugins (shellcode generators). Use j for JSON output
+Lh	List hash plugins for cryptographic functions (see 'ph' command)
+Li[j]	List binary information plugins. Alias for 'iL'. Use j for JSON output
+Ll[qj]	List scripting language plugins (#! hashbang). Use q for quiet mode, j for JSON output
+LL	Lock the terminal screen (requires password to unlock)
+Lm[j]	List filesystem plugins. Alias for 'mL'. Use j for JSON output
+Lo[j]	List IO plugins (file access). Alias for 'oL'. Use j for JSON output
+Lp[j]	List parser plugins for assembly parsing. Configure with 'e asm.parser=?'. Use j for JSON output
+Ls[qj]	List assembly plugins (disassemblers). Use q for quiet mode, j for JSON output
+Lt[j]	List available color themes. Alias for 'eco'. Use j for JSON output
+m /mnt ext2 0	Mount an ext2 filesystem at /mnt with a delta of 0 on the current IO device
+m /mnt	Mount a filesystem at /mnt, automatically detecting the filesystem type and using the current offset
+m*	Display mount commands in radare2 script format for current mounts
+m-/	Unmount the filesystem at the given path (/)
+mL[Lj]	List available filesystem plugins (Same as Lm command), use mLL to show only plugin names, j for JSON output
+mc [file]	Display the contents of the specified file (similar to 'cat' command)
+md /	List files and directories in the virtual radare2 filesystem root
+mdd /	Show detailed file information including size, similar to 'ls -l' command
+mdq /	Display only filenames in the current directory (quiet mode)
+mf[?] [o|n]	Search for files by filename or offset within the mounted filesystem
+mg /foo [offset size]	Retrieve file or directory from the mounted filesystem and save to disk (supports base64 encoding)
+mi /foo/bar	Get the offset and size information for the specified file in the mounted filesystem
+mj	List all mounted filesystems in JSON format for easy parsing
+mo /foo/bar	Open the specified file from the mounted filesystem into a new memory buffer (malloc://)
+mp msdos 0	Display partition information in MSDOS format starting at offset 0
+mp	List all supported partition table types
+ms /mnt	Open an interactive filesystem shell at the specified mount point (or fs.cwd if not defined)
+mw [file] [data]	Write the specified data to the given file in the mounted filesystem
+mwf [diskfile] [r2filepath]	Copy contents of a local disk file into a file in the radare2 mounted filesystem
+my	Copy (yank) the contents of the current file into the clipboard
+mal	List all available radare2 documentation topics
+man [page]	Display the manual page for the specified radare2 command or topic
+mfn /foo *.c	Search for files by name pattern (e.g., *.c) in the /foo directory of the mounted filesystem
+mfo /foo 0x5e91	Search for files by their offset (0x5e91) in the /foo directory of the mounted filesystem
+o-1	Close the file descriptor with ID 1, releasing associated resources
+o*[*]	List all opened files as r2 commands, optionally showing a script to set flags for each file descriptor
+o+ [file]	Open the specified file in read-write mode, allowing both reading and modification
+o++ [file]	Create a new file if it doesn't exist and open it in read-write mode (see 'ot' for creation and 'omr' for mapping)
+o-[?][#!*$.]	Close opened files with various options (use 'o-?' for help on closing specific files)
+o.	Display the filename of the currently active file (use 'o.q' or 'oq' to get the file descriptor instead)
+o: [len]	Create a new memory buffer of specified length and copy bytes from current offset into it
+o=(#fd)	Select a file descriptor or display a visual ASCII art representation of all opened files
+oL	Display a comprehensive list of all registered IO (Input/Output) plugins
+oa[-] [A] [B] [filename]	Specify architecture and bits for a given file, or remove this information if used with '-'
+ob	Show a detailed list of all opened binary files along with their object IDs
+oc [file]	Open and analyze a core dump file, similar to restarting r2 with the core file
+of[?] [file]	Open a file without creating any memory map (use 'of?' for more options)
+oe [filename]	Open the specified file using the editor defined in the 'cfg.editor' configuration
+oj	Display information about all opened files in JSON format for easy parsing
+om	Show a comprehensive list of all defined IO memory maps
+on[?][n] [file] 0x4000	Map a raw file at the specified address (0x4000 in this example) without involving the binary parser
+oo	Reopen the current file, refreshing its contents and analysis
+op[npr] [fd]	Select a prioritized file by its file descriptor, with options for next, previous, or rotate selection
+ot [file]	Create an empty file (equivalent to the 'touch' command in Unix-like systems)
+oq[q]	List all open files or display the current file descriptor (use 'oqq' for a more concise output)
+ox fd fdx	Swap the descriptors of two files (fd and fdx) while maintaining their memory mappings
+open [file]	Utilize the system's default file opener (xdg-open on Linux, open on macOS) to view the specified file
+o-*	Close all currently opened files, clearing the file descriptor list
+o-!	Close all opened files except for the currently active one
+o-3	Close the file with file descriptor 3
+o-$	Close the most recently opened file (last in the file descriptor list)
+o-.	Close the currently active file
+o--	Perform a complete reset: close all files, clear analysis data, remove binary files and flags (equivalent to restarting r2)
+ob*	List opened binary files and their object IDs in r2 command format for scripting
+ob *	Select all binary files (use 'ob <bfid>' to select a specific one)
+obi?[..]	Display binary information (alias for 'i' command with optional arguments)
+obio	Force loading of binary information from the IO plugin, bypassing cached data
+obm([id])	Merge the currently selected binary file into the previous one (id-1)
+obm-([id])	Merge binary files and delete the current one after merging
+ob-*	Remove all loaded binary files from the session
+ob-[objid]	Remove a specific binary file by its object ID
+ob--	Remove the most recently loaded binary file
+ob. ([addr])	Display the binary file ID (bfid) for the file mapped at the given address
+ob=	Show an ASCII art table listing all open binary files
+obL	List available binary formats (equivalent to 'iL' or 'Li' commands)
+oba [addr]	Load binary information starting from the specified address
+obf ([file])	Load binary information for the current file (useful when r2 is started with -n)
+obj	List opened binary files and their object IDs in JSON format
+obo [fd]	Switch to a different open binary file using its file descriptor
+obr [baddr]	Rebase the current binary object to a new base address
+om fd vaddr [size] [paddr] [rwx] [name]	Create a new IO memory map with specified parameters
+om*	List all memory maps in r2 command format for scripting
+om-mapid	Remove a specific memory map by its ID
+om-*	Remove all defined memory maps
+om-..	Display a heads-up display (HUD) to visually select and remove maps
+om.	Show details of the memory map at the current offset
+om, [query]	List memory maps using the table API, optionally filtered by a query
+om=	Display all memory maps in an ASCII art representation
+oma [fd]	Create a memory map covering the entire virtual address space for a given file descriptor
+omb [id]	Switch to a different memory bank by ID
+omB mapid addr	Relocate a specific memory map to a new address
+omB. addr	Relocate the current memory map to a new address
+omd from to @ paddr	Create a simplified memory map using current seek, file descriptor, and permissions
+omf [mapid] rwx	Modify flags/permissions for a specific memory map or the current one
+omfg[+-]rwx	Globally change flags/permissions for all memory maps
+omj	List all memory maps in JSON format for easy parsing and scripting
+omm [fd]	Create a default memory map for the given file descriptor (use 'omm `oq`' for current file)
+omn[?] ([fd]) [name]	Manage memory map names: set, show, or delete names for maps
+omo fd	Map the given file descriptor with the lowest priority in the memory layout
+omp mapid	Increase the priority of the memory map with the specified ID
+ompb [fd]	Prioritize all memory maps associated with the binary file of the given file descriptor
+ompd mapid	Decrease the priority of the memory map with the specified ID
+ompf [fd]	Prioritize all memory maps associated with the given file descriptor
+omq	Display a list of all memory maps along with their corresponding file descriptors
+omqq	List addresses of all memory maps (use $MM to get the size of each map)
+omr [mapid newsize]	Resize the memory map with the specified ID to the new size
+omt mapid	Toggle backwards tying for the specified memory map (equivalent to omtb)
+omtb mapid	Toggle backwards tying for the specified memory map
+omtf mapid	Toggle forwards tying for the specified memory map
+omb=[name]	Select a memory bank by name (equivalent to 'omb id' but using the bank's name)
+omb+ [name]	Create a new memory bank with the given name
+omba [id]	Add the current memory map to the specified bank
+ombd [id]	Remove a memory map from the specified bank
+omb-*	Delete all memory banks, resetting the bank structure
+omb- [mapid]	Delete the memory bank with the given ID
+ombg	Associate all existing memory maps with the current bank
+ombq	Display the ID of the currently active memory bank
+omn mapaddr [name]	Set or delete a name for the memory map that includes the specified address
+omn.([-|name])	Show, set, or delete the name for the memory map at the current address
+omni mapid [name]	Set or delete a name for the memory map with the specified ID
+on /bin/ls 0x4000	Map a raw file at the specified address (0x4000) without using the binary parser
+onn [file] ([rwx])	Open a file without creating any memory maps or parsing headers (specify optional permissions)
+onnu [file] ([rwx])	Open a file uniquely, returning the existing file descriptor if already opened
+on+ [file] ([rwx])	Open a file in read-write mode without parsing headers (specify optional permissions)
+on*	Display list of open files formatted as r2 commands for scripting
+oo+	Reopen current file in read-write mode
+oob [baddr]	Reopen file and reload binary information with optional new base address
+ooi	Reload binary information without reopening the underlying file
+ooc	Reopen current file as a core dump file
+ood [args]	Reopen current file in debug mode with optional program arguments
+oom[?]	Reopen current file in memory (malloc://) with various options
+oon	Reopen current file without loading binary analysis information
+oon+	Reopen current file in read-write mode without binary analysis
+oonn	Reopen current file without binary analysis but preserve header flags
+oonn+	Reopen current file in read-write mode without binary analysis but preserve header flags
+oodf [file]	Debug the specified file (equivalent to reopening in debug mode)
+oodr [rarun2]	Execute rarun2 profile then reopen in debug mode
+p- [nblocks]	Display a visual representation of metadata distribution across file boundaries using ASCII art bars
+p2 [len]	Generate and display 8x8 2bpp-tiles for the specified length of data
+p3 [file]	Create and print a 3D stereogram image of the current block or specified file
+p6[de] [len]	Perform base64 encoding (e) or decoding (d) on the specified length of data
+p8[?][dfjx] [len]	Print a list of bytes as hexadecimal pairs with various formatting options
+p=	Visualize the bytes of the current block using ASCII art bars
+pa [assembly]	Assemble the given assembly expression and print the resulting hexadecimal pairs
+pA[n_ops]	Display the address and type information for the specified number of operations
+pb[?] [n]	Print a bitstream representation of N bits
+pB[?] [n]	Print a bitstream representation of N bytes
+pc	Print the current block in C syntax
+pC[aAcdDxw] [rows]	Print disassembly in columns with various formatting options (see hex.cols and pdi)
+pd[?] [sz] [a] [b]	Disassemble N opcodes (pd) or N bytes (pD) with optional start and end addresses
+pf[?][.name] [fmt]	Print formatted data using a specified format string or named format
+pF[?][apx]	Print ASN.1, PKCS#7, or X.509 formatted data
+pg	Print all available formatting options
+ph	Display a list of available hash plugins (equivalent to Lh and phl/phL)
+pi[?][bdefrj] [num]	Print instructions with various formatting options and count
+pI[?][iI][df] [len]	Print N instructions or bytes with function-level granularity
+pj	Print the current block as indented JSON for easy parsing
+pk [len]	Generate and display a visual representation of the key using randomart mosaic
+pK [len]	Generate and display a visual representation of the key using randomart mosaic (alternative format)
+pl[?][format] [arg]	Print a list of data using specified format options (pl Ffvc)
+pm [file|directory]	Set the libmagic reference file or directory for file type identification (see /m?)
+po[24aAdlmorsx]	Print data in various formats, using clipboard content if no hexadecimal pairs are provided
+pp[?][sz] [len]	Print repeating patterns with various options (see pp? for more details)
+pq[?][is] [len]	Generate and print a QR code containing the first N bytes of data
+pr[?][glx] [len]	Print N raw bytes in various formats (lines, hexblocks, or gunzipped)
+ps[j]	Print the string until the first non-printable character is encountered
+pt	Print the UNIX timestamp (32-bit, respecting cfg.bigendian) as a human-readable date
+pu[w] [len]	Print N URL-encoded bytes (w for wide-character encoding)
+pv	Print bytes based on the current asm.bits setting
+pwd	Display the current working directory
+px	Show a hexadecimal dump of the current block
+py([-:file]) [expr]	Execute Python code: print clipboard (yp), run Python script (py:file), execute one-liner `py print(1)`, or read from stdin `py-`
+pz[?] [len]	Display a zoomed view of data, showing patterns and repetitions (use pz? for detailed help)
+pkill [process-name]	Terminate all running processes with the specified name
+pushd [dir]	Change to the specified directory and add the current directory to the directory stack
+popd[-a][-h]	Remove the top directory from the stack and change to it; -a pops all, -h shows history
+p-e [nblocks]	Visualize entropy distribution across file/block using ASCII-art bars
+p-h [nblocks]	Display a histogram analysis of metadata distribution per block
+p-j [nblocks]	Output metadata analysis in JSON format
+p8 ([len])	Print data as a string of hexadecimal pairs, optionally specifying length
+p8*	Generate and display radare2 commands to recreate the current block
+p8d	Output byte values as a space-separated list in decimal format
+p8f	Print hexadecimal pairs of the current function's bytes (linear representation)
+p8j	Output hexadecimal pairs as a JSON array
+p8x	Display hexadecimal pairs, respecting the hex.cols configuration
+e zoom.in	Set the range for zoomed view of data
+p==[..]	Execute subcommands similar to p=, but display results using column bars instead of rows
+p=0	Display a histogram of null byte (0x00) distribution across the file or block
+p=2	Generate a visualization using short (signed int16) bars, useful for representing waveforms
+p=a	Show a map of basic blocks from analysis results
+p=A	Display comprehensive analysis statistics maps (refer to p- for more details)
+p=b	Identical to p=a, showing basic block map from analysis
+p=c	Visualize the number of function calls per block
+p=d	Present the minimum, maximum, and count of unique bytes in each block
+p=e	Illustrate the entropy distribution for each file size or block size
+p=F	Create a histogram of 0xFF byte distribution across the file or block
+p=i	Highlight the number of invalid instructions detected in each block
+p=j	Visualize the frequency of jumps and conditional jumps within blocks
+p=m	Display the distribution of flags and marks across blocks
+p=p	Show the proportion of printable bytes for each file size or block size
+p=s	Illustrate the occurrence of system calls and privileged instructions
+p=z	Visualize the character count in strings found within blocks
+paD [hexpairs]	Disassemble and display both the assembly expression and original hexadecimal pairs
+pad [hexpairs]	Convert hexadecimal pairs to assembly expression (equivalent to pdx and pix)
+pade [hexpairs]	Generate and display the ESIL (Evaluable Strings Intermediate Language) expression from given hexadecimal pairs
+pae [assembly]	Convert the provided assembly expression into its corresponding ESIL representation
+pc*	output current block as radare2 'wx' commands for reconstruction
+pcA	output current block as .bytes with assembly instructions in comments
+pca	output current block as GNU assembler (GAS) .byte directives
+pcc	output current block as C char array with multiline string formatting
+pcd	output current block as C array of double words (8 byte values)
+pch	output current block as C array of half-words (2 byte values) 
+pci	output current block as C array of bytes with assembly instructions in comments
+pcJ	output current block as JavaScript code
+pcj	output current block as JSON data
+pck	output current block as Kotlin code
+pco	output current block as Objective-C code
+pcp	output current block as Python code
+pcq	output current block as C code without comments (suitable for includes)
+pcr	output current block as Rust code
+pcg	output current block as Go language code
+pcS	output current block as shell script that can reconstruct the binary
+pcs	output current block as string literal
+pcn	output current block as space-separated list of decimal numbers
+pcv	output current block as Java code
+pcV	output current block as V language code
+pcw	output current block as C array of words (4 byte values)
+pcy	output current block as YARA pattern matching rules
+pcY	output current block as YARA rules without comments
+pcz	output current block as Swift code
+pD N	Disassemble and display N bytes of machine code as assembly instructions
+pd -N	Disassemble N instructions backwards from the current position, useful for reverse analysis
+pd N	Disassemble and display N instructions from the current position
+pd-- N	Show context disassembly of N instructions, including surrounding code for better understanding
+pda	Disassemble all possible opcodes byte by byte, useful for identifying hidden or obfuscated instructions
+pdaj	Disassemble all possible opcodes byte by byte and output the result in JSON format for easy parsing
+pdb[j]	Disassemble the current basic block, with optional JSON output (use 'j' flag)
+pdc	Perform pseudo-decompilation of the function at the current offset, converting assembly to C-like code
+pdC	Display comments found in N instructions, helping to understand code annotations
+pde[q|qq|j] N	Disassemble N instructions following the execution flow from current PC, with options for quiet output or JSON format
+pdo N	Convert ESIL (Evaluable Strings Intermediate Language) expressions of N instructions to C code (use pdO for raw bytes)
+pdf	Disassemble the entire function in a linear way, showing all instructions sequentially
+pdi	Disassemble with offset and bytes information, similar to 'pi' command but with additional details
+pdj	Disassemble and output the result in JSON format for programmatic analysis
+pdJ	Provide formatted disassembly output in JSON, similar to 'pd' command but in a structured format
+pdk[?]	Disassemble all methods of a class, useful for analyzing object-oriented code
+pdl	Display the sizes of instructions, helping to understand code density and alignment
+pdp	Disassemble by following pointers to read return-oriented programming (ROP) chains
+pdr	Recursively disassemble across the entire function graph, showing control flow
+pdr.	Recursively disassemble across the function graph, starting from the current basic block
+pdR	Recursively disassemble a specified number of bytes without analyzing functions, useful for raw binary analysis
+pds[?]	Print disassembly summary, showing referenced names, strings, and other important information
+pdsb [N]	Display a summary of the current basic block or N basic blocks
+pdsf[sjq]	Show a comprehensive function summary including strings, calls, variables, and references, with options for different output formats
+pdss [N]	Display a summary of strings found in the current function or N functions
+pdu[aceios?]	Disassemble instructions until a specified condition is met, useful for analyzing loops or specific code patterns
+pd, [n] [query]	Disassemble N instructions in a tabular format, similar to debug trace display (see 'dtd' command)
+pdx [hex]	Alias for 'pad' or 'pix' commands, used to disassemble from raw hexadecimal input
+pdcc	Perform pseudo-decompilation with additional C helper functions for improved readability
+pdco	Display pseudo-decompiled output with associated memory offsets for each line of code
+pdcj	Generate JSON format output for codemeta annotations, used by frontends like Iaito for enhanced visualization
+pdfj	Disassemble the entire function and output the result in JSON format (see 'pdfJ' for differences)
+pdfr	Recursively disassemble the function, equivalent to 'pdr' command
+pdfs	Display a concise function summary, including key information about the function (see 'pdsf' for more details)
+pf fmt	Display data using a custom format string. See 'pf??' and 'pf???' for detailed syntax and examples.
+pf?	Show help information for the 'pf' command and its subcommands.
+pf??	Provide detailed explanation of format characters used in 'pf' command.
+pf???	Display practical usage examples of the 'pf' command for various data structures.
+pf* fmt_name|fmt	Print data using the specified format as r2 flag creation commands, useful for scripting.
+pf.	List all predefined format definitions available in the current session.
+pf.fmt_name [0|cnt]fmt	Define a new named format with optional count, allowing reuse in future commands.
+pf.fmt_name.field_name[i]	Display the i-th element of an array field within a named format.
+pf.fmt_name.field_name=33	Set a new value for a specific field in a named format, useful for data modification.
+pf?fmt_name	Show the detailed definition of a previously defined named format.
+pfb [fmt] [fnames]	Print formatted bitfield in ASCII art, visualizing bit layouts.
+pfc fmt_name|fmt	Display data using the specified format as a C string, useful for code generation.
+pfd.fmt_name	Generate and display data using a named format as Graphviz commands for visualization.
+pfj fmt_name|fmt	Output data using the specified format in JSON, facilitating machine parsing.
+pfo fdf_name	Load a Format Definition File (FDF), importing predefined complex structures.
+pfo	List all available Format Definition Files (FDF) in the current r2 installation.
+pfq fmt ...	Perform a quiet print of the formatted data, omitting the address information.
+pfs[.fmt_name|fmt]	Calculate and print the size of a named format or format string in bytes.
+pfv.fmt_name[.field]	Print only the values for a named format or specific field, ideal for scripting.
+pfbc [fmt] [fnames]	Similar to 'pfb', but output using C syntax for bitfield representation.
+pfbj [fmt] [fnames]	Output bitfield information in JSON format, useful for further processing.
+pfbq [fmt] [fnames]	Display bitfield information in a quieter, one-line format for concise output.
+pfbd [fmt] [fnames]	Similar to 'pfb', but includes additional debugging information.
+pfb 3b4b foo bar	Define and display two bitfields: 'foo' of 3 bits and 'bar' of 4 bits.
+pfb 3b+4b foo bar	Equivalent to the above, demonstrating that the '+' sign is optional.
+pfb 3b..4b foo bar	Define bitfields with 2 unused bits between them, useful for aligned structures.
+pfb 3b2.4b foo bar	Another way to represent the above, using digits and dots for bit spacing.
+pFa[jqt] [len]	Decode ASN1/DER data from the current block, with options for JSON, quiet, or test output.
+pFA[j] [len]	Decode Android Binary XML data from the current block, with optional JSON output.
+pFb[vj] [len]	Decode raw Protocol Buffers data, with options for verbose or JSON output.
+pFB[j] [len]	Decode iOS Binary PLIST data from the current block, with optional JSON output.
+pFo[j] [len]	Decode ASN1 Object Identifier (OID), with optional JSON output.
+pFp[j] [len]	Decode PKCS7 data structure, commonly used in cryptography, with optional JSON output.
+pFx[j] [len]	Decode X509 certificates, with optional JSON output for detailed certificate information.
+pFX [len]	Decompress and print the contents of an XZ-compressed block of specified length
+pg*	Generate and print ROP gadgets as r2 commands for scripting or further analysis
+pg-*	Remove all previously discovered ROP gadgets from memory
+ph md5	Compute and display the MD5 hash of the current data block
+ph:md5	Equivalent to 'ph md5', using a colon instead of a space for command separation
+ph sha1 32 @ 0x1000	Calculate and show the SHA1 hash of 32 bytes starting at address 0x1000
+phj	Display a list of all available cryptographic hash plugins in JSON format
+pia	Print all possible opcodes byte by byte, useful for instruction set analysis
+pib	Disassemble and print all instructions within the current basic block
+pid	Alias for 'pdi', disassembles and prints instructions with detailed information
+pie	Convert and print the ESIL (Evaluable Strings Intermediate Language) representation of N instructions
+piE	Generate and display ESIL for all instructions found within N bytes of data
+pif	Disassemble and print all instructions of the current function
+pij	Disassemble N instructions and output the result in JSON format for easy parsing
+pir	Recursively disassemble the function graph, similar to 'pdr' but using 'pI' output format
+piu[q] [optype]	Disassemble instructions until an instruction of the specified optype is encountered, with optional quiet mode
+pix	[hexpairs] Alias for 'pdx' and 'pad', disassemble from raw hexadecimal input
+pieb	Print ESIL representation of all instructions in the current function's basic block
+pieq	Display ESIL of instructions without showing their addresses, for a cleaner output
+pief	Generate and print ESIL representations for all basic blocks in the current function
+piefq	Print ESIL for all function basic blocks without displaying instruction addresses
+piEq	Show ESIL of instructions found in N bytes, omitting the instruction addresses
+pifj	Output all function instructions in JSON format for programmatic analysis
+pifc	Analyze and print all function calls made within the current function
+pifcj	Display all function calls in the current function in JSON format
+pj.	Generate and print indented JSON representation of data from address 0 to the current offset
+pj..	Produce a JSON path representation from address 0 to the current offset, useful for data structure analysis
+e dir.magic	Set the directory path for magic files, defaulting to /usr/local/share/radare2/5.9.7/magic
+po2 [val]	Perform a 2-byte endian swap on the given value
+po4 [val]	Execute a 4-byte endian swap on the specified value
+poa [val]	Perform addition operation on current value (e.g., poa 0102 adds 0x0102)
+poA [val]	Apply bitwise AND operation with the given value
+pod [val]	Divide the current value by the specified value
+poD [algo] [key] [iv]	Decrypt a block of data using specified algorithm, key, and initialization vector
+poE [algo] [key] [iv]	Encrypt a block of data using specified algorithm, key, and initialization vector
+pol [val]	Perform a bitwise left shift operation by the given number of bits
+pom [val]	Multiply the current value by the specified value
+poo [val]	Apply bitwise OR operation with the given value
+por [val]	Execute a bitwise right shift operation by the given number of bits
+pos [val]	Subtract the specified value from the current value
+pox [val]	Perform bitwise XOR operation with the given value (e.g., pox 0x90)
+poS [algo] [key]	Calculate and display the cryptographic signature of a block using the specified algorithm and key
+pp0	Fill and print a buffer with zero bytes
+pp1	Generate and print an incremental byte pattern, considering lower bits of current address and block size
+pp2	Create and display an incremental word (2-byte) pattern
+pp4	Produce and show an incremental double word (4-byte) pattern
+pp8	Generate and print an incremental quad word (8-byte) pattern
+ppa[lu]	Print Latin alphabet pattern (l for lowercase, u for uppercase, with restrictions)
+ppd	Generate and print a De Bruijn pattern (refer to ragg2 -P, -q and wopD for more options)
+ppf	Fill and print a buffer with 0xFF bytes
+ppn	Generate and display numeric PIN patterns
+pq 32	Create and print a QR code representing the current 32 bytes of data
+pqz	Generate and display a QR code using the current null-terminated string at the current offset
+prc[=fep..]	Visualize bytes as colors using a specified palette
+prg	Decompress and print the gunzipped data of the current block
+pri[aA12r]	Print raw image data, with options for 1-bit image and respecting hex.cols setting
+print[f][ln]	Various print functions: print, println, printf, printfln for formatted output
+prl	Print raw data with line offsets, displaying both hexadecimal and ASCII representations
+prx	Print printable characters with their real file offsets, useful for analyzing text within binary data
+prz	Print raw zero-terminated string, stopping at the first null byte encountered
+prgl	Decompress the current block using LZ4 algorithm, adjusting the blocksize as needed for decompression
+prgi	Display the number of bytes consumed during inflation (decompression) process
+prgo	Show the resulting output bytes after inflating (decompressing) the data
+ps+[j]	Print C++ std::string, handling same-endian, ASCII, zero-terminated strings (optional JSON output with 'j')
+psa	Print any type of string, automatically detecting the format (combines functionality of psp/psw/psW/psz/..)
+psb	Print all strings found in the current block, useful for quick string analysis
+psi	Print the string at the current seek position, useful for targeted string extraction
+psn[l] [len]	Print string until a newline is encountered, with optional length limit
+psp	Print a Pascal-style string, where the first byte defines the length of the following string
+psq	Alias for 'pqs', printing 4-byte aligned strings
+pss	Print string formatted to fit the screen width, wrapping long strings for better readability
+pso[j]	Print string constructed from immediates, useful for analyzing Swift strings (optional JSON output)
+psu[zj]	Print UTF-16 unicode string, with options for null-termination (z) and JSON output (j)
+psw[j]	Print 16-bit wide string, useful for analyzing Unicode strings (optional JSON output)
+psW[j]	Print 32-bit wide string, for analyzing wider character encodings (optional JSON output)
+psx	Display string with escaped characters, making non-printable characters visible
+psz	Print zero-terminated string, stopping at the first null byte
+psp1	Print Pascal-style string where the first byte defines the length (same as psp)
+psp2	Print Pascal-style string where the first two bytes define the length
+psp4	Print Pascal-style string where the first four bytes (respecting endianness) define the length
+pspj	Print Pascal-style string in JSON format for easy parsing and analysis
+pspw	Print zero-terminated 16-bit wide Pascal string, length in bytes defined by the first byte
+pspw1	Print zero-terminated 16-bit wide Pascal string (same as pspw)
+pspw2	Print 16-bit wide Pascal string, length defined by first two bytes
+pspw4	Print 16-bit wide Pascal string, length defined by first four bytes (respecting endianness)
+pspwj	Print 16-bit wide Pascal string in JSON format for structured output
+pspW	Print zero-terminated 32-bit wide Pascal string, length in bytes defined by the first byte
+pspW1	Print zero-terminated 32-bit wide Pascal string (same as pspW)
+pspW2	Print 32-bit wide Pascal string, length defined by first two bytes
+pspW4	Print 32-bit wide Pascal string, length defined by first four bytes (respecting endianness)
+pspWj	Print 32-bit wide Pascal string in JSON format for advanced analysis
+psz*	Generate an r2 command to write the null-terminated string at the current address
+pszj	Print zero-terminated string in JSON format, useful for scripting and data extraction
+pszl	Print the length of the zero-terminated string at the current address
+pt.	Print the current system time in a human-readable format
+ptb	Print Swatch Internet Time (BEAT), a decimal time concept dividing the day into 1000 beats
+ptd	Print DOS time (32-bit, respecting cfg.bigendian) formatted as date and time since January 1, 1980
+pth	Print HFS (Hierarchical File System) time (32-bit, respecting cfg.bigendian) formatted as date and time since January 1, 1904
+ptn	Print NTFS (New Technology File System) time (64-bit, respecting cfg.bigendian) formatted as date and time since January 1, 1601
+pv1[udj]	Print 1 byte from memory, with options for unsigned decimal (u), signed decimal (d), or JSON (j) format
+pv2[udj]	Print 2 bytes from memory, with options for unsigned decimal (u), signed decimal (d), or JSON (j) format
+pv4[udj]	Print 4 bytes from memory, with options for unsigned decimal (u), signed decimal (d), or JSON (j) format
+pv8[udj]	Print 8 bytes from memory, with options for unsigned decimal (u), signed decimal (d), or JSON (j) format
+pvp[udj]	Print 4 or 8 bytes from memory depending on asm.bits setting, with options for unsigned decimal (u), signed decimal (d), or JSON (j) format
+pve [1234] ([bsize])	Print value with custom endianness by specifying byte order (1234), optionally setting block size
+pvz	Print value as a null-terminated string (equivalent to the 'ps' command)
+px--[n]	Display a context-aware hexdump, showing n bytes before and after the current position (similar to pd--3 for disassembly)
+px/	Execute GDB-style memory examination (equivalent to x/ in GDB, use 'help x' for more information)
+px*	Generate r2 commands to recreate the current hexdump view (similar to pc* or p8*)
+px0	Display a list of hexadecimal byte pairs until a null byte (0x00) is encountered
+pxa	Show an annotated hexdump with ASCII representation and analysis information
+pxA[?]	Display a color-coded operation analysis map of the hexdump (use pxA? for more options)
+pxb	Dump memory contents as bits in hexadecimal format
+pxB	Dump memory contents as a visual bitmap representation of bits
+pxc	Display a hexdump with comments, including references and strings
+pxd[?1248]	Show a hexdump of signed integers (1, 2, or 4 bytes), with options for different sizes
+pxe	Generate an emoji-based hexdump for a fun and unique visualization of data
+pxf	Display a hexdump of the current function's bytes
+pxh	Show a hexadecimal dump of 16-bit half-words
+pxH	Display a hexadecimal dump of 16-bit half-words, with one half-word per line
+pxi	Present data in HexII format, a compact binary representation
+pxl	Show a specified number of lines (rows) in the hexdump view
+pxo	Display memory contents in octal format
+pxq	Show a hexadecimal dump of 64-bit quad-words
+pxQ[q]	Display hexadecimal quad-words (64-bit), one per line (q for quiet mode)
+pxr[1248][qj]	Show hexadecimal word references with optional size (1,2,4,8 bytes), quiet mode, or JSON output
+pxs	Display hexadecimal dump in sparse mode, highlighting only non-zero bytes
+pxt[*.] [origin]	Generate delta pointer table as r2 commands, useful for analyzing relative addressing
+pxu[?1248]	Print unsigned integer dump with selectable sizes (1, 2, or 4 bytes)
+pxw	Display hexadecimal words dump (32-bit), useful for viewing aligned data
+pxW[q]	Show hexadecimal words (32-bit) dump, one word per line (q for quiet mode)
+pxx	Print a compact hexadecimal dump without ASCII representation
+pxX	Display a compact hexadecimal dump of words without ASCII representation
++-*/	Represent basic arithmetic operations in disassembly
+->	Indicate a push operation in disassembly output
+<-	Represent a pop operation in disassembly view
+<<>>	Denote shift operations (left and right) in disassembly
+XX	Indicate an invalid or unrecognized instruction in disassembly
+_C	Represent a function call instruction in disassembly output
+_J	Indicate a jump instruction in disassembly view
+_R	Represent a return instruction in disassembly output
+cJ	Denote a conditional jump instruction in disassembly
+mv	Represent move, load effective address, or load immediate instructions
+|&^	Indicate bitwise operations (OR, AND, XOR) in disassembly
+e zoom.maxsz	Set the maximum size of the block for zoomed view
+e zoom.from	Define the starting address for the zoomed view
+e zoom.to	Specify the ending address for the zoomed view
+e zoom.byte	Configure the method for calculating each byte in the zoomed view
+pz0	Display the count of zero bytes (0x00) in the current block
+pzF	Show the number of bytes with value 0xFF in the current block
+pze	Calculate and display the entropy of the current block, scaled to 0-255 range
+pzf	Count and list the number of flags present in the current block
+pzh	Show the first byte value of each unit in the block (default zoom mode)
+pzp	Count and display the number of printable characters in the current block
+pzs	List all strings found within the current block range
+P.	Display information about the currently loaded project (refer to prj.name)
+P+ [name]	Save the current project without checking for changes (similar to Ps)
+P- [name]	Delete the specified project from the projects directory
+P*	Print the current project script as a series of r2 commands
+P!([cmd])	Execute a shell command or open a shell in the project's directory
+Pc	Close and unload the current project
+Pd [N]	Show a diff of the Nth commit in the project's history
+Pi [file]	Display detailed information about the specified project file
+Pl	List all available projects in the projects directory
+Pn -	Open the current project's notes in the configured editor (cfg.editor)
+Pn[j]	Manage and display notes associated with the current project (j for JSON output)
+Ps [file]	Save the current project to a file (see dir.projects for location)
+PS [file]	Save the current r2 script to a file
+PS* [name]	Print the specified project's script file as r2 commands (requires a project)
+Pz[ie] [zipfile]	Import (i) or export (e) an r2 project as a zip file (.zrp extension)
+q!	Force quit radare2 immediately without prompting for confirmation or saving any changes
+q!!	Force quit radare2 without saving command history, useful for discarding recent commands
+q!!!	Force quit radare2 without freeing any resources, may leave memory leaks but exits quickly
+q 1	Quit radare2 with a specific return value of 1, useful for scripting and error handling
+q a-b	Quit radare2 with a return value calculated as (a-b), allowing dynamic exit codes
+Q	Alias for q!!, force quit without saving command history
+rj	Display the current file size in JSON format, useful for scripting and data extraction
+r size	Resize the current file to the specified size, either expanding or truncating it
+r-num	Remove 'num' bytes from the current position, shifting following data backwards
+r+num	Insert 'num' bytes at the current position, shifting following data forwards
+r2pm [...]	Execute the r2pm (radare2 package manager) with given arguments, manage r2 packages
+rabin2 [...]	Run the rabin2 binary analysis tool with specified arguments, extract file info
+radare2 [...]	Launch a new instance of radare2 with given arguments, useful for nested analysis
+radiff2 [...]	Execute the radiff2 binary diffing tool with provided arguments, compare files
+rafind2 [...]	Run the rafind2 binary search tool with given arguments, search for patterns
+rahash2 [...]	Execute the rahash2 hashing tool with specified arguments, calculate file hashes
+rasm2 [...]	Run the rasm2 assembler/disassembler with given arguments, manipulate assembly
+ravc2 [...]	Execute the ravc2 (radare2 version control) tool with provided arguments
+rax2 [...]	Run the rax2 base conversion tool with specified arguments, perform numeric conversions
+rb oldbase @ newbase	Rebase all flags, binary information, breakpoints, and analysis results from oldbase to newbase
+rm [file]	Remove the specified file from the filesystem
+rmrf [file|dir]	Recursively remove a file or directory and its contents
+rh	Display file size in a human-readable format (e.g., KB, MB, GB)
+r2 [file]	Launch radare2 with the specified file (also works for other r2 tools like rax2, rasm2)
+reset	Reset all console settings to their default values (equivalent to a hard clear)
+s addr	Seek to the specified memory address
+s.	Seek to the current address (equivalent to 's $$')
+s:pad	Print the current address with N padded zeros (default is 8 zeros)
+s-	Undo the last seek operation
+s-*	Clear the entire seek history
+s- n	Seek backward by n bytes
+s--[n]	Seek backward by one blocksize (or n blocksizes if specified)
+s+	Redo the last undone seek operation
+s+ n	Seek forward by n bytes
+s++[n]	Seek forward by one blocksize (or n blocksizes if specified)
+s/ DATA	Search for the next occurrence of 'DATA' starting from current address
+s/x 9091	Search for the next occurrence of the hex bytes 90 91
+sa ([+-]addr)	Seek to a block-size aligned address (uses current address if not specified)
+sb ([addr])	Seek to the beginning of the current or specified basic block
+sC[?] string	Seek to the comment matching the given string
+sd ([addr])	Display the difference between current seek and all possible reference bases
+sf	Seek to the end of the current function (function address + size)
+sf function	Seek to the starting address of the specified function
+sf.	Seek to the beginning of the current function
+sfp	Seek to the function prelude, searching backward up to one blocksize
+sff	Seek to the nearest flag in the backward direction (uses fd and ignores delta)
+sg/sG	Seek to the beginning (sg) or end (sG) of the current section or file
+sh	Open a basic shell with support for basic POSIX syntax, allowing execution of system commands
+sl[+-][line]	Seek to a relative line number, use + or - to move forward or backward
+sn/sp ([nkey])	Seek to the next or previous location, as defined by the scr.nkey configuration
+snp	Seek to the next function prelude, useful for navigating between functions
+spp	Seek to the previous function prelude, moving backward through function definitions
+so ([[-]N])	Seek N opcodes forward or backward (when N is negative), with a default of 1 opcode
+sr PC	Seek to the value stored in a register or its alias, e.g., 'sr PC' seeks to the program counter
+ss[?]	Perform a silent seek without adding an entry to the seek history, use '?' for more options
+sort [file]	Sort the contents of the specified file or current buffer if no file is given
+s..32a8	Seek to the same address but replace the lower nibbles with the specified value (32a8 in this case)
+sC*	List all comments in the current file or memory space
+sC str	Seek to the first comment that matches the given string 'str'
+slc	Clear the line cache, which can be useful for refreshing the view after changes
+sll	Display the total number of lines in the current file or disassembly
+sleep [seconds]	Pause execution for the specified number of seconds, supporting decimal values for precision
+s?	Display help for all seek (s) subcommands, e.g., 'ssr' would show help for silent relative seek
+tj	List all loaded types in JSON format, useful for scripting and data extraction
+t <type>	Display the specified type using the 'pf' (print formatted) syntax
+t*	List all type information as radare2 commands, allowing for easy replication or scripting
+t- <name>	Delete the specified type by its name from the loaded type definitions
+t-*	Remove all loaded type definitions, clearing the type system
+tail([n]) [file]	Display the last n lines of a file (default n=5), useful for viewing the end of logs or large files
+tac [file]	Reverse the order of lines in a file, displaying them from bottom to top
+tc [type.name]	Display the specified loaded type in C output format with newlines, showing its structure and members
+td <string>	Load type definitions from a string, allowing inline type creation (enclose the entire command in quotes: "td ...")
+te	List all loaded enumeration types, showing their names and values
+tf	Display all loaded function definitions, including their signatures and return types
+tk <sdb-query>	Execute an sdb (string database) query, allowing low-level manipulation of radare2's internal databases
+tl [typename] = [address]	Link a type to a specific memory address, useful for associating data structures with memory locations
+tn	List all loaded types, including structs, enums, and typedefs
+to[?] <path>	Load type definitions from a C header file, importing external type information
+tp	<type> [addr|varname] Cast and print data at a given address or variable name to the specified type, useful for data interpretation
+ts [type]	Show the pf (print format) string for a given struct, displaying its layout and member offsets
+tt	List all loaded type definitions (typedefs), showing aliases for complex types
+tu [type]	Display the pf (print format) string for a given union, showing its possible interpretations
+tx	List all functions and the types they use, providing an overview of type usage in the binary
+tcd	List all loaded types in C output format without newlines, useful for compact type information display
+tcc	Display all registered calling conventions, showing how function arguments are passed
+tcc*	List all calling conventions as radare2 commands, allowing for easy replication or scripting
+tcck	Show calling conventions in key=value format, useful for parsing and automation
+tccl	List calling convention signatures in the format: return ccname (arg0, arg1, ..) err;
+tccj	Display all calling conventions in JSON format, facilitating integration with other tools
+tcc <ret> ([args]) ([err])	Define a new function calling convention, specifying return value, arguments, and error handling
+tcc r0 pascal(r0,r1,r2)	Define a signature for the Pascal calling convention, using registers r0, r1, and r2 (see also arcc)
+tcc-<name>	Unregister (remove) a specific calling convention by its name
+tcc-*	Unregister all calling conventions, clearing the entire calling convention database
+te <enum>	Display all values and their corresponding names for the specified enumeration
+te <enum> <value>	Show the name associated with the given numeric value in the specified enumeration
+te-<enum>	Remove the definition of the specified enumeration type from the loaded types
+teb <enum> <name>	Display the matching enum bitfield value for the given name within the specified enumeration
+tec	List all loaded enumerations in C output format, including newlines for readability
+tec <name>	Display the specified loaded enumeration in C output format with newlines
+ted	List all loaded enumerations in C output format without newlines, for compact output
+tej	List all loaded enumerations in JSON format for easy parsing and data exchange
+tej <enum>	Display the specified enumeration in JSON format for programmatic access
+test [-x,f,d] [path]	Check if the specified path exists and is executable (-x), a regular file (-f), or a directory (-d)
+tf <name>	Display the function signature for the specified function name, including return type and parameters
+tfc <name>	Show the function signature for the given function in C syntax, useful for code generation or documentation
+tfcj <name>	Display the function signature in JSON format, providing structured data for the specified function
+tfj	List all function definitions in JSON format, including their signatures and metadata
+tfj <name>	Show the function signature and related information for the specified function in JSON format
+tll	Display all type links in a human-readable format, showing connections between types and addresses
+tllj	List all type links in a readable JSON format, facilitating programmatic analysis of type associations
+tls [address]	Show the type link at the given memory address, revealing type information for specific locations
+tl-*	Remove all type links, clearing all associations between types and memory addresses
+tl- [address]	Delete the type link at the specified memory address, removing type information for that location
+tl*	List all type links in radare2 command format, allowing for easy replication or scripting
+tlj	Display all type links in JSON format, providing structured data for type-address associations
+tnf	List functions marked as non-returning, equivalent to the command `afl,noret/eq/1`
+tn- 0x3000 sym.imp.exit ...	Remove specified no-return references, such as for the exit function at address 0x3000
+tn-*	Remove all no-return references, clearing the list of functions marked as non-returning
+to -	Open the configured editor (cfg.editor) to manually load or edit type definitions
+to <path>	Load type definitions from a specified C header file, importing external type information into radare2
+tos <path>	Load type definitions from a pre-parsed Sdb (String DataBase) file, allowing for faster loading of complex type information
+toe [type.name]	Open the configured editor (set by cfg.editor) to manually edit the specified type definition or create a new one if it doesn't exist
+touch <file>	Create a new file or update the timestamp of an existing file, similar to the Unix 'touch' command
+tpv <type> [@addr]	Display the value at the given address (or current address if omitted) formatted according to the specified type, useful for interpreting memory contents
+tpx <type> <hexpairs>	Parse and display the given hexadecimal byte sequence as a value of the specified type, allowing inspection of raw data as structured types
+ts-[type]	Delete the definition of the specified struct type from the loaded types, removing it from radare2's type system
+tsj [type]	Display the print format (pf) string for the given struct in JSON format, useful for programmatic analysis of struct layouts
+ts* [type]	Show the print format (pf) string for the given struct in radare2 command syntax, prefixed with 'pf.', facilitating reuse in scripts
+tsc<name>	List all loaded structs (or a specific one if <name> is provided) in C output format with newlines, useful for code generation or documentation
+tsd	List all loaded struct definitions in C output format without newlines, providing a compact overview of available structs
+tss [type]	Display the total size in bytes of the specified struct type, helpful for memory allocation and layout analysis
+tt <typename>	Show the actual type name for a given type alias, resolving typedefs to their underlying types
+ttj	Display all type aliases (typedefs) and their corresponding actual types in JSON format, facilitating programmatic type analysis
+ttc<name>	Show the specified type alias (typedef) in C output format, useful for understanding type relationships
+tuj [type]	Display the print format (pf) string for the given union in JSON format, allowing for programmatic analysis of union layouts
+tu* [type]	Show the print format (pf) string for the given union in radare2 command syntax, prefixed with 'pf.', useful for scripting
+tuc<name>	List all loaded unions (or a specific one if <name> is provided) in C output format with newlines, aiding in code generation or documentation
+tud	List all loaded union definitions in C output format without newlines, offering a compact overview of available unions
+tx.	List all types used in the current function, equivalent to the 'txf' command without arguments
+tx int32_t	List all function names that use the specified type (e.g., int32_t) as an argument or return value
+txt int32_t	Alias for 'tx type', listing functions using the specified type
+txf ([addr])	List all types used in the current function or the function at the specified address, useful for understanding type usage within a specific context
+txl	List all types used by any function in the analyzed binary, providing a comprehensive overview of type usage
+txg	Generate and render a graph of type cross-references, visualizing relationships between types (use '.txg;aggv' to display)
+T message	Add a new log message to the current session's log
+T 123	Display all log entries starting from log ID 123
+T 10 3	Show 3 log messages beginning from log ID 10
+T*	List all log entries in radare2 command format for scripting
+T-	Remove all log entries from the current session
+T- 123	Delete all log entries with IDs less than 123
+Tl	Retrieve the ID of the most recent log message
+Tj	Display all log entries in JSON format for easy parsing
+Tm [idx]	Show log messages without their index numbers, optionally starting from a specific index
+TT	Launch an interactive text-based chat console for logging
+T=[.]	Fetch and synchronize logs from a remote radare2 instance defined by http.sync
+T=&	Initiate a background process to continuously sync logs with a remote server
+uw	Write changes to disk (alias for 'wc', requires 'e io.cache=true')
+us	Navigate backwards through seek history (alias for 's-')
+uc	Display a list of all available core undo commands
+uid	Show the current process's numeric user ID
+uniq	Filter and display only unique rows, removing duplicates
+uname	Display basic information about the host operating system
+uc w hello,w world	Manually add a new undo command with multiple write operations
+uc*	List all core undo operations as radare2 commands for scripting
+ucu	Undo the previous action (move up in undo history)
+ucd	Redo a previously undone action (move down in undo history)
+uc-	Revert the most recent action in the undo history
+uc.	Show all available undo operations for the current state
+uname -a	Display comprehensive system information including kernel version, hardware details, and operating system
+uname -j	Output system information in JSON format for easy parsing and integration with other tools
+uname -b	Show the size of the machine's CPU register in bits (e.g., 32 or 64)
+uname -m	Display the machine's CPU architecture name (e.g., x86_64, arm64)
+uname -r	Show the specific version of the operating system kernel
+w foobar	Write the string 'foobar' at the current seek position in the file or memory
+w+string	Write the given string and automatically move the cursor to the byte after its null terminator
+w0 [len]	Fill 'len' bytes with null (0x00) values starting from the current position
+w6[d|e|x] base64/string/hex	Write data in various formats: [d]ecode base64, [e]ncode to base64, or write [x] hex string
+wa[?] push ebp	"Write assembly instruction(s), use ';' as separator and '""' for commands with spaces"
+waf f.asm	Assemble all instructions from the specified file and write the resulting machine code
+waF f.asm	Assemble file contents, write the bytes, and display the 'wx' command with hexadecimal representation
+wao [op]	Perform specific modifications on the current opcode (e.g., nop, trap, swap conditionals)
+wb 011001	Write the given bits in big-endian order (see 'pb' command for reading bits)
+wB[-]0xVALUE	Set or unset (with '-') specific bits using the given hexadecimal value
+wc	Display a list of all write changes made in the current cache layer
+wd [off] [n]	Copy N bytes from the specified offset to the current seek position (similar to memcpy)
+we[?] [nNsxX] [arg]	Extend write operations by inserting data instead of replacing it. Supports various data types (nNsxX) and optional arguments.
+wf[fs] -|file	Write the contents of a specified file at the current offset in the target file or memory.
+wg[et] [http://host/file]	Download a file from an HTTP server and save it to disk, similar to the wget command.
+wh r2	Execute the 'whereis' or 'which' shell command to locate the radare2 binary in the system path.
+wm f0ff	Set a binary mask using hexadecimal pairs to be used as a cyclic write mask for subsequent write operations.
+wo[?] hex	Perform various bitwise operations on the current block using the specified hexadecimal value. Use 'wo?' for more information.
+wp[?] -|file	Apply a radare2 patch file to modify the current file or memory. See 'wp?' for detailed usage instructions.
+wr 10	Write 10 random bytes at the current offset, useful for generating random data or fuzzing.
+ws[?] pstring	Write a Pascal-style string: 1 byte for length followed by N bytes for the string content.
+wt[?][afs] [filename] [size]	Write data to a file, starting from the current seek position. Options for append, force, and specifying size.
+ww foobar	Write a wide string (UTF-16) 'foobar' with null bytes between each character.
+wx[?][fs] 9090	Write hexadecimal values directly. In this example, write two x86 NOP instructions (90 90).
+wX 1b2c3d	Fill the current block with repeating cyclic hexadecimal pairs (1b2c3d in this case).
+wv[?] eip+34	Write a 32-bit or 64-bit value at the current offset, respecting the cfg.bigendian setting.
+wu [unified-diff-patch]	Apply a unified diff patch to the current file or memory. Similar to the 'cu' command.
+wz string	Write a zero-terminated string (equivalent to writing the string followed by a null byte)
+wa nop	Write a no-operation (NOP) instruction using the current architecture and bit mode settings
+wai jmp 0x8080	Write the specified instruction inside the current opcode, filling with NOPs if space remains or returning an error if it doesn't fit
+wan jmp 0x8080	Write the specified instruction(s) and NOP the remaining bytes of the current opcode
+wa+ nop	Write a NOP instruction and move the cursor to the next position (e.g., 7wa+nop writes 7 consecutive NOPs)
+wa* mov eax, 33	Display the 'wx' command with hexadecimal representation of the assembled opcode
+'wa nop;nop	Assemble and write multiple instructions in a single command (note the surrounding single quotes)
+waF* f.asm	Assemble all instructions from the specified file and display the 'wx' command with hexadecimal representation of the assembled code
+wao?	Show help information for available assembler operations on the current opcode
+wao+[op]	Perform the specified assembler operation and move the cursor forward after writing
+wao nop	Replace the current opcode with a NOP instruction
+wao jinf	Assemble an infinite loop at the current position
+wao jz	Convert the current opcode to a conditional jump if zero (equivalent to je)
+wao jnz	Convert the current opcode to a conditional jump if not zero (equivalent to jne)
+wao ret1	Modify the current opcode to return 1
+wao ret0	Modify the current opcode to return 0
+wao retn	Modify the current opcode to return -1
+wao nocj	Remove the conditional part of a branch instruction, making it unconditional
+wao trap	Replace the current opcode with a trap instruction
+wao recj	Reverse (swap) the condition of a conditional branch instruction
+wc*	Generate and print radare2 commands to replicate all patches in the current cache layer
+wc**	Generate and print radare2 commands to replicate patches from all cache layers, not just the current one
+wc+ [from] [to]	Commit changes from the cache to the underlying I/O, optionally specifying a range with [from] and [to] addresses
+wc++	Create and push a new I/O cache layer onto the stack, allowing for nested modifications
+wc- [from] [to]	Remove a specific write operation at the current seek or given address range
+wc--	Remove (pop) the most recent I/O cache layer, discarding its changes
+wcU	Redo a previously undone change (functionality not yet implemented)
+wca	Display a comprehensive list of all write changes across all cache layers
+wcd	Show all write changes in a disassembly diff format, highlighting modifications
+wcf [file]	Write the contents of the current write cache to the specified file
+wci	Commit all pending write operations in the cache to the underlying I/O
+wcj	Output all write changes in JSON format for easy parsing and processing
+wcl	Display a list of all active I/O cache layers
+wcp [fd]	List all cached write operations on the physical layer for the specified file descriptor or current fd
+wcp* [fd]	Generate radare2 commands for all cached write operations on the physical layer
+wcpi [fd]	Commit and invalidate the physical cache for the specified file descriptor or current fd
+wcr	Revert all write operations stored in the cache, undoing all pending changes
+wcs	Combine consecutive write operations in the cache to optimize storage and application
+wcu	Undo the most recent change in the write cache, reverting to the previous state
+wen <num>	Extend the underlying file by inserting <num> null bytes at the current offset, effectively increasing the file size
+weN <addr> <len>	Extend the current file by inserting <len> bytes at the specified <addr>, shifting existing data
+wes <addr> <dist> <block_size>	Shift a block of data of size <block_size> at <addr> by <dist> bytes left or right, or open in editor
+wex <hex_bytes>	Insert the specified hexadecimal bytes at the current offset by extending the file
+weX <addr> <hex_bytes>	Insert the specified hexadecimal bytes at the given address by extending the file
+wo2	Perform a 2-byte (word) endian swap on the current block
+wo4	Perform a 4-byte (dword) endian swap on the current block
+wo8	Perform an 8-byte (qword) endian swap on the current block
+woa [hexpair]	Perform addition operation with the specified hex value (e.g., woa 0102 adds 0x0102 to each byte)
+woA [hexpair]	Perform bitwise AND operation with the specified hex value
+wod [hexpair]	Perform division operation with the specified hex value
+woD [algo] [key] [IV]	Decrypt the current block using the specified algorithm, key, and initialization vector (IV)
+woE [algo] [key] [IV]	Encrypt the current block using the specified algorithm, key, and initialization vector (IV)
+woe [from] ([to] [step] [wsz=1])	Write an enumeration sequence starting from [from], optionally specifying [to], [step], and word size
+woi	Invert (bitwise NOT) all bytes in the current block
+wol [val]	Perform a bitwise left shift operation by [val] bits
+wom [val]	Perform multiplication operation with the specified value
+woo [val]	Perform bitwise OR operation with the specified value
+wop[DO] [arg]	Generate and write De Bruijn patterns, useful for buffer overflow testing and exploit development
+wor [val]	Perform a bitwise right shift operation by [val] bits
+woR	Write random bytes to the current block (equivalent to 'wr $b')
+wos [val]	Perform subtraction operation with the specified value
+woS [algo] [key]	Sign the current block using the specified algorithm and key
+wow [val]	Write a looped value, repeating [val] throughout the block (alias for 'wb')
+wox [val]	Perform bitwise XOR operation with the specified value (e.g., wox 0x90 XORs each byte with 0x90)
+ws str	Write a Pascal string, using the first byte to store the length of the string
+ws1 str	Write a Pascal string with a 1-byte length prefix
+ws2 str	Write a Pascal string with a 2-byte (ut16) length prefix, respecting the cfg.bigendian setting
+ws4 str	Write a Pascal string with a 4-byte (ut32) length prefix, respecting the cfg.bigendian setting
+wta [filename]	Append the current block to the specified file, creating it if it doesn't exist
+wtf [filename] [size]	Write the current block or specified size to a file (related to 'wxf' and 'wf?' commands)
+wtf! [filename]	Write data from the current address to the end of file, ignoring any specified size
+wtff [prefix] [size]	Write a block from the current seek to a file named "<prefix>-<offset>"
+wts host:port [size]	Send data to a remote TCP socket specified by host:port
+wx 3.	Modify the left nibble (4 bits) of the current byte
+wx .5	Modify the right nibble (4 bits) of the current byte
+wx+ 9090	Write the specified hex pairs and move the cursor forward
+wxf -|file	Write the contents of a file containing hex pairs to the current address
+wv 0x834002	Write a 32-bit (dword) value at the current address
+wv1 234	Write a single byte with the specified value
+wv2 234	Write a 16-bit unsigned short (2 bytes) with the specified value
+wv4 1 2 3	Write multiple space-separated 32-bit (dword) values
+wv8 234	Write a 64-bit (qword) value at the current address
+wvp 934	Write a pointer (4 or 8 bytes, depending on asm.bits) with the specified value
+wvf 3.14	Write a 32-bit float value at the current address
+wvF 3.14	Write a 64-bit double value at the current address
+wvG 3.14	Write a long double value (10 or 16 bytes, depending on the architecture) at the current address
+y!	Open the configured editor (cfg.editor) to modify the contents of the clipboard
+y 16 0x200	Copy 16 bytes from address 0x200 into the clipboard
+y 16	Copy 16 bytes from the current address into the clipboard
+y*	Print the contents of the clipboard formatted as radare2 commands
+y-	Clear the clipboard, removing all its contents
+y8	Display the contents of the clipboard as hexadecimal pairs
+yf [L] [O] [file]	Copy L bytes from offset O of the specified file into the clipboard
+yfa [filepath]	Copy the entire contents of the specified file into the clipboard
+yfx 10203040	Copy the specified hexadecimal bytes (10203040) into the clipboard (equivalent to ywx)
+yj	Print the contents of the clipboard in JSON format
+yp	Display the raw contents of the clipboard
+ys	Display the contents of the clipboard interpreted as a string
+yt 64 0x200	Copy 64 bytes from the current seek position to address 0x200
+ytf file	Write the contents of the clipboard to the specified file
+yw hello world	Copy the specified string ("hello world") into the clipboard
+ywx 10203040	Copy the specified hexadecimal bytes (10203040) into the clipboard (equivalent to yfx)
+yx	Display the contents of the clipboard in hexadecimal format
+yy 0x3344	Paste the contents of the clipboard at address 0x3344
+yy	Paste the contents of the clipboard at the current seek position
+yz [len]	Copy a null-terminated string (up to the specified length or blocksize) into the clipboard
+z ([addr])	Display or list zignatures (function signatures) at the specified address or current offset if not provided
+z.	Find and display zignatures matching the current offset
+z,([:help])	List loaded zignatures in a table format, with optional help information (use z,:help for details)
+zb [n]	Find and display the n closest matching zignatures to the function at the current offset
+zdzignature	Compare and show differences between the current function and the specified zignature
+z* ([addr])	Display zignatures in radare2 command format, optionally at the specified address
+zq ([addr])	Display zignatures in quiet mode, showing minimal information
+zj ([addr])	Display zignatures in JSON format for easy parsing and processing
+zk	Display zignatures in SDB (String Database) format
+z-zignature	Delete the specified zignature from the current zignspace
+z-*	Delete all zignatures from the current zignspace
+za[?]	Add a new zignature (use za? for more options and information)
+zg	Generate zignatures for all functions in the binary (alias for zaF)
+zo[?]	Manage zignature files, including loading and saving (use zo? for more options)
+zf[?]	Manage FLIRT (Fast Library Identification and Recognition Technology) signatures (use zf? for more options)
+z/	Search for matching zignatures within a specified range and flag the matches
+zc[?]	Compare zignatures in the current zignspace with another zignspace (use zc? for more options)
+zs	Display all available zignspaces (named collections of zignatures)
+zi [text]	Show detailed information about zignatures matching the specified text
+zbr zigname [n]	Search for the n most similar functions to the specified zignature name
+za zigname type params	Add a new zignature with the given name, type, and parameters
+zac	Compute and display collisions between existing zignatures
+zaf [fcnname] [zigname]	Create a zignature for the specified function, optionally with a custom name
+zaF	Generate zignatures for all functions in the binary
+zaM	Generate zignatures for all functions and merge signatures with the same name
+za??	Display extended help information for zignature-related commands
+zo filename	Load zignatures from the specified SDB file
+zoz filename	Load zignatures from a gzipped SDB file
+zos filename	Save current zignatures to an SDB file, merging with existing content if the file exists
+zfd filename	Open a FLIRT signature file and dump its contents
+zfs filename	Open a FLIRT signature file and scan the binary for matches
+zfs /path/**.sig	Recursively search for FLIRT signature files and scan them (depth controlled by dir.depth)
+zfz filename	Open a FLIRT signature file and output radare2 zignature commands (useful for conversion)
+z/f	Search for zignature matches among known functions in the binary
+z/*	Search for zignature matches within a specified range and output results as radare2 commands
+zc other_space	Compare all zignatures in the current zignspace with those in the specified other_space
+zcn other_space	Compare zignatures in current zignspace with matching named ones in other_space
+zcn! other_space	Compare zignatures between spaces and show only those that don't match
+zs zignspace	Switch to the specified zignspace (named collection of zignatures)
+zs *	Select and activate all available zignspaces
+zs-zignspace	Delete the specified zignspace and all its contained zignatures
+zs-*	Delete all existing zignspaces and their contained zignatures
+zs+zignspace	Save current zignspace to stack and switch to specified one
+zs-	Return to the previously saved zignspace from stack
+zsr newname	Change the name of the currently selected zignspace
