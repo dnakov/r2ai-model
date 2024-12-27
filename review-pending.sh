@@ -1,6 +1,7 @@
 #!/bin/sh
 
 F="$1"
+[ -z "$EDITOR" ] && EDITOR=vim
 
 if [ -z "$F" ]; then
 	echo "Usage: review-pending.sh [tsvfile]"

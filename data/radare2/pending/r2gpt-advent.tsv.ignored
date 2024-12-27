@@ -1,0 +1,67 @@
+Finding Strings	What command would you use to search for the ascii string 'hello' in the binary.?	/ Hello
+Analyzing Functions	Which Radare2 command is used to list all functions analyzed in the binary.?	afl
+Finding Strings	What command would you use to search for the ascii string 'hello' in the binary.?	/ Hello
+Code Coverage	What command would you use to analyze all code call destinations and find additional functions.?	aac
+Breakpoints	Which Radare2 command is used to set a breakpoint at the symbol 'main'.?	db sym.main
+Searching Patterns	What command would you use to search for the hexadecimal pattern '41 42 43'.?	/x 414243
+Searching	How can you find a 4-byte value 0x90 in little-endian format. in Radare2?	/v4 0x90 @ e:cfg.bigendian=false
+Breakpoints	What command would you use to set a breakpoint at the symbol 'main'.?	db sym.main
+Searching	How can you find a 4-byte value 0x90 in little-endian format. in Radare2?	/v4 0x90 @ e:cfg.bigendian=false
+Breakpoints	What command would you use to set a breakpoint at the symbol 'main'.?	db sym.main
+Analyzing Functions	What command would you use to list all functions analyzed in the binary.?	afl
+Scripting in Radare2	What command would you use to execute a script in radare2 non-interactively.?	r2 -qi script.r2
+Code Coverage	What command would you use to analyze all code call destinations and find additional functions.?	aac
+Searching Patterns	Explain the Radare2 command to search for the hexadecimal pattern '41 42 43'..	/x 414243
+Breakpoints	Which Radare2 command is used to set a breakpoint at the symbol 'main'.?	db sym.main
+Disassembling Code	Which Radare2 command is used to disassemble the next 10 instructions from the current offset.?	pd 10
+Debugging Techniques	Provide the Radare2 command to continue execution until the 'main' function is reached..	dcu main
+Using Plugins	What command would you use to install the r2frida plugin using r2pm.?	r2pm -i r2frida
+Using Plugins	How can you install the r2frida plugin using r2pm. in Radare2?	r2pm -i r2frida
+Breakpoints	Provide the Radare2 command to set a breakpoint at the symbol 'main'..	db sym.main
+Analyzing Functions	Explain the Radare2 command to list all functions analyzed in the binary..	afl
+Searching Patterns	Explain the Radare2 command to search for the hexadecimal pattern '41 42 43'..	/x 414243
+Disassembling Code	What command would you use to disassemble the next 10 instructions from the current offset.?	pd 10
+Analyzing Functions	Provide the Radare2 command to list all functions analyzed in the binary..	afl
+Searching Patterns	What command would you use to search for the hexadecimal pattern '41 42 43'.?	/x 414243
+Examining Binary Headers	What command would you use to display detailed information about the binary headers.?	iI
+Analyzing Functions	Explain the Radare2 command to list all functions analyzed in the binary..	afl
+Using Plugins	How can you install the r2frida plugin using r2pm. in Radare2?	r2pm -i r2frida
+Code Coverage	Explain the Radare2 command to analyze all code call destinations and find additional functions..	aac
+Searching Patterns	Explain the Radare2 command to search for the hexadecimal pattern '41 42 43'..	/x 414243
+Examining Binary Headers	How can you display detailed information about the binary headers. in Radare2?	iI
+Finding Strings	Provide the Radare2 command to search for the ascii string 'hello' in the binary..	/ Hello
+Searching Patterns	Explain the Radare2 command to search for the hexadecimal pattern '41 42 43'..	/x 414243
+Disassembling Code	Provide the Radare2 command to disassemble the next 10 instructions from the current offset..	pd 10
+Debugging Techniques	What command would you use to continue execution until the 'main' function is reached.?	dcu main
+Debugging Techniques	Provide the Radare2 command to continue execution until the 'main' function is reached..	dcu main
+Searching	How can you find a 4-byte value 0x90 in little-endian format. in Radare2?	/v4 0x90 @ e:cfg.bigendian=false
+Using Plugins	Explain the Radare2 command to install the r2frida plugin using r2pm..	r2pm -i r2frida
+Breakpoints	Which Radare2 command is used to set a breakpoint at the symbol 'main'.?	db sym.main
+Breakpoints	Which Radare2 command is used to set a breakpoint at the symbol 'main'.?	db sym.main
+Breakpoints	What command would you use to set a breakpoint at the symbol 'main'.?	db sym.main
+Breakpoints	Explain the Radare2 command to set a breakpoint at the symbol 'main'..	db sym.main
+Analyzing Functions	Provide the Radare2 command to list all functions analyzed in the binary..	afl
+Breakpoints	How can you set a breakpoint at the symbol 'main'. in Radare2?	db sym.main
+Code Coverage	What command would you use to analyze all code call destinations and find additional functions.?	aac
+Analyzing Functions	What command would you use to list all functions analyzed in the binary.?	afl
+Disassembling Code	What command would you use to disassemble the next 10 instructions from the current offset.?	pd 10
+Using Plugins	Which Radare2 command is used to install the r2frida plugin using r2pm.?	r2pm -i r2frida
+Debugging Techniques	Explain the Radare2 command to continue execution until the 'main' function is reached..	dcu main
+Scripting in Radare2	How can you execute a script in radare2 non-interactively. in Radare2?	r2 -qi script.r2
+Analyzing Functions	Provide the Radare2 command to list all functions analyzed in the binary..	afl
+Scripting in Radare2	How can you execute a script in radare2 non-interactively. in Radare2?	r2 -qi script.r2
+Using Plugins	What command would you use to install the r2frida plugin using r2pm.?	r2pm -i r2frida
+Examining Binary Headers	Explain the Radare2 command to display detailed information about the binary headers..	iI
+Using Plugins	Which Radare2 command is used to install the r2frida plugin using r2pm.?	r2pm -i r2frida
+Breakpoints	Provide the Radare2 command to set a breakpoint at the symbol 'main'..	db sym.main
+Searching Patterns	Which Radare2 command is used to search for the hexadecimal pattern '41 42 43'.?	/x 414243
+Searching	Provide the Radare2 command to find a 4-byte value 0x90 in little-endian format..	/v4 0x90 @ e:cfg.bigendian=false
+Searching	What command would you use to find a 4-byte value 0x90 in little-endian format.?	/v4 0x90 @ e:cfg.bigendian=false
+Examining Binary Headers	Provide the Radare2 command to display detailed information about the binary headers..	iI
+Finding Strings	What command would you use to search for the ascii string 'hello' in the binary.?	/ Hello
+Disassembling Code	Provide the Radare2 command to disassemble the next 10 instructions from the current offset..	pd 10
+Analyzing Functions	What command would you use to list all functions analyzed in the binary.?	afl
+Code Coverage	Explain the Radare2 command to analyze all code call destinations and find additional functions..	aac
+Scripting in Radare2	Explain the Radare2 command to execute a script in radare2 non-interactively..	r2 -qi script.r2
+Examining Binary Headers	Provide the Radare2 command to display detailed information about the binary headers..	iI
+Function Analysis	How can I modify patched sections?	oj+

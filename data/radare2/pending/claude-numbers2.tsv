@@ -20,15 +20,3 @@ Exploit Dev	How do I find offset between two consecutive function calls?	?v $Cn-
 Exploit Dev	How do I calculate padding needed to align stack?	?v 16-($r{rsp}%16)
 Exploit Dev	How do I get size of memory region for heap spray?	?v $MM
 Firmware Analysis	How do I get size of firmware section for extraction?	?v $SS
-Firmware Analysis	How do I calculate checksum range from section start?	?v $S+$SS
-Firmware Analysis	How do I find offset between two memory-mapped regions?	?v $M-$B
-Firmware Analysis	How do I get size of bootloader section?	?v $s{bootloader}
-Firmware Analysis	How do I calculate flash page boundaries?	?v $$-($$ % 4096)
-Malware Analysis	How do I find size of encrypted code section?	?v $s{.text}
-Malware Analysis	How do I calculate offset to embedded payload?	?v $Dn-$FB
-Malware Analysis	How do I get distance between two anti-debug checks?	?v $Xn-$X{n-1}
-Malware Analysis	How do I measure size of unpacking stub?	?v $Fe-$FB
-Malware Analysis	How do I find offset to API resolution code?	?v $Ja-$FB
-Forensics	How do I calculate file slack space size?	?v $s-($o+$SS)
-Forensics	How do I get sector alignment padding?	?v 512-($o%512)
-Forensics	How do I find size of embedded file structure?	?v $s{embedded_file}

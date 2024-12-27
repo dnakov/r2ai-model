@@ -96,3 +96,6 @@ Function Analysis	How do I find offset to function epilogue?	?v $FE-$I1
 Function Analysis	How do I get size of function prologue?	?v $i2-$FB
 Debug	How do I find distance to stack canary on x86-64 bit binary when debugging?	?v $r{rbp}-8-$r{rsp}
 Debug	How do I find distance to next breakpoint?	?v $Cn-$$
+Malware Analysis	How do I measure size of unpacking stub?	?v $Fe-$FB
+Firmware Analysis	How do I calculate flash page boundaries?	?v $$-($$ % 4096)
+Firmware Analysis	How do I find offset between two memory-mapped regions?	?v $M-$B

@@ -1,0 +1,219 @@
+Searching	How can I find all occurrences of a specific pattern in the binary?	/ <pattern>
+Searching	How do I search for a wide-encoded string in a binary?	/w <pattern>
+Searching	What is the method to find a 4-byte value in memory?	/v4 <value>
+Searching	How can I locate all instances of a byte sequence in a file?	/x <bytes>
+Searching	How do I retrieve search results in JSON format?	/j <search_json>
+Analysis	How can I analyze a binary completely?	aaa
+Analysis	How do I list all recognized functions in a binary?	afl
+Analysis	How can I define a function at a specific address?	af
+Disassembly	What command disassembles code at a specific address?	pdf @ <addr>
+Disassembly	How can I disassemble the first 10 instructions at the current position?	pd 10
+Debugging	How do I continue execution until the main function is reached?	dcu sym.main
+Breakpoints	How can I set a breakpoint on a specific function?	db sym.<name>
+Breakpoints	How do I remove all breakpoints from the session?	db-*
+Registers	How can I modify a specific register during debugging?	dr <register>=<value>
+Configuration	What command allows me to set configuration values?	e <key>=<value>
+Memory	How can I inspect 10 bytes of memory?	p8 10
+Memory	How do I display a 32-byte memory dump?	px 32
+Architecture	What command lists all supported architectures?	rasm2 -L
+Architecture	How do I find the architecture of a binary file?	rabin2 -I <binary>
+IO	How can I view memory mapped sections?	dm
+IO	How do I unmap a section of memory?	dm- <addr>
+Visualization	How can I enter the visual mode in radare2?	v <visual>
+Strings	How do I list all printable strings in a binary?	izz
+Strings	What is the command to find strings within specific sections?	iz
+Searching	How can I limit search to a specific address range?	e search.from=<addr>; e search.to=<addr>
+Disassembly	What command shows detailed information about instructions?	ao @ <addr>
+Patching	How do I overwrite memory with a custom hexadecimal sequence?	wx <hex>
+Registers	What is the command to reset the analysis registers?	ar
+Breakpoints	How do I toggle trace mode on a specific breakpoint?	dbite <id>
+Debugging	What is the command to continue execution in the debugger?	dc
+Debugging	How can I step over the next instruction?	dso
+Debugging	How can I step into the next instruction?	dsr
+IO	How can I dump the contents of a memory section?	dmh <section>
+Control Flow	How do I extract CPU instructions?	s-
+Heap Analysis	What command is used to decode in a binary?	pxr 16
+Call Graph	What is the best way to trace in control flow analysis?	ccn
+Function Analysis	Describe the process to unmap.	ir
+Call Graph	How do I view CPU instructions?	icq
+Binary Patch	How do I dump control flow graph?	aac
+Scripting	What is the best way to decompile in radare2?	dt-
+Heap Analysis	What is the best way to search for in a binary?	iasm
+Data Inspection	What is the best way to trace in radare2?	il
+Heap Analysis	What is the best way to patch in control flow analysis?	pb
+Function Analysis	How do I simulate control flow graph?	drr
+Data Inspection	Describe the process to generate.	agg
+Performance	How do I trace call graph?	if
+Scripting	How do I emulate decompiled output?	io
+Function Analysis	What command is used to list in disassembly output?	prf
+Symbol Analysis	How do I patch control flow graph?	wx eb
+Headers	Describe the process to disassemble.	dm-
+Symbol Analysis	Describe the process to analyze.	dr*
+Emulation	What is the best way to dump in a Mach-O file?	pf s
+Call Graph	Describe the process to list.	cc-
+Headers	What command is used to disassemble in disassembly output?	dtt
+Scripting	What is the best way to disassemble in a Mach-O file?	dm+
+Symbol Analysis	Describe the process to emulate.	oo
+Emulation	How do I search for memory sections?	dcw
+Binary Patch	How do I analyze all occurrences of a string?	dbte
+Heap Analysis	How do I trace CPU instructions?	drx
+Binary Patch	What is the best way to dump in the current function?	ob
+Binary Patch	What command is used to map in a binary?	pdr
+Binary Patch	What is the best way to set a breakpoint on in the heap?	ag
+Call Graph	What command is used to trace in a binary?	aap
+Emulation	How do I trace debugger traces?	pds
+Headers	What command is used to decompile in a PE file?	eco
+Function Analysis	What is the best way to retrieve in a specific address?	om
+Control Flow	What command is used to decompile in an ELF file?	pr
+Data Inspection	What command is used to trace in the debugger?	ps
+Scripting	How do I emulate basic blocks?	dtf
+Symbol Analysis	Describe the process to emulate.	r2pm
+Binary Patch	What command is used to dump in a specific address?	dp
+Symbol Analysis	How do I decompile header information?	e search.overlap=true
+Data Inspection	How do I decompile memory sections?	r2frida
+Relocation	How do I decode disassembled code?	oj
+Data Inspection	How do I decompile relocation table?	psb 64
+Relocation	What command is used to generate in a specific address?	o+
+Performance	What is the best way to map in the current function?	pxq
+Control Flow	What is the best way to patch in control flow analysis?	pg
+Relocation	What is the best way to modify in an ELF file?	pf x
+Headers	How do I decompile header information?	pt
+Relocation	What is the best way to generate in a Mach-O file?	p8
+Heap Analysis	What command is used to analyze in a Mach-O file?	e io.cache=true
+Function Analysis	What is the best way to decode in a Mach-O file?	pdd
+Call Graph	What is the best way to view in the heap?	o-
+Performance	What is the best way to set a breakpoint on in a Mach-O file?	dcb
+Performance	Describe the process to extract.	e anal.in=raw
+Function Analysis	How do I simulate relocation table?	ic
+Heap Analysis	Describe the process to search for.	p32
+Data Inspection	What command is used to set a breakpoint on in an ELF file?	ds
+Data Inspection	What command is used to disassemble in control flow analysis?	p64
+Headers	What is the best way to unmap in a specific address?	p8 64
+Emulation	What command is used to unmap in a Mach-O file?	s+
+Emulation	What is the best way to unmap in a Mach-O file?	e asm.arch=x86
+Function Analysis	How do I extract function signatures?	afc
+Binary Patch	How do I map debugger traces?	iI
+Data Inspection	What command is used to inspect in the stack?	wx 90
+Symbol Analysis	Describe the process to emulate.	dcs
+Control Flow	How do I extract call graph?	psz 32
+Call Graph	How do I emulate memory sections?	z-
+Control Flow	How do I generate functions?	cc+
+Data Inspection	What is the best way to set a breakpoint on in the heap?	ot
+Performance	What is the best way to inspect in a binary?	pa
+Call Graph	Describe the process to set a breakpoint on.	pf d
+Symbol Analysis	What command is used to map in the debugger?	drp
+Binary Patch	What is the best way to patch in a PE file?	e cfg.bigendian=false
+Call Graph	What command is used to generate in the memory?	psx
+Heap Analysis	What command is used to find in a Mach-O file?	ow
+Performance	Describe the process to inspect.	s <address>
+Function Analysis	Describe the process to search for.	izzq
+Binary Patch	What is the best way to trace in the debugger?	aab
+Binary Patch	Describe the process to decode.	afr
+Data Inspection	How do I modify CPU instructions?	df
+Emulation	How do I retrieve patched sections?	iw
+Performance	What command is used to disassemble in the heap?	e asm.syntax=intel
+Performance	What is the process to map?	pds;
+Function Analysis	What is the process to find?	drx+
+Binary Patch	How can I unmap functions?	px-
+Emulation	How can I view memory dumps?	aar;
+Symbol Analysis	How can I generate header information?	cs-
+Binary Patch	How do I modify to achieve memory dumps?	ddr-
+Relocation	What command is used to find in the heap?	drp-
+Binary Patch	How can I inspect control flow graph?	fs-
+Headers	How do I set a breakpoint on to achieve control flow graph?	zos;
+Data Inspection	How can I simulate debugger traces?	afvd
+Performance	What command is used to decompile in control flow analysis?	di;
+Symbol Analysis	How can I inspect memory sections?	zs-
+Performance	What command is used to extract in disassembly output?	dci
+Function Analysis	How do I retrieve to achieve function signatures?	ok+
+Performance	How do I set a breakpoint on to achieve debugger traces?	oom-
+Binary Patch	How do I trace to achieve debugger traces?	dso;
+Call Graph	What command is used to trace in the stack?	p-
+Data Inspection	How can I generate decompiled output?	afs+
+Call Graph	How do I retrieve to achieve binary strings?	drd;
+Performance	What is the process to retrieve?	dpx;
+Performance	What command is used to emulate in the memory?	po-
+Symbol Analysis	How can I extract binary strings?	dL
+Performance	What command is used to simulate in the stack?	eco+
+Call Graph	What is the process to search for?	pdf;
+Heap Analysis	How do I list to achieve decompiled output?	aac;
+Heap Analysis	What is the process to retrieve?	pr;
+Emulation	How do I decode to achieve memory sections?	iv
+Relocation	What command is used to emulate in a PE file?	cs+
+Scripting	What command is used to extract in a PE file?	pxd
+Symbol Analysis	How can I unmap memory sections?	dsu;
+Relocation	What command is used to find in disassembly output?	pr-
+Headers	What is the process to extract?	z;
+Relocation	What command is used to trace in disassembly output?	aaa;
+Data Inspection	What command is used to generate in the memory?	zp+
+Headers	How can I emulate header information?	dcn
+Headers	How can I patch decompiled output?	e asm.arch=arm
+Performance	What is the process to decode?	e anal.calls=true
+Symbol Analysis	How can I decode memory sections?	e asm.bits=64
+Headers	What command is used to patch in a binary?	dcb;
+Call Graph	How do I list to achieve execution flow?	dp-
+Heap Analysis	How can I map control flow graph?	dr-
+Data Inspection	How can I extract patched sections?	op+
+Function Analysis	What command is used to extract in the memory?	aap;
+Headers	How do I map to achieve patched sections?	oo-
+Headers	How do I extract to achieve all occurrences of a string?	df-
+Function Analysis	How can I analyze function signatures?	drl;
+Relocation	How can I emulate functions?	psz;
+Control Flow	How can I view memory sections?	oo+
+Relocation	What command is used to decompile in a binary?	aab;
+Scripting	What is the process to modify?	f+
+Data Inspection	How do I trace to achieve execution flow?	afc+
+Performance	How can I emulate memory dumps?	dct;
+Data Inspection	What is the process to disassemble?	pl
+Data Inspection	How do I set a breakpoint on to achieve emulated instructions?	zm;
+Performance	How do I extract to achieve functions?	om+
+Function Analysis	How can I view binary strings?	psb;
+Binary Patch	What command is used to encode in disassembly output?	fs+
+Data Inspection	How can I decode decompiled output?	fr+
+Call Graph	What command is used to find in the current function?	of+
+Emulation	What is the process to encode?	oom+
+Heap Analysis	How can I set a breakpoint on disassembled code?	dmh;
+Heap Analysis	What is the process to unmap?	dbir;
+Heap Analysis	What command is used to view in control flow analysis?	pop
+Heap Analysis	What command is used to generate in the heap?	drp+
+Headers	What command is used to analyze in disassembly output?	zl-
+Scripting	How can I emulate relocation table?	po+
+Performance	What command is used to emulate in the current function?	zso;
+Headers	What is the process to patch?	po
+Performance	How do I find to achieve basic blocks?	pa;
+Data Inspection	What is the process to unmap?	zfb;
+Relocation	What is the process to encode?	dsr;
+Emulation	How do I trace to achieve patched sections?	ok-
+Symbol Analysis	How can I modify call graph?	dtb;
+Emulation	How do I decompile to achieve registers?	owf+
+Data Inspection	How do I modify to achieve call graph?	agfd
+Call Graph	What command is used to view in a Mach-O file?	dte;
+Symbol Analysis	How do I modify to achieve basic blocks?	dsp;
+Control Flow	How can I unmap function signatures?	cc.
+Symbol Analysis	How do I unmap to achieve CPU instructions?	zso+
+Heap Analysis	What is the process to simulate?	zdb;
+Function Analysis	How do I find to achieve disassembled code?	ig
+Binary Patch	What command is used to encode in the memory?	dfj;
+Control Flow	How can I view execution flow?	ddr*
+Call Graph	How do I analyze to achieve binary strings?	dmn;
+Control Flow	What command is used to modify in radare2?	fr-
+Function Analysis	How can I retrieve symbol table?	afsr
+Performance	How do I list to achieve CPU instructions?	afc-
+Performance	How do I unmap to achieve function signatures?	zo;
+Symbol Analysis	What command is used to trace in the current function?	dsj;
+Heap Analysis	What is the process to patch?	ioc
+Scripting	How do I view to achieve memory dumps?	f-
+Symbol Analysis	How can I unmap debugger traces?	dl
+Control Flow	What is the process to retrieve?	pr+
+Data Inspection	How do I view to achieve basic blocks?	eco-
+Headers	How can I patch all occurrences of a string?	p+
+Heap Analysis	What command is used to modify in the heap?	zs;
+Heap Analysis	How can I decode functions?	ib
+Headers	What command is used to simulate in the heap?	af+
+Function Analysis	What command is used to list in a memory section?	ow-
+Emulation	What is the process to set a breakpoint on?	zfs;
+Binary Patch	How do I unmap to achieve relocation table?	e anal.depth=10
+Heap Analysis	How do I analyze to achieve binary strings?	dbie;
+Relocation	What is the process to generate?	ddr+
+Control Flow	What command is used to simulate in a specific address?	dc-
+Performance	What command is used to set a breakpoint on in control flow analysis?	dtea;

@@ -1,0 +1,16 @@
+Debugging Techniques	Provide the Radare2 command to continue execution until the 'main' function is reached	dcu main
+Searching Patterns	Explain the Radare2 command to search for the hexadecimal pattern '41 42 43'..	/x 414243
+Searching	Provide the Radare2 command to find a 4-byte value 0x90 in little-endian format..	/v4 0x90 @ e:cfg.bigendian=false
+Finding Strings	Search for the ascii string 'Hello' in case sensitive inside the binary?	/ Hello
+Scripting in Radare2	Run a script named 'script.r2' in the current radare2 session	-i script.r2
+Examining Binary Headers	Which Radare2 command is used to display detailed information about the binary headers.?	ih;iH
+Analyzing Functions	What command would you use to list all functions analyzed in the binary.?	afl
+Analyzing Functions	How can you list all functions analyzed in the binary. in Radare2?	afl
+Searching	Provide the Radare2 command to find a 4-byte value 0x90 in little-endian format..	/v4 0x90 @ e:cfg.bigendian=false
+Code Coverage	Provide the Radare2 command to analyze all code call destinations and find additional functions	aac
+Breakpoints	Which Radare2 command is used to set a breakpoint at the symbol 'main'?	db sym.main
+Analyzing Control Flow	What command would you use to generate a graph of the function 'main'?	agf @ main
+Using Plugins	How can you install the r2frida plugin using r2pm. in Radare2?	r2pm -ci r2frida
+Disassembling Code	What command would you use to disassemble the next 10 instructions from the current offset?	pd 10
+Edition	How to reopen the file in read-write mode?	oo+
+Analysis	How can I list all function signatures?	afs@@F
